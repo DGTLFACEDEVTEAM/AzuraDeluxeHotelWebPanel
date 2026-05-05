@@ -47,6 +47,8 @@ export default function Footer() {
                   Alanya / Turkey
                 </p>
               </div>
+              <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] cursor-pointer">{t("culture")}</Link>
             </div>
         </div>
 <div className="flex w-[1px] h-[240px] bg-gray-400"></div>
@@ -200,7 +202,7 @@ export default function Footer() {
 
   
 
-        <div className="flex w-[92%] items-center justify-center gap-[80px] py-[15px]">
+        <div className="flex w-[92%] items-center justify-center gap-[80px] pt-[15px]">
           {/* Sosyal ikonlar */}
           <div className="flex items-center gap-[32px]">
           <Link
@@ -246,7 +248,10 @@ export default function Footer() {
                   <Link href="/news">{t("blog")}</Link>
                 </li>
           </div>
+          
         </div>
+        <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] cursor-pointer">{t("culture")}</Link>
       </div>
 
       <div className="flex md:hidden bg-lagoBlack w-screen h-full pt-[29px] pb-[35px] items-center justify-center">
@@ -321,6 +326,7 @@ export default function Footer() {
                 </p>
               </div>
             </div>
+            
           </div>
 
           {/* <div className="flex flex-col w-full items-center justify-center font-jost font-normal text-[14px]">
@@ -468,6 +474,8 @@ export default function Footer() {
               <FaInstagram className="w-[30px] h-[32px]" />
             </Link></div>
           </div>
+          <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[14px] font-normal cursor-pointer text-center">{t("culture")}</Link>
         </div>
       </div>
 
