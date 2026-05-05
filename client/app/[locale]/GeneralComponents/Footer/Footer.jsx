@@ -25,10 +25,10 @@ export default function Footer() {
 
   return (
     <footer className="w-full flex flex-col bg-[#1A1A16] text-gray-200 text-sm justify-center items-center z-10">
-      <div className="hidden lg:flex lg:flex-row-reverse w-[91.1%] lg:w-[76.8%] max-w-[1440px] items-start justify-center text-start gap-[4%] mt-[60px]">
+      <div className="hidden lg:flex lg:flex-row-reverse w-[91.1%] xl:w-[76.8%] max-w-[1440px] items-start justify-center text-start gap-[4%] mt-[60px]">
         <div className="flex w-[50%] items-center text-center justify-start">
           {/* SOL: 4 SÜTUN (QUICK MENU, TERMS, COMPANY, CONTACT) */}
-          <div className="flex flex-col items-start justify-start text-start gap-[40px]">
+          <div className="flex flex-col items-start justify-start text-start gap-[40px] mt-4">
               <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
                 <Link href="/connect">{t("contact")}</Link>
               </h4>
@@ -47,12 +47,11 @@ export default function Footer() {
                   Alanya / Turkey
                 </p>
               </div>
-              <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
-              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] cursor-pointer">{t("culture")}</Link>
+             
             </div>
         </div>
-<div className="flex w-[1px] h-[240px] bg-gray-400"></div>
-        <div className="w-[50%] flex flex-col items-end  pr-16 gap-[40px]">
+        <div className="flex w-[1px] h-[240px] bg-gray-400"></div>
+        <div className="w-[50%] flex flex-col items-start pl-[22%] gap-[32px]">
           {/* Logo */}
           <div className="mb-1">
           <Image
@@ -94,7 +93,7 @@ export default function Footer() {
           </div>
 
           {/* Alt linkler */}
-          <div className="grid grid-cols-2 items-center gap-6 whitespace-nowrap text-lagoGray2">
+          <div className="grid grid-cols-2 2xl:grid-cols-3 items-center gap-6 whitespace-nowrap text-lagoGray2">
             <a href="/terms-of-use" className="hover:underline">
             {t("termsuse")}
             </a>
@@ -124,10 +123,11 @@ export default function Footer() {
                 
           </div>
         </div>
+        
       </div>
 
       {/* tablet */}
-      <div className="hidden md:flex flex-col lg:hidden w-full bg-lagoBlack h-auto py-[47px] gap-[50px] items-center justify-center">
+      <div className="hidden md:flex flex-col lg:hidden w-full bg-lagoBlack h-auto pt-[47px] pb-[10px] gap-[50px] items-center justify-center">
         <div className="flex w-[90%] gap-[37px] items-center justify-start ml-[10%]">
           <Image
             src={logosvg}
@@ -244,14 +244,18 @@ export default function Footer() {
             <a href="/documents/Azura Hotel Sürdürülebilirlik Raporu 2023-2024.pdf" target="_blank"  rel="noopener noreferrer" className="hover:underline">
             {t("sustainability")}
             </a>
-            <li className="hover:text-white cursor-pointer">
+  
                   <Link href="/news">{t("blog")}</Link>
-                </li>
+               
           </div>
           
         </div>
-        <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
-              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] cursor-pointer">{t("culture")}</Link>
+        <div className="w-full hidden md:flex lg:hidden flex-col gap-5 mt-2 items-center justify-center text-center">
+                <div className="w-full h-[1px] bg-[#5a5a5a]"></div>
+                <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[14px] font-normal leading-[18px] cursor-pointer">{t("culture")}</Link>
+              <div className="w-full h-[1px] bg-[#5a5a5a]"></div>
+              </div>
       </div>
 
       <div className="flex md:hidden bg-lagoBlack w-screen h-full pt-[29px] pb-[35px] items-center justify-center">
@@ -474,13 +478,30 @@ export default function Footer() {
               <FaInstagram className="w-[30px] h-[32px]" />
             </Link></div>
           </div>
-          <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
-              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[14px] font-normal cursor-pointer text-center">{t("culture")}</Link>
+          <div className="w-full flex md:hidden flex-col gap-4 mt-3 items-center justify-center text-center">
+                <div className="w-full h-[1px] bg-[#5a5a5a]"></div>
+                <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[14px] font-normal leading-[18px] cursor-pointer">{t("culture")}</Link>
+              <div className="w-full h-[1px] bg-[#5a5a5a]"></div>
+              </div>
         </div>
       </div>
 
+
+
+       <div className="w-full hidden lg:flex flex-col gap-5 mt-12 items-center justify-center text-center">
+                <div className="w-full max-w-[1100px] 2xl:max-w-[1200px] h-[1px] bg-[#5a5a5a]"></div>
+                <Link href="https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr" target="_blank"
+              rel="norefferer nofollower" className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] cursor-pointer">{t("culture")}</Link>
+              <div className="w-full max-w-[1100px] 2xl:max-w-[1200px] h-[1px] bg-[#5a5a5a]"></div>
+              </div>
+
+
+
+
+
       {/* Alt ince çizgi */}
-      <div className="md:flex hidden w-full h-[1px] bg-gray-400 mt-[60px]" />
+      <div className="md:flex hidden w-full mt-[20px]" />
       <Link href="https://dgtlface.com"   rel="norefferer nofollower"
                   target="_blank" className="flex w-full text-[14px] font-normal leading-normal font-jost tracking-[0.56px] mb-2 pb-[80px] md:py-[1.8%] text-center justify-center items-center gap-[9.13px] text-[#A6A6A6]">
             Powered by <DgtlfaceSvg className="flex" width={104} height={27} />
