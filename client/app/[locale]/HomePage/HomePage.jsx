@@ -10,7 +10,7 @@ import ContactSection from '../GeneralComponents/Contact/ContactSection'
 import EmblaCarousel from "./Components/Slider/Slider1"
 import TwoAnimationImage from "./Components/TwoAnimationImage"
 
-const HomePage = () => {
+const HomePage = ({ experience }) => {
   return (
     <div className='flex flex-col items-center justify-center overflow-hidden'>
         <HomePage1 />
@@ -18,7 +18,7 @@ const HomePage = () => {
         <EmblaCarousel options={{ loop: true }}/>
      <div className='flex flex-col items-center justify-center w-screen gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
      {/* <HomePage3 /> */}
-     <TwoAnimationImage/>
+     <TwoAnimationImage {...experience}/>
      <HomePage4 />
         <HomePage5 />
         <ContactSection />

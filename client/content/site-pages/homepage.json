@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "homepage",
+  "experience": {
+    "background": {
+      "image": "/uploads/pages/homepage/experience-background.jpg",
+      "translations": {
+        "tr": { "alt": "Azura Deluxe Hotel havuzları ve deniz manzarası" },
+        "en": { "alt": "Azura Deluxe Hotel pools and sea view" },
+        "de": { "alt": "Pools und Meerblick des Azura Deluxe Hotels" },
+        "ru": { "alt": "Бассейны отеля Azura Deluxe и вид на море" }
+      }
+    },
+    "foreground": {
+      "image": "/uploads/pages/homepage/experience-foreground.jpg",
+      "translations": {
+        "tr": { "alt": "Azura Deluxe Hotel ve iskelesinin kuşbakışı görünümü" },
+        "en": { "alt": "Aerial view of Azura Deluxe Hotel and its pier" },
+        "de": { "alt": "Luftaufnahme des Azura Deluxe Hotels und seines Stegs" },
+        "ru": { "alt": "Вид с воздуха на отель Azura Deluxe и его пирс" }
+      }
+    }
+  }
+}
