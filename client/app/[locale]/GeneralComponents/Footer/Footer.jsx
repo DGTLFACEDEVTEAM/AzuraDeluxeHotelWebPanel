@@ -51,7 +51,7 @@ export default function Footer() {
             </div>
         </div>
         <div className="flex w-[1px] h-[240px] bg-gray-400"></div>
-        <div className="w-[50%] flex flex-col items-start pl-[22%] gap-[32px]">
+        <div className="w-[50%] flex flex-col items-start pl-[15%] 2xl:pl-[22%] gap-[32px]">
           {/* Logo */}
           <div className="mb-1">
           <Image
@@ -93,7 +93,7 @@ export default function Footer() {
           </div>
 
           {/* Alt linkler */}
-          <div className="grid grid-cols-2 2xl:grid-cols-3 items-center gap-6 whitespace-nowrap text-lagoGray2">
+          <div className="grid grid-cols-2 2xl:grid-cols-2 items-center gap-6 whitespace-nowrap text-lagoGray2">
             <a href="/terms-of-use" className="hover:underline">
             {t("termsuse")}
             </a>
@@ -202,7 +202,7 @@ export default function Footer() {
 
   
 
-        <div className="flex w-[92%] items-center justify-center gap-[80px] pt-[15px]">
+        <div className="flex w-[92%] items-center justify-center gap-[20px] pt-[15px]">
           {/* Sosyal ikonlar */}
           <div className="flex items-center gap-[32px]">
           <Link
