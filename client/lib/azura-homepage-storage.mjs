@@ -1,9 +1,18 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { open, readFile, realpath, rename, stat, unlink } from "node:fs/promises";
 import path from "node:path";
 
 export const LOCALES = ["tr", "en", "de", "ru"];
 const IMAGE_PATH = /^\/uploads\/pages\/homepage\/[A-Za-z0-9][A-Za-z0-9._-]{0,127}\.(?:jpg|jpeg|png|webp)$/i;
+const TEXT_LIMITS = {
+  subtitle: 200,
+  title: 250,
+  text1: 2000,
+  text2: 2000,
+  buttonText: 120,
+};
+const REVISION = /^[a-f0-9]{64}$/;
+let homepageWriteQueue = Promise.resolve();
 
 export class HomepageContentError extends Error {
   constructor(message, status = 400) {
@@ -73,6 +82,60 @@ export function validateExperience(experience) {
   return experience;
 }
 
+export function validateExperienceText(experienceText) {
+  exactKeys(experienceText, LOCALES, "experienceText");
+  for (const locale of LOCALES) {
+    exactKeys(experienceText[locale], Object.keys(TEXT_LIMITS), `experienceText.${locale}`);
+    for (const [field, limit] of Object.entries(TEXT_LIMITS)) {
+      const value = experienceText[locale][field];
+      if (typeof value !== "string" || !value.trim() || value.length > limit || /[\u0000-\u001f\u007f]/.test(value)) {
+        throw new HomepageContentError(`experienceText.${locale}.${field} geçersiz veya çok uzun.`);
+      }
+    }
+  }
+  return experienceText;
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) =>
+      `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function revisionFor(value) {
+  return createHash("sha256").update(canonicalJson(value)).digest("hex");
+}
+
+export function getExperienceRevision(experience) {
+  validateExperience(experience);
+  return revisionFor(experience);
+}
+
+export function getExperienceTextRevision(experienceText) {
+  validateExperienceText(experienceText);
+  return revisionFor(experienceText);
+}
+
+export function parseIfMatch(value) {
+  if (value === null || value === undefined || value === "") {
+    throw new HomepageContentError("If-Match başlığı zorunludur.", 428);
+  }
+  const match = /^"([a-f0-9]{64})"$/.exec(value);
+  if (!match || !REVISION.test(match[1])) {
+    throw new HomepageContentError("If-Match başlığı geçersizdir.");
+  }
+  return match[1];
+}
+
+function enqueueHomepageWrite(operation) {
+  const result = homepageWriteQueue.then(operation, operation);
+  homepageWriteQueue = result.then(() => undefined, () => undefined);
+  return result;
+}
+
 export async function assertExperienceImagesExist(experience, paths) {
   const root = await realpath(paths.uploadsRoot);
   for (const item of [experience.background, experience.foreground]) {
@@ -101,14 +164,11 @@ export async function readHomepageContent(paths = resolveAzuraPaths()) {
     throw new Error("Azura homepage verisinin sayfa anahtarı veya şema sürümü geçersiz.");
   }
   validateExperience(content.experience);
+  if (content.experienceText !== undefined) validateExperienceText(content.experienceText);
   return content;
 }
 
-export async function writeHomepageExperience(experience, paths = resolveAzuraPaths()) {
-  validateExperience(experience);
-  await assertExperienceImagesExist(experience, paths);
-  const current = await readHomepageContent(paths);
-  const next = { ...current, experience };
+async function writeHomepageContentAtomically(next, paths = resolveAzuraPaths()) {
   const target = homepageFile(paths);
   const temporary = `${target}.${randomUUID()}.tmp`;
   let handle;
@@ -130,5 +190,48 @@ export async function writeHomepageExperience(experience, paths = resolveAzuraPa
     await unlink(temporary).catch(() => {});
     throw error;
   }
-  return next.experience;
+  return next;
+}
+
+function assertRevision(expected, actual) {
+  if (!REVISION.test(expected)) {
+    throw new HomepageContentError("Beklenen revision geçersizdir.");
+  }
+  if (expected !== actual) {
+    throw new HomepageContentError("İçerik başka bir kullanıcı tarafından güncellendi.", 409);
+  }
+}
+
+export async function writeHomepageExperience(experience, expectedRevision, paths = resolveAzuraPaths()) {
+  validateExperience(experience);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    assertRevision(expectedRevision, getExperienceRevision(current.experience));
+    await assertExperienceImagesExist(experience, paths);
+    const next = await writeHomepageContentAtomically({ ...current, experience }, paths);
+    return { experience: next.experience, revision: getExperienceRevision(next.experience) };
+  });
+}
+
+export async function writeHomepageExperienceText(experienceText, expectedRevision, paths = resolveAzuraPaths()) {
+  validateExperienceText(experienceText);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    if (!current.experienceText) {
+      throw new HomepageContentError("Kalıcı homepage JSON'unda experienceText eksik.", 503);
+    }
+    assertRevision(expectedRevision, getExperienceTextRevision(current.experienceText));
+    const next = await writeHomepageContentAtomically({ ...current, experienceText }, paths);
+    return { experienceText: next.experienceText, revision: getExperienceTextRevision(next.experienceText) };
+  });
+}
+
+export async function ensureHomepageExperienceText(experienceText, paths = resolveAzuraPaths()) {
+  validateExperienceText(experienceText);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    if (current.experienceText !== undefined) return current.experienceText;
+    const next = await writeHomepageContentAtomically({ ...current, experienceText }, paths);
+    return next.experienceText;
+  });
 }

@@ -1,7 +1,13 @@
 import { constants } from "node:fs";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { homepageFile, resolveAzuraPaths } from "../lib/azura-homepage-storage.mjs";
+import {
+  homepageFile,
+  ensureHomepageExperienceText,
+  readHomepageContent,
+  resolveAzuraPaths,
+  validateExperienceText,
+} from "../lib/azura-homepage-storage.mjs";
 
 const appRoot = process.cwd();
 const paths = resolveAzuraPaths({ appRoot, production: true });
@@ -29,4 +35,12 @@ for (const image of images) {
     if (error.code !== "EEXIST") throw error;
     console.log(`Mevcut Azura görseli korundu: ${target}`);
   }
+}
+
+const current = await readHomepageContent(paths);
+if (current.experienceText === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateExperienceText(initial.experienceText);
+  await ensureHomepageExperienceText(initial.experienceText, paths);
+  console.log(`Azura experienceText alanı mevcut JSON'a eklendi: ${homepageFile(paths)}`);
 }

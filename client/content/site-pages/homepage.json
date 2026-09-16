@@ -5,20 +5,66 @@
     "background": {
       "image": "/uploads/pages/homepage/experience-background.jpg",
       "translations": {
-        "tr": { "alt": "Azura Deluxe Hotel havuzları ve deniz manzarası" },
-        "en": { "alt": "Azura Deluxe Hotel pools and sea view" },
-        "de": { "alt": "Pools und Meerblick des Azura Deluxe Hotels" },
-        "ru": { "alt": "Бассейны отеля Azura Deluxe и вид на море" }
+        "tr": {
+          "alt": "Azura Deluxe Hotel havuzları ve deniz manzarası brbhetbetr"
+        },
+        "en": {
+          "alt": "Azura Deluxe Hotel pools and sea view"
+        },
+        "de": {
+          "alt": "Pools und Meerblick des Azura Deluxe Hotels"
+        },
+        "ru": {
+          "alt": "Бассейны отеля Azura Deluxe и вид на море"
+        }
       }
     },
     "foreground": {
       "image": "/uploads/pages/homepage/experience-foreground.jpg",
       "translations": {
-        "tr": { "alt": "Azura Deluxe Hotel ve iskelesinin kuşbakışı görünümü" },
-        "en": { "alt": "Aerial view of Azura Deluxe Hotel and its pier" },
-        "de": { "alt": "Luftaufnahme des Azura Deluxe Hotels und seines Stegs" },
-        "ru": { "alt": "Вид с воздуха на отель Azura Deluxe и его пирс" }
+        "tr": {
+          "alt": "Azura Deluxe Hotel ve iskelesinin kuşbakışı görünümü"
+        },
+        "en": {
+          "alt": "Aerial view of Azura Deluxe Hotel and its pier"
+        },
+        "de": {
+          "alt": "Luftaufnahme des Azura Deluxe Hotels und seines Stegs"
+        },
+        "ru": {
+          "alt": "Вид с воздуха на отель Azura Deluxe и его пирс"
+        }
       }
+    }
+  },
+  "experienceText": {
+    "tr": {
+      "subtitle": " AZURA DELUXE’TE UNUTULMAZ ANLAR btb",
+      "title": " Şimdi Azura deneyimini keşfedin!",
+      "text1": "  Turkuaz Akdeniz’in ve görkemli Toros Dağları’nın arasında yer alan 12.000 m²’lik kartpostallık bir alanda konumlanan Azura Deluxe Resort & Spa, sizi tamamen dinlenmeye yönelik tasarlanmış davetkâr iskelesiyle birlikte 70 metrelik özel plajıyla karşılıyor. kjbkj",
+      "text2": "Açık yüzme havuzu, ısıtmalı kapalı havuzlar ve heyecan verici su kaydıraklarının bulunduğu farklı havuzlarımızda huzura dalın; her yaştan misafir için eğlence ve dinlenme bir arada sunuluyor. Lüks ve konfor dolu kaçamağınız Azura Deluxe’te sizi bekliyor; burada her an, değerli bir anıya dönüşür.",
+      "buttonText": " Galeriye Git eee"
+    },
+    "en": {
+      "subtitle": " UNFORGETTABLE MOMENTS AT AZURA DELUXE fwrgr",
+      "title": "Discover the Azura experience now!",
+      "text1": " Located on a picturesque 12,000 m² area between the turquoise Mediterranean Sea and the majestic Taurus Mountains, Azura Deluxe Resort & Spa welcomes you with its private 70-meter beach, complete with an inviting jetty designed for ultimate relaxation. hjoılhlk",
+      "text2": "Dive into serenity at our various pools, featuring an outdoor swimming pool, heated indoor pools, and exhilarating water slides, ensuring fun and relaxation for guests of all ages. Your luxurious and comfortable escape awaits at Azura Deluxe, where every moment turns into a cherished memory.",
+      "buttonText": " Go to gallery ggge"
+    },
+    "de": {
+      "subtitle": "  ENTDECKEN SIE MEHRE",
+      "title": " UNVERGESSLICHE MOMENTE IM AZURA DELUXE",
+      "text1": "  Inmitten einer malerischen 12.000 m² großen Landschaft zwischen dem türkisfarbenen Mittelmeer und den majestätischen Taurusbergen gelegen, empfängt Sie das Azura Deluxe Resort & Spa mit einem 70 Meter langen Privatstrand und einem einladenden Steg – für vollkommene Entspannung.",
+      "text2": "Tauchen Sie ein in die Ruhe unserer vielfältigen Poollandschaft: Freiluftpool, beheizte Innenpools und aufregende Wasserrutschen sorgen für Spaß und Erholung bei Gästen jeden Alters. Ihre luxuriöse und komfortable Auszeit erwartet Sie im Azura Deluxe – wo jeder Moment zu einer wertvollen Erinnerung wird.",
+      "buttonText": "Zur Galerie gehen"
+    },
+    "ru": {
+      "subtitle": "НЕЗАБЫВАЕМЫЕ МГНОВЕНИЯ В AZURA DELUXE",
+      "title": " Откройте для себя мир Azura уже сейчас!",
+      "text1": "Расположенный на живописной территории площадью 12 000 м² между бирюзовыми водами Средиземного моря и величественными горами Тавр, курорт Azura Deluxe Resort & Spa встречает вас частным пляжем длиной 70 метров и уютным пирсом, созданным для полного расслабления.",
+      "text2": "Погрузитесь в атмосферу спокойствия в одном из наших бассейнов: открытый бассейн, подогреваемые крытые  бассейны и захватывающие водные горки обеспечат отдых и веселье для гостей всех возрастов. Ваш роскошный и комфортабельный отдых ждёт вас в Azura Deluxe — месте, где каждое мгновение становится бесценным воспоминанием.",
+      "buttonText": "  Перейти в галерею"
     }
   }
 }

@@ -7,7 +7,10 @@ export async function readHomepageExperience(locale) {
     throw new Error(`Azura homepage için desteklenmeyen dil: ${locale}`);
   }
 
-  const { experience } = await readHomepageContent();
+  const { experience, experienceText } = await readHomepageContent();
+  if (!experienceText) {
+    throw new Error("Azura homepage experienceText alanı kalıcı JSON'da eksik.");
+  }
 
   return {
     backgroundImage: {
@@ -18,5 +21,6 @@ export async function readHomepageExperience(locale) {
       src: experience.foreground.image,
       alt: experience.foreground.translations[locale].alt,
     },
+    experienceText: experienceText[locale],
   };
 }

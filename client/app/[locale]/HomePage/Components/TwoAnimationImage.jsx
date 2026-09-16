@@ -2,10 +2,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { Link } from '@/i18n/navigation';
-import {useTranslations} from 'next-intl';
 
-const TwoAnimationImage = ({ backgroundImage, foregroundImage }) => {
-  const t = useTranslations('Homepage.TwoImageSection');
+const TwoAnimationImage = ({ backgroundImage, foregroundImage, experienceText }) => {
 
   const [animate, setAnimate] = useState(false);
   const sectionRef = useRef(null); 
@@ -36,25 +34,25 @@ const TwoAnimationImage = ({ backgroundImage, foregroundImage }) => {
       <div className="flex flex-col md:flex-row-reverse w-[87.79%] md:w-[91.4%] lg:w-[76.8%] items-center justify-center gap-[30px] md:gap-[42px] lg:gap-[52px] h-full">
         <div className="flex flex-col w-[96%] md:w-[55%] lg:w-[48.5%] items-center md:items-start justify-center text-center md:text-start gap-[15px] md:gap-[25px] text-black font-jost">
           <span className="text-[12px] font-medium leading-[14.026px] tracking-[0.481px] uppercase">
-          {t("subtitle")}
+          {experienceText.subtitle}
           </span>
           <h2 className="hidden lg:flex lg:text-[48.089px] font-normal font-marcellus md:leading-normal lg:leading-[57.707px] capsizedText2">
-          {t("title")}
+          {experienceText.title}
           </h2>
           <h2 className="text-[28px] md:text-[32px] lg:text-[48.089px] font-normal font-marcellus md:leading-normal lg:hidden capsizedText2">
-          {t("title")}
+          {experienceText.title}
           </h2>
           <p className="text-[14px] md:text-[13.943px] lg:text-[16.03px] font-normal leading-[130%] lg:leading-[24.045px] leading-trim-both text-edge-cap capsizedText4">
-          {t("text1")}
+          {experienceText.text1}
           </p>
           <p className="text-[14px] md:text-[13.943px] lg:text-[16.03px] font-normal leading-[130%] lg:leading-[24.045px] leading-trim-both text-edge-cap capsizedText4">
-          {t("text2")}
+          {experienceText.text2}
           </p>
           <Link
             href="/gallery"
             className="flex py-[16px] px-[32px] items-center justify-center text-center text-[14px] lg:text-[16px] h-[38px] md:h-[37.88px] lg:h-[41px] text-lagoBrown uppercase md:leading-[29.878px] leading-[30px] font-medium border border-lagoBrown shadow-buttonCustom hover:bg-lagoBrown hover:underline hover:text-white"
           >
-            {t("buttonText")}
+            {experienceText.buttonText}
           </Link>
         </div>
 

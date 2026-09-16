@@ -2,41 +2,37 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import {
   HomepageContentError,
-  getExperienceRevision,
+  getExperienceTextRevision,
   LOCALES,
   parseIfMatch,
   readHomepageContent,
-  writeHomepageExperience,
+  writeHomepageExperienceText,
 } from "@/lib/azura-homepage-storage.mjs";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const MAX_BODY_BYTES = 64 * 1024;
+
 function json(body, status = 200) {
   return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
 }
 
 function authorize(request) {
-  if (!serviceTokenConfigured()) {
-    return json({ error: "Azura servis tokenı yapılandırılmamış." }, 503);
-  }
-  if (!hasValidServiceToken(request.headers.get("authorization"))) {
-    return json({ error: "Yetkisiz erişim." }, 401);
-  }
+  if (!serviceTokenConfigured()) return json({ error: "Azura servis tokenı yapılandırılmamış." }, 503);
+  if (!hasValidServiceToken(request.headers.get("authorization"))) return json({ error: "Yetkisiz erişim." }, 401);
   return null;
 }
 
 function failure(error) {
-  if (error instanceof HomepageContentError) {
-    return json({ error: error.message }, error.status);
-  }
-  console.error("Azura homepage experience API hatası:", error);
-  return json({ error: "Azura homepage verisi işlenemedi." }, 500);
+  if (error instanceof HomepageContentError) return json({ error: error.message }, error.status);
+  console.error("Azura homepage experienceText API hatası:", error);
+  return json({ error: "Azura homepage metinleri işlenemedi." }, 500);
 }
 
 async function readLimitedBody(request) {
-  if (Number(request.headers.get("content-length")) > 8192) {
+  if (Number(request.headers.get("content-length")) > MAX_BODY_BYTES) {
     throw new HomepageContentError("İstek gövdesi çok büyük.", 413);
   }
   const reader = request.body?.getReader();
@@ -47,7 +43,7 @@ async function readLimitedBody(request) {
     const { value, done } = await reader.read();
     if (done) break;
     size += value.byteLength;
-    if (size > 8192) {
+    if (size > MAX_BODY_BYTES) {
       await reader.cancel();
       throw new HomepageContentError("İstek gövdesi çok büyük.", 413);
     }
@@ -60,8 +56,9 @@ export async function GET(request) {
   const denied = authorize(request);
   if (denied) return denied;
   try {
-    const { experience } = await readHomepageContent();
-    return json({ experience, revision: getExperienceRevision(experience) });
+    const { experienceText } = await readHomepageContent();
+    if (!experienceText) throw new HomepageContentError("Kalıcı homepage JSON'unda experienceText eksik.", 503);
+    return json({ experienceText, revision: getExperienceTextRevision(experienceText) });
   } catch (error) {
     return failure(error);
   }
@@ -88,10 +85,10 @@ export async function PUT(request) {
       return json({ error: "Geçersiz JSON." }, 400);
     }
     if (!body || typeof body !== "object" || Array.isArray(body) ||
-        Object.keys(body).length !== 1 || !Object.hasOwn(body, "experience")) {
-      return json({ error: "Yalnızca experience alanı güncellenebilir." }, 400);
+        Object.keys(body).length !== 1 || !Object.hasOwn(body, "experienceText")) {
+      return json({ error: "Yalnızca experienceText alanı güncellenebilir." }, 400);
     }
-    const result = await writeHomepageExperience(body.experience, expectedRevision);
+    const result = await writeHomepageExperienceText(body.experienceText, expectedRevision);
     for (const locale of LOCALES) revalidatePath(`/${locale}`);
     return json(result);
   } catch (error) {

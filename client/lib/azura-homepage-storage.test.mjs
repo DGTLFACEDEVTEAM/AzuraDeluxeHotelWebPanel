@@ -6,6 +6,7 @@ import path from "node:path";
 import test from "node:test";
 import {
   HomepageContentError,
+  getExperienceRevision,
   homepageFile,
   readHomepageContent,
   resolveAzuraPaths,
@@ -44,29 +45,32 @@ test("geçersiz PUT verisi mevcut dosyayı korur; geçerli kayıt diğer alanlar
     );
   }
   const before = await readFile(homepageFile(paths));
+  const revision = getExperienceRevision(seed.experience);
 
   const invalidPath = structuredClone(seed.experience);
   invalidPath.background.image = "/uploads/pages/homepage/../../secret.jpg";
-  await assert.rejects(writeHomepageExperience(invalidPath, paths), HomepageContentError);
+  await assert.rejects(writeHomepageExperience(invalidPath, revision, paths), HomepageContentError);
   assert.deepEqual(await readFile(homepageFile(paths)), before);
 
   const absentImage = structuredClone(seed.experience);
   absentImage.foreground.image = "/uploads/pages/homepage/missing.jpg";
-  await assert.rejects(writeHomepageExperience(absentImage, paths), HomepageContentError);
+  await assert.rejects(writeHomepageExperience(absentImage, revision, paths), HomepageContentError);
   assert.deepEqual(await readFile(homepageFile(paths)), before);
 
   const invalidLocale = structuredClone(seed.experience);
   delete invalidLocale.background.translations.ru;
-  await assert.rejects(writeHomepageExperience(invalidLocale, paths), HomepageContentError);
+  await assert.rejects(writeHomepageExperience(invalidLocale, revision, paths), HomepageContentError);
   assert.deepEqual(await readFile(homepageFile(paths)), before);
 
   const updated = structuredClone(seed.experience);
   updated.foreground.translations.tr.alt = "Azura yeni açıklama";
-  await writeHomepageExperience(updated, paths);
+  const result = await writeHomepageExperience(updated, revision, paths);
+  assert.equal(result.revision, getExperienceRevision(updated));
   const saved = await readHomepageContent(paths);
   assert.equal(saved.experience.foreground.translations.tr.alt, "Azura yeni açıklama");
   assert.deepEqual(saved.futureField, { preserved: true });
   assert.deepEqual(saved.experience.background, seed.experience.background);
+  assert.deepEqual(saved.experienceText, seed.experienceText);
 });
 
 test("bozuk mevcut JSON üzerine yazılmaz", async (t) => {
@@ -88,6 +92,6 @@ test("bozuk mevcut JSON üzerine yazılmaz", async (t) => {
   }
   await writeFile(homepageFile(paths), "{bozuk JSON");
   const seed = JSON.parse(await readFile(path.join(appRoot, "content", "site-pages", "homepage.json"), "utf8"));
-  await assert.rejects(writeHomepageExperience(seed.experience, paths));
+  await assert.rejects(writeHomepageExperience(seed.experience, "0".repeat(64), paths));
   assert.equal(await readFile(homepageFile(paths), "utf8"), "{bozuk JSON");
 });
