@@ -24,6 +24,9 @@ const images = [
   "carousel-beach-pools.jpg",
   "carousel-experiences.jpg",
   "carousel-kids.jpg",
+  "accommodation-deluxe.png",
+  "accommodation-fantasy.png",
+  "accommodation-family.png",
 ];
 
 await mkdir(path.dirname(homepageFile(paths)), { recursive: true });
@@ -76,4 +79,11 @@ if (current.sections?.carousel === undefined) {
   validateHomepageSection("carousel", initial.sections?.carousel);
   await ensureHomepageSection("carousel", initial.sections.carousel, paths);
   console.log(`Azura carousel bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
+}
+
+if (current.sections?.accommodation === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateHomepageSection("accommodation", initial.sections?.accommodation);
+  await ensureHomepageSection("accommodation", initial.sections.accommodation, paths);
+  console.log(`Azura accommodation bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
 }

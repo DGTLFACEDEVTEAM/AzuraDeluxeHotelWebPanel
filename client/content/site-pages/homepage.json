@@ -277,6 +277,134 @@
           }
         }
       ]
+    },
+    "accommodation": {
+      "translations": {
+        "tr": {
+          "subtitle": " Size En Uygun Konaklamayı Seçin",
+          "title": "Lüks Bir Konaklama Deneyiminin Keyfini Çıkarın",
+          "buttonText": " Keşfet"
+        },
+        "en": {
+          "subtitle": " Choose Your Perfect Accommodation",
+          "title": "Indulge in a Luxury Stay Experience",
+          "buttonText": "EXPLORE"
+        },
+        "de": {
+          "subtitle": "Wählen Sie Ihre perfekte Unterkunft",
+          "title": " Genießen Sie ein luxuriöses Aufenthaltserlebnis",
+          "buttonText": "Entdecken"
+        },
+        "ru": {
+          "subtitle": "  Выберите идеальное размещение",
+          "title": " Побалуйте себя роскошным отдыхом",
+          "buttonText": "Исследовать"
+        }
+      },
+      "cards": [
+        {
+          "key": "deluxe",
+          "image": "/uploads/pages/homepage/accommodation-deluxe.png",
+          "translations": {
+            "tr": {
+              "title": " Deluxe Oda",
+              "description": "  Ana binamızda yer alan bu şık 30–32 m² büyüklüğündeki oda; deniz, kara veya kısmi deniz manzarası seçenekleriyle büyüleyici bir konaklama sunar. Bir adet çift kişilik yatak ve bir adet tek kişilik yatak bulunan oda, 3 yetişkin ve 1 çocuğa kadar konforlu bir şekilde konaklama imkânı sağlar. Oda, modern bir banyo ve dinlenmeniz için keyifli bir oturma alanı ile donatılmıştır.",
+              "area": " 30-32 m²",
+              "view": "Kara / Deniz Manzarası",
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "title": " Deluxe Room",
+              "description": " Located in our main building, this stylish room of 30-32 m² offers charming views of the sea, land, or partial sea views. It features one double bed and one single bed, comfortably accommodating up to 3 adults and 1 child. The room includes a modern bathroom and a relaxing sitting area for your convenience.",
+              "area": " 30-32 m²",
+              "view": "Land / Sea View",
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "title": " Deluxe-Zimmer",
+              "description": " Dieses stilvolle Zimmer mit einer Größe von 30–32 m² befindet sich im Hauptgebäude und bietet einen charmanten Ausblick auf das Meer, das Land oder einen teilweisen Meerblick. Es verfügt über ein Doppelbett und ein Einzelbett und bietet bequem Platz für bis zu 3 Erwachsene und 1 Kind. Zur Ausstattung gehören ein modernes Badezimmer sowie ein gemütlicher Sitzbereich für Ihr Wohlbefinden.",
+              "area": " 30-32 m²",
+              "view": "Land- / Meerblick",
+              "alt": " Deluxe-Zimmer"
+            },
+            "ru": {
+              "title": " Номер Делюкс",
+              "description": "  Этот стильный номер площадью 30–32 м² расположен в главном здании и предлагает очаровательный вид на море, сушу или частичный вид на море. В номере имеется одна двуспальная кровать и одна односпальная, что позволяет с комфортом разместить до 3 взрослых и 1 ребёнка. В распоряжении гостей — современная ванная комната и уютная зона отдыха для дополнительного удобства.",
+              "area": " 30-32 m²",
+              "view": " Вид на сушу / море",
+              "alt": " Номер Делюкс"
+            }
+          }
+        },
+        {
+          "key": "fantasy",
+          "image": "/uploads/pages/homepage/accommodation-fantasy.png",
+          "translations": {
+            "tr": {
+              "title": "  Fantazi Oda",
+              "description": " Özel olarak tasarlanmış Fantazi Odalarımız, nefes kesici deniz manzarası eşliğinde etkileyici 58 m²’lik bir yaşam alanı sunar. Her odada konforlu bir çift kişilik yatağın yer aldığı şık bir yatak odası ve 25 m² büyüklüğünde, jakuzi ve şezlonglarla donatılmış lüks bir özel teras bulunur. Romantik bir dinlenme ve mahremiyet arayan çiftler için mükemmel bir seçenektir.",
+              "area": "  58 m²",
+              "view": "Deniz Manzarası",
+              "alt": "  Fantazi Oda"
+            },
+            "en": {
+              "title": "  Fantasy Room",
+              "description": " Our exclusively designed Fantasy Rooms offer an impressive 58 m² of space with breathtaking sea views. Each room features one elegant bedroom with a comfortable double bed and a luxurious private terrace of 25 m², complete with a jacuzzi and sun loungers—perfect for couples seeking romantic relaxation and privacy.",
+              "area": "  58 m²",
+              "view": "Sea View",
+              "alt": "  Fantasy Room"
+            },
+            "de": {
+              "title": "   Fantasie-Zimmer",
+              "description": "  Unsere exklusiv gestalteten Fantasie-Zimmer bieten großzügige 58 m² Wohnfläche mit atemberaubendem Meerblick. Jedes Zimmer verfügt über ein elegantes Schlafzimmer mit einem komfortablen Doppelbett sowie eine 25 m² große private Terrasse mit Whirlpool und Sonnenliegen – ideal für Paare, die romantische Entspannung und Privatsphäre suchen.",
+              "area": "  58 m²",
+              "view": "Meerblick",
+              "alt": "   Fantasie-Zimmer"
+            },
+            "ru": {
+              "title": "   Фантазийный номер",
+              "description": "  Наши эксклюзивно оформленные Фантазийные номера предлагают просторные 58 м² с захватывающим видом на море. В каждом номере имеется элегантная спальня с удобной двуспальной кроватью и роскошная частная терраса площадью 25 м² с джакузи и шезлонгами — идеальное решение для пар, ищущих романтический отдых и уединение.",
+              "area": "  58 m²",
+              "view": "Вид на море",
+              "alt": "   Фантазийный номер"
+            }
+          }
+        },
+        {
+          "key": "family",
+          "image": "/uploads/pages/homepage/accommodation-family.png",
+          "translations": {
+            "tr": {
+              "title": " Aile Odası",
+              "description": "  Ana binamızda yer alan geniş Aile Odalarımız, 50 m²’lik konforlu alanıyla iki ayrı yatak odasından oluşur ve bu odalar ara kapı ile birbirine bağlanarak hem mahremiyet hem de kullanım kolaylığı sunar. Her Aile Odasında bir adet çift kişilik yatak ve iki adet tek kişilik yatak bulunur; bu da aileler veya gruplar için ideal bir konaklama sağlar. Deniz ya da kara manzaralı seçenekleriyle sunulan bu odalar, 4 yetişkin ve 1 çocuk ya da 3 yetişkin ve 1 çocuk için konforlu bir konaklama imkânı sunar ve tüm aile için keyifli bir tatil vadeder.",
+              "area": "  50 m²",
+              "view": "Kara / Deniz Manzarası",
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "title": " Family Room",
+              "description": "  Located in our main building, our spacious Family Rooms offer 50 m² of comfort and feature two separate bedrooms connected by a door, providing both privacy and convenience. Each Family Room includes one double bed and two single beds, ideal for families or groups. Available with either sea or land views, these rooms comfortably accommodate up to 4 adults and 1 child, or 3 adults and 1 child, ensuring a delightful stay for the entire famil",
+              "area": "  50 m²",
+              "view": " Land / Sea View",
+              "alt": " Family Room"
+            },
+            "de": {
+              "title": "  Familienzimmer",
+              "description": "   Unsere großzügigen Familienzimmer im Hauptgebäude bieten auf 50 m² Komfort und verfügen über zwei durch eine Tür verbundene, separate Schlafzimmer – ideal für Privatsphäre und Bequemlichkeit. Jedes Familienzimmer ist mit einem Doppelbett und zwei Einzelbetten ausgestattet und eignet sich hervorragend für Familien oder Gruppen. Mit wahlweise Meer- oder Landblick bieten diese Zimmer Platz für bis zu 4 Erwachsene und 1 Kind oder 3 Erwachsene und 1 Kind – für einen rundum gelungenen Familienaufenthalt.",
+              "area": "  50 m²",
+              "view": " Land- / Meerblick",
+              "alt": "  Familienzimmer"
+            },
+            "ru": {
+              "title": "  Семейный номер",
+              "description": " Наши просторные семейные номера, расположенные в главном здании, предлагают 50 м² комфорта и состоят из двух отдельных спален, соединённых дверью, что обеспечивает как уединение, так и удобство. В каждом семейном номере имеется одна двуспальная кровать и две односпальные, что идеально подходит для семей или групп. Номера доступны с видом на море или сушу и могут с комфортом разместить до 4 взрослых и 1 ребёнка либо 3 взрослых и 1 ребёнка — для приятного отдыха всей семьи.",
+              "area": "  50 m²",
+              "view": "  Вид на сушу / море",
+              "alt": "  Семейный номер"
+            }
+          }
+        }
+      ]
     }
   }
 }

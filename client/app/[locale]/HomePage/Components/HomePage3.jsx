@@ -2,52 +2,21 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Family from "./Images/ODASOL.png";
-import Fantasy from "./Images/ODAORTA.png";
-import Deluxe from "./Images/ODASAG.png";
 import Area from "./Icons/Area";
 import Tree from "./Icons/Tree";
 import Sea from "./Icons/Sea";
 import { Link } from '@/i18n/navigation';
-import {useTranslations} from 'next-intl';
 
-export default function HomePage3() {
-  const t = useTranslations('Homepage.Accomodation');
-
-  const images = [
-    {
-      src: Family,
-      title: t("roomTitle1"),
-      desc: t("roomText1"),
-             area:t("area1"),
-             span:t("view1"),
-             link:"/rooms/deluxeroom"
-    },
-    {
-      src: Fantasy,
-      title: t("roomTitle2"),
-      desc: t("roomText2"),
-             area:t("area2"),
-             span:t("view2"),
-             link:"/rooms/fantasyroom"
-    },
-    {
-      src: Deluxe,
-      title: t("roomTitle3"),
-      desc: t("roomText3"),
-             area:t("area3"),
-             span:t("view3"),
-             link:"/rooms/familyroom"
-    },
-  ];
+export default function HomePage3({ accommodation }) {
+  const images = accommodation.cards;
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
  <div className="flex flex-col w-screen gap-[30px] lg:gap-[64px] items-center justify-center">
   <div className="flex flex-col w-[87.79%] md:w-[91.4%] lg:w-[76.8%] gap-[17px] md:gap-[25px] lg:gap-[30px] items-center justify-center text-center">
-    <span className="text-[12px] leading-[14px] uppercase tracking-[0.48px] font-medium font-jost">  {t("subtitle")}</span>
-    <h3 className="text-[28px] md:text-[32px] md:leading-[57.6px] lg:text-[48px] capsizedText2 font-marcellus font-normal leading-normal">  {t("title")}</h3>
+    <span className="text-[12px] leading-[14px] uppercase tracking-[0.48px] font-medium font-jost">  {accommodation.subtitle}</span>
+    <h3 className="text-[28px] md:text-[32px] md:leading-[57.6px] lg:text-[48px] capsizedText2 font-marcellus font-normal leading-normal">  {accommodation.title}</h3>
   </div>
 
      <div className="flex flex-col md:flex-row w-full md:h-[49vh] md:min-h-[354px] lg:h-[498px]">
@@ -79,7 +48,7 @@ export default function HomePage3() {
             {/* Resim */}
             <Image
               src={img.src}
-              alt={img.title}
+              alt={img.alt}
               width={0}
               height={0}
               sizes="100vw"
@@ -127,8 +96,7 @@ export default function HomePage3() {
                 </h3>
                 <p
                   className="text-[14px] lg:text-[16px] w-[80%] font-jost font-normal leading-normal text-left ml-6 lg:ml-16 line-clamp-3 md:line-clamp-4 lg:line-clamp-6"
-                  dangerouslySetInnerHTML={{ __html: img.desc }}
-                />
+                >{img.desc}</p>
 
                 {/* İkon satırı */}
                 <div className="flex items-center gap-4 ml-6 lg:ml-16 text-[14px] lg:text-[16px]">
@@ -151,7 +119,7 @@ export default function HomePage3() {
                 </div>
 
                 {/* Buton */}
-                <span className="text-white font-marcellus underline underline-offset-[6px] text-[14px]  ml-6 font-normal md:leading-[19.88px] flex uppercase lg:hidden">  {t("buttonText")}</span>
+                <span className="text-white font-marcellus underline underline-offset-[6px] text-[14px]  ml-6 font-normal md:leading-[19.88px] flex uppercase lg:hidden">  {accommodation.buttonText}</span>
                 <Link href={img.link}
                   className="
                     hidden
@@ -171,7 +139,7 @@ export default function HomePage3() {
                     tracking-wider
                     hover:bg-black hover:text-white hover:underline hover:underline-offset-2
                     transition">
-                  {t("buttonText")}
+                  {accommodation.buttonText}
                 </Link>
               </div>
             </div>

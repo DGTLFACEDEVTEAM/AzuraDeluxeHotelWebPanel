@@ -111,23 +111,6 @@
 
   "Homepage":{
 
-    "Accomodation":{
-      "subtitle":" Choose Your Perfect Accommodation",
-      "title":"Indulge in a Luxury Stay Experience",
-      "roomTitle1":" Deluxe Room",
-      "roomText1":" Located in our main building, this stylish room of 30-32 m² offers charming views of the sea, land, or partial sea views. It features one double bed and one single bed, comfortably accommodating up to 3 adults and 1 child. The room includes a modern bathroom and a relaxing sitting area for your convenience.",
-      "area1":" 30-32 m²",
-      "view1":"Land / Sea View",
-      "roomTitle2":"  Fantasy Room",
-      "roomText2":" Our exclusively designed Fantasy Rooms offer an impressive 58 m² of space with breathtaking sea views. Each room features one elegant bedroom with a comfortable double bed and a luxurious private terrace of 25 m², complete with a jacuzzi and sun loungers—perfect for couples seeking romantic relaxation and privacy.",
-      "area2":"  58 m²",
-      "view2":"Sea View",
-      "roomTitle3":" Family Room",
-      "roomText3":"  Located in our main building, our spacious Family Rooms offer 50 m² of comfort and feature two separate bedrooms connected by a door, providing both privacy and convenience. Each Family Room includes one double bed and two single beds, ideal for families or groups. Available with either sea or land views, these rooms comfortably accommodate up to 4 adults and 1 child, or 3 adults and 1 child, ensuring a delightful stay for the entire famil",
-      "area3":"  50 m²",
-      "view3":" Land / Sea View",
-      "buttonText":"EXPLORE"
-    },
 
     "BackgroundSection":{
       "subtitle":" Experience the Harmony of Luxury and Nature at Azura Deluxe.",

@@ -9,6 +9,11 @@ const CAROUSEL_LINKS = Object.freeze({
   experiences: "/entertainment",
   kids: "/kidsclub",
 });
+const ACCOMMODATION_LINKS = Object.freeze({
+  deluxe: "/rooms/deluxeroom",
+  fantasy: "/rooms/fantasyroom",
+  family: "/rooms/familyroom",
+});
 
 export async function readHomepageExperience(locale) {
   if (!LOCALES.includes(locale)) {
@@ -27,6 +32,9 @@ export async function readHomepageExperience(locale) {
   }
   if (!sections?.carousel) {
     throw new Error("Azura homepage sections.carousel alanı kalıcı JSON'da eksik.");
+  }
+  if (!sections?.accommodation) {
+    throw new Error("Azura homepage sections.accommodation alanı kalıcı JSON'da eksik.");
   }
 
   return {
@@ -47,5 +55,17 @@ export async function readHomepageExperience(locale) {
       alt: slide.translations[locale].alt,
       link: CAROUSEL_LINKS[slide.key],
     })),
+    accommodation: {
+      ...sections.accommodation.translations[locale],
+      cards: sections.accommodation.cards.map((card) => ({
+        src: card.image,
+        title: card.translations[locale].title,
+        desc: card.translations[locale].description,
+        area: card.translations[locale].area,
+        span: card.translations[locale].view,
+        alt: card.translations[locale].alt,
+        link: ACCOMMODATION_LINKS[card.key],
+      })),
+    },
   };
 }

@@ -104,23 +104,6 @@
 
     "Homepage":{
 
-      "Accomodation":{
-        "subtitle":" Size En Uygun Konaklamayı Seçin",
-        "title":"Lüks Bir Konaklama Deneyiminin Keyfini Çıkarın",
-        "roomTitle1":" Deluxe Oda",
-        "roomText1":"  Ana binamızda yer alan bu şık 30–32 m² büyüklüğündeki oda; deniz, kara veya kısmi deniz manzarası seçenekleriyle büyüleyici bir konaklama sunar. Bir adet çift kişilik yatak ve bir adet tek kişilik yatak bulunan oda, 3 yetişkin ve 1 çocuğa kadar konforlu bir şekilde konaklama imkânı sağlar. Oda, modern bir banyo ve dinlenmeniz için keyifli bir oturma alanı ile donatılmıştır.",
-        "area1":" 30-32 m²",
-        "view1":"Kara / Deniz Manzarası",
-        "roomTitle2":"  Fantazi Oda",
-        "roomText2":" Özel olarak tasarlanmış Fantazi Odalarımız, nefes kesici deniz manzarası eşliğinde etkileyici 58 m²’lik bir yaşam alanı sunar. Her odada konforlu bir çift kişilik yatağın yer aldığı şık bir yatak odası ve 25 m² büyüklüğünde, jakuzi ve şezlonglarla donatılmış lüks bir özel teras bulunur. Romantik bir dinlenme ve mahremiyet arayan çiftler için mükemmel bir seçenektir.",
-        "area2":"  58 m²",
-        "view2":"Deniz Manzarası",
-        "roomTitle3":" Aile Odası",
-        "roomText3":"  Ana binamızda yer alan geniş Aile Odalarımız, 50 m²’lik konforlu alanıyla iki ayrı yatak odasından oluşur ve bu odalar ara kapı ile birbirine bağlanarak hem mahremiyet hem de kullanım kolaylığı sunar. Her Aile Odasında bir adet çift kişilik yatak ve iki adet tek kişilik yatak bulunur; bu da aileler veya gruplar için ideal bir konaklama sağlar. Deniz ya da kara manzaralı seçenekleriyle sunulan bu odalar, 4 yetişkin ve 1 çocuk ya da 3 yetişkin ve 1 çocuk için konforlu bir konaklama imkânı sunar ve tüm aile için keyifli bir tatil vadeder.",
-        "area3":"  50 m²",
-        "view3":"Kara / Deniz Manzarası",
-        "buttonText":" Keşfet"
-      },
   
       "BackgroundSection":{
         "subtitle":" Azura Deluxe’te Lüks ve Doğanın Uyumunu Yaşayın",

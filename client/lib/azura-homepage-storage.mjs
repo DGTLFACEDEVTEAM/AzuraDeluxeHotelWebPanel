@@ -20,6 +20,9 @@ const WELCOME_TEXT_LIMITS = {
 export const CAROUSEL_KEYS = Object.freeze([
   "accommodation", "restaurants", "beachPools", "experiences", "kids",
 ]);
+export const ACCOMMODATION_KEYS = Object.freeze(["deluxe", "fantasy", "family"]);
+const ACCOMMODATION_TEXT_LIMITS = Object.freeze({ subtitle: 200, title: 250, buttonText: 120 });
+const ACCOMMODATION_CARD_LIMITS = Object.freeze({ title: 250, description: 2000, area: 120, view: 120, alt: 300 });
 const SECTION_SCHEMAS = Object.freeze({
   essentials: Object.freeze({
     kind: "localizedText",
@@ -42,6 +45,7 @@ const SECTION_SCHEMAS = Object.freeze({
     }),
   }),
   carousel: Object.freeze({ kind: "carousel" }),
+  accommodation: Object.freeze({ kind: "accommodation" }),
 });
 const REVISION = /^[a-f0-9]{64}$/;
 let homepageWriteQueue = Promise.resolve();
@@ -149,6 +153,19 @@ function sectionSchema(sectionKey) {
   return SECTION_SCHEMAS[sectionKey];
 }
 
+function validateLocalizedFields(translations, limits, label) {
+  exactKeys(translations, LOCALES, label);
+  for (const locale of LOCALES) {
+    exactKeys(translations[locale], Object.keys(limits), `${label}.${locale}`);
+    for (const [field, limit] of Object.entries(limits)) {
+      const value = translations[locale][field];
+      if (typeof value !== "string" || !value.trim() || value.length > limit || /[\u0000-\u001f\u007f]/.test(value)) {
+        throw new HomepageContentError(`${label}.${locale}.${field} geçersiz veya çok uzun.`);
+      }
+    }
+  }
+}
+
 export function assertHomepageSectionKey(sectionKey) {
   sectionSchema(sectionKey);
   return sectionKey;
@@ -156,6 +173,25 @@ export function assertHomepageSectionKey(sectionKey) {
 
 export function validateHomepageSection(sectionKey, section) {
   const schema = sectionSchema(sectionKey);
+  if (schema.kind === "accommodation") {
+    exactKeys(section, ["translations", "cards"], "sections.accommodation");
+    validateLocalizedFields(section.translations, ACCOMMODATION_TEXT_LIMITS, "sections.accommodation.translations");
+    if (!Array.isArray(section.cards) || section.cards.length !== ACCOMMODATION_KEYS.length) {
+      throw new HomepageContentError("sections.accommodation tam olarak üç kart içermelidir.");
+    }
+    section.cards.forEach((card, index) => {
+      const label = `sections.accommodation.cards[${index}]`;
+      exactKeys(card, ["key", "image", "translations"], label);
+      if (card.key !== ACCOMMODATION_KEYS[index]) {
+        throw new HomepageContentError(`${label} kart sırası veya anahtarı geçersiz.`);
+      }
+      if (typeof card.image !== "string" || !IMAGE_PATH.test(card.image) || card.image.includes("..")) {
+        throw new HomepageContentError(`${label} için geçersiz görsel yolu.`);
+      }
+      validateLocalizedFields(card.translations, ACCOMMODATION_CARD_LIMITS, `${label}.translations`);
+    });
+    return section;
+  }
   if (schema.kind === "carousel") {
     exactKeys(section, ["slides"], "sections.carousel");
     if (!Array.isArray(section.slides) || section.slides.length !== CAROUSEL_KEYS.length) {
@@ -419,7 +455,9 @@ export async function writeHomepageSection(sectionKey, section, expectedRevision
     const previous = current.sections?.[sectionKey];
     if (!previous) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
     assertRevision(expectedRevision, getHomepageSectionRevision(sectionKey, previous));
-    if (sectionKey === "carousel") await assertHomepageImagesExist(section.slides, paths, true);
+    if (sectionKey === "carousel" || sectionKey === "accommodation") {
+      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides : section.cards, paths, true);
+    }
     const next = await writeHomepageContentAtomically({
       ...current,
       sections: { ...current.sections, [sectionKey]: section },
@@ -433,7 +471,9 @@ export async function ensureHomepageSection(sectionKey, section, paths = resolve
   return enqueueHomepageWrite(async () => {
     const current = await readHomepageContent(paths);
     if (current.sections?.[sectionKey] !== undefined) return current.sections[sectionKey];
-    if (sectionKey === "carousel") await assertHomepageImagesExist(section.slides, paths, true);
+    if (sectionKey === "carousel" || sectionKey === "accommodation") {
+      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides : section.cards, paths, true);
+    }
     const next = await writeHomepageContentAtomically({
       ...current,
       sections: { ...current.sections, [sectionKey]: section },

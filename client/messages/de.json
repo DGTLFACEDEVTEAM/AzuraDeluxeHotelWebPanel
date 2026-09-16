@@ -103,23 +103,6 @@
 
     "Homepage":{
 
-    "Accomodation":{
-      "subtitle":"Wählen Sie Ihre perfekte Unterkunft",
-      "title":" Genießen Sie ein luxuriöses Aufenthaltserlebnis",
-      "roomTitle1":" Deluxe-Zimmer",
-      "roomText1":" Dieses stilvolle Zimmer mit einer Größe von 30–32 m² befindet sich im Hauptgebäude und bietet einen charmanten Ausblick auf das Meer, das Land oder einen teilweisen Meerblick. Es verfügt über ein Doppelbett und ein Einzelbett und bietet bequem Platz für bis zu 3 Erwachsene und 1 Kind. Zur Ausstattung gehören ein modernes Badezimmer sowie ein gemütlicher Sitzbereich für Ihr Wohlbefinden.",
-      "area1":" 30-32 m²",
-      "view1":"Land- / Meerblick",
-      "roomTitle2":"   Fantasie-Zimmer",
-      "roomText2":"  Unsere exklusiv gestalteten Fantasie-Zimmer bieten großzügige 58 m² Wohnfläche mit atemberaubendem Meerblick. Jedes Zimmer verfügt über ein elegantes Schlafzimmer mit einem komfortablen Doppelbett sowie eine 25 m² große private Terrasse mit Whirlpool und Sonnenliegen – ideal für Paare, die romantische Entspannung und Privatsphäre suchen.",
-      "area2":"  58 m²",
-      "view2":"Meerblick",
-      "roomTitle3":"  Familienzimmer",
-      "roomText3":"   Unsere großzügigen Familienzimmer im Hauptgebäude bieten auf 50 m² Komfort und verfügen über zwei durch eine Tür verbundene, separate Schlafzimmer – ideal für Privatsphäre und Bequemlichkeit. Jedes Familienzimmer ist mit einem Doppelbett und zwei Einzelbetten ausgestattet und eignet sich hervorragend für Familien oder Gruppen. Mit wahlweise Meer- oder Landblick bieten diese Zimmer Platz für bis zu 4 Erwachsene und 1 Kind oder 3 Erwachsene und 1 Kind – für einen rundum gelungenen Familienaufenthalt.",
-      "area3":"  50 m²",
-      "view3":" Land- / Meerblick",
-      "buttonText":"Entdecken"
-    },
 
     "BackgroundSection":{
       "subtitle":" Erleben Sie die Harmonie von Luxus und Natur im Azura Deluxe",
