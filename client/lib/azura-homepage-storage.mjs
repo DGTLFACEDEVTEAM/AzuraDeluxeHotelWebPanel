@@ -11,6 +11,31 @@ const TEXT_LIMITS = {
   text2: 2000,
   buttonText: 120,
 };
+const WELCOME_TEXT_LIMITS = {
+  subtitle: 200,
+  title: 250,
+  text: 2000,
+  buttonText: 120,
+};
+const SECTION_FIELDS = Object.freeze({
+  essentials: Object.freeze({
+    subtitle: 200,
+    title: 250,
+    title1: 250,
+    text1: 2000,
+    title2: 250,
+    text2: 2000,
+    title3: 250,
+    text3: 2000,
+    title4: 250,
+    text4: 2000,
+    title5: 250,
+    text5: 2000,
+    title6: 250,
+    text6: 2000,
+    buttonText: 120,
+  }),
+});
 const REVISION = /^[a-f0-9]{64}$/;
 let homepageWriteQueue = Promise.resolve();
 
@@ -96,6 +121,47 @@ export function validateExperienceText(experienceText) {
   return experienceText;
 }
 
+export function validateWelcomeText(welcomeText) {
+  exactKeys(welcomeText, LOCALES, "welcomeText");
+  for (const locale of LOCALES) {
+    exactKeys(welcomeText[locale], Object.keys(WELCOME_TEXT_LIMITS), `welcomeText.${locale}`);
+    for (const [field, limit] of Object.entries(WELCOME_TEXT_LIMITS)) {
+      const value = welcomeText[locale][field];
+      if (typeof value !== "string" || !value.trim() || value.length > limit || /[\u0000-\u001f\u007f]/.test(value)) {
+        throw new HomepageContentError(`welcomeText.${locale}.${field} geçersiz veya çok uzun.`);
+      }
+    }
+  }
+  return welcomeText;
+}
+
+function sectionFields(sectionKey) {
+  if (!Object.hasOwn(SECTION_FIELDS, sectionKey)) {
+    throw new HomepageContentError("Bilinmeyen Azura homepage bölümü.", 404);
+  }
+  return SECTION_FIELDS[sectionKey];
+}
+
+export function assertHomepageSectionKey(sectionKey) {
+  sectionFields(sectionKey);
+  return sectionKey;
+}
+
+export function validateHomepageSection(sectionKey, section) {
+  const limits = sectionFields(sectionKey);
+  exactKeys(section, LOCALES, `sections.${sectionKey}`);
+  for (const locale of LOCALES) {
+    exactKeys(section[locale], Object.keys(limits), `sections.${sectionKey}.${locale}`);
+    for (const [field, limit] of Object.entries(limits)) {
+      const value = section[locale][field];
+      if (typeof value !== "string" || !value.trim() || value.length > limit || /[\u0000-\u001f\u007f]/.test(value)) {
+        throw new HomepageContentError(`sections.${sectionKey}.${locale}.${field} geçersiz veya çok uzun.`);
+      }
+    }
+  }
+  return section;
+}
+
 function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
   if (value && typeof value === "object") {
@@ -117,6 +183,16 @@ export function getExperienceRevision(experience) {
 export function getExperienceTextRevision(experienceText) {
   validateExperienceText(experienceText);
   return revisionFor(experienceText);
+}
+
+export function getWelcomeTextRevision(welcomeText) {
+  validateWelcomeText(welcomeText);
+  return revisionFor(welcomeText);
+}
+
+export function getHomepageSectionRevision(sectionKey, section) {
+  validateHomepageSection(sectionKey, section);
+  return revisionFor(section);
 }
 
 export function parseIfMatch(value) {
@@ -165,7 +241,26 @@ export async function readHomepageContent(paths = resolveAzuraPaths()) {
   }
   validateExperience(content.experience);
   if (content.experienceText !== undefined) validateExperienceText(content.experienceText);
+  if (content.welcomeText !== undefined) validateWelcomeText(content.welcomeText);
+  if (content.sections !== undefined) {
+    if (!content.sections || typeof content.sections !== "object" || Array.isArray(content.sections)) {
+      throw new HomepageContentError("sections alanı beklenen biçimde değil.");
+    }
+    for (const sectionKey of Object.keys(SECTION_FIELDS)) {
+      if (content.sections[sectionKey] !== undefined) {
+        validateHomepageSection(sectionKey, content.sections[sectionKey]);
+      }
+    }
+  }
   return content;
+}
+
+export async function readHomepageSection(sectionKey, paths = resolveAzuraPaths()) {
+  sectionFields(sectionKey);
+  const content = await readHomepageContent(paths);
+  const section = content.sections?.[sectionKey];
+  if (!section) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
+  return { section, revision: getHomepageSectionRevision(sectionKey, section) };
 }
 
 async function writeHomepageContentAtomically(next, paths = resolveAzuraPaths()) {
@@ -233,5 +328,56 @@ export async function ensureHomepageExperienceText(experienceText, paths = resol
     if (current.experienceText !== undefined) return current.experienceText;
     const next = await writeHomepageContentAtomically({ ...current, experienceText }, paths);
     return next.experienceText;
+  });
+}
+
+export async function writeHomepageWelcomeText(welcomeText, expectedRevision, paths = resolveAzuraPaths()) {
+  validateWelcomeText(welcomeText);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    if (!current.welcomeText) {
+      throw new HomepageContentError("Kalıcı homepage JSON'unda welcomeText eksik.", 503);
+    }
+    assertRevision(expectedRevision, getWelcomeTextRevision(current.welcomeText));
+    const next = await writeHomepageContentAtomically({ ...current, welcomeText }, paths);
+    return { welcomeText: next.welcomeText, revision: getWelcomeTextRevision(next.welcomeText) };
+  });
+}
+
+export async function ensureHomepageWelcomeText(welcomeText, paths = resolveAzuraPaths()) {
+  validateWelcomeText(welcomeText);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    if (current.welcomeText !== undefined) return current.welcomeText;
+    const next = await writeHomepageContentAtomically({ ...current, welcomeText }, paths);
+    return next.welcomeText;
+  });
+}
+
+export async function writeHomepageSection(sectionKey, section, expectedRevision, paths = resolveAzuraPaths()) {
+  validateHomepageSection(sectionKey, section);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    const previous = current.sections?.[sectionKey];
+    if (!previous) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
+    assertRevision(expectedRevision, getHomepageSectionRevision(sectionKey, previous));
+    const next = await writeHomepageContentAtomically({
+      ...current,
+      sections: { ...current.sections, [sectionKey]: section },
+    }, paths);
+    return { section: next.sections[sectionKey], revision: getHomepageSectionRevision(sectionKey, next.sections[sectionKey]) };
+  });
+}
+
+export async function ensureHomepageSection(sectionKey, section, paths = resolveAzuraPaths()) {
+  validateHomepageSection(sectionKey, section);
+  return enqueueHomepageWrite(async () => {
+    const current = await readHomepageContent(paths);
+    if (current.sections?.[sectionKey] !== undefined) return current.sections[sectionKey];
+    const next = await writeHomepageContentAtomically({
+      ...current,
+      sections: { ...current.sections, [sectionKey]: section },
+    }, paths);
+    return next.sections[sectionKey];
   });
 }

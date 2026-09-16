@@ -8,54 +8,52 @@ import Kids from "./Icons/Kids"
 import Pool from "./Icons/Pool"
 import Spa from "./Icons/Spa"
 import Link from "next/link"
-import {useTranslations} from 'next-intl';
 
-export default function HomePage4() {
-  const t = useTranslations('Homepage.Essentials');
+export default function HomePage4({ essentials }) {
   
   const services = [
     {
-      title: t("title1"),
+      title: essentials.title1,
       Icon: Beach,
       description:
-      t("text1"),
+      essentials.text1,
         link:"/beach-pool"
     },
     {
-      title: t("title2"),
+      title: essentials.title2,
       Icon: Pool,
       description:
-      t("text2"),
+      essentials.text2,
         link:"/beach-pool"
     },
     // 3. sırada World-Class Dining
     {
-      title: t("title3"),
+      title: essentials.title3,
       Icon: Dining,
       description:
-      t("text3"),
+      essentials.text3,
         link:"/restaurants"
     },
     // 4. sırada Fun for Kids
     {
-      title: t("title4"),
+      title: essentials.title4,
       Icon: Kids,
       description:
-      t("text4"),
+      essentials.text4,
         link:"/kidsclub"
     },
     {
-      title: t("title5"),
+      title: essentials.title5,
       Icon: Fireworks,
       description:
-      t("text5"),
+      essentials.text5,
         link:"/entertainment"
     },
     {
-      title: t("title6"),
+      title: essentials.title6,
       Icon: Spa,
       description:
-      t("text6"),
+      essentials.text6,
         link:"spawellness"
     }
   ]
@@ -65,12 +63,12 @@ export default function HomePage4() {
       {/* Üst küçük başlık */}
       <div className="flex flex-col 2xl:w-[1106px] w-[87.79%] md:w-[91.4%] xl:w-[76.8%] items-start ml-[6.1%] md:ml-[4.3%] xl:ml-[11.6%] justify-center gap-[15px] md:gap-[25px] lg:gap-[35px] text-lagoBlack">
       <p className="text-[12px] leading-[14px] tracking-[0.48px] uppercase font-medium font-jost">
-       {t("subtitle")}
+       {essentials.subtitle}
       </p>
 
       {/* Büyük başlık */}
       <h2 className="text-[28px] md:text-[32px] lg:text-[48px] font-marcellus font-normal lg:leading-[57.6px] lg:capsizedText2 lg:w-[60%]">
-      {t("title")}
+      {essentials.title}
       </h2>
 
       {/* İkon + metin grid (2 satır x 3 sütun) */}
@@ -100,7 +98,7 @@ export default function HomePage4() {
       {/* Alt kısım: Discover More link/button */}
       <div className="hidden lg:flex ">
         <Link href="/about" className="flex border-b font-marcellus border-lagoBlack text-lagoBlack uppercase text-[16px] font-normal leading-[30px] transition cursor-pointer">
-        {t("buttonText")}
+        {essentials.buttonText}
         </Link>
       </div>
       </div>

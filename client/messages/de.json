@@ -102,10 +102,6 @@
   },
 
     "Homepage":{
-    "subtitle":"Willkommen im Azura Deluxe Resort & Spa – Wo Träume auf Komfort treffen!",
-    "title":"Luxus, Komfort, Qualität und tadelloser Service",
-    "text":"Zwischen dem Mittelmeer und den atemberaubenden Taurusbergen gelegen, erstreckt sich das Azura Deluxe Resort & Spa über ein 12.000 m² großes, malerisches Gelände direkt am Meer. Dank der günstigen Lage in der Nähe der Flughäfen Antalya und Gazipaşa erwartet Sie unser 70 Meter langer Privatstrand mit einladendem Steg.",
-    "buttonText":"MEHR ENTDECKEN",
 
     "EmblaCarousel": {
       "accommodation": "Unterkunft",
@@ -131,24 +127,6 @@
       "area3":"  50 m²",
       "view3":" Land- / Meerblick",
       "buttonText":"Entdecken"
-    },
-
-    "Essentials":{
-      "subtitle": "Entdecken Sie unsere außergewöhnlichen Services",
-      "title": "Alles für ultimativen Komfort",
-      "title1":"  Privatstrand und Steg",
-      "text1":" Entspannen Sie sich an unserem 70 Meter langen Privatstrand, ausgestattet mit bequemen Liegen, Sonnenschirmen und einem luxuriösen Steg – perfekt für erholsame Stunden unter der Sonne.",
-      "title2":"  Pools für jede Stimmung",
-      "text2":" Erfrischen Sie sich in unserem großzügigen Außenpool, genießen Sie unsere beheizten Innenpools oder erleben Sie Nervenkitzel im Aqua Park mit vier aufregenden Rutschen. Auch unsere kleinen Gäste freuen sich über separate Kinderbecken.",
-      "title3":" Kulinarischer Hochgenuss auf Weltklasse-Niveau",
-      "text3":"Verwöhnen Sie Ihren Gaumen mit unserem Ultra-All-Inclusive-Konzept, das opulente Buffets und elegante À-la-carte-Restaurants mit türkischen, mediterranen und internationalen Köstlichkeiten bietet.",
-      "title4":" Spaß für Kinder",
-      "text4":" Unser Mini-Club (für Kinder von 4 bis 12 Jahren) bietet grenzenlosen Spaß mit Spielplätzen, betreuten Spielräumen, täglichen Mini-Discos und speziellen Kinderbuffets – alles, um unsere kleinen Gäste glücklich und beschäftigt zu halten.",
-      "title5":" Unterhaltung & Aktivitäten",
-      "text5":" Gestalten Sie Ihre Tage mit spannender Unterhaltung und abwechslungsreichen Aktivitäten für jedes Alter – darunter Live-Shows, Wasserspiele, Fitnesskurse, Tischtennis, Darts, Boccia und vieles mehr.",
-      "title6":"Spa & Wellness",
-      "text6":" Entspannen, regenerieren und erfrischen Sie sich im Symphony Spa & Wellness Center mit traditionellem türkischem Bad, Sauna, Dampfbad sowie einer Vielzahl wohltuender Massagen und Anwendungen. Für Ihr Wohlbefinden steht Ihnen auch ein voll ausgestattetes Fitnesscenter zur Verfügung.",
-      "buttonText":"  Folgen Sie uns für mehr"
     },
 
     "BackgroundSection":{

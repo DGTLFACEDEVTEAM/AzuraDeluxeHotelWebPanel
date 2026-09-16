@@ -103,10 +103,6 @@
   },
 
     "Homepage":{
-      "subtitle":" Azura Deluxe Resort & Spa’ya Hoş Geldiniz – Hayallerin Konforla Buluştuğu Yer!",
-      "title":" Lüks, konfor, kalite ve kusursuz hizmet",
-      "text":"Akdeniz ile büyüleyici Toros Dağları arasında konumlanan Azura Deluxe Resort & Spa, 12.000 m²'lik etkileyici bir deniz kenarı alanına yayılmaktadır. Antalya ve Gazipaşa havalimanlarına yakın konumuyla, 70 metrelik özel plajımız ve davetkâr iskelesi sizleri bekliyor.",
-      "buttonText":" DAHA FAZLASINI KEŞFEDİN",
 
       "EmblaCarousel":{
       "accommodation":"Konaklama",
@@ -133,24 +129,6 @@
         "area3":"  50 m²",
         "view3":"Kara / Deniz Manzarası",
         "buttonText":" Keşfet"
-      },
-  
-      "Essentials":{
-        "subtitle": "Olağanüstü Hizmetlerimizi Keşfedin",
-        "title": "Mükemmel Konfor için Her Şey",
-        "title1":"  Özel Plaj ve İskele",
-        "text1":" Rahat şezlonglar, güneş şemsiyeleri ve güneşin tadını doyasıya çıkarabilmeniz için özel olarak tasarlanmış lüks iskelesiyle donatılmış 70 metrelik özel plajımızda dinlenin ve gevşeyin",
-        "title2":"Her Ruh Hâline Uygun Havuzlar",
-        "text2":"Geniş açık havuzumuzda ferahlayın, ısıtmalı kapalı havuzlarımızda keyifli anlar yaşayın ya da dört heyecan verici kaydırağa sahip Aqua Park’ımızda eğlencenin tadını çıkarın. Küçük misafirlerimiz için özel olarak tasarlanmış çocuk havuzları da mevcuttur.",
-        "title3":" Dünya Standartlarında Yemek Deneyimi",
-        "text3":"Zengin açık büfelerin ve Türk, Akdeniz ile uluslararası mutfaklardan seçkin lezzetler sunan şık à la carte restoranların yer aldığı ultra her şey dâhil gastronomi deneyimimizle damak zevkinizi şımartın.",
-        "title4":" Çocuklar İçin Eğlence",
-        "text4":" 4–12 yaş arası çocuklara yönelik Mini Kulübümüz; oyun alanları, gözetmen eşliğindeki oyun odaları, günlük mini diskolar ve özel çocuk büfeleriyle minik misafirlerimizin hem eğlenmesini hem de mutlu olmasını sağlar.",
-        "title5":" Eğlence ve Aktiviteler",
-        "text5":" Her yaşa uygun canlı performanslar, su oyunları, fitness dersleri, masa tenisi, dart, boccia ve çok daha fazlasıyla dolu dolu, eğlenceli anlarla günlerinizi renklendirin.",
-        "title6":"Spa & Wellness",
-        "text6":"Geleneksel Türk hamamı, sauna, buhar odası ve rahatlatıcı masaj ile bakım uygulamalarının sunulduğu Symphony Spa & Wellness Merkezi’mizde gevşeyin, yenilenin ve tazelenin. Ayrıca konforunuz için tam donanımlı bir fitness merkezi de hizmetinizdedir.",
-        "buttonText":"  Bizi Takip Edin"
       },
   
       "BackgroundSection":{

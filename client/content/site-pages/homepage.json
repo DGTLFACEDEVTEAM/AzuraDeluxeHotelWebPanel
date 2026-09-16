@@ -39,8 +39,8 @@
   },
   "experienceText": {
     "tr": {
-      "subtitle": " AZURA DELUXE’TE UNUTULMAZ ANLAR btb",
-      "title": " Şimdi Azura deneyimini keşfedin!",
+      "subtitle": " AZURA DELUXE’TE UNUTULMAZ ANLAR",
+      "title": " Şimdi Azura deneyimini keşfedin! fgerg35",
       "text1": "  Turkuaz Akdeniz’in ve görkemli Toros Dağları’nın arasında yer alan 12.000 m²’lik kartpostallık bir alanda konumlanan Azura Deluxe Resort & Spa, sizi tamamen dinlenmeye yönelik tasarlanmış davetkâr iskelesiyle birlikte 70 metrelik özel plajıyla karşılıyor. kjbkj",
       "text2": "Açık yüzme havuzu, ısıtmalı kapalı havuzlar ve heyecan verici su kaydıraklarının bulunduğu farklı havuzlarımızda huzura dalın; her yaştan misafir için eğlence ve dinlenme bir arada sunuluyor. Lüks ve konfor dolu kaçamağınız Azura Deluxe’te sizi bekliyor; burada her an, değerli bir anıya dönüşür.",
       "buttonText": " Galeriye Git eee"
@@ -65,6 +65,104 @@
       "text1": "Расположенный на живописной территории площадью 12 000 м² между бирюзовыми водами Средиземного моря и величественными горами Тавр, курорт Azura Deluxe Resort & Spa встречает вас частным пляжем длиной 70 метров и уютным пирсом, созданным для полного расслабления.",
       "text2": "Погрузитесь в атмосферу спокойствия в одном из наших бассейнов: открытый бассейн, подогреваемые крытые  бассейны и захватывающие водные горки обеспечат отдых и веселье для гостей всех возрастов. Ваш роскошный и комфортабельный отдых ждёт вас в Azura Deluxe — месте, где каждое мгновение становится бесценным воспоминанием.",
       "buttonText": "  Перейти в галерею"
+    }
+  },
+  "welcomeText": {
+    "tr": {
+      "subtitle": " Azura Deluxe Resort & Spa’ya Hoş Geldiniz – Hayallerin Konforla Buluştuğu Yer!",
+      "title": " Lüks, konfor, kalite ve kusursuz hizmet",
+      "text": "Akdeniz ile büyüleyici Toros Dağları arasında konumlanan Azura Deluxe Resort & Spa, 12.000 m²'lik etkileyici bir deniz kenarı alanına yayılmaktadır. Antalya ve Gazipaşa havalimanlarına yakın konumuyla, 70 metrelik özel plajımız ve davetkâr iskelesi sizleri bekliyor.",
+      "buttonText": " DAHA FAZLASINI KEŞFEDİN"
+    },
+    "en": {
+      "subtitle": "Welcome to Azura Deluxe Resort & Spa – Where Dreams Meet Comfort!",
+      "title": "Luxury, comfort, quality, and impeccable service",
+      "text": "Set between the Mediterranean Sea and stunning Taurus Mountains, Azura Deluxe Resort & Spa spans 12,000 m² of beautiful seaside grounds. Conveniently located near Antalya and Gazipaşa airports, our 70-meter private beach with an inviting jetty awaits your arrival.",
+      "buttonText": "DISCOVER MORE"
+    },
+    "de": {
+      "subtitle": "Willkommen im Azura Deluxe Resort & Spa – Wo Träume auf Komfort treffen!",
+      "title": "Luxus, Komfort, Qualität und tadelloser Service",
+      "text": "Zwischen dem Mittelmeer und den atemberaubenden Taurusbergen gelegen, erstreckt sich das Azura Deluxe Resort & Spa über ein 12.000 m² großes, malerisches Gelände direkt am Meer. Dank der günstigen Lage in der Nähe der Flughäfen Antalya und Gazipaşa erwartet Sie unser 70 Meter langer Privatstrand mit einladendem Steg.",
+      "buttonText": "MEHR ENTDECKEN"
+    },
+    "ru": {
+      "subtitle": "Добро пожаловать в Azura Deluxe Resort & Spa – место, где мечты встречаются с комфортом!",
+      "title": " Роскошь, комфорт, качество и безупречное обслуживание",
+      "text": " Расположенный между Средиземным морем и величественными горами Тавр, курорт Azura Deluxe Resort & Spa занимает территорию в 12 000 м² живописного прибрежного ландшафта. Удобно расположенный рядом с аэропортами Антальи и Газипаши, наш частный пляж длиной 70 метров с уютным пирсом ждёт вашего прибытия.",
+      "buttonText": "УЗНАЙТЕ БОЛЬШЕ"
+    }
+  },
+  "sections": {
+    "essentials": {
+      "tr": {
+        "subtitle": "Olağanüstü Hizmetlerimizi Keşfedin",
+        "title": "Mükemmel Konfor için Her Şey",
+        "title1": "  Özel Plaj ve İskele",
+        "text1": " Rahat şezlonglar, güneş şemsiyeleri ve güneşin tadını doyasıya çıkarabilmeniz için özel olarak tasarlanmış lüks iskelesiyle donatılmış 70 metrelik özel plajımızda dinlenin ve gevşeyin",
+        "title2": "Her Ruh Hâline Uygun Havuzlar",
+        "text2": "Geniş açık havuzumuzda ferahlayın, ısıtmalı kapalı havuzlarımızda keyifli anlar yaşayın ya da dört heyecan verici kaydırağa sahip Aqua Park’ımızda eğlencenin tadını çıkarın. Küçük misafirlerimiz için özel olarak tasarlanmış çocuk havuzları da mevcuttur.",
+        "title3": " Dünya Standartlarında Yemek Deneyimi",
+        "text3": "Zengin açık büfelerin ve Türk, Akdeniz ile uluslararası mutfaklardan seçkin lezzetler sunan şık à la carte restoranların yer aldığı ultra her şey dâhil gastronomi deneyimimizle damak zevkinizi şımartın.",
+        "title4": " Çocuklar İçin Eğlence",
+        "text4": " 4–12 yaş arası çocuklara yönelik Mini Kulübümüz; oyun alanları, gözetmen eşliğindeki oyun odaları, günlük mini diskolar ve özel çocuk büfeleriyle minik misafirlerimizin hem eğlenmesini hem de mutlu olmasını sağlar.",
+        "title5": " Eğlence ve Aktiviteler",
+        "text5": " Her yaşa uygun canlı performanslar, su oyunları, fitness dersleri, masa tenisi, dart, boccia ve çok daha fazlasıyla dolu dolu, eğlenceli anlarla günlerinizi renklendirin.",
+        "title6": "Spa & Wellness",
+        "text6": "Geleneksel Türk hamamı, sauna, buhar odası ve rahatlatıcı masaj ile bakım uygulamalarının sunulduğu Symphony Spa & Wellness Merkezi’mizde gevşeyin, yenilenin ve tazelenin. Ayrıca konforunuz için tam donanımlı bir fitness merkezi de hizmetinizdedir.",
+        "buttonText": "  Bizi Takip Edin"
+      },
+      "en": {
+        "subtitle": "Explore Our Exceptional Services",
+        "title": "All You Need for Ultimate Comfort",
+        "title1": " Private Beach & Pier",
+        "text1": "Relax and unwind on our exclusive 70-meter private beach, complete with comfortable loungers, sun umbrellas, and a luxurious pier designed especially for leisurely moments under the sun",
+        "title2": " Pools for Every Mood",
+        "text2": "Refresh yourself at our spacious outdoor swimming pool, enjoy our heated indoor pools, or experience the excitement of our Aqua Park featuring 4 thrilling slides. Our little guests will also enjoy dedicated children's pools.",
+        "title3": " World-Class Dining",
+        "text3": "Indulge your palate with our ultra all-inclusive dining experience, featuring lavish open buffets and elegant à la carte restaurants offering Turkish, Mediterranean, and international culinary delights.",
+        "title4": "Fun for Kids",
+        "text4": " Our Mini Club (ages 4-12) provides endless fun with playgrounds, supervised game rooms, daily mini discos, and special children's buffets designed to keep your little ones entertained and happy.",
+        "title5": " Entertainment & Activities",
+        "text5": " Fill your days with exciting entertainment and engaging activities suitable for all ages, including live performances, water games, fitness classes, table tennis, darts, boccia, and much more.",
+        "title6": "Spa & Wellness",
+        "text6": " Relax, rejuvenate, and refresh at our Symphony Spa & Wellness Center, featuring a traditional Turkish bath, sauna, steam room, and a range of relaxing massages and treatments. A fully-equipped fitness center is also available for your convenience.",
+        "buttonText": " Follow us for more"
+      },
+      "de": {
+        "subtitle": "Entdecken Sie unsere außergewöhnlichen Services",
+        "title": "Alles für ultimativen Komfort",
+        "title1": "  Privatstrand und Steg",
+        "text1": " Entspannen Sie sich an unserem 70 Meter langen Privatstrand, ausgestattet mit bequemen Liegen, Sonnenschirmen und einem luxuriösen Steg – perfekt für erholsame Stunden unter der Sonne.",
+        "title2": "  Pools für jede Stimmung",
+        "text2": " Erfrischen Sie sich in unserem großzügigen Außenpool, genießen Sie unsere beheizten Innenpools oder erleben Sie Nervenkitzel im Aqua Park mit vier aufregenden Rutschen. Auch unsere kleinen Gäste freuen sich über separate Kinderbecken.",
+        "title3": " Kulinarischer Hochgenuss auf Weltklasse-Niveau",
+        "text3": "Verwöhnen Sie Ihren Gaumen mit unserem Ultra-All-Inclusive-Konzept, das opulente Buffets und elegante À-la-carte-Restaurants mit türkischen, mediterranen und internationalen Köstlichkeiten bietet.",
+        "title4": " Spaß für Kinder",
+        "text4": " Unser Mini-Club (für Kinder von 4 bis 12 Jahren) bietet grenzenlosen Spaß mit Spielplätzen, betreuten Spielräumen, täglichen Mini-Discos und speziellen Kinderbuffets – alles, um unsere kleinen Gäste glücklich und beschäftigt zu halten.",
+        "title5": " Unterhaltung & Aktivitäten",
+        "text5": " Gestalten Sie Ihre Tage mit spannender Unterhaltung und abwechslungsreichen Aktivitäten für jedes Alter – darunter Live-Shows, Wasserspiele, Fitnesskurse, Tischtennis, Darts, Boccia und vieles mehr.",
+        "title6": "Spa & Wellness",
+        "text6": " Entspannen, regenerieren und erfrischen Sie sich im Symphony Spa & Wellness Center mit traditionellem türkischem Bad, Sauna, Dampfbad sowie einer Vielzahl wohltuender Massagen und Anwendungen. Für Ihr Wohlbefinden steht Ihnen auch ein voll ausgestattetes Fitnesscenter zur Verfügung.",
+        "buttonText": "  Folgen Sie uns für mehr"
+      },
+      "ru": {
+        "subtitle": "Откройте для себя наши исключительные услуги",
+        "title": "Всё для максимального комфорта",
+        "title1": " Частный пляж и пирс",
+        "text1": " Расслабьтесь и насладитесь отдыхом на нашем частном пляже протяжённостью 70 метров, оснащённом удобными шезлонгами, зонтиками от солнца и роскошным пирсом, созданным для безмятежных солнечных моментов.",
+        "title2": " Бассейны на любой вкус и настроение",
+        "text2": " Освежитесь в просторном открытом бассейне, насладитесь теплом подогреваемых крытых бассейнов или получите дозу адреналина в аквапарке с четырьмя захватывающими горками. Для наших маленьких гостей предусмотрены отдельные детские бассейны.",
+        "title3": " Гастрономия мирового уровня",
+        "text3": "Побалуйте себя нашей ультра всё включено концепцией питания: изысканные шведские столы и элегантные a la carte рестораны с блюдами турецкой, средиземноморской и мировой кухни ждут вас.",
+        "title4": " Развлечения для детейs",
+        "text4": " Наш мини-клуб (для детей от 4 до 12 лет) предлагает нескончаемые развлечения: игровые площадки, комнаты с присмотром, ежедневные мини-дискотеки и специальные детские буфеты — всё, чтобы ваши малыши были заняты и счастливы.",
+        "title5": " Развлечения и активный отдых",
+        "text5": " Наполните свои дни захватывающими развлечениями и интересными занятиями для всех возрастов: живые выступления, водные игры, фитнес-классы, настольный теннис, дартс, бочча и многое другое",
+        "title6": " Спа и велнес",
+        "text6": "  Расслабьтесь, восстановите силы и освежитесь в центре Symphony Спа и велнес: традиционный турецкий хаммам, сауна, паровая комната, а также широкий выбор расслабляющих массажей и процедур. Также к вашим услугам полностью оборудованный фитнес-центр.",
+        "buttonText": " чтобы узнать больше"
+      }
     }
   }
 }

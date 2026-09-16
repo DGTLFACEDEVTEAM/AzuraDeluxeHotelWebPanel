@@ -110,10 +110,6 @@
   },
 
   "Homepage":{
-    "subtitle":"Welcome to Azura Deluxe Resort & Spa – Where Dreams Meet Comfort!",
-    "title":"Luxury, comfort, quality, and impeccable service",
-    "text":"Set between the Mediterranean Sea and stunning Taurus Mountains, Azura Deluxe Resort & Spa spans 12,000 m² of beautiful seaside grounds. Conveniently located near Antalya and Gazipaşa airports, our 70-meter private beach with an inviting jetty awaits your arrival.",
-    "buttonText":"DISCOVER MORE",
 
     "EmblaCarousel":{
       "accommodation":"Accommodation",
@@ -139,24 +135,6 @@
       "area3":"  50 m²",
       "view3":" Land / Sea View",
       "buttonText":"EXPLORE"
-    },
-
-    "Essentials":{
-      "subtitle": "Explore Our Exceptional Services",
-      "title": "All You Need for Ultimate Comfort",
-      "title1":" Private Beach & Pier",
-      "text1":"Relax and unwind on our exclusive 70-meter private beach, complete with comfortable loungers, sun umbrellas, and a luxurious pier designed especially for leisurely moments under the sun",
-      "title2":" Pools for Every Mood",
-      "text2":"Refresh yourself at our spacious outdoor swimming pool, enjoy our heated indoor pools, or experience the excitement of our Aqua Park featuring 4 thrilling slides. Our little guests will also enjoy dedicated children's pools.",
-      "title3":" World-Class Dining",
-      "text3":"Indulge your palate with our ultra all-inclusive dining experience, featuring lavish open buffets and elegant à la carte restaurants offering Turkish, Mediterranean, and international culinary delights.",
-      "title4":"Fun for Kids",
-      "text4":" Our Mini Club (ages 4-12) provides endless fun with playgrounds, supervised game rooms, daily mini discos, and special children's buffets designed to keep your little ones entertained and happy.",
-      "title5":" Entertainment & Activities",
-      "text5":" Fill your days with exciting entertainment and engaging activities suitable for all ages, including live performances, water games, fitness classes, table tennis, darts, boccia, and much more.",
-      "title6":"Spa & Wellness",
-      "text6":" Relax, rejuvenate, and refresh at our Symphony Spa & Wellness Center, featuring a traditional Turkish bath, sauna, steam room, and a range of relaxing massages and treatments. A fully-equipped fitness center is also available for your convenience.",
-      "buttonText":" Follow us for more"
     },
 
     "BackgroundSection":{

@@ -7,9 +7,15 @@ export async function readHomepageExperience(locale) {
     throw new Error(`Azura homepage için desteklenmeyen dil: ${locale}`);
   }
 
-  const { experience, experienceText } = await readHomepageContent();
+  const { experience, experienceText, welcomeText, sections } = await readHomepageContent();
   if (!experienceText) {
     throw new Error("Azura homepage experienceText alanı kalıcı JSON'da eksik.");
+  }
+  if (!welcomeText) {
+    throw new Error("Azura homepage welcomeText alanı kalıcı JSON'da eksik.");
+  }
+  if (!sections?.essentials) {
+    throw new Error("Azura homepage sections.essentials alanı kalıcı JSON'da eksik.");
   }
 
   return {
@@ -22,5 +28,7 @@ export async function readHomepageExperience(locale) {
       alt: experience.foreground.translations[locale].alt,
     },
     experienceText: experienceText[locale],
+    welcomeText: welcomeText[locale],
+    essentials: sections.essentials[locale],
   };
 }

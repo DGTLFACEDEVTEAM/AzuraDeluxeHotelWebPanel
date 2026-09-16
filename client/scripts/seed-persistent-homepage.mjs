@@ -4,9 +4,13 @@ import path from "node:path";
 import {
   homepageFile,
   ensureHomepageExperienceText,
+  ensureHomepageWelcomeText,
+  ensureHomepageSection,
   readHomepageContent,
   resolveAzuraPaths,
   validateExperienceText,
+  validateWelcomeText,
+  validateHomepageSection,
 } from "../lib/azura-homepage-storage.mjs";
 
 const appRoot = process.cwd();
@@ -43,4 +47,18 @@ if (current.experienceText === undefined) {
   validateExperienceText(initial.experienceText);
   await ensureHomepageExperienceText(initial.experienceText, paths);
   console.log(`Azura experienceText alanı mevcut JSON'a eklendi: ${homepageFile(paths)}`);
+}
+
+if (current.welcomeText === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateWelcomeText(initial.welcomeText);
+  await ensureHomepageWelcomeText(initial.welcomeText, paths);
+  console.log(`Azura welcomeText alanı mevcut JSON'a eklendi: ${homepageFile(paths)}`);
+}
+
+if (current.sections?.essentials === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateHomepageSection("essentials", initial.sections?.essentials);
+  await ensureHomepageSection("essentials", initial.sections.essentials, paths);
+  console.log(`Azura essentials bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
 }
