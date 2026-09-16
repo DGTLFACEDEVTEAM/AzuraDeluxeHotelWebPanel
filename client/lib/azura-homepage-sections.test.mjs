@@ -43,9 +43,10 @@ function status(expected) {
   return (error) => error instanceof HomepageContentError && error.status === expected;
 }
 
-test("izin listesinde yalnızca essentials bulunur; bölüm revision'ı kararlı SHA-256'dır", async (t) => {
+test("izin listesinde essentials ve carousel bulunur; bölüm revision'ı kararlı SHA-256'dır", async (t) => {
   const paths = await fixture(t);
   assert.equal(assertHomepageSectionKey("essentials"), "essentials");
+  assert.equal(assertHomepageSectionKey("carousel"), "carousel");
   assert.throws(() => assertHomepageSectionKey("unknown"), status(404));
   await assert.rejects(readHomepageSection("unknown", paths), status(404));
   const section = seed.sections.essentials;

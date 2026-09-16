@@ -103,14 +103,6 @@
 
     "Homepage":{
 
-    "EmblaCarousel": {
-      "accommodation": "Unterkunft",
-      "restaurants": "Restaurants",
-      "beachPools": "Strand & Pools",
-      "experiences": "Erlebnisse",
-      "kids": "Kinder"
-    },
-
     "Accomodation":{
       "subtitle":"Wählen Sie Ihre perfekte Unterkunft",
       "title":" Genießen Sie ein luxuriöses Aufenthaltserlebnis",

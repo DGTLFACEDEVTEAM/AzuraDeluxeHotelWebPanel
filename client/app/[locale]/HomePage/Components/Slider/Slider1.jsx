@@ -4,37 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import {useTranslations} from 'next-intl';
 import { MdArrowBackIosNew,MdArrowForwardIos } from "react-icons/md";
-
-// Varsayılan slaytlar
-const DEFAULT_SLIDES = [
-  {
-    src: require("./Images/accommodation.jpg"),
-    title: "Accommodation",
-    link: "/rooms",
-  },
-  {
-    src: require("./Images/Flavours.jpg"),
-    title: "Restaurants",
-    link: "/restaurants",
-  },
-  {
-    src: require("./Images/Beachandpool.jpg"),
-    title: "Beach & Pools",
-    link: "/beachpools",
-  },
-  {
-    src: require("./Images/Entertainment.jpg"),
-    title: "Experiences",
-    link: "/entertainment",
-  },
-  {
-    src: require("./Images/kids.jpg"),
-    title: "Kids",
-    link: "/kidsclub",
-  },
-];
 
 // Tekil slayt bileşeni
 function Slide({ slide, marginClass }) {
@@ -59,7 +29,7 @@ function Slide({ slide, marginClass }) {
     >
       <Image
         src={slide.src}
-        alt={slide.title}
+        alt={slide.alt}
         width={360}
         height={540}
         className="lg:w-full lg:h-full md:w-[270px] md:h-[405px] h-[266px] w-[177.3px] object-cover"
@@ -81,38 +51,7 @@ function Slide({ slide, marginClass }) {
 }
 
 export default function Slider1({ slides }) {
-  const t = useTranslations('Homepage.EmblaCarousel');
-
-  const DEFAULT_SLIDES = [
-    {
-      src: require("./Images/accommodation.jpg"),
-      title: t("accommodation"),
-      link: "/rooms",
-    },
-    {
-      src: require("./Images/Flavours.jpg"),
-      title: t("restaurants"),
-      link: "/restaurants",
-    },
-    {
-      src: require("./Images/Beachandpool.jpg"),
-      title: t("beachPools"),
-      link: "/beachpools",
-    },
-    {
-      src: require("./Images/Entertainment.jpg"),
-      title: t("experiences"),
-      link: "/entertainment",
-    },
-    {
-      src: require("./Images/kids.jpg"),
-      title: t("kids"),
-      link: "/kidsclub",
-    },
-  ];
-
-  
-  const slidesOriginal = slides || DEFAULT_SLIDES;
+  const slidesOriginal = slides;
   const slidesCombined = [...slidesOriginal, ...slidesOriginal]; // Loop için ekstra slaytlar
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -194,6 +133,5 @@ export default function Slider1({ slides }) {
     </section>
   );
 }
-
 
 

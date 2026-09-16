@@ -104,15 +104,6 @@
 
     "Homepage":{
 
-      "EmblaCarousel":{
-      "accommodation":"Konaklama",
-      "restaurants":"Restoranlar",
-      "beachPools":"Plaj ve Havuzlar",
-      "experiences":"Deneyimler",
-      "kids":"Çocuklar"
-      },
-  
-  
       "Accomodation":{
         "subtitle":" Size En Uygun Konaklamayı Seçin",
         "title":"Lüks Bir Konaklama Deneyiminin Keyfini Çıkarın",

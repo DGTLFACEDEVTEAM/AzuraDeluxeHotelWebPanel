@@ -16,7 +16,15 @@ import {
 const appRoot = process.cwd();
 const paths = resolveAzuraPaths({ appRoot, production: true });
 const seed = path.join(appRoot, "content", "site-pages", "homepage.json");
-const images = ["experience-background.jpg", "experience-foreground.jpg"];
+const images = [
+  "experience-background.jpg",
+  "experience-foreground.jpg",
+  "carousel-accommodation.jpg",
+  "carousel-restaurants.jpg",
+  "carousel-beach-pools.jpg",
+  "carousel-experiences.jpg",
+  "carousel-kids.jpg",
+];
 
 await mkdir(path.dirname(homepageFile(paths)), { recursive: true });
 await mkdir(path.join(paths.uploadsRoot, "pages", "homepage"), { recursive: true });
@@ -61,4 +69,11 @@ if (current.sections?.essentials === undefined) {
   validateHomepageSection("essentials", initial.sections?.essentials);
   await ensureHomepageSection("essentials", initial.sections.essentials, paths);
   console.log(`Azura essentials bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
+}
+
+if (current.sections?.carousel === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateHomepageSection("carousel", initial.sections?.carousel);
+  await ensureHomepageSection("carousel", initial.sections.carousel, paths);
+  console.log(`Azura carousel bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
 }

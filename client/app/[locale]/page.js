@@ -6,11 +6,11 @@ export const dynamic = 'force-dynamic';
 
 const page = async ({ params }) => {
   const { locale } = await params;
-  const { welcomeText, essentials, ...experience } = await readHomepageExperience(locale);
+  const { welcomeText, essentials, carouselSlides, ...experience } = await readHomepageExperience(locale);
 
   return (
     <div className='overflow-hidden'>
-      <HomePage experience={experience} welcomeText={welcomeText} essentials={essentials} />
+      <HomePage experience={experience} welcomeText={welcomeText} essentials={essentials} carouselSlides={carouselSlides} />
     </div>
   )
 }

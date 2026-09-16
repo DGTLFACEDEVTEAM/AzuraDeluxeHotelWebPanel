@@ -17,24 +17,31 @@ const WELCOME_TEXT_LIMITS = {
   text: 2000,
   buttonText: 120,
 };
-const SECTION_FIELDS = Object.freeze({
+export const CAROUSEL_KEYS = Object.freeze([
+  "accommodation", "restaurants", "beachPools", "experiences", "kids",
+]);
+const SECTION_SCHEMAS = Object.freeze({
   essentials: Object.freeze({
-    subtitle: 200,
-    title: 250,
-    title1: 250,
-    text1: 2000,
-    title2: 250,
-    text2: 2000,
-    title3: 250,
-    text3: 2000,
-    title4: 250,
-    text4: 2000,
-    title5: 250,
-    text5: 2000,
-    title6: 250,
-    text6: 2000,
-    buttonText: 120,
+    kind: "localizedText",
+    limits: Object.freeze({
+      subtitle: 200,
+      title: 250,
+      title1: 250,
+      text1: 2000,
+      title2: 250,
+      text2: 2000,
+      title3: 250,
+      text3: 2000,
+      title4: 250,
+      text4: 2000,
+      title5: 250,
+      text5: 2000,
+      title6: 250,
+      text6: 2000,
+      buttonText: 120,
+    }),
   }),
+  carousel: Object.freeze({ kind: "carousel" }),
 });
 const REVISION = /^[a-f0-9]{64}$/;
 let homepageWriteQueue = Promise.resolve();
@@ -135,20 +142,49 @@ export function validateWelcomeText(welcomeText) {
   return welcomeText;
 }
 
-function sectionFields(sectionKey) {
-  if (!Object.hasOwn(SECTION_FIELDS, sectionKey)) {
+function sectionSchema(sectionKey) {
+  if (!Object.hasOwn(SECTION_SCHEMAS, sectionKey)) {
     throw new HomepageContentError("Bilinmeyen Azura homepage bölümü.", 404);
   }
-  return SECTION_FIELDS[sectionKey];
+  return SECTION_SCHEMAS[sectionKey];
 }
 
 export function assertHomepageSectionKey(sectionKey) {
-  sectionFields(sectionKey);
+  sectionSchema(sectionKey);
   return sectionKey;
 }
 
 export function validateHomepageSection(sectionKey, section) {
-  const limits = sectionFields(sectionKey);
+  const schema = sectionSchema(sectionKey);
+  if (schema.kind === "carousel") {
+    exactKeys(section, ["slides"], "sections.carousel");
+    if (!Array.isArray(section.slides) || section.slides.length !== CAROUSEL_KEYS.length) {
+      throw new HomepageContentError("sections.carousel tam olarak beş kart içermelidir.");
+    }
+    section.slides.forEach((slide, index) => {
+      const label = `sections.carousel.slides[${index}]`;
+      exactKeys(slide, ["key", "image", "translations"], label);
+      if (slide.key !== CAROUSEL_KEYS[index]) {
+        throw new HomepageContentError(`${label} kart sırası veya anahtarı geçersiz.`);
+      }
+      if (typeof slide.image !== "string" || !IMAGE_PATH.test(slide.image) || slide.image.includes("..")) {
+        throw new HomepageContentError(`${label} için geçersiz görsel yolu.`);
+      }
+      exactKeys(slide.translations, LOCALES, `${label}.translations`);
+      for (const locale of LOCALES) {
+        exactKeys(slide.translations[locale], ["title", "alt"], `${label}.translations.${locale}`);
+        for (const [field, limit] of [["title", 200], ["alt", 300]]) {
+          const value = slide.translations[locale][field];
+          if (typeof value !== "string" || !value.trim() || value.length > limit || /[\u0000-\u001f\u007f]/.test(value)) {
+            throw new HomepageContentError(`${label}.translations.${locale}.${field} geçersiz veya çok uzun.`);
+          }
+        }
+      }
+    });
+    return section;
+  }
+
+  const limits = schema.limits;
   exactKeys(section, LOCALES, `sections.${sectionKey}`);
   for (const locale of LOCALES) {
     exactKeys(section[locale], Object.keys(limits), `sections.${sectionKey}.${locale}`);
@@ -212,9 +248,10 @@ function enqueueHomepageWrite(operation) {
   return result;
 }
 
-export async function assertExperienceImagesExist(experience, paths) {
+async function assertHomepageImagesExist(items, paths, inspect = false) {
   const root = await realpath(paths.uploadsRoot);
-  for (const item of [experience.background, experience.foreground]) {
+  const media = inspect ? await import("./azura-homepage-media.mjs") : null;
+  for (const item of items) {
     const relative = item.image.slice("/uploads/".length);
     const file = path.join(paths.uploadsRoot, relative);
     let resolved;
@@ -223,10 +260,31 @@ export async function assertExperienceImagesExist(experience, paths) {
     } catch {
       throw new HomepageContentError(`Görsel uploads dizininde bulunamadı: ${item.image}`);
     }
-    if (!resolved.startsWith(`${root}${path.sep}`) || !(await stat(resolved)).isFile()) {
+    const details = await stat(resolved);
+    if (!resolved.startsWith(`${root}${path.sep}`) || !details.isFile()) {
       throw new HomepageContentError(`Görsel uploads dizini dışında veya dosya değil: ${item.image}`);
     }
+    if (media) {
+      if (details.size > media.MAX_IMAGE_BYTES) {
+        throw new HomepageContentError(`Görsel boyutu geçersiz: ${item.image}`);
+      }
+      const extension = path.extname(item.image).toLowerCase();
+      const mimeType = extension === ".jpg" || extension === ".jpeg" ? "image/jpeg" :
+        extension === ".png" ? "image/png" : "image/webp";
+      try {
+        await media.inspectHomepageImage(await readFile(resolved), mimeType);
+      } catch (error) {
+        if (error instanceof media.HomepageMediaError) {
+          throw new HomepageContentError(`Geçersiz carousel görseli: ${item.image}`);
+        }
+        throw error;
+      }
+    }
   }
+}
+
+export async function assertExperienceImagesExist(experience, paths) {
+  return assertHomepageImagesExist([experience.background, experience.foreground], paths);
 }
 
 export async function readHomepageContent(paths = resolveAzuraPaths()) {
@@ -246,7 +304,7 @@ export async function readHomepageContent(paths = resolveAzuraPaths()) {
     if (!content.sections || typeof content.sections !== "object" || Array.isArray(content.sections)) {
       throw new HomepageContentError("sections alanı beklenen biçimde değil.");
     }
-    for (const sectionKey of Object.keys(SECTION_FIELDS)) {
+    for (const sectionKey of Object.keys(SECTION_SCHEMAS)) {
       if (content.sections[sectionKey] !== undefined) {
         validateHomepageSection(sectionKey, content.sections[sectionKey]);
       }
@@ -256,7 +314,7 @@ export async function readHomepageContent(paths = resolveAzuraPaths()) {
 }
 
 export async function readHomepageSection(sectionKey, paths = resolveAzuraPaths()) {
-  sectionFields(sectionKey);
+  sectionSchema(sectionKey);
   const content = await readHomepageContent(paths);
   const section = content.sections?.[sectionKey];
   if (!section) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
@@ -361,6 +419,7 @@ export async function writeHomepageSection(sectionKey, section, expectedRevision
     const previous = current.sections?.[sectionKey];
     if (!previous) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
     assertRevision(expectedRevision, getHomepageSectionRevision(sectionKey, previous));
+    if (sectionKey === "carousel") await assertHomepageImagesExist(section.slides, paths, true);
     const next = await writeHomepageContentAtomically({
       ...current,
       sections: { ...current.sections, [sectionKey]: section },
@@ -374,6 +433,7 @@ export async function ensureHomepageSection(sectionKey, section, paths = resolve
   return enqueueHomepageWrite(async () => {
     const current = await readHomepageContent(paths);
     if (current.sections?.[sectionKey] !== undefined) return current.sections[sectionKey];
+    if (sectionKey === "carousel") await assertHomepageImagesExist(section.slides, paths, true);
     const next = await writeHomepageContentAtomically({
       ...current,
       sections: { ...current.sections, [sectionKey]: section },

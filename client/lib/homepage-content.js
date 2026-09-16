@@ -2,6 +2,14 @@ import "server-only";
 
 import { LOCALES, readHomepageContent } from "./azura-homepage-storage.mjs";
 
+const CAROUSEL_LINKS = Object.freeze({
+  accommodation: "/rooms",
+  restaurants: "/restaurants",
+  beachPools: "/beachpools",
+  experiences: "/entertainment",
+  kids: "/kidsclub",
+});
+
 export async function readHomepageExperience(locale) {
   if (!LOCALES.includes(locale)) {
     throw new Error(`Azura homepage için desteklenmeyen dil: ${locale}`);
@@ -17,6 +25,9 @@ export async function readHomepageExperience(locale) {
   if (!sections?.essentials) {
     throw new Error("Azura homepage sections.essentials alanı kalıcı JSON'da eksik.");
   }
+  if (!sections?.carousel) {
+    throw new Error("Azura homepage sections.carousel alanı kalıcı JSON'da eksik.");
+  }
 
   return {
     backgroundImage: {
@@ -30,5 +41,11 @@ export async function readHomepageExperience(locale) {
     experienceText: experienceText[locale],
     welcomeText: welcomeText[locale],
     essentials: sections.essentials[locale],
+    carouselSlides: sections.carousel.slides.map((slide) => ({
+      src: slide.image,
+      title: slide.translations[locale].title,
+      alt: slide.translations[locale].alt,
+      link: CAROUSEL_LINKS[slide.key],
+    })),
   };
 }

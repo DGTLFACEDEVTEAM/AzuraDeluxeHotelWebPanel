@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:homepage-api": "node --test lib/azura-homepage-storage.test.mjs lib/azura-homepage-media.test.mjs lib/azura-homepage-text.test.mjs lib/azura-homepage-concurrency.test.mjs lib/azura-homepage-welcome.test.mjs lib/azura-homepage-sections.test.mjs"
+    "test:homepage-api": "node --test lib/azura-homepage-storage.test.mjs lib/azura-homepage-media.test.mjs lib/azura-homepage-text.test.mjs lib/azura-homepage-concurrency.test.mjs lib/azura-homepage-welcome.test.mjs lib/azura-homepage-sections.test.mjs lib/azura-homepage-carousel.test.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

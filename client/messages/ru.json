@@ -102,14 +102,6 @@
 
     "Homepage":{
 
-    "EmblaCarousel": {
-      "accommodation": "Размещение",
-      "restaurants": "Рестораны",
-      "beachPools": "Пляж и Бассейны",
-      "experiences": "Впечатления",
-      "kids": "Дети"
-    },
-
     "Accomodation":{
       "subtitle":"  Выберите идеальное размещение",
       "title":" Побалуйте себя роскошным отдыхом",

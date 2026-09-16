@@ -163,6 +163,120 @@
         "text6": "  Расслабьтесь, восстановите силы и освежитесь в центре Symphony Спа и велнес: традиционный турецкий хаммам, сауна, паровая комната, а также широкий выбор расслабляющих массажей и процедур. Также к вашим услугам полностью оборудованный фитнес-центр.",
         "buttonText": " чтобы узнать больше"
       }
+    },
+    "carousel": {
+      "slides": [
+        {
+          "key": "accommodation",
+          "image": "/uploads/pages/homepage/carousel-accommodation.jpg",
+          "translations": {
+            "tr": {
+              "title": "Konaklama",
+              "alt": "Deniz manzaralı terasta jakuzide dinlenen iki misafir"
+            },
+            "en": {
+              "title": "Accommodation",
+              "alt": "Two guests relaxing in a hot tub on a terrace overlooking the sea"
+            },
+            "de": {
+              "title": "Unterkunft ethet",
+              "alt": "Zwei Gäste entspannen im Whirlpool auf einer Terrasse mit Meerblick"
+            },
+            "ru": {
+              "title": "Размещение",
+              "alt": "Двое гостей отдыхают в джакузи на террасе с видом на море"
+            }
+          }
+        },
+        {
+          "key": "restaurants",
+          "image": "/uploads/pages/homepage/carousel-restaurants.jpg",
+          "translations": {
+            "tr": {
+              "title": "Restoranlar",
+              "alt": "Kırmızı peçetelerle hazırlanmış Azura restoran masası"
+            },
+            "en": {
+              "title": "Restaurants",
+              "alt": "Azura restaurant table set with red napkins and glasses"
+            },
+            "de": {
+              "title": "Restaurants gheh",
+              "alt": "Gedeckter Tisch im Azura Restaurant mit roten Servietten und Gläsern"
+            },
+            "ru": {
+              "title": "Рестораны",
+              "alt": "Стол ресторана Azura с красными салфетками и бокалами"
+            }
+          }
+        },
+        {
+          "key": "beachPools",
+          "image": "/uploads/pages/homepage/carousel-beach-pools.jpg",
+          "translations": {
+            "tr": {
+              "title": "Plaj ve Havuzlar",
+              "alt": "Deniz kıyısındaki Azura havuzları ve şezlonglu plaj alanı"
+            },
+            "en": {
+              "title": "Beach & Pools",
+              "alt": "Azura pools and sun loungers beside the Mediterranean beach"
+            },
+            "de": {
+              "title": "Strand & Pools",
+              "alt": "Azura Pools und Sonnenliegen am Strand des Mittelmeers"
+            },
+            "ru": {
+              "title": "Пляж и Бассейны",
+              "alt": "Бассейны Azura и шезлонги у пляжа Средиземного моря"
+            }
+          }
+        },
+        {
+          "key": "experiences",
+          "image": "/uploads/pages/homepage/carousel-experiences.jpg",
+          "translations": {
+            "tr": {
+              "title": "Deneyimler",
+              "alt": "Gece ışıklandırılmış Azura havuzlarının kuşbakışı görünümü"
+            },
+            "en": {
+              "title": "Experiences",
+              "alt": "Aerial night view of the illuminated Azura swimming pools"
+            },
+            "de": {
+              "title": "Erlebnisse",
+              "alt": "Luftaufnahme der beleuchteten Azura Pools bei Nacht"
+            },
+            "ru": {
+              "title": "Впечатления",
+              "alt": "Вид с высоты на освещённые бассейны Azura ночью"
+            }
+          }
+        },
+        {
+          "key": "kids",
+          "image": "/uploads/pages/homepage/carousel-kids.jpg",
+          "translations": {
+            "tr": {
+              "title": "Çocuklar",
+              "alt": "Renkli duvar resimleriyle Azura çocuk kulübü giriş alanı"
+            },
+            "en": {
+              "title": "Kids",
+              "alt": "Azura kids club entrance with colorful wall murals"
+            },
+            "de": {
+              "title": "Kinder hbtrnt",
+              "alt": "Eingangsbereich des Azura Kinderclubs mit bunten Wandbildern"
+            },
+            "ru": {
+              "title": "Дети",
+              "alt": "Вход в детский клуб Azura с яркими рисунками на стенах"
+            }
+          }
+        }
+      ]
     }
   }
 }
