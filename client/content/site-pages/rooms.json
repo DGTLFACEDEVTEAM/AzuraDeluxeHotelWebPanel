@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "rooms",
+  "cards": [
+    {
+      "key": "deluxe",
+      "primary": {
+        "src": "/uploads/pages/rooms/deluxe-primary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "secondary": {
+        "src": "/uploads/pages/rooms/deluxe-secondary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "translations": {
+        "tr": {
+          "title": "Deluxe Oda azure",
+          "text": "30-32 m² büyüklüğündeki zarif ve konforlu odalarımız, ana binamızda yer alır. Kara, kısmi deniz ve tam deniz manzarası seçenekleri sunan bu odalarda 1 çift kişilik yatak, 1 tek kişilik yatak ve 1 koltuk (sofa) yer alır. Toplamda 288 adet standart deluxe ve 4 adet engelli odası mevcuttur. Tüm misafirlerimizin konforu için zemin katta özel olarak tasarlanmış engelli odaları da bulunmaktadır.  azure",
+          "area": "30-32 m²",
+          "view": " Kara veya Kısmi Deniz Manzarası veya Deniz Manzaralı",
+          "buttonText": " Keşfet"
+        },
+        "en": {
+          "title": "Deluxe Room",
+          "text": "Our elegant and comfortable rooms, sized between 30–32 m², are located in our main building. These rooms offer land, partial sea, or full sea views and are furnished with one double bed, one single bed, and one sofa. There are a total of 288 standard deluxe rooms and 4 accessible rooms. For the comfort of all our guests, specially designed accessible rooms are also available on the ground floor.",
+          "area": "30-32 m²",
+          "view": "Sea, Land, or Partial Sea View or Sea View",
+          "buttonText": "EXPLORE"
+        },
+        "de": {
+          "title": "Deluxe-Zimmer",
+          "text": "Unsere eleganten und komfortablen Zimmer mit einer Größe von 30–32 m² befinden sich im Hauptgebäude. Diese Zimmer bieten Blick auf das Land, teilweisen Meerblick oder direkten Meerblick und sind mit einem Doppelbett, einem Einzelbett und einem Sofa ausgestattet. Insgesamt stehen 288 Standard-Deluxe-Zimmer und 4 barrierefreie Zimmer zur Verfügung. Für den Komfort aller Gäste befinden sich im Erdgeschoss speziell gestaltete barrierefreie Zimmer.",
+          "area": "30-32 m²",
+          "view": "Meerblick, Landblick oder seitlicher Meerblick",
+          "buttonText": "Entdecken"
+        },
+        "ru": {
+          "title": " Номер Deluxe",
+          "text": "Наши элегантные и комфортабельные номера площадью 30–32 м² расположены в главном здании. В номерах имеется вид на сушу, частичный или панорамный вид на море, а также одна двуспальная кровать, одна односпальная кровать и диван. Всего доступно 288 стандартных делюкс-номеров и 4 номера для гостей с ограниченными возможностями. Для удобства всех гостей специальные номера для людей с инвалидностью расположены на первом этаже.",
+          "area": "30-32 m²",
+          "view": "Вид на море, сушу или частичный вид на море",
+          "buttonText": "Исследовать"
+        }
+      }
+    },
+    {
+      "key": "family",
+      "primary": {
+        "src": "/uploads/pages/rooms/family-primary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "secondary": {
+        "src": "/uploads/pages/rooms/family-secondary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "translations": {
+        "tr": {
+          "title": "Aile Odası azure",
+          "text": "Aileler ve gruplar için ideal olan 50 m² büyüklüğündeki odalarımızda, birbirine kapı ile bağlı iki ayrı yatak odası yer alır. Bir çift kişilik ve iki tek kişilik yatak içeren Aile Odaları; 2 yetişkin + 2 çocuk, 3 yetişkin + 1 çocuk veya 4 yetişkin + 1 çocuk konaklamaları için uygundur. Deniz veya kara manzaralı seçenekleriyle keyifli bir tatil sizleri bekliyor.",
+          "area": " 50 m² azure",
+          "view": "Kara veya Kısmi Deniz Manzarası",
+          "buttonText": " Keşfet"
+        },
+        "en": {
+          "title": "Family Room",
+          "text": "Ideal for families and groups, our spacious Family Rooms offer 50 m² of comfort with two beautifully decorated bedrooms connected by a convenient door. Each Family Room includes one double bed and two single beds, providing flexibility and space to comfortably accommodate up to 2 adults and 2 children, 3 adults and 1 child, or 4 adults and 1 child. Choose from enchanting sea or scenic land views to enhance your perfect stay.",
+          "area": " 50 m²",
+          "view": "Land or Sea View",
+          "buttonText": "EXPLORE"
+        },
+        "de": {
+          "title": "Familienzimmer",
+          "text": "Ideal für Familien oder Gruppen: Unsere 50 m² großen Familienzimmer verfügen über zwei durch eine Tür verbundene Schlafzimmer mit stilvoller Einrichtung. Mit einem Doppelbett und zwei Einzelbetten bieten diese Zimmer Platz für 2 Erwachsene + 2 Kinder, 3 Erwachsene + 1 Kind oder 4 Erwachsene + 1 Kind. Wählen Sie zwischen Meer- oder Landblick für Ihren perfekten Urlaub.",
+          "area": " 50 m²",
+          "view": "Land- oder Meerblick",
+          "buttonText": "Entdecken"
+        },
+        "ru": {
+          "title": "Семейный номер",
+          "text": "Просторные семейные номера площадью 50 м² идеально подходят для семей и групп. Два отдельных спальни соединены дверью. В номере — одна двуспальная и две односпальные кровати. Возможные варианты размещения: 2 взрослых + 2 ребёнка, 3 взрослых + 1 ребёнок или 4 взрослых + 1 ребёнок. Доступны номера с видом на море или сушу.",
+          "area": " 50 m²",
+          "view": "Вид на сушу или море",
+          "buttonText": "Исследовать"
+        }
+      }
+    },
+    {
+      "key": "fantasy",
+      "primary": {
+        "src": "/uploads/pages/rooms/fantasy-primary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "secondary": {
+        "src": "/uploads/pages/rooms/fantasy-secondary.png",
+        "width": 860,
+        "height": 1240,
+        "translations": {
+          "tr": {
+            "alt": "Superior Rooms"
+          },
+          "en": {
+            "alt": "Superior Rooms"
+          },
+          "de": {
+            "alt": "Superior Rooms"
+          },
+          "ru": {
+            "alt": "Superior Rooms"
+          }
+        }
+      },
+      "translations": {
+        "tr": {
+          "title": " Fantazi Oda azure",
+          "text": " Çiftler için özel olarak tasarlanmış Fantazi Odalarımız, 58 m² genişliğindedir ve büyüleyici deniz manzarasına sahiptir. 25 m²’lik özel terasında jakuzi ve şezlonglar bulunan bu odalar, romantik ve ayrıcalıklı bir tatil için idealdir. Şık bir şekilde dekore edilmiş yatak odasında geniş çift kişilik yatak yer almaktadır.",
+          "area": " 58 m²",
+          "view": "Deniz Manzarası",
+          "buttonText": " Keşfetazure"
+        },
+        "en": {
+          "title": " Fantasy Room",
+          "text": "Our Fantasy Rooms offer an exclusive and romantic getaway for couples. Each elegantly designed room spans 58 m², featuring breathtaking sea views and a private 25 m² terrace. Indulge yourselves with the luxurious jacuzzi and relax comfortably on the terrace sunbeds. With one stylish bedroom equipped with a spacious double bed, Fantasy Rooms provide the perfect romantic ambiance for two.",
+          "area": " 58 m²",
+          "view": " Sea View",
+          "buttonText": "EXPLORE"
+        },
+        "de": {
+          "title": "Fantasy-Zimmer",
+          "text": " Unsere exklusiv gestalteten Fantasy-Zimmer bieten Paaren eine romantische Auszeit auf 58 m² Wohnfläche. Genießen Sie den atemberaubenden Meerblick und entspannen Sie auf der 25 m² großen privaten Terrasse mit Whirlpool und Sonnenliegen. Das elegante Schlafzimmer ist mit einem großzügigen Doppelbett ausgestattet – die perfekte Atmosphäre für Zweisamkeit.",
+          "area": " 58 m²",
+          "view": "Meerblick",
+          "buttonText": "Entdecken"
+        },
+        "ru": {
+          "title": "  Номер Fantasy",
+          "text": "Романтическое убежище для двоих: номера Fantasy — это 58 м² элегантного пространства с захватывающим видом на море и приватной террасой площадью 25 м². Терраса оснащена джакузи и шезлонгами. В спальне — просторная двуспальная кровать. Идеальная атмосфера для незабываемого отдыха вдвоем.",
+          "area": " 58 m²",
+          "view": " Вид на море",
+          "buttonText": "Исследовать"
+        }
+      }
+    }
+  ],
+  "hero": {
+    "image": "/uploads/pages/rooms/rooms-hero.webp",
+    "translations": {
+      "tr": {
+        "alt": "Azura Deluxe Resort & Spa oda görseli"
+      },
+      "en": {
+        "alt": "Azura Deluxe Resort & Spa rooms"
+      },
+      "de": {
+        "alt": "Zimmer im Azura Deluxe Resort & Spa"
+      },
+      "ru": {
+        "alt": "Номера Azura Deluxe Resort & Spa"
+      }
+    }
+  },
+  "intro": {
+    "tr": {
+      "header": "ODALARIMIZ azure",
+      "buttonText1": "Deluxe Oda  azure",
+      "buttonText2": "Aile Odasıazure",
+      "buttonText3": " Fantazi Odaazure",
+      "subtitle": " SİZ VE AİLENİZ İÇİN KONFORLU KONAKLAMA",
+      "title": "Lüks Odalarımızda Kendinizi Evde Hissedin",
+      "text": "Azura Deluxe Resort & Spa’nın özenle dekore edilmiş odalarında konfor ve zarafetin tadını çıkarın. Her oda, dinlenme, rahatlık ve lüksü bir arada sunmak üzere özenle tasarlanmıştır. İster etkileyici manzaraya sahip bir Deluxe Oda, ister aileler için ideal geniş bir Aile Odası, ister özel ayrıcalıklarla donatılmış romantik bir Fantazi Oda tercih edin — tüm ihtiyaçlarınıza hitap eden mükemmel bir sığınak sizi bekliyor.",
+      "checkin": "GİRİŞ: 14:00",
+      "checkout": "ÇIKIŞ: 12:00"
+    },
+    "en": {
+      "header": "Our Rooms",
+      "buttonText1": "Deluxe Room",
+      "buttonText2": "Family Room",
+      "buttonText3": " Fantasy Room",
+      "subtitle": " COMFORTABLE STAY FOR YOU AND YOUR FAMILY",
+      "title": "Feel Right at Home in Our Luxurious Rooms",
+      "text": "Enjoy the comfort and elegance of Azura Deluxe Resort & Spa's beautifully appointed rooms, each thoughtfully designed to offer relaxation, convenience, and luxury. Whether you choose a Deluxe Room with stunning views, a spacious Family Room ideal for families, or a romantic Fantasy Room with exclusive amenities, you'll find the perfect sanctuary to unwind and recharge. All our rooms feature modern comforts including daily refreshed minibars, premium bath amenities, tea and coffee-making facilities, and high-speed Wi-Fi, ensuring your stay is both memorable and convenient.",
+      "checkin": "CHECK-IN: 14:00",
+      "checkout": "CHECK-OUT: 12:00"
+    },
+    "de": {
+      "header": "Unsere Zimmer",
+      "buttonText1": "Deluxe-Zimmer",
+      "buttonText2": "Familienzimmer",
+      "buttonText3": " Fantasy-Zimmer",
+      "subtitle": " KOMFORTABLER AUFENTHALT FÜR SIE UND IHRE FAMILIE",
+      "title": " Fühlen Sie sich wie zu Hause in unseren luxuriösen Zimmern",
+      "text": " Genießen Sie Komfort und Eleganz in den stilvoll eingerichteten Zimmern des Azura Deluxe Resort & Spa, die mit viel Liebe zum Detail für Entspannung, Bequemlichkeit und Luxus gestaltet wurden. Ob Sie sich für ein Deluxe-Zimmer mit atemberaubender Aussicht, ein geräumiges Familienzimmer oder ein romantisches Fantasy-Zimmer mit exklusiven Annehmlichkeiten entscheiden – hier finden Sie den perfekten Rückzugsort zum Abschalten und Auftanken.",
+      "checkin": "CHECK-IN: 14:00",
+      "checkout": "CHECK-OUT: 12:00"
+    },
+    "ru": {
+      "header": "Наши номера",
+      "buttonText1": " Номер Deluxe",
+      "buttonText2": "Семейный номер",
+      "buttonText3": " Номер Fantasy",
+      "subtitle": " КОМФОРТНОЕ ПРОЖИВАНИЕ ДЛЯ ВАС И ВАШЕЙ СЕМЬИ",
+      "title": " Почувствуйте себя как дома в наших роскошных номерах",
+      "text": " Наслаждайтесь комфортом и элегантностью прекрасно оформленных номеров Azura Deluxe Resort & Spa. Каждый номер продуман до мелочей и создан для вашего уюта, релакса и наслаждения. Выберите ли вы номер Deluxe с потрясающим видом, просторный Семейный номер или романтический номер Fantasy с эксклюзивными удобствами — здесь вы найдёте идеальное место для отдыха и восстановления.",
+      "checkin": "ЗАСЕЛЕНИЕ: 14:00",
+      "checkout": "ВЫСЕЛЕНИЕ: 12:00"
+    }
+  },
+  "parallax": {
+    "image": "/uploads/pages/rooms/rooms-parallax.jpg",
+    "translations": {
+      "tr": {
+        "alt": "Azura Deluxe Resort & Spa oda olanakları"
+      },
+      "en": {
+        "alt": "Azura Deluxe Resort & Spa room amenities"
+      },
+      "de": {
+        "alt": "Zimmerausstattung im Azura Deluxe Resort & Spa"
+      },
+      "ru": {
+        "alt": "Удобства номеров Azura Deluxe Resort & Spa"
+      }
+    },
+    "content": {
+      "tr": {
+        "subtitle": " Odada Sunulan Temel Olanaklar",
+        "title": "İhtiyacınız Olan Her Şey, Odalarımızda Sizi Bekliyor",
+        "text": "Tüm temel ihtiyaçlar elinizin altında, kusursuz bir konaklama deneyimi sizi bekliyor. Günlük yenilenen minibar, kaliteli banyo ürünleri, güvenli oda erişimi ve LED TV ile 24 saat Wi-Fi hizmetiyle her an konforunuz ön planda tutulur.",
+        "span1": "Mini Bar azure",
+        "text1": " Günlük olarak yenilenen minibarımızda; şişe su, gazlı içecekler (Coca Cola, Fanta, Sprite), meyve suları ve soda yer alır.",
+        "span2": "Kozmetik Ürünleri",
+        "text2": "  Banyo malzemeleri arasında şampuan, saç kremi, duş jeli, sabun, vücut losyonu, lif, diş fırçası ve macunu, duş bonesi, tıraş bıçağı, makyaj temizleme pamuğu ve saç kurutma makinesi bulunur.",
+        "span3": " Oda Girişi",
+        "text3": "  Tüm odalara güvenli elektronik kart sistemiyle kolay ve güvenli erişim sağlanmaktadır.",
+        "span4": "Wifi & LedTV  azure",
+        "text4": " Ulusal ve uluslararası uydu kanallarına sahip LED TV, radyo ve 24 saat kesintisiz Wi-Fi hizmeti mevcuttur."
+      },
+      "en": {
+        "subtitle": "The Essential In-Room Amenities",
+        "title": "Everything You Need, Right in Your Room",
+        "text": "Enjoy a seamless stay with all the essential amenities at your fingertips. From daily minibar replenishments to premium bath essentials, secure room access, and uninterrupted entertainment with LED TV and 24-hour WiFi, we ensure your comfort at every moment.",
+        "span1": "Mini Bar",
+        "text1": "Daily replenishments include bottled water, soft drinks (Coca Cola, Fanta, Sprite), fruit juices, and soda.",
+        "span2": "Cosmetics",
+        "text2": " Bathroom essentials include shampoo, conditioner, shower gel, soap, body lotion, loofah, toothbrush & toothpaste, shower cap, razor, makeup remover cotton, and a hairdryer.",
+        "span3": "Room Access",
+        "text3": " All doors are securely operated using a convenient electronic key card system for easy access",
+        "span4": "Wifi & LedTV ",
+        "text4": "LED TV with international and national satellite channels, radio, and 24-hour WiFi access."
+      },
+      "de": {
+        "subtitle": " Unverzichtbare Annehmlichkeiten im Zimmer",
+        "title": " Alles, was Sie brauchen – direkt in Ihrem Zimmer",
+        "text": "Tägliche Auffüllung mit: Wasserflaschen, Erfrischungsgetränken (Coca Cola, Fanta, Sprite), Fruchtsäften und Soda.",
+        "span1": "Mini Bar",
+        "text1": "Daily replenishments include bottled water, soft drinks (Coca Cola, Fanta, Sprite), fruit juices, and soda.",
+        "span2": "Kosmetikartikel",
+        "text2": "  Im Bad finden Sie: Shampoo, Conditioner, Duschgel, Seife, Bodylotion, Duschschwamm, Zahnbürste & Zahnpasta, Duschhaube, Rasierer, Make-up-Entfernerpads und einen Haartrockner.",
+        "span3": "Zugang zum Zimmer",
+        "text3": " Alle Türen sind mit einem elektronischen Schlüsselkartensystem für sicheren und bequemen Zugang ausgestattet.",
+        "span4": "Wifi & LedTV ",
+        "text4": " LED-Fernseher mit nationalen und internationalen Satellitenkanälen, Radio sowie 24-Stunden-WLAN-Verbindung."
+      },
+      "ru": {
+        "subtitle": "Основные удобства в номере",
+        "title": " Всё, что вам нужно — прямо в номере",
+        "text": " Наслаждайтесь беззаботным отдыхом с полным набором необходимых удобств. Ежедневное пополнение мини-бара, премиальная косметика, безопасный доступ в номер, LED-телевизор и круглосуточный Wi-Fi обеспечат ваш комфорт в любое время суток.",
+        "span1": " Мини-бар",
+        "text1": " Ежедневное пополнение: бутилированная вода, газированные напитки (Coca-Cola, Fanta, Sprite), фруктовые соки и сода.",
+        "span2": "Косметические средства",
+        "text2": " В ванной комнате имеются: шампунь, кондиционер, гель для душа, мыло, лосьон для тела, мочалка, зубная щётка и паста, шапочка для душа, бритва, ватные диски для снятия макияжа и фен.",
+        "span3": "Доступ в номер",
+        "text3": " Безопасный вход в номер с помощью удобной электронной ключ-карты.",
+        "span4": " Wi-Fi и LED-TV ",
+        "text4": "LED-телевизор с национальными и международными спутниковыми каналами, радио и круглосуточный Wi-Fi."
+      }
+    }
+  }
+}

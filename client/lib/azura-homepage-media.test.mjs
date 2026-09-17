@@ -10,7 +10,9 @@ import {
   MAX_IMAGE_BYTES,
   inspectHomepageImage,
   listHomepageImages,
+  listRoomsImages,
   saveHomepageImage,
+  saveRoomsImage,
 } from "./azura-homepage-media.mjs";
 
 const appRoot = path.resolve(import.meta.dirname, "..");
@@ -88,4 +90,20 @@ test("doğrulama geçerli görselin ölçüsünü ve gerçek türünü bildirir"
   assert.equal(info.width, 600);
   assert.equal(info.height, 900);
   assert.equal(info.extension, "jpg");
+});
+
+test("oda görselleri aynı sınırlarla yüklenir; liste symlink ve sahte dosyaları dışlar", async (t) => {
+  const paths = await fixture(t);
+  const saved = await saveRoomsImage(jpeg, "image/jpeg", paths);
+  assert.match(saved.image, /^\/uploads\/pages\/rooms\/rooms-[a-f0-9-]+\.jpg$/);
+  assert.equal(saved.width, 600);
+  assert.equal(saved.height, 900);
+  const folder = path.join(paths.uploadsRoot, "pages", "rooms");
+  await writeFile(path.join(folder, "fake.png"), Buffer.from("<svg/>"));
+  await symlink(path.join(folder, path.basename(saved.image)), path.join(folder, "linked.jpg"));
+  assert.deepEqual((await listRoomsImages(paths)).map((image) => image.image), [saved.image]);
+  await assert.rejects(saveRoomsImage(Buffer.from("%PDF-1.7"), "image/jpeg", paths), HomepageMediaError);
+  await assert.rejects(saveRoomsImage(jpeg, "image/jpeg", paths, () => "../escape"), HomepageMediaError);
+  await saveRoomsImage(jpeg, "image/jpeg", paths, () => "fixed");
+  await assert.rejects(saveRoomsImage(jpeg, "image/jpeg", paths, () => "fixed"), { status: 409 });
 });

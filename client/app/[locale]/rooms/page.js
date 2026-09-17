@@ -5,59 +5,43 @@ import RoomsSection from "./components/RoomsSection";
 import RoomsSectionReverse from "./components/RoomsSectionReverse";
 import RoomsParallaxSection from "./components/RoomsParallaxSection";
 
-import imgFamily from "./images/fam1.png";
-import imgFamily2 from "./images/fam2.png";
-import imgdeluxe from "./images/deluxe2.png";
-import imgdeluxe2 from "./images/deluxe.png";
-
-import imgFantasy from "./images/fantasy1.png";
-import imgFantasy2 from "./images/fantasy2.png";
-
 import ContactSection2 from "../GeneralComponents/Contact/ContactSection2";
-import {useTranslations} from 'next-intl';
+import { readRoomsPageLocale } from "@/lib/azura-rooms-page-content.mjs";
 
-const Page = () => {
-  const t = useTranslations('Rooms.Room1');
-  const t2 = useTranslations('Rooms.Room2');
-  const t3 = useTranslations('Rooms.Room3');
+export const dynamic = "force-dynamic";
+
+const ROOM_ROUTES = Object.freeze({
+  deluxe: { id: "deluxeroom", link: "/rooms/deluxeroom" },
+  family: { id: "familyroom", link: "/rooms/familyroom" },
+  fantasy: { id: "fantasyroom", link: "/rooms/fantasyroom" },
+});
+
+const Page = async ({ params }) => {
+  const { locale } = await params;
+  const { cards, hero, intro, parallax } = await readRoomsPageLocale(locale);
 
   return (
     <div className="overflow-hidden flex flex-col items-center justify-center gap-[50px] lg:gap-[100px] bg-[#fbfbfb]">
-      <RoomsBanner />
-      <RoomsInfoSection />
-      <RoomsSection
-      id="deluxeroom"
-        img={imgdeluxe}
-        img2={imgdeluxe2}
-        header={t("title")}
-        text={t("text")}
-        span={t("area")}
-        span2={t("view")}
-        link="/rooms/deluxeroom" 
-      />
-      <RoomsSectionReverse
-      id="familyroom"
-        img={imgFamily}
-        img2={imgFamily2}
-        header={t2("title")}
-        text={t2("text")}
-        span={t2("area")}
-        span2={t2("view")}
-        link="/rooms/familyroom" 
-      />
+      <RoomsBanner content={hero} />
+      <RoomsInfoSection content={intro} />
+      {cards.map((card, index) => {
+        const Section = index === 1 ? RoomsSectionReverse : RoomsSection;
+        const route = ROOM_ROUTES[card.key];
+        return <Section
+          key={card.key}
+          id={route.id}
+          img={card.primary}
+          img2={card.secondary}
+          header={card.title}
+          text={card.text}
+          span={card.area}
+          span2={card.view}
+          buttonText={card.buttonText}
+          link={route.link}
+        />;
+      })}
 
-      <RoomsSection
-       id="fantasyroom"
-        img={imgFantasy}
-        img2={imgFantasy2}
-        header={t3("title")}
-        text={t3("text")}
-        span={t3("area")}
-        span2={t3("view")}
-        link="/rooms/fantasyroom" 
-      />
-
-      <RoomsParallaxSection />
+      <RoomsParallaxSection content={parallax} />
       <ContactSection2/>
     </div>
   );

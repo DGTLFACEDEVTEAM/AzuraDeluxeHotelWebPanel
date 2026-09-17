@@ -4,28 +4,26 @@ import TreeSvg from "./svg/TreeSvg";
 import ViewSvg from "./svg/ViewSvg";
 import Image from "next/image";
 import { Link } from '@/i18n/navigation';
-import {useTranslations} from 'next-intl';
 
-const RoomsSectionReverse = ({img,img2, header,text,span,span2,link, id}) => {
-  const t = useTranslations('Rooms.Room1');
+const RoomsSectionReverse = ({img,img2, header,text,span,span2,buttonText,link, id}) => {
 
   return (
     <div id={id} className="flex w-screen h-auto items-center justify-center">
       <div className="flex flex-col lg:flex-row-reverse items-center justify-between w-[87.79%] md:w-[91.4%] lg:w-[76.8%] gap-[28px] lg:gap-[42px] max-w-[1400px] px-4 lg:px-0">
         <div className="flex flex-row items-center w-full lg:w-[72.5%] gap-[10px]">
           <Image
-            src={img}
+            src={img.src}
             width={img.width}
             height={img.height}
-            alt="Superior Rooms"
+            alt={img.alt}
             className="w-[50%] flex"
           />
 
           <Image
-            src={img2}
+            src={img2.src}
             width={img2.width}
             height={img2.height}
-            alt="Superior Rooms"
+            alt={img2.alt}
             className="w-[50%] flex"
           />
         </div>
@@ -55,7 +53,7 @@ const RoomsSectionReverse = ({img,img2, header,text,span,span2,link, id}) => {
           </div>
           <div className="flex gap-2">
           <Link href={link} className="flex bg-[#fbfbfb] border border-lagoBrown items-center justify-center py-[12px] px-[32px] h-[41px] shadow-buttonCustom bg-transparent text-[14px] text-lagoBrown uppercase leading-[30px] font-medium hover:bg-black hover:text-white hover:underline">
-            {t("buttonText")}
+            {buttonText}
           </Link>
       
 

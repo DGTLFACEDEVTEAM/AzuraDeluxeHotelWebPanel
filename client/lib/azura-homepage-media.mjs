@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { link, mkdir, open, readFile, readdir, realpath, stat, unlink } from "node:fs/promises";
+import { constants } from "node:fs";
+import { link, lstat, mkdir, open, readdir, realpath, stat, unlink } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { resolveAzuraPaths } from "./azura-homepage-storage.mjs";
@@ -23,7 +24,15 @@ export class HomepageMediaError extends Error {
 }
 
 export function homepageMediaDir(paths = resolveAzuraPaths()) {
-  return path.join(paths.uploadsRoot, "pages", "homepage");
+  return mediaDir("homepage", paths);
+}
+
+export function roomsMediaDir(paths = resolveAzuraPaths()) {
+  return mediaDir("rooms", paths);
+}
+
+function mediaDir(page, paths) {
+  return path.join(paths.uploadsRoot, "pages", page);
 }
 
 function sniffFormat(bytes) {
@@ -67,31 +76,46 @@ export async function inspectHomepageImage(bytes, mimeType) {
   }
 }
 
-async function safeMediaDir(paths, create = false) {
+async function safeMediaDir(paths, page, create = false) {
   if (create) await mkdir(paths.uploadsRoot, { recursive: true });
   const root = await realpath(paths.uploadsRoot);
+  if ((await lstat(path.join(root, "pages")).catch((error) => {
+    if (error.code !== "ENOENT" || !create) throw error;
+    return null;
+  }))?.isSymbolicLink()) throw new HomepageMediaError("Uploads üst dizini güvenli değil.");
   if (create) {
     const pages = path.join(root, "pages");
     await mkdir(pages).catch((error) => { if (error.code !== "EEXIST") throw error; });
     const resolvedPages = await realpath(pages);
     if (!resolvedPages.startsWith(`${root}${path.sep}`) || !(await stat(resolvedPages)).isDirectory()) {
-      throw new HomepageMediaError("Homepage uploads üst dizini güvenli değil.");
+      throw new HomepageMediaError("Uploads üst dizini güvenli değil.");
     }
-    await mkdir(path.join(resolvedPages, "homepage")).catch((error) => {
+    await mkdir(path.join(resolvedPages, page)).catch((error) => {
       if (error.code !== "EEXIST") throw error;
     });
   }
-  const folder = await realpath(homepageMediaDir(paths));
+  if ((await lstat(mediaDir(page, paths))).isSymbolicLink()) {
+    throw new HomepageMediaError("Uploads dizini güvenli değil.");
+  }
+  const folder = await realpath(mediaDir(page, paths));
   if (!folder.startsWith(`${root}${path.sep}`) || !(await stat(folder)).isDirectory()) {
-    throw new HomepageMediaError("Homepage uploads dizini güvenli değil.");
+    throw new HomepageMediaError("Uploads dizini güvenli değil.");
   }
   return folder;
 }
 
 export async function saveHomepageImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("homepage", bytes, mimeType, paths, idFactory);
+}
+
+export async function saveRoomsImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("rooms", bytes, mimeType, paths, idFactory);
+}
+
+async function savePageImage(page, bytes, mimeType, paths, idFactory) {
   const info = await inspectHomepageImage(bytes, mimeType);
-  const folder = await safeMediaDir(paths, true);
-  const name = `homepage-${idFactory()}.${info.extension}`;
+  const folder = await safeMediaDir(paths, page, true);
+  const name = `${page}-${idFactory()}.${info.extension}`;
   if (!IMAGE_NAME.test(name) || name.includes("..")) {
     throw new HomepageMediaError("Sunucu dosya adı oluşturamadı.");
   }
@@ -118,13 +142,21 @@ export async function saveHomepageImage(bytes, mimeType, paths = resolveAzuraPat
   } finally {
     await directory.close();
   }
-  return { image: `/uploads/pages/homepage/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
+  return { image: `/uploads/pages/${page}/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
 }
 
 export async function listHomepageImages(paths = resolveAzuraPaths()) {
+  return listPageImages("homepage", paths);
+}
+
+export async function listRoomsImages(paths = resolveAzuraPaths()) {
+  return listPageImages("rooms", paths);
+}
+
+async function listPageImages(page, paths) {
   let folder;
   try {
-    folder = await safeMediaDir(paths);
+    folder = await safeMediaDir(paths, page);
   } catch (error) {
     if (error.code === "ENOENT") return [];
     throw error;
@@ -136,12 +168,15 @@ export async function listHomepageImages(paths = resolveAzuraPaths()) {
     const mimeType = extension === ".jpg" || extension === ".jpeg" ? "image/jpeg" :
       extension === ".png" ? "image/png" : "image/webp";
     const file = path.join(folder, entry.name);
+    let handle;
     try {
-      const details = await stat(file);
+      handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW);
+      const details = await handle.stat();
+      if (!details.isFile()) continue;
       if (details.size === 0 || details.size > MAX_IMAGE_BYTES) continue;
-      const info = await inspectHomepageImage(await readFile(file), mimeType);
+      const info = await inspectHomepageImage(await handle.readFile(), mimeType);
       records.push({
-        image: `/uploads/pages/homepage/${entry.name}`,
+        image: `/uploads/pages/${page}/${entry.name}`,
         mimeType: info.mimeType,
         size: info.size,
         width: info.width,
@@ -149,7 +184,9 @@ export async function listHomepageImages(paths = resolveAzuraPaths()) {
         modifiedAt: details.mtime.toISOString(),
       });
     } catch (error) {
-      if (!(error instanceof HomepageMediaError) && error.code !== "ENOENT") throw error;
+      if (!(error instanceof HomepageMediaError) && !["ENOENT", "ELOOP"].includes(error.code)) throw error;
+    } finally {
+      if (handle) await handle.close();
     }
   }
   return records.sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt) || a.image.localeCompare(b.image));

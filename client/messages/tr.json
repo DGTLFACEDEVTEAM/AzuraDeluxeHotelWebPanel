@@ -113,30 +113,7 @@
       "text":"Azura Deluxe Resort & Spa’nın özenle dekore edilmiş odalarında konfor ve zarafetin tadını çıkarın. Her oda, dinlenme, rahatlık ve lüksü bir arada sunmak üzere özenle tasarlanmıştır. İster etkileyici manzaraya sahip bir Deluxe Oda, ister aileler için ideal geniş bir Aile Odası, ister özel ayrıcalıklarla donatılmış romantik bir Fantazi Oda tercih edin — tüm ihtiyaçlarınıza hitap eden mükemmel bir sığınak sizi bekliyor.",
       "checkin":"GİRİŞ: 14:00",
       "checkout":"ÇIKIŞ: 12:00",
-  
-      "Room1":{
-        "title":"Deluxe Oda",
-        "text": "30-32 m² büyüklüğündeki zarif ve konforlu odalarımız, ana binamızda yer alır. Kara, kısmi deniz ve tam deniz manzarası seçenekleri sunan bu odalarda 1 çift kişilik yatak, 1 tek kişilik yatak ve 1 koltuk (sofa) yer alır. Toplamda 288 adet standart deluxe ve 4 adet engelli odası mevcuttur. Tüm misafirlerimizin konforu için zemin katta özel olarak tasarlanmış engelli odaları da bulunmaktadır.",
-        "area":"30-32 m²",
-        "view":" Kara veya Kısmi Deniz Manzarası veya Deniz Manzaralı",
-        "buttonText":" Keşfet"
-      },
-  
-      "Room2":{
-        "title":"Aile Odası",
-        "text":"Aileler ve gruplar için ideal olan 50 m² büyüklüğündeki odalarımızda, birbirine kapı ile bağlı iki ayrı yatak odası yer alır. Bir çift kişilik ve iki tek kişilik yatak içeren Aile Odaları; 2 yetişkin + 2 çocuk, 3 yetişkin + 1 çocuk veya 4 yetişkin + 1 çocuk konaklamaları için uygundur. Deniz veya kara manzaralı seçenekleriyle keyifli bir tatil sizleri bekliyor.",
-        "area":" 50 m²",
-        "view":"Kara veya Kısmi Deniz Manzarası",
-        "buttonText":" Keşfet"
-      },
-  
-      "Room3":{
-        "title":" Fantazi Oda",
-        "text":" Çiftler için özel olarak tasarlanmış Fantazi Odalarımız, 58 m² genişliğindedir ve büyüleyici deniz manzarasına sahiptir. 25 m²’lik özel terasında jakuzi ve şezlonglar bulunan bu odalar, romantik ve ayrıcalıklı bir tatil için idealdir. Şık bir şekilde dekore edilmiş yatak odasında geniş çift kişilik yatak yer almaktadır.",
-        "area":" 58 m²",
-        "view":"Deniz Manzarası",
-        "buttonText":" Keşfet"
-      },
+
   
       "Parallax":{
         "subtitle":" Odada Sunulan Temel Olanaklar",

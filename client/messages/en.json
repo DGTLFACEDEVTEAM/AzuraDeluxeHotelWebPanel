@@ -121,29 +121,6 @@
     "checkin":"CHECK-IN: 14:00",
     "checkout":"CHECK-OUT: 12:00",
 
-    "Room1":{
-      "title":"Deluxe Room",
-     "text": "Our elegant and comfortable rooms, sized between 30–32 m², are located in our main building. These rooms offer land, partial sea, or full sea views and are furnished with one double bed, one single bed, and one sofa. There are a total of 288 standard deluxe rooms and 4 accessible rooms. For the comfort of all our guests, specially designed accessible rooms are also available on the ground floor.",
-      "area":"30-32 m²",
-      "view":"Sea, Land, or Partial Sea View or Sea View",
-      "buttonText":"EXPLORE"
-    },
-
-    "Room2":{
-      "title":"Family Room",
-      "text":"Ideal for families and groups, our spacious Family Rooms offer 50 m² of comfort with two beautifully decorated bedrooms connected by a convenient door. Each Family Room includes one double bed and two single beds, providing flexibility and space to comfortably accommodate up to 2 adults and 2 children, 3 adults and 1 child, or 4 adults and 1 child. Choose from enchanting sea or scenic land views to enhance your perfect stay.",
-      "area":" 50 m²",
-      "view":"Land or Sea View",
-      "buttonText":"EXPLORE"
-    },
-
-    "Room3":{
-      "title":" Fantasy Room",
-      "text":"Our Fantasy Rooms offer an exclusive and romantic getaway for couples. Each elegantly designed room spans 58 m², featuring breathtaking sea views and a private 25 m² terrace. Indulge yourselves with the luxurious jacuzzi and relax comfortably on the terrace sunbeds. With one stylish bedroom equipped with a spacious double bed, Fantasy Rooms provide the perfect romantic ambiance for two.",
-      "area":" 58 m²",
-      "view":" Sea View",
-      "buttonText":"EXPLORE"
-    },
 
     "Parallax":{
       "subtitle":"The Essential In-Room Amenities",

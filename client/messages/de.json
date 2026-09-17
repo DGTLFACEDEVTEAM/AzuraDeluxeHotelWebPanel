@@ -113,29 +113,6 @@
     "checkin":"CHECK-IN: 14:00",
     "checkout":"CHECK-OUT: 12:00",
 
-    "Room1":{
-      "title":"Deluxe-Zimmer",
-      "text": "Unsere eleganten und komfortablen Zimmer mit einer Größe von 30–32 m² befinden sich im Hauptgebäude. Diese Zimmer bieten Blick auf das Land, teilweisen Meerblick oder direkten Meerblick und sind mit einem Doppelbett, einem Einzelbett und einem Sofa ausgestattet. Insgesamt stehen 288 Standard-Deluxe-Zimmer und 4 barrierefreie Zimmer zur Verfügung. Für den Komfort aller Gäste befinden sich im Erdgeschoss speziell gestaltete barrierefreie Zimmer.",
-      "area":"30-32 m²",
-      "view":"Meerblick, Landblick oder seitlicher Meerblick",
-      "buttonText":"Entdecken"
-    },
-
-    "Room2":{
-      "title":"Familienzimmer",
-      "text":"Ideal für Familien oder Gruppen: Unsere 50 m² großen Familienzimmer verfügen über zwei durch eine Tür verbundene Schlafzimmer mit stilvoller Einrichtung. Mit einem Doppelbett und zwei Einzelbetten bieten diese Zimmer Platz für 2 Erwachsene + 2 Kinder, 3 Erwachsene + 1 Kind oder 4 Erwachsene + 1 Kind. Wählen Sie zwischen Meer- oder Landblick für Ihren perfekten Urlaub.",
-      "area":" 50 m²",
-      "view":"Land- oder Meerblick",
-      "buttonText":"Entdecken"
-    },
-
-    "Room3":{
-      "title":"Fantasy-Zimmer",
-      "text":" Unsere exklusiv gestalteten Fantasy-Zimmer bieten Paaren eine romantische Auszeit auf 58 m² Wohnfläche. Genießen Sie den atemberaubenden Meerblick und entspannen Sie auf der 25 m² großen privaten Terrasse mit Whirlpool und Sonnenliegen. Das elegante Schlafzimmer ist mit einem großzügigen Doppelbett ausgestattet – die perfekte Atmosphäre für Zweisamkeit.",
-      "area":" 58 m²",
-      "view":"Meerblick",
-      "buttonText":"Entdecken"
-    },
 
     "Parallax":{
       "subtitle":" Unverzichtbare Annehmlichkeiten im Zimmer",

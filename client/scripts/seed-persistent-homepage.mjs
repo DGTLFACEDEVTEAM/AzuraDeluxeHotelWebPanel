@@ -100,3 +100,5 @@ if (current.sections?.background === undefined) {
 const contactSeed = JSON.parse(await readFile(path.join(appRoot, "content", "shared", "contact-details.json"), "utf8"));
 await ensureSharedContactDetails(contactSeed, paths);
 console.log(`Azura ortak iletişim verisi mevcut veya başlatıldı: ${sharedContactFile(paths)}`);
+
+await import("./seed-persistent-rooms.mjs");

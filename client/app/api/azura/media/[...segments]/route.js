@@ -11,7 +11,7 @@ const types = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png"
 export async function GET(_request, { params }) {
   const { segments } = await params;
   if (!Array.isArray(segments) || segments.length !== 3 ||
-      segments[0] !== "pages" || segments[1] !== "homepage" ||
+      segments[0] !== "pages" || !["homepage", "rooms"].includes(segments[1]) ||
       segments.some((segment) => !/^[A-Za-z0-9._-]+$/.test(segment) || segment.includes(".."))) {
     return new NextResponse(null, { status: 404 });
   }
