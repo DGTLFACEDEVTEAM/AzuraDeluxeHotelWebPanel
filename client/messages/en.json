@@ -109,18 +109,7 @@
   
   },
 
-  "Homepage":{
-
-
-    "BackgroundSection":{
-      "subtitle":" Experience the Harmony of Luxury and Nature at Azura Deluxe.",
-      "title":" Where Luxury Meets the Beauty of Nature",
-      "text":" Azura Deluxe Resort & Spa is perfectly nestled between the breathtaking Mediterranean Sea and the majestic Taurus Mountains, offering you an exceptional escape in luxurious comfort. With its private beach, elegant accommodations, world-class dining experiences, and sophisticated spa facilities, Azura Deluxe provides everything you need for an unforgettable holiday filled with relaxation and indulgence. Experience the Harmony of Luxury and Nature at Azura Deluxe.",
-      "buttonText":" Discover More"
-    }
-  },
-
-  "Rooms":{
+"Rooms":{
     "header":"Our Rooms",
     "buttonText1":"Deluxe Room",
     "buttonText2":"Family Room",

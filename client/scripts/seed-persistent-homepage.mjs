@@ -12,6 +12,7 @@ import {
   validateWelcomeText,
   validateHomepageSection,
 } from "../lib/azura-homepage-storage.mjs";
+import { ensureSharedContactDetails, sharedContactFile } from "../lib/azura-shared-contact-storage.mjs";
 
 const appRoot = process.cwd();
 const paths = resolveAzuraPaths({ appRoot, production: true });
@@ -27,6 +28,7 @@ const images = [
   "accommodation-deluxe.png",
   "accommodation-fantasy.png",
   "accommodation-family.png",
+  "background-green-and-blue.png",
 ];
 
 await mkdir(path.dirname(homepageFile(paths)), { recursive: true });
@@ -87,3 +89,14 @@ if (current.sections?.accommodation === undefined) {
   await ensureHomepageSection("accommodation", initial.sections.accommodation, paths);
   console.log(`Azura accommodation bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
 }
+
+if (current.sections?.background === undefined) {
+  const initial = JSON.parse(await readFile(seed, "utf8"));
+  validateHomepageSection("background", initial.sections?.background);
+  await ensureHomepageSection("background", initial.sections.background, paths);
+  console.log(`Azura background bölümü mevcut JSON'a eklendi: ${homepageFile(paths)}`);
+}
+
+const contactSeed = JSON.parse(await readFile(path.join(appRoot, "content", "shared", "contact-details.json"), "utf8"));
+await ensureSharedContactDetails(contactSeed, paths);
+console.log(`Azura ortak iletişim verisi mevcut veya başlatıldı: ${sharedContactFile(paths)}`);

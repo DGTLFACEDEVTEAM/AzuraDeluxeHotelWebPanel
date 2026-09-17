@@ -405,6 +405,35 @@
           }
         }
       ]
+    },
+    "background": {
+      "image": "/uploads/pages/homepage/background-green-and-blue.png",
+      "translations": {
+        "tr": {
+          "subtitle": " Azura Deluxe’te Lüks ve Doğanın Uyumunu Yaşayın",
+          "title": " Lüks ile Doğanın Güzelliği Buluşuyor",
+          "text": " Azura Deluxe Resort & Spa, etkileyici Akdeniz ile görkemli Toros Dağları arasında mükemmel bir konumda yer alarak size lüks ve konfor dolu eşsiz bir kaçış sunar. Özel plajı, şık konaklama seçenekleri, dünya standartlarında yemek deneyimleri ve zarif spa olanaklarıyla Azura Deluxe, rahatlama ve keyif dolu unutulmaz bir tatil için ihtiyaç duyduğunuz her şeyi sunar.Azura Deluxe’te Lüks ve Doğanın Uyumunu Yaşayın.",
+          "buttonText": "  Daha Fazlasını Keşfedin"
+        },
+        "en": {
+          "subtitle": " Experience the Harmony of Luxury and Nature at Azura Deluxe.",
+          "title": " Where Luxury Meets the Beauty of Nature",
+          "text": " Azura Deluxe Resort & Spa is perfectly nestled between the breathtaking Mediterranean Sea and the majestic Taurus Mountains, offering you an exceptional escape in luxurious comfort. With its private beach, elegant accommodations, world-class dining experiences, and sophisticated spa facilities, Azura Deluxe provides everything you need for an unforgettable holiday filled with relaxation and indulgence. Experience the Harmony of Luxury and Nature at Azura Deluxe.",
+          "buttonText": " Discover More"
+        },
+        "de": {
+          "subtitle": " Erleben Sie die Harmonie von Luxus und Natur im Azura Deluxe",
+          "title": " Wo Luxus auf die Schönheit der Natur trifft",
+          "text": "  Das Azura Deluxe Resort & Spa liegt eingebettet zwischen dem atemberaubenden Mittelmeer und den majestätischen Taurusgebirgen und bietet Ihnen einen außergewöhnlichen Rückzugsort voller Komfort. Mit privatem Strand, stilvollen Unterkünften, kulinarischen Highlights und einem erstklassigen Spa-Erlebnis bietet Azura Deluxe alles für einen unvergesslichen Urlaub voller Entspannung und Genuss. Erleben Sie die Harmonie von Luxus und Natur im Azura Deluxe.",
+          "buttonText": "  Mehr entdecken"
+        },
+        "ru": {
+          "subtitle": "  Почувствуйте гармонию роскоши и природы в Azura Deluxe",
+          "title": "  Где роскошь встречается с красотой природы",
+          "text": "Azura Deluxe Resort & Spa идеально расположен между завораживающим Средиземным морем и величественными горами Тавр, предлагая исключительный отдых в атмосфере роскоши и комфорта. Частный пляж, элегантные номера, гастрономические удовольствия мирового уровня и изысканный спа-центр — всё это сделает ваш отдых незабываемым, наполненным расслаблением и удовольствием. Почувствуйте гармонию роскоши и природы в Azura Deluxe.",
+          "buttonText": " Узнать больше"
+        }
+      }
     }
   }
 }

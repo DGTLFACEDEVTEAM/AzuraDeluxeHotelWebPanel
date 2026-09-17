@@ -23,6 +23,7 @@ export const CAROUSEL_KEYS = Object.freeze([
 export const ACCOMMODATION_KEYS = Object.freeze(["deluxe", "fantasy", "family"]);
 const ACCOMMODATION_TEXT_LIMITS = Object.freeze({ subtitle: 200, title: 250, buttonText: 120 });
 const ACCOMMODATION_CARD_LIMITS = Object.freeze({ title: 250, description: 2000, area: 120, view: 120, alt: 300 });
+const BACKGROUND_TEXT_LIMITS = Object.freeze({ subtitle: 200, title: 250, text: 2000, buttonText: 120 });
 const SECTION_SCHEMAS = Object.freeze({
   essentials: Object.freeze({
     kind: "localizedText",
@@ -46,6 +47,7 @@ const SECTION_SCHEMAS = Object.freeze({
   }),
   carousel: Object.freeze({ kind: "carousel" }),
   accommodation: Object.freeze({ kind: "accommodation" }),
+  background: Object.freeze({ kind: "background" }),
 });
 const REVISION = /^[a-f0-9]{64}$/;
 let homepageWriteQueue = Promise.resolve();
@@ -173,6 +175,14 @@ export function assertHomepageSectionKey(sectionKey) {
 
 export function validateHomepageSection(sectionKey, section) {
   const schema = sectionSchema(sectionKey);
+  if (schema.kind === "background") {
+    exactKeys(section, ["image", "translations"], "sections.background");
+    if (typeof section.image !== "string" || !IMAGE_PATH.test(section.image) || section.image.includes("..")) {
+      throw new HomepageContentError("sections.background için geçersiz görsel yolu.");
+    }
+    validateLocalizedFields(section.translations, BACKGROUND_TEXT_LIMITS, "sections.background.translations");
+    return section;
+  }
   if (schema.kind === "accommodation") {
     exactKeys(section, ["translations", "cards"], "sections.accommodation");
     validateLocalizedFields(section.translations, ACCOMMODATION_TEXT_LIMITS, "sections.accommodation.translations");
@@ -455,8 +465,9 @@ export async function writeHomepageSection(sectionKey, section, expectedRevision
     const previous = current.sections?.[sectionKey];
     if (!previous) throw new HomepageContentError("Kalıcı homepage JSON'unda bölüm eksik.", 503);
     assertRevision(expectedRevision, getHomepageSectionRevision(sectionKey, previous));
-    if (sectionKey === "carousel" || sectionKey === "accommodation") {
-      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides : section.cards, paths, true);
+    if (sectionKey === "carousel" || sectionKey === "accommodation" || sectionKey === "background") {
+      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides :
+        sectionKey === "accommodation" ? section.cards : [section], paths, true);
     }
     const next = await writeHomepageContentAtomically({
       ...current,
@@ -471,8 +482,9 @@ export async function ensureHomepageSection(sectionKey, section, paths = resolve
   return enqueueHomepageWrite(async () => {
     const current = await readHomepageContent(paths);
     if (current.sections?.[sectionKey] !== undefined) return current.sections[sectionKey];
-    if (sectionKey === "carousel" || sectionKey === "accommodation") {
-      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides : section.cards, paths, true);
+    if (sectionKey === "carousel" || sectionKey === "accommodation" || sectionKey === "background") {
+      await assertHomepageImagesExist(sectionKey === "carousel" ? section.slides :
+        sectionKey === "accommodation" ? section.cards : [section], paths, true);
     }
     const next = await writeHomepageContentAtomically({
       ...current,

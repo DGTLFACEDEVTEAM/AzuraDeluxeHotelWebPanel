@@ -8,7 +8,7 @@ import test from "node:test";
 const appRoot = path.resolve(import.meta.dirname, "..");
 const seed = JSON.parse(await readFile(path.join(appRoot, "content/site-pages/homepage.json"), "utf8"));
 const contactSeed = JSON.parse(await readFile(path.join(appRoot, "content/shared/contact-details.json"), "utf8"));
-const token = "azura-accommodation-local-test-token";
+const token = "azura-background-local-test-token";
 const locales = ["tr", "en", "de", "ru"];
 
 async function startServer(port, paths) {
@@ -26,7 +26,7 @@ async function startServer(port, paths) {
   for (let i = 0; i < 100; i++) {
     if (child.exitCode !== null) throw new Error(`Next başlatılamadı: ${output}`);
     try {
-      const response = await fetch(`${base}/api/azura/homepage/sections/accommodation`);
+      const response = await fetch(`${base}/api/azura/homepage/sections/background`);
       if (response.status === 401) return { child, base };
     } catch { /* server not ready */ }
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -44,8 +44,8 @@ async function stopServer(child) {
   });
 }
 
-test("canlı production API: yetki, şema, revision, medya listesi ve dört dilde yayın", { timeout: 60000 }, async (t) => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "azura-accommodation-http-"));
+test("canlı production background API ve dört dilde güncel yayın", { timeout: 60000 }, async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "azura-background-http-"));
   t.after(() => rm(root, { recursive: true, force: true }));
   const paths = { contentRoot: path.join(root, "content"), uploadsRoot: path.join(root, "uploads") };
   await mkdir(path.join(paths.contentRoot, "site-pages"), { recursive: true });
@@ -61,67 +61,62 @@ test("canlı production API: yetki, şema, revision, medya listesi ve dört dild
   const port = 46000 + Math.floor(Math.random() * 10000);
   const { child, base } = await startServer(port, paths);
   t.after(() => stopServer(child));
-  const url = `${base}/api/azura/homepage/sections/accommodation`;
+  const url = `${base}/api/azura/homepage/sections/background`;
   const auth = { Authorization: `Bearer ${token}` };
   assert.equal((await fetch(url)).status, 401);
   assert.equal((await fetch(url, { headers: { Authorization: "Bearer wrong" } })).status, 401);
-  assert.equal((await fetch(`${base}/api/azura/homepage/sections/unknown`, { headers: auth })).status, 404);
-  const get = await fetch(url, { headers: auth });
-  assert.equal(get.status, 200);
-  const initial = await get.json();
-  assert.deepEqual(initial.section, seed.sections.accommodation);
+  const initialResponse = await fetch(url, { headers: auth });
+  assert.equal(initialResponse.status, 200);
+  const initial = await initialResponse.json();
+  assert.deepEqual(initial.section, seed.sections.background);
   assert.match(initial.revision, /^[a-f0-9]{64}$/);
-  const media = await fetch(`${base}/api/azura/homepage/images`, { headers: auth });
-  assert.equal(media.status, 200);
-  const listed = JSON.stringify(await media.json());
-  for (const card of initial.section.cards) assert.ok(listed.includes(card.image));
+  assert.equal((await fetch(`${base}${initial.section.image}`)).status, 200);
+  const listed = await fetch(`${base}/api/azura/homepage/images`, { headers: auth });
+  assert.equal(listed.status, 200);
+  assert.ok(JSON.stringify(await listed.json()).includes(initial.section.image));
   const put = (section, ifMatch, extra = {}) => fetch(url, {
     method: "PUT", headers: { ...auth, "Content-Type": "application/json", ...(ifMatch ? { "If-Match": ifMatch } : {}) },
     body: JSON.stringify({ section, ...extra }),
   });
   assert.equal((await put(initial.section)).status, 428);
   assert.equal((await put(initial.section, "unquoted")).status, 400);
+  assert.equal((await put(initial.section, `"${initial.revision}"`, { other: true })).status, 400);
   assert.equal((await fetch(url, {
     method: "PUT", headers: { ...auth, "Content-Type": "application/json", "If-Match": `"${initial.revision}"` },
     body: "{invalid",
   })).status, 400);
-  assert.equal((await put(initial.section, `"${initial.revision}"`, { other: true })).status, 400);
   const invalid = structuredClone(initial.section);
-  invalid.cards[0].image = "/uploads/pages/homepage/missing.png";
+  invalid.image = "/uploads/pages/homepage/missing.png";
   assert.equal((await put(invalid, `"${initial.revision}"`)).status, 400);
   const before = await readFile(jsonFile);
   assert.equal((await put(initial.section, '"' + "0".repeat(64) + '"')).status, 409);
   assert.deepEqual(await readFile(jsonFile), before);
+
+  const form = new FormData();
+  form.set("file", new File([await readFile(path.join(source, "background-green-and-blue.png"))],
+    "background.png", { type: "image/png" }));
+  const upload = await fetch(`${base}/api/azura/homepage/images`, { method: "POST", headers: auth, body: form });
+  assert.equal(upload.status, 201);
+  const uploadedImage = (await upload.json()).image;
+  assert.match(uploadedImage, /^\/uploads\/pages\/homepage\/.+\.png$/);
+
   const changed = structuredClone(initial.section);
-  for (const locale of locales) changed.cards[0].translations[locale].title = `Azura ${locale} room marker`;
-  changed.cards[0].translations.en.description = "<img src=x onerror=alert(1)>";
+  changed.image = uploadedImage;
+  for (const locale of locales) changed.translations[locale].title = `Azura ${locale} nature marker`;
   const saved = await put(changed, `"${initial.revision}"`);
   assert.equal(saved.status, 200);
   const result = await saved.json();
   assert.deepEqual(result.section, changed);
   assert.notEqual(result.revision, initial.revision);
-  assert.deepEqual(JSON.parse(await readFile(jsonFile)).sections.accommodation, changed);
+  const current = JSON.parse(await readFile(jsonFile));
+  assert.deepEqual(current.sections.background, changed);
+  assert.deepEqual(current.sections.accommodation, seed.sections.accommodation);
   for (const locale of locales) {
     const page = await fetch(`${base}/${locale}`);
     assert.equal(page.status, 200);
     const html = await page.text();
-    assert.ok(html.includes(`Azura ${locale} room marker`), `${locale} anasayfasında yeni başlık yok`);
-    if (locale === "en") {
-      assert.ok(html.includes("&lt;img src=x onerror=alert(1)&gt;"));
-      assert.ok(!html.includes('<img src=x onerror=alert(1)>'));
-    }
+    assert.ok(html.includes(`Azura ${locale} nature marker`), `${locale} anasayfasında yeni başlık yok`);
+    assert.ok(html.includes(uploadedImage), `${locale} anasayfasında yeni arka plan yok`);
   }
-  const form = new FormData();
-  form.set("file", new File([await readFile(path.join(source, "accommodation-deluxe.png"))], "room.png", { type: "image/png" }));
-  const uploaded = await fetch(`${base}/api/azura/homepage/images`, {
-    method: "POST", headers: auth, body: form,
-  });
-  assert.equal(uploaded.status, 201);
-  const uploadedImage = (await uploaded.json()).image;
-  assert.match(uploadedImage, /^\/uploads\/pages\/homepage\/.+\.png$/);
-  const selected = structuredClone(changed);
-  selected.cards[0].image = uploadedImage;
-  const selectedResponse = await put(selected, `"${result.revision}"`);
-  assert.equal(selectedResponse.status, 200);
-  assert.equal((await selectedResponse.json()).section.cards[0].image, uploadedImage);
+  assert.equal((await fetch(`${base}${uploadedImage}`)).status, 200);
 });

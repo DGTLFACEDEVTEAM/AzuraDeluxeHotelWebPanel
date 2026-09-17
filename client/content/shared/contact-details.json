@@ -1,0 +1,44 @@
+{
+  "username": "@AzuraDeluxeResort",
+  "phone": "+90 242 517 12 34",
+  "callCenter": "+90 242 277 11 43",
+  "email": "info@azuradeluxe.com",
+  "instagramUrl": "https://www.instagram.com/azuradeluxeresort/",
+  "facebookUrl": "https://www.facebook.com/AzuraDeluxeResort/",
+  "youtubeUrl": "https://www.youtube.com/channel/UC3Z23WuWOhmpFnbw9fLI1-g",
+  "reservationUrl": "https://azuradeluxehotel.orsmod.com/",
+  "translations": {
+    "tr": {
+      "contactForMore": "DAHA FAZLA BİLGİ İÇİN İLETİŞİME GEÇİN",
+      "address": "Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey",
+      "phoneLabel": "Telefon:",
+      "callCenterLabel": "Çağrı Merkezi",
+      "emailLabel": "E-posta Adresi:",
+      "reservationButtonText": "HEMEN REZERVASYON"
+    },
+    "en": {
+      "contactForMore": "CONTACT US FOR MORE",
+      "address": "Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey",
+      "phoneLabel": "Phone:",
+      "callCenterLabel": "Call Center",
+      "emailLabel": "Email Address:",
+      "reservationButtonText": "BOOK NOW"
+    },
+    "de": {
+      "contactForMore": "KONTAKTIEREN SIE UNS FÜR MEHR",
+      "address": "Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey",
+      "phoneLabel": "Telefon:",
+      "callCenterLabel": "Call Center",
+      "emailLabel": "E-Mail-Adresse:",
+      "reservationButtonText": "JETZT BUCHEN"
+    },
+    "ru": {
+      "contactForMore": "СВЯЖИТЕСЬ С НАМИ ДЛЯ ПОДРОБНОСТЕЙ",
+      "address": "Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey",
+      "phoneLabel": "Телефон:",
+      "callCenterLabel": "Контакт-центр",
+      "emailLabel": "Адрес электронной почты:",
+      "reservationButtonText": "ЗАБРОНИРОВАТЬ"
+    }
+  }
+}

@@ -101,18 +101,7 @@
     "culture":"Ministerium für Kultur und Tourismus — Tourismusbetriebslizenz: 15069"
   },
 
-    "Homepage":{
-
-
-    "BackgroundSection":{
-      "subtitle":" Erleben Sie die Harmonie von Luxus und Natur im Azura Deluxe",
-      "title":" Wo Luxus auf die Schönheit der Natur trifft",
-      "text":"  Das Azura Deluxe Resort & Spa liegt eingebettet zwischen dem atemberaubenden Mittelmeer und den majestätischen Taurusgebirgen und bietet Ihnen einen außergewöhnlichen Rückzugsort voller Komfort. Mit privatem Strand, stilvollen Unterkünften, kulinarischen Highlights und einem erstklassigen Spa-Erlebnis bietet Azura Deluxe alles für einen unvergesslichen Urlaub voller Entspannung und Genuss. Erleben Sie die Harmonie von Luxus und Natur im Azura Deluxe.",
-      "buttonText":"  Mehr entdecken"
-    }
-  },
-
-  "Rooms":{
+"Rooms":{
     "header":"Unsere Zimmer",
     "buttonText1":"Deluxe-Zimmer",
     "buttonText2":"Familienzimmer",

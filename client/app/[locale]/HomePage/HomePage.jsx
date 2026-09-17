@@ -10,7 +10,7 @@ import ContactSection from '../GeneralComponents/Contact/ContactSection'
 import EmblaCarousel from "./Components/Slider/Slider1"
 import TwoAnimationImage from "./Components/TwoAnimationImage"
 
-const HomePage = ({ experience, welcomeText, essentials, carouselSlides, accommodation }) => {
+const HomePage = ({ experience, welcomeText, essentials, carouselSlides, accommodation, background, contact }) => {
   return (
     <div className='flex flex-col items-center justify-center overflow-hidden'>
         <HomePage1 />
@@ -21,8 +21,8 @@ const HomePage = ({ experience, welcomeText, essentials, carouselSlides, accommo
      <TwoAnimationImage {...experience}/>
      <HomePage4 accommodation={accommodation} />
         <HomePage5 essentials={essentials} />
-        <ContactSection />
-        <HomePage6 />
+        <ContactSection contact={contact} />
+        <HomePage6 background={background} />
      </div>
         
     </div>

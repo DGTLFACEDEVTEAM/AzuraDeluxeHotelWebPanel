@@ -6,10 +6,8 @@ import LeafSvg from '../Header/Icons/LeafSvg'
 import minigallery from "./images/azuragallerynew.webp"
 import Link from 'next/link'
 import { PiInstagramLogoLight,PiFacebookLogoLight, PiYoutubeLogoLight} from "react-icons/pi";
-import {useTranslations} from 'next-intl';
 
-const ContactSection = () => {
-  const t = useTranslations('ContactPage');
+const ContactSection = ({ contact }) => {
 
   const scrollRef = useRef(null);
 
@@ -45,43 +43,43 @@ const ContactSection = () => {
 
         <div className='flex h-[25%] md:h-auto w-[90%] md:w-[45%] lg:w-[39%] font-jost text-black items-center md:items-start justify-center z-20'>
            <div className='flex flex-col md:w-[79%] items-center text-center md:text-start md:items-start justify-center gap-[15px] md:gap-[23.19px] lg:gap-[30px]'>
-           <span className=' text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] mt-[14%] md:mt-0'> {t("contactForMore")}</span>
-            <h2 className='font-marcellus font-normal text-[28px] md:text-[28px] lg:text-[28px] xl:text-[36px] 2xl:text-[44px] leading-[150%] lg:leading-[57.6px] capsizedText3 lg:capsizedText2'>@AzuraDeluxeResort</h2>
+           <span className=' text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] mt-[14%] md:mt-0'> {contact.contactForMore}</span>
+            <h2 className='font-marcellus font-normal text-[28px] md:text-[28px] lg:text-[28px] xl:text-[36px] 2xl:text-[44px] leading-[150%] lg:leading-[57.6px] capsizedText3 lg:capsizedText2'>{contact.username}</h2>
            
             <div className="font-jost text-[14px] md:text-[16px] leading-[24px] underline-offset-2 flex flex-col gap-2 ">
           {/* Mobil görünüm (lg'den küçük) */}
           <span className="capsizedText4 lg:hidden">
-          Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey
+          {contact.address}
           </span>
           <span className="capsizedText4 lg:hidden">
-            {t("phoneColon")} <Link href="tel:+902425171234" className="underline z-[99] ">+90 242 517 12 34</Link>
+            {contact.phoneLabel} <Link href={contact.phoneHref} className="underline z-[99] ">{contact.phone}</Link>
           </span>
           <span className="capsizedText4 lg:hidden">
-          {t("callCenter")}: <Link href="tel:+902422771143" className="underline z-[99] ">+90 242 277 11 43</Link>
+          {contact.callCenterLabel}: <Link href={contact.callCenterHref} className="underline z-[99] ">{contact.callCenter}</Link>
           </span>
           <span className="capsizedText4 lg:hidden">
-          {t("emailAddress")}: <Link  href="mailto:info@azuradeluxe.com" className="underline z-[99] ">info@azuradeluxe.com</Link>
+          {contact.emailLabel}: <Link  href={contact.emailHref} className="underline z-[99] ">{contact.email}</Link>
           </span>
 
           {/* Desktop görünüm (lg ve üstü) */}
           <span className="hidden lg:block">
-          Avsallar Mah. İncekum Cad. No:76 Alanya / Turkey
+          {contact.address}
           </span>
           <span className="hidden lg:block">
-          {t("phoneColon")} <Link href="tel:+902425171234" className="underline z-[99] ">+90 242 517 12 34</Link>
+          {contact.phoneLabel} <Link href={contact.phoneHref} className="underline z-[99] ">{contact.phone}</Link>
           </span>
           <span className="hidden lg:block">
-          {t("callCenter")}: <Link href="tel:+902422771143" className="underline z-[99] ">+90 242 277 11 43</Link>
+          {contact.callCenterLabel}: <Link href={contact.callCenterHref} className="underline z-[99] ">{contact.callCenter}</Link>
           </span>
           <span className="hidden lg:block">
-          {t("emailAddress")}: <Link  href="mailto:info@azuradeluxe.com" className="underline z-20 cursor-pointer">info@azuradeluxe.com</Link>
+          {contact.emailLabel}: <Link  href={contact.emailHref} className="underline z-20 cursor-pointer">{contact.email}</Link>
           </span>
         </div>
             
             <div className='flex w-full items-center justify-center md:justify-start gap-[20px] '>
                 <div className='flex items-center justify-center gap-[18px]'>
                 <Link className="flex z-20"
-              href="https://www.instagram.com/azuradeluxeresort/"
+              href={contact.instagramUrl}
               target="_blank"
               rel="norefferer nofollower"
             >
@@ -91,7 +89,7 @@ const ContactSection = () => {
             
             <Link
             className="flex z-20"
-              href="https://www.facebook.com/AzuraDeluxeResort/"
+              href={contact.facebookUrl}
               target="_blank"
               rel="norefferer nofollower"
             >
@@ -100,7 +98,7 @@ const ContactSection = () => {
             </Link>
             <Link
             className="flex z-20"
-              href="https://www.youtube.com/channel/UC3Z23WuWOhmpFnbw9fLI1-g"
+              href={contact.youtubeUrl}
               target="_blank"
               rel="norefferer nofollower"
             >
@@ -109,10 +107,10 @@ const ContactSection = () => {
             </Link>
                 </div>
                 <div className='flex bg-black h-[20px] w-[1px]'></div>
-                <Link href="https://azuradeluxehotel.orsmod.com/"  target="_blank"
-              rel="norefferer nofollower" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[16px] font-normal hidden lg:flex leading-[30px] uppercase z-20">{t("bookNow")}</Link>
-                <Link href="https://azuradeluxehotel.orsmod.com/"  target="_blank"
-              rel="norefferer nofollower" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[14px] font-normal md:leading-[19.88px] flex lg:hidden uppercase z-20">{t("bookNow")}</Link>
+                <Link href={contact.reservationUrl}  target="_blank"
+              rel="norefferer nofollower" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[16px] font-normal hidden lg:flex leading-[30px] uppercase z-20">{contact.reservationButtonText}</Link>
+                <Link href={contact.reservationUrl}  target="_blank"
+              rel="norefferer nofollower" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[14px] font-normal md:leading-[19.88px] flex lg:hidden uppercase z-20">{contact.reservationButtonText}</Link>
             </div>
            </div>
         </div>

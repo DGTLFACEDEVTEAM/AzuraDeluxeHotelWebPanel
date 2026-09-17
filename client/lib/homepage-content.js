@@ -1,6 +1,7 @@
 import "server-only";
 
 import { LOCALES, readHomepageContent } from "./azura-homepage-storage.mjs";
+import { contactEmailHref, contactPhoneHref, readSharedContactDetails } from "./azura-shared-contact-storage.mjs";
 
 const CAROUSEL_LINKS = Object.freeze({
   accommodation: "/rooms",
@@ -20,7 +21,9 @@ export async function readHomepageExperience(locale) {
     throw new Error(`Azura homepage için desteklenmeyen dil: ${locale}`);
   }
 
-  const { experience, experienceText, welcomeText, sections } = await readHomepageContent();
+  const [{ experience, experienceText, welcomeText, sections }, { details }] = await Promise.all([
+    readHomepageContent(), readSharedContactDetails(),
+  ]);
   if (!experienceText) {
     throw new Error("Azura homepage experienceText alanı kalıcı JSON'da eksik.");
   }
@@ -35,6 +38,9 @@ export async function readHomepageExperience(locale) {
   }
   if (!sections?.accommodation) {
     throw new Error("Azura homepage sections.accommodation alanı kalıcı JSON'da eksik.");
+  }
+  if (!sections?.background) {
+    throw new Error("Azura homepage sections.background alanı kalıcı JSON'da eksik.");
   }
 
   return {
@@ -66,6 +72,24 @@ export async function readHomepageExperience(locale) {
         alt: card.translations[locale].alt,
         link: ACCOMMODATION_LINKS[card.key],
       })),
+    },
+    background: {
+      image: sections.background.image,
+      ...sections.background.translations[locale],
+    },
+    contact: {
+      username: details.username,
+      phone: details.phone,
+      phoneHref: contactPhoneHref(details.phone),
+      callCenter: details.callCenter,
+      callCenterHref: contactPhoneHref(details.callCenter),
+      email: details.email,
+      emailHref: contactEmailHref(details.email),
+      instagramUrl: details.instagramUrl,
+      facebookUrl: details.facebookUrl,
+      youtubeUrl: details.youtubeUrl,
+      reservationUrl: details.reservationUrl,
+      ...details.translations[locale],
     },
   };
 }
