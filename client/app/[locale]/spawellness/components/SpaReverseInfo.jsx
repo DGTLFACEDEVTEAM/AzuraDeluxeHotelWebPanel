@@ -10,7 +10,8 @@ const SpaTypesInfoSection = ({
   text, 
   img, 
   link, 
-  showLink 
+  showLink,
+  buttonText
 }) => {
   const containerDirection = isImageLeft ? "flex-row" : "flex-row-reverse"
   const t2 = useTranslations("About.InfoSection");
@@ -28,7 +29,7 @@ const SpaTypesInfoSection = ({
         </div>
         <Image 
           src={img} 
-          alt="indoor" 
+          alt={img.alt ?? "indoor"}
           width={img.width} 
           height={img.height} 
           className="w-[100%] md:w-[49.5%]" 
@@ -48,7 +49,7 @@ const SpaTypesInfoSection = ({
               href={link} 
               className="flex w-[173.585px] lg:w-[198px] whitespace-nowrap py-[16px] px-[32px] font-jost text-[14px] lg:text-[16px] text-lagoBrown font-medium leading-[30px] max-h-[41px] items-center justify-center border border-lagoBrown shadow-buttonCustom uppercase text-center "
             >
-             {t2("buttonText")}
+             {buttonText ?? t2("buttonText")}
             </Link>
           )}
         </div>

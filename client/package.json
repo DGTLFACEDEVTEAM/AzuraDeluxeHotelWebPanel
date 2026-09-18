@@ -12,7 +12,9 @@
     "test:rooms": "node --test lib/azura-rooms-storage.test.mjs lib/azura-rooms-page-content.test.mjs",
     "test:rooms-http": "node --test lib/azura-rooms-http.test.mjs",
     "test:restaurants": "node --test lib/azura-restaurants-storage.test.mjs",
-    "test:restaurants-http": "node --test lib/azura-restaurants-http.test.mjs"
+    "test:restaurants-http": "node --test lib/azura-restaurants-http.test.mjs",
+    "test:about": "node --test lib/azura-about-storage.test.mjs",
+    "test:about-http": "node --test lib/azura-about-http.test.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

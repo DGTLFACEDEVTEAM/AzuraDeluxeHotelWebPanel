@@ -119,3 +119,79 @@ Zorunlu kök alanlar `schemaVersion: 1`, `pageKey: "restaurants"`, `translations
 `GET /api/azura/restaurants/page-content` ve `PUT /api/azura/restaurants/page-content`, `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister. GET ve başarılı PUT yanıtının tam üst düzey biçimi `{ "bundle": <restaurants.json.translations>, "media": <restaurants.json.media>, "revision": "<64 karakterlik küçük harf SHA-256>" }` olur. `bundle` ve `media` yukarıdaki kesin şemayı kullanır; `intro.subtitle` ile `reverse.span` boş dize olabilir. PUT yalnızca `{ "bundle": ..., "media": ... }` gövdesini, `Content-Type: application/json` ve `If-Match: "<GET revision>"` başlığını kabul eder. Revision, doğrulanmış `bundle` ve `media` içeriğinden hesaplanır; dosyaya yazılmaz. `schemaVersion`, `pageKey` ve ileride eklenen başka kök alanlar korunur. Kilit altında dosya yeniden okunur, revision karşılaştırılır ve geçerli içerik atomik yazılır. Başarılı kayıt dört dildeki `/restaurants` yollarını yeniden doğrular. Yetkisiz istek `401`, eksik `If-Match` `428`, bozuk başlık/veri/görsel `400`, eski revision `409`, yanlış Content-Type `415` döner. 409 dosyayı değiştirmez. Aşırı büyük JSON gövdesi `413` döner.
 
 `GET /api/azura/restaurants/images` aynı Bearer tokenıyla `{ "images": [{ "image": "/uploads/pages/restaurants/<dosya>.jpg", "mimeType": "image/jpeg", "size": 123, "width": 300, "height": 450, "modifiedAt": "<ISO tarih>" }, ...] }` döner. Yalnızca kalıcı restoran uploads dizinindeki gerçek, çözülebilen JPEG/PNG/WebP dosyaları listelenir; symlink ve bozuk dosyalar atlanır. `POST /api/azura/restaurants/images`, tek `file` alanlı `multipart/form-data` yüklemesi alır; başarılı `201` yanıtı `{ "image": "/uploads/pages/restaurants/restaurants-<sunucu-id>.jpg", "mimeType": "image/jpeg", "size": 123, "width": 300, "height": 450 }` biçimindedir. Gerçek imza ve dosya türü eşleşmeli, dosya en çok 8 MiB ve görsel en çok 16 milyon piksel olmalıdır. Dosya adı sunucuda oluşturulur; mevcut dosyanın üzerine yazılmaz. Yükleme `restaurants.json` dosyasını değiştirmez; görseli seçmek için `media` içindeki ilgili `image`, `width` ve `height` değerleri birlikte PUT ile güncellenir. Doğrulama: `npm run test:restaurants`, `npm run build`, `npm run test:restaurants-http`, `npm run test:homepage-api`, `npm run test:rooms`.
+
+### Hakkımızda sayfası: kalıcı okuma
+
+Aktif `/[locale]/about` sayfası `${AZURA_CONTENT_ROOT}/site-pages/about.json` dosyasını sunucuda okur. Production'da `AZURA_CONTENT_ROOT` ve `AZURA_UPLOADS_ROOT` mutlak kalıcı yollar olarak tanımlanmalıdır. Development varsayılanları `client/content` ve `client/public/uploads` klasörleridir. `client` çalışma dizininde `node scripts/seed-persistent-about.mjs` komutu başlangıç JSON'unu ve sekiz görseli kalıcı köklere yalnızca eksikse ekler. `wx` ve `COPYFILE_EXCL` mevcut dosyaların üzerine yazılmasını önler. Mevcut bozuk dosya düzeltilmez; doğrulama açık hata verir. About sayfası `force-dynamic` çalışır; dosya her sunucu render'ında doğrulanarak okunur. `azura-about-content.js` içindeki `server-only` işareti okuma katmanının istemciye taşınmasını engeller.
+
+Kesin JSON şeması:
+
+```text
+{
+  schemaVersion: 1,
+  pageKey: "about",
+  translations: {
+    tr: LocaleContent, en: LocaleContent, de: LocaleContent, ru: LocaleContent
+  },
+  media: {
+    hero: Image,
+    location: Image,
+    moments: { images: [Moment1, Moment2, Moment3, Moment4] },
+    missionVision: { mission: Image, vision: Image }
+  }
+}
+LocaleContent = {
+  hero: { subtitle: string, title: string },
+  location: { subtitle: string, title: string, text: string, buttonText: string },
+  missionVision: {
+    subtitle: string, title: string, text: string,
+    mission: { subtitle: string, title: string, text: string },
+    vision: { subtitle: string, title: string, text: string }
+  }
+}
+Image = {
+  image: "/uploads/pages/about/<dosya>.jpg",
+  width: pozitif tamsayı, height: pozitif tamsayı,
+  translations: { tr: {alt: string}, en: {alt: string}, de: {alt: string}, ru: {alt: string} }
+}
+MomentN = { id: "about-moment-N", order: N-1, ...Image }
+```
+
+Alanlar tam olmalıdır; ek alanlar, eksik diller, boş veya 4000 karakterden uzun metinler ve kontrol karakterleri reddedilir. Alt açıklamalar en çok 300 karakterdir. Dört moments kaydının id ve sıra değerleri sabittir. JPEG/PNG/WebP imzası ve çözülebilirlik, 8 MiB/16 milyon piksel sınırları, güvenli dizin, gerçek width/height eşliği doğrulanır; eksik dosya, yol taşması ve symlink görsel hata verir. Orijinal görüntü oranları korunur; var olan CSS kırpmaları değişmez. CSS hero arka planının alt açıklaması veride tutulur; CSS arka planı HTML alt niteliği kullanmaz.
+
+| JSON alanı | Görünen bileşen | Başlangıç kaynağı |
+| --- | --- | --- |
+| `translations.*.hero`, `media.hero` | MainBanner2 | `About.subtitle/title`, `banner.jpg` → `hero.jpg` |
+| `translations.*.location`, `media.location` | SpaReverseInfo | `About.InfoSection`, `PANORAMIC.jpg` → `location.jpg`; bağlantı `/` |
+| `media.moments.images` | KidsMomentCarousel | `gal_orta.jpg`, `Gal_sag.jpg`, `gal_son.jpg`, `gal_sol.jpg` → `moment-1.jpg`…`moment-4.jpg` |
+| `translations.*.missionVision`, `media.missionVision` | MissionVisionSection | `About.MissinonVision` görünen alanları; `1.jpg` → `mission.jpg`, `2.jpg` → `vision.jpg` |
+
+Mevcut tutarsızlıklar bilinçli ele alındı: About sayfasındaki HomePage Slider1 çağrısı `slides` göndermediğinden `TypeError: undefined is not iterable` üretmekteydi. Kullanıcı onayıyla yalnızca bu çağrı kaldırıldı; keşif kartı uydurulmadı ve HomePage Slider1 değiştirilmedi. Misyon-vizyonun her iki sütununda `clubsubtitle1/clubtitle1` görünüyordu; sol paragraf üst bölümün `text` değerini, sağ paragraf `clubtext2` değerini gösteriyordu. Başlangıç verisi bu görünen eşleşmeyi korur. `clubtext1`, `clubsubtitle2`, `clubtitle2` ve gizli misyon-vizyon düğmesi görünür yeni alanlar olarak eklenmedi. Mesaj dosyaları korunur. Lago about JSON'undan yalnızca `hero`, `location`, `moments`, `missionVision` adları referans alındı; Lago'nun belge görseli ve yedi keşif kartı eklenmedi. Azura'nın location alanı konum özelliği eklemez; mevcut tanıtım bölümünün adlandırmasıdır. ContactSection2 ve diğer sayfalar kapsam dışıdır; ortak SpaReverseInfo ve KidsMomentCarousel'e eklenen isteğe bağlı prop/alt desteği diğer kullanımların eski davranışını korur.
+
+### Hakkımızda içerik ve medya API'leri
+
+`GET /api/azura/about/page-content` ve aynı adrese `PUT`, `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister. GET ve başarılı PUT yanıtı tam olarak `{ "bundle": <about.json.translations>, "media": <about.json.media>, "revision": "<64 karakterlik küçük harf SHA-256>" }` biçimindedir. Yukarıdaki LocaleContent ve Image şemaları aynen geçerlidir; sekiz görsel ve dört moments kimliği korunur. Başlangıç verisinde boş metin alanı yoktur. Metinler 1–4000, alt açıklamalar 1–300 karakterdir; yalnızca boşluk içeren değerler ve kontrol karakterleri kabul edilmez, geçerli metnin başındaki/sonundaki boşluklar korunur. İç içe ek alanlar reddedilir; dosyadaki ek kök metadata korunur.
+
+PUT başlıkları:
+
+```http
+Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>
+Content-Type: application/json
+If-Match: "<GET revision>"
+```
+
+PUT gövdesi yalnızca `{ "bundle": <dört dilin tamamı>, "media": <sekiz görselin tamamı> }` içerir; `revision`, `schemaVersion` veya `pageKey` gönderilmez. JSON gövdesi restoran API'siyle aynı şekilde en fazla 128 KiB olabilir. Revision, doğrulanmış bundle ve media'nın nesne anahtarları sıralanmış kanonik JSON içeriğinin SHA-256 değeridir; dizilerin sırası korunur ve revision dosyaya yazılmaz. Kuyruk içinde mevcut dosya yeniden okunur, revision karşılaştırılır ve yalnızca translations/media güncellenerek atomik kaydedilir. schemaVersion, pageKey ve diğer kök alanlar korunur. **Kuyruk yalnızca aynı Node.js süreci içindeki yazmaları korur; ayrı worker/process veya sunucular arasında kilit sağlamaz.** Çok süreçli yazma için ayrıca ortak kilit/veritabanı gerekir. Başarısız işlem kuyruğu kilitlemez.
+
+Başarı `200`; yetkisiz istek `401`, eksik If-Match `428`, biçimsiz If-Match veya geçersiz veri/görsel `400`, eski revision `409`, yanlış Content-Type `415`, gövde sınırı aşımı `413` döner. Hatalar `{ "error": "..." }` biçimindedir. `409` dosyayı değiştirmez; panel güncel veriyi GET ile alıp kullanıcı değişikliklerini yeniden değerlendirmelidir. Başarılı kayıt `/tr/about`, `/en/about`, `/de/about`, `/ru/about` yollarını yeniden doğrular.
+
+`GET /api/azura/about/images` aynı Bearer tokenıyla şu biçimi döndürür:
+
+```json
+{"images":[{"image":"/uploads/pages/about/hero.jpg","mimeType":"image/jpeg","size":123,"width":2560,"height":1438,"modifiedAt":"2026-09-18T00:00:00.000Z"}]}
+```
+
+Örnekteki boyut/tarih temsildir; gerçek değerler dosyadan okunur. Yalnızca kalıcı about dizinindeki geçerli JPEG/PNG/WebP dosyaları listelenir; symlink ve bozuk dosyalar dışlanır. `POST /api/azura/about/images` aynı token ve tek `file` alanlı multipart/form-data kabul eder. Başarılı `201` yanıtı tam olarak `{ "image": "/uploads/pages/about/about-<sunucu-id>.jpg", "mimeType": "image/jpeg", "size": 123, "width": 1042, "height": 1042 }` biçimindedir. Dosya en fazla 8 MiB, görsel en fazla 16 milyon pikseldir; multipart gövde sınırı 8 MiB + 128 KiB'dir. Gerçek dosya imzası, MIME türü ve çözülebilirlik ortak medya katmanında doğrulanır. SVG/PDF/sahte görseller reddedilir; sunucunun benzersiz dosya adı ve üzerine yazmayan kayıt kullanılır.
+
+Yükleme yalnızca dosyayı kaydeder, about.json değişmez. Panel görsel seçildiğinde ilgili media nesnesinin image/width/height değerlerini birlikte güncelleyip dört dilde alt açıklamalarla page-content PUT yapmalıdır. Moments id/order değerleri değiştirilmez. Lago panel bağlantısı bu aşamada yoktur; belge veya keşif carousel'i eklenmez.
+
+Doğrulama komutları: `npm run test:about`, `npm run lint`, `npm run build`, build sonrasında `npm run test:about-http`. Birim testleri metin/görsel eşliğini, şemayı, seed'i, kanonik revision'ı, kuyruk ve metadata korumasını doğrular. HTTP testi yetki/hatalı istekleri, paralel 200/409 kaydı, sekiz görseli, yükleme ve seçimi, dört dilde yayını ve production sunucusu yeniden başlatıldıktan sonra kalıcılığı kontrol eder. Ortak medya regresyonu için `test:homepage-api`, `test:homepage-http`, `test:rooms`, `test:rooms-http`, `test:restaurants`, `test:restaurants-http` çalıştırılır.

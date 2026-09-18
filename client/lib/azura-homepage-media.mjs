@@ -203,3 +203,11 @@ async function listPageImages(page, paths) {
   }
   return records.sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt) || a.image.localeCompare(b.image));
 }
+
+export async function saveAboutImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("about", bytes, mimeType, paths, idFactory);
+}
+
+export async function listAboutImages(paths = resolveAzuraPaths()) {
+  return listPageImages("about", paths);
+}

@@ -1,0 +1,81 @@
+import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
+import { HomepageContentError, LOCALES } from "@/lib/azura-homepage-storage.mjs";
+import {
+  parseAboutIfMatch, readAboutPageContent, AboutContentError,
+  writeAboutPageContent,
+} from "@/lib/azura-about-storage.mjs";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+const MAX_BODY_BYTES = 128 * 1024;
+
+function json(body, status = 200) {
+  return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
+}
+
+function authorize(request) {
+  if (!serviceTokenConfigured()) return json({ error: "Azura servis tokenı yapılandırılmamış." }, 503);
+  if (!hasValidServiceToken(request.headers.get("authorization"))) return json({ error: "Yetkisiz erişim." }, 401);
+  return null;
+}
+
+function failure(error) {
+  if (error instanceof AboutContentError || error instanceof HomepageContentError) {
+    return json({ error: error.message }, error.status);
+  }
+  console.error("Azura Hakkımızda sayfası API hatası:", error);
+  return json({ error: "Azura Hakkımızda sayfası işlenemedi." }, 500);
+}
+
+async function readLimitedBody(request) {
+  if (Number(request.headers.get("content-length")) > MAX_BODY_BYTES) {
+    throw new AboutContentError("İstek gövdesi çok büyük.", 413);
+  }
+  const reader = request.body?.getReader();
+  if (!reader) return "";
+  const chunks = [];
+  let size = 0;
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BODY_BYTES) {
+      await reader.cancel();
+      throw new AboutContentError("İstek gövdesi çok büyük.", 413);
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString("utf8");
+}
+
+export async function GET(request) {
+  const denied = authorize(request);
+  if (denied) return denied;
+  try { return json(await readAboutPageContent()); } catch (error) { return failure(error); }
+}
+
+export async function PUT(request) {
+  const denied = authorize(request);
+  if (denied) return denied;
+  try {
+    const expectedRevision = parseAboutIfMatch(request.headers.get("if-match"));
+    if (!/^application\/json(?:\s*;|\s*$)/i.test(request.headers.get("content-type") || "")) {
+      return json({ error: "Content-Type application/json olmalıdır." }, 415);
+    }
+    let body;
+    try { body = JSON.parse(await readLimitedBody(request)); }
+    catch (error) {
+      if (error instanceof AboutContentError) throw error;
+      return json({ error: "Geçersiz JSON." }, 400);
+    }
+    if (!body || typeof body !== "object" || Array.isArray(body) ||
+        Object.keys(body).length !== 2 || !Object.hasOwn(body, "bundle") || !Object.hasOwn(body, "media")) {
+      return json({ error: "Yalnızca bundle ve media alanları güncellenebilir." }, 400);
+    }
+    const result = await writeAboutPageContent(body.bundle, body.media, expectedRevision);
+    for (const locale of LOCALES) revalidatePath(`/${locale}/about`);
+    return json(result);
+  } catch (error) { return failure(error); }
+}

@@ -18,7 +18,7 @@ const MissionColumn = ({
       src={img}
       width={img.width}
       height={img.height}
-      alt="hotel"
+      alt={img.alt ?? "hotel"}
       className="flex w-full min-h-[270px] max-h-[280px] lg:max-h-[350px] object-cover"
     />
     <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
@@ -42,9 +42,7 @@ const MissionColumn = ({
 );
 
 const MissionVisionSection = ({
-  texts = [],
-  texts2 = [],
-  texts3 = [],
+  content,
   leftImg,
   rightImg,
   showLink,
@@ -83,13 +81,13 @@ const MissionVisionSection = ({
         {/* Üst metin alanı */}
         <div className="flex flex-col items-center justify-normal lg:w-[65%] text-center font-jost text-black gap-[15px] md:gap-[25px] lg:gap-[35px]">
           <span className="text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px]">
-            {texts[0]}
+            {content.subtitle}
           </span>
           <h3 className="text-[28px] md:text-[32px] lg:text-[48px] font-normal leading-[120%] lg:leading-[57.6px] font-marcellus">
-            {texts[1]}
+            {content.title}
           </h3>
           <p className="text-[14px] lg:text-[16px] font-normal leading-[24px]">
-            {texts[2]}
+            {content.text}
           </p>
         </div>
 
@@ -97,17 +95,17 @@ const MissionVisionSection = ({
         <div className="hidden md:flex w-full items-start justify-center gap-[2%]">
           <MissionColumn
             img={leftImg}
-            spanText={texts2[0]}
-            heading={texts2[1]}
-            paragraph={texts[2]}
+            spanText={content.mission.subtitle}
+            heading={content.mission.title}
+            paragraph={content.mission.text}
             showLink={showLink}
             link={link1}
           />
           <MissionColumn
             img={rightImg}
-            spanText={texts2[0]}
-            heading={texts2[1]}
-            paragraph={texts3[2]}
+            spanText={content.vision.subtitle}
+            heading={content.vision.title}
+            paragraph={content.vision.text}
             showLink={showLink}
             link={link2}
           />
@@ -119,9 +117,9 @@ const MissionVisionSection = ({
             <div className="flex-[0_0_90%] mr-[4%] ">
               <MissionColumn
                 img={leftImg}
-                spanText={texts2[0]}
-                heading={texts2[1]}
-                paragraph={texts[2]}
+                spanText={content.mission.subtitle}
+                heading={content.mission.title}
+                paragraph={content.mission.text}
                 showLink={showLink}
                 link={link1}
               />
@@ -129,9 +127,9 @@ const MissionVisionSection = ({
             <div className="flex-[0_0_90%]">
               <MissionColumn
                 img={rightImg}
-                spanText={texts2[0]}
-                heading={texts2[1]}
-                paragraph={texts3[2]}
+                spanText={content.vision.subtitle}
+                heading={content.vision.title}
+                paragraph={content.vision.text}
                 showLink={showLink}
                 link={link2}
               />

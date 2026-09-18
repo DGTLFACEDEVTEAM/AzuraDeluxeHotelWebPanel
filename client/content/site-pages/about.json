@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "about",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "  UNUTULMAZ MUTLU ANLAR",
+        "title": " Otelimiz Hakkında"
+      },
+      "location": {
+        "subtitle": " Azura Deluxe Resort & Spa",
+        "title": " İdeal Tatil Adresiniz",
+        "text": "  Azura Deluxe Resort & Spa’da konfor ve şıklığı bir arada sunan odalarımızda unutulmaz bir tatil deneyimi yaşayın. Otelimizin eşsiz konumu sayesinde odalarımız deniz, havuz veya yemyeşil çevre manzarasına sahiptir. Ayrıca, biri yetişkinler diğeri çocuklar için özel olarak tasarlanmış ısıtmalı kapalı havuzlarımızla tatilinizi daha keyifli hale getirin.",
+        "buttonText": "DAHA FAZLASINI KEŞFET"
+      },
+      "missionVision": {
+        "subtitle": "Azura Deluxe Resort & Spa",
+        "title": " Misyonumuz ve Vizyonumuz",
+        "text": "  Azura Deluxe Resort & Spa olarak misyonumuz, misafirlerimize benzersiz bir konukseverlik sunmak ve unutulmaz anılar yaratmaktır. Kişiye özel hizmetlerden sürdürülebilir uygulamalara kadar konaklamanızın her alanında mükemmelliğe adanmış bulunmaktayız. Vizyonumuz ise, olağanüstü deneyimler yaşatan ve çevreye duyarlı bir işletme olarak turizm sektöründe öncü olmaktır.",
+        "mission": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": " Neden Azura Deluxe’ü Tercih Etmelisiniz?",
+          "text": "  Azura Deluxe Resort & Spa olarak misyonumuz, misafirlerimize benzersiz bir konukseverlik sunmak ve unutulmaz anılar yaratmaktır. Kişiye özel hizmetlerden sürdürülebilir uygulamalara kadar konaklamanızın her alanında mükemmelliğe adanmış bulunmaktayız. Vizyonumuz ise, olağanüstü deneyimler yaşatan ve çevreye duyarlı bir işletme olarak turizm sektöründe öncü olmaktır."
+        },
+        "vision": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": " Neden Azura Deluxe’ü Tercih Etmelisiniz?",
+          "text": "  Huzur veren Akdeniz ve görkemli Toros Dağları’nın arasında yer alan Azura Deluxe Resort & Spa, ayrıcalıklı konforu kişiye özel misafirperverlikle buluşturuyor. Şık odalarımız, gurme restoranlarımız, dinlendirici spa olanaklarımız ve keyifli aktivitelerimizle unutulmaz anılar yaratın. Alanya’ya yakın konumumuz ve kolay ulaşım imkanlarımızla tatilinizi konforla buluşturuyoruz."
+        }
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": "  UNFORGETTABLE HAPPY MOMENTS",
+        "title": "About Our Hotel"
+      },
+      "location": {
+        "subtitle": "Azura Deluxe Resort & Spa",
+        "title": " Your Ideal Holiday Destination",
+        "text": "  Enjoy an unforgettable holiday experience at Azura Deluxe Resort & Spa, where comfort meets elegance in our stylish and thoughtfully designed rooms. Thanks to the hotel’s excellent location, our rooms offer charming views of the sea, pool, or lush surroundings. We also offer heated indoor pools: one dedicated to adults and another specially designed for children.",
+        "buttonText": "MORE ABOUT"
+      },
+      "missionVision": {
+        "subtitle": " Azura Deluxe Resort & Spa",
+        "title": "Our Mission & Vision",
+        "text": " Our mission is to provide unparalleled hospitality and create lasting memories for our guests at Azura Deluxe Resort & Spa. We are dedicated to excellence in every aspect of your stay, from personalized services to sustainable practices. Our vision is to become a leading name in the hospitality industry, renowned for exceptional experiences and environmental responsibility.",
+        "mission": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": "Why Choose Azura Deluxe?",
+          "text": " Our mission is to provide unparalleled hospitality and create lasting memories for our guests at Azura Deluxe Resort & Spa. We are dedicated to excellence in every aspect of your stay, from personalized services to sustainable practices. Our vision is to become a leading name in the hospitality industry, renowned for exceptional experiences and environmental responsibility."
+        },
+        "vision": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": "Why Choose Azura Deluxe?",
+          "text": "  Nestled between the serene Mediterranean Sea and majestic Taurus Mountains, Azura Deluxe Resort & Spa combines unmatched luxury with personalized hospitality. From stylish rooms and gourmet dining experiences to our inviting spa and vibrant entertainment, every moment here is uniquely crafted for your comfort. Our prime location provides easy access to historical Alanya and nearby airports, making your vacation seamless."
+        }
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "  UNVERGESSLICHE GLÜCKLICHE MOMENTE",
+        "title": " Über Unser Hotel"
+      },
+      "location": {
+        "subtitle": " Azura Deluxe Resort & Spa",
+        "title": " Ihr Idealer Urlaubsort",
+        "text": "  Genießen Sie ein unvergessliches Urlaubserlebnis im Azura Deluxe Resort & Spa, wo Komfort und Eleganz in stilvoll eingerichteten Zimmern aufeinandertreffen. Dank der einzigartigen Lage unseres Hotels bieten unsere Zimmer herrliche Ausblicke auf das Meer, den Pool oder die grüne Umgebung. Zusätzlich verfügen wir über beheizte Innenpools, einen für Erwachsene und einen speziell für Kinder.",
+        "buttonText": "Mehr über"
+      },
+      "missionVision": {
+        "subtitle": " Azura Deluxe Resort & Spa",
+        "title": " Unsere Mission und Vision",
+        "text": "  Unsere Mission im Azura Deluxe Resort & Spa ist es, unübertroffene Gastfreundschaft zu bieten und bleibende Erinnerungen für unsere Gäste zu schaffen. Wir sind der Exzellenz in allen Bereichen Ihres Aufenthaltes verpflichtet – von personalisiertem Service bis hin zu nachhaltigen Praktiken. Unsere Vision ist es, ein führender Name in der Hotelbranche zu werden, bekannt für außergewöhnliche Erlebnisse und Umweltbewusstsein.",
+        "mission": {
+          "subtitle": " Azura Deluxe Resort & Spa",
+          "title": " Warum Azura Deluxe wählen?",
+          "text": "  Unsere Mission im Azura Deluxe Resort & Spa ist es, unübertroffene Gastfreundschaft zu bieten und bleibende Erinnerungen für unsere Gäste zu schaffen. Wir sind der Exzellenz in allen Bereichen Ihres Aufenthaltes verpflichtet – von personalisiertem Service bis hin zu nachhaltigen Praktiken. Unsere Vision ist es, ein führender Name in der Hotelbranche zu werden, bekannt für außergewöhnliche Erlebnisse und Umweltbewusstsein."
+        },
+        "vision": {
+          "subtitle": " Azura Deluxe Resort & Spa",
+          "title": " Warum Azura Deluxe wählen?",
+          "text": "  Eingebettet zwischen dem ruhigen Mittelmeer und dem imposanten Taurusgebirge vereint das Azura Deluxe Resort & Spa unvergleichlichen Luxus mit persönlicher Gastfreundschaft. Von eleganten Zimmern über exklusive kulinarische Erlebnisse bis hin zu unserem erholsamen Spa und abwechslungsreicher Unterhaltung gestalten wir jeden Moment einzigartig. Unsere hervorragende Lage ermöglicht bequemen Zugang zum historischen Alanya und den umliegenden Flughäfen."
+        }
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "  НЕЗАБЫВАЕМЫЕ СЧАСТЛИВЫЕ МОМЕНТЫ",
+        "title": " О нашем отеле"
+      },
+      "location": {
+        "subtitle": "Azura Deluxe Resort & Spa",
+        "title": " Ваш идеальный отдых",
+        "text": "  Насладитесь незабываемым отдыхом в Azura Deluxe Resort & Spa, где комфорт встречается с элегантностью в наших стильных номерах, тщательно продуманных до мельчайших деталей. Благодаря уникальному расположению отеля, номера имеют великолепный вид на море, бассейн или зеленые окрестности. Также к вашим услугам подогреваемые крытые бассейны: один для взрослых, второй — специально для детей.",
+        "buttonText": "Подробнее о"
+      },
+      "missionVision": {
+        "subtitle": "Azura Deluxe Resort & Spa",
+        "title": " Наша миссия и видение",
+        "text": "  Наша миссия в Azura Deluxe Resort & Spa – обеспечить высочайший уровень гостеприимства и создать незабываемые воспоминания для наших гостей. Мы стремимся к совершенству во всех аспектах вашего пребывания – от персонализированного сервиса до устойчивых экологических практик. Наше видение – стать лидером гостиничного бизнеса, известным исключительным качеством предоставляемых услуг и заботой об окружающей среде.",
+        "mission": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": " Почему стоит выбрать Azura Deluxe?",
+          "text": "  Наша миссия в Azura Deluxe Resort & Spa – обеспечить высочайший уровень гостеприимства и создать незабываемые воспоминания для наших гостей. Мы стремимся к совершенству во всех аспектах вашего пребывания – от персонализированного сервиса до устойчивых экологических практик. Наше видение – стать лидером гостиничного бизнеса, известным исключительным качеством предоставляемых услуг и заботой об окружающей среде."
+        },
+        "vision": {
+          "subtitle": "Azura Deluxe Resort & Spa",
+          "title": " Почему стоит выбрать Azura Deluxe?",
+          "text": "  Расположенный между тихим Средиземным морем и величественными горами Таурус, Azura Deluxe Resort & Spa сочетает в себе непревзойденную роскошь и индивидуальный подход к гостям. Стильные номера, изысканные блюда, расслабляющий спа-центр и яркие развлечения – здесь каждый момент станет особенным. Удобное расположение отеля позволит легко посетить историческую Аланью и обеспечивает быстрый доступ к аэропортам."
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/about/hero.jpg",
+      "width": 2560,
+      "height": 1438,
+      "translations": {
+        "tr": {
+          "alt": "Azura Deluxe sahili ve iskelesinin havadan görünümü"
+        },
+        "en": {
+          "alt": "Aerial view of the Azura Deluxe beach and pier"
+        },
+        "de": {
+          "alt": "Luftaufnahme des Strandes und Stegs von Azura Deluxe"
+        },
+        "ru": {
+          "alt": "Вид с воздуха на пляж и пирс Azura Deluxe"
+        }
+      }
+    },
+    "location": {
+      "image": "/uploads/pages/about/location.jpg",
+      "width": 1665,
+      "height": 1110,
+      "translations": {
+        "tr": {
+          "alt": "Azura Deluxe otel binası ve giriş alanı"
+        },
+        "en": {
+          "alt": "Azura Deluxe hotel building and entrance"
+        },
+        "de": {
+          "alt": "Hotelgebäude und Eingang von Azura Deluxe"
+        },
+        "ru": {
+          "alt": "Здание и вход отеля Azura Deluxe"
+        }
+      }
+    },
+    "moments": {
+      "images": [
+        {
+          "id": "about-moment-1",
+          "order": 0,
+          "image": "/uploads/pages/about/moment-1.jpg",
+          "width": 1042,
+          "height": 1042,
+          "translations": {
+            "tr": {
+              "alt": "Akşam ışıklarıyla Azura Deluxe havuzu"
+            },
+            "en": {
+              "alt": "Azura Deluxe pool illuminated in the evening"
+            },
+            "de": {
+              "alt": "Abendlich beleuchteter Pool von Azura Deluxe"
+            },
+            "ru": {
+              "alt": "Бассейн Azura Deluxe с вечерней подсветкой"
+            }
+          }
+        },
+        {
+          "id": "about-moment-2",
+          "order": 1,
+          "image": "/uploads/pages/about/moment-2.jpg",
+          "width": 1879,
+          "height": 1254,
+          "translations": {
+            "tr": {
+              "alt": "Gün batımında Azura Deluxe havuz terası"
+            },
+            "en": {
+              "alt": "Azura Deluxe pool terrace at sunset"
+            },
+            "de": {
+              "alt": "Poolterrasse von Azura Deluxe bei Sonnenuntergang"
+            },
+            "ru": {
+              "alt": "Терраса у бассейна Azura Deluxe на закате"
+            }
+          }
+        },
+        {
+          "id": "about-moment-3",
+          "order": 2,
+          "image": "/uploads/pages/about/moment-3.jpg",
+          "width": 2048,
+          "height": 1267,
+          "translations": {
+            "tr": {
+              "alt": "Azura Deluxe girişindeki aydınlatılmış heykeller"
+            },
+            "en": {
+              "alt": "Illuminated statues at the Azura Deluxe entrance"
+            },
+            "de": {
+              "alt": "Beleuchtete Statuen am Eingang von Azura Deluxe"
+            },
+            "ru": {
+              "alt": "Подсвеченные скульптуры у входа в Azura Deluxe"
+            }
+          }
+        },
+        {
+          "id": "about-moment-4",
+          "order": 3,
+          "image": "/uploads/pages/about/moment-4.jpg",
+          "width": 1425,
+          "height": 1069,
+          "translations": {
+            "tr": {
+              "alt": "Azura Deluxe oteli ve deniz üzerindeki iskelesi"
+            },
+            "en": {
+              "alt": "Azura Deluxe hotel and its pier over the sea"
+            },
+            "de": {
+              "alt": "Azura Deluxe Hotel und sein Steg über dem Meer"
+            },
+            "ru": {
+              "alt": "Отель Azura Deluxe и его морской пирс"
+            }
+          }
+        }
+      ]
+    },
+    "missionVision": {
+      "mission": {
+        "image": "/uploads/pages/about/mission.jpg",
+        "width": 2048,
+        "height": 1367,
+        "translations": {
+          "tr": {
+            "alt": "Azura Deluxe otel binası önündeki açık havuz"
+          },
+          "en": {
+            "alt": "Outdoor pool in front of the Azura Deluxe hotel"
+          },
+          "de": {
+            "alt": "Außenpool vor dem Azura Deluxe Hotel"
+          },
+          "ru": {
+            "alt": "Открытый бассейн перед отелем Azura Deluxe"
+          }
+        }
+      },
+      "vision": {
+        "image": "/uploads/pages/about/vision.jpg",
+        "width": 1614,
+        "height": 1600,
+        "translations": {
+          "tr": {
+            "alt": "Jakuzide dinlenen Azura Deluxe misafiri"
+          },
+          "en": {
+            "alt": "Azura Deluxe guest relaxing in a whirlpool"
+          },
+          "de": {
+            "alt": "Azura Deluxe Gast beim Entspannen im Whirlpool"
+          },
+          "ru": {
+            "alt": "Гость Azura Deluxe отдыхает в джакузи"
+          }
+        }
+      }
+    }
+  }
+}

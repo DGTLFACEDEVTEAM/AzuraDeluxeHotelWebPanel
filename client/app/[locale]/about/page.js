@@ -1,38 +1,24 @@
 import React from 'react'
 import MainBanner2 from '../GeneralComponents/MainBanner2'
-import mainImg from "./images/banner.jpg"
-import exactImg from "./images/PANORAMIC.jpg"
 import SpaReverseInfo from '../spawellness/components/SpaReverseInfo'
 import MissionVisionSection from './components/MissionVisionSection'
-import EmblaCarousel from "../HomePage/Components/Slider/Slider1"
 import KidsMomentCarousel from '../kidsclub/components/KidsMomentCarousel'
-import img1 from "./images/gal_sol.jpg"
-import img2 from "./images/gal_orta.jpg"
-import img3 from "./images/Gal_sag.jpg"
-import img4 from "./images/gal_son.jpg"
-import leftImg from "./images/1.jpg"
-import rightImg from "./images/2.jpg"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
-import {useTranslations} from 'next-intl';
+import { readAboutPageLocale } from '@/lib/azura-about-content'
 
-const images =[img2,img3,img4,img1]
+export const dynamic = 'force-dynamic'
 
-const Page = () => {
-  const t = useTranslations("About");
-  const t2 = useTranslations("About.InfoSection");
-  const t3 = useTranslations("About.MissinonVision");
-
-  const texts=[t3("subtitle"),t3("title"),t3("text")]
-const texts2=[t3("clubsubtitle1"),t3("clubtitle1"),t3("clubtext1")]
-const texts3=[t3("clubsubtitle2"),t3("clubtitle2"),t3("clubtext2")]
+const Page = async ({ params }) => {
+  const { locale } = await params
+  const { texts, images } = await readAboutPageLocale(locale)
 
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-x-hidden'>
-      <MainBanner2 span={t("subtitle")} header={t("title")} img={mainImg}/>
-      <SpaReverseInfo isImageLeft={false} span={t2("subtitle")} header={t2("title")} text={t2("text")} link="/" showLink={true} img={exactImg}/>
-      <KidsMomentCarousel showheader={false} header=""  images={images}/>
-      <MissionVisionSection texts={texts} texts2={texts2} texts3={texts3} leftImg={leftImg} rightImg={rightImg} showLink={false}/>
-      <EmblaCarousel options={{ loop: true }}/>
+      <MainBanner2 span={texts.hero.subtitle} header={texts.hero.title} img={images.hero}/>
+      <SpaReverseInfo isImageLeft={false} span={texts.location.subtitle} header={texts.location.title} text={texts.location.text} buttonText={texts.location.buttonText} link="/" showLink={true} img={images.location}/>
+      <KidsMomentCarousel showheader={false} header="" images={images.moments}/>
+      <MissionVisionSection content={texts.missionVision} leftImg={images.missionVision.mission} rightImg={images.missionVision.vision} showLink={false}/>
+      {/* The former Slider1 call had no slides and threw during rendering. No About discovery content is defined. */}
       <ContactSection2/>
     </div>
   )
