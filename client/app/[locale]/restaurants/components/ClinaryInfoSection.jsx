@@ -81,7 +81,7 @@ const ClinaryInfoSection = ({
           <Image
            style={{ objectFit: "cover" }}
             src={img2}
-            alt="art"
+            alt={img2.alt ?? "art"}
             width={img2.width}
             height={img2.height}
             className={`w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out mb-[20px] lg:mb-0 ${
@@ -91,7 +91,7 @@ const ClinaryInfoSection = ({
           <Image
            style={{ objectFit: "cover" }}
             src={img1}
-            alt="art"
+            alt={img1.alt ?? "art"}
             width={img1.width}
             height={img1.height}
             className={`absolute top-[80px] left-[126px] md:top-[208px] md:left-[135px] lg:top-[105px] lg:left-[215px] w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${

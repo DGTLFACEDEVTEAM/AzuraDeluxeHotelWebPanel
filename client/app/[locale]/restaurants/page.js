@@ -2,106 +2,58 @@ import React from 'react'
 import ClinaryInfoSection from './components/ClinaryInfoSection'
 import MainRestaurantSection from './components/MainRestaurantSection'
 import CuisinesCarousel from './components/CuisinesCarousel'
-import CuisinesCarouselSingle from './components/CuisinesCarouselSingle'
 import ClinaryReverseInfo from './components/ClinaryReverseInfo'
-
-import orchestra from "./images/orchestra.webp"
-import bellaazura from "./images/bellaazura.webp"
-import ottoman from "./images/ottoman.webp"
-
-import patisserie from "./images/Patisserie.webp"
-import mazurka from "./images/MAZURKA.jpg"
-import lyric from "./images/LYRIC.jpg"
 import DiscoverBackground from './components/DiscoverBackground'
-import backgroundImg from "./images/discoverbarsparallax.jpg"
-
-import img1 from "./images/blok22.jpg"
-import img2 from "./images/blok222.webp"
-
-import img3 from "./images/blok2.jpg"
-import img4 from "./images/blok21.jpg"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
-
-import mainBanner from "./images/Banner.jpg"
 import BannerDark from '../GeneralComponents/BannerDark'
-import {useTranslations} from 'next-intl';
+import { readRestaurantsPageLocale, RESTAURANT_CAROUSEL_KEYS } from '@/lib/azura-restaurants-storage.mjs'
 
-const Page = () => {
-  const t = useTranslations('Restaurants');
-  const t2 = useTranslations('Restaurants.TwoImagesSection');
-  const t3 = useTranslations('Restaurants.CarouselSection');
-  const t4 = useTranslations('Restaurants.CarouselSection2');
-  const t5 = useTranslations('Restaurants.BackgroundSection2');
-  const t6 = useTranslations('Restaurants.TwoImagesSection2');
+export const dynamic = 'force-dynamic'
 
-  const cuisines = [
-    {
-      id: 1,
-      img: orchestra,
-      title: t3("title1"),
-      description: t3("subtitle1"),
-      text:t3("text1"),
-      link:"restaurants/orchestrarestaurant"
-    },
-    {
-      id: 2,
-      img: bellaazura,
-      title: t3("subtitle2"),
-      description: t3("title2"),
-      text:t3("text2"),
-       link:"/restaurants/bellaazura"
-    },
-    {
-      id: 3,
-      img: ottoman,
-      title: t3("title3"),
-      description: t3("subtitle3"),
-      text:t3("text3"),
-       link:"/restaurants/ottomanrestaurant"
-    }
-  ];
+const FIRST_LINKS = Object.freeze({
+  orchestra: 'restaurants/orchestrarestaurant',
+  bellaAzura: '/restaurants/bellaazura',
+  ottoman: '/restaurants/ottomanrestaurant',
+})
+const SECOND_LINKS = Object.freeze({
+  patisserie: '/restaurants/patisserie',
+  mazurka: '/restaurants/mazurka',
+  lyric: '/restaurants/lyric',
+})
 
-  const cuisines2 = [
-    {
-      id: 1,
-      img: patisserie,
-      title: t4("title1"),
-      description: t4("subtitle1"),
-      text:t4("text1"),
-      link:"/restaurants/patisserie"
-    },
-    {
-      id: 2,
-      img: mazurka,
-      title: t4("title2"),
-      description: t4("subtitle2"),
-      text:t4("text2"),
-       link:"/restaurants/mazurka"
-    },
-    {
-      id: 3,
-      img: lyric,
-      title: t4("title3"),
-      description: t4("subtitle3"),
-      text:t4("text3"),
-       link:"/restaurants/lyric"
-    }
-  ];
+const Page = async ({ params }) => {
+  const { locale } = await params
+  const { texts, images } = await readRestaurantsPageLocale(locale)
 
-const textsClinary=[t2("text"),t2("span"),t2("list1")]
+  const cuisines = RESTAURANT_CAROUSEL_KEYS.alacarteCarousel.map((key, index) => ({
+    id: index + 1,
+    img: images.alacarteCarousel.cards[key],
+    title: texts.alacarteCarousel.cards[key].title,
+    description: texts.alacarteCarousel.cards[key].subtitle,
+    text: texts.alacarteCarousel.cards[key].text,
+    link: FIRST_LINKS[key],
+  }))
+  const cuisines2 = RESTAURANT_CAROUSEL_KEYS.dessertsCarousel.map((key, index) => ({
+    id: index + 1,
+    img: images.dessertsCarousel.cards[key],
+    title: texts.dessertsCarousel.cards[key].title,
+    description: texts.dessertsCarousel.cards[key].subtitle,
+    text: texts.dessertsCarousel.cards[key].text,
+    link: SECOND_LINKS[key],
+  }))
+  const textsClinary = [texts.intro.text, texts.intro.span, texts.intro.list1]
 
   return (
     <div className='overflow-hidden items-center justify-center flex flex-col gap-[60px]  md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
-      <BannerDark img={mainBanner} span={t("subtitle")} header={t("title")} text={t("text")}/>
-      <ClinaryInfoSection img1={img3} img2={img4} span={t2("subtitle")} header={t2("title")} texts={textsClinary} />
-      <MainRestaurantSection/>
-      {/* <CuisinesCarouselSingle span={t3("subtitle")} header={t3("title1")} text={t3("text1")} cuisines={cuisines}/> */}
-      <CuisinesCarousel span={t3("subtitle")} header={t3("title")} text={t3("text")} cuisines={cuisines}/>
-      <ClinaryReverseInfo img1={img1} img2={img2} span={t6("span")} header={t6("title")} text1={t6("text")} text2={t6("text2")}/>
-     <div className='flex flex-col relative'>
-     <CuisinesCarousel span={t4("subtitle")} header={t4("title")} text={t4("text")} cuisines={cuisines2}/>
-     </div>
-      <DiscoverBackground span={t5("subtitle")} header={t5("title")} text={t5("text")} link="/bars" img={backgroundImg}/>
+      <BannerDark img={images.hero} span={texts.hero.subtitle} header={texts.hero.title} text={texts.hero.text}/>
+      <ClinaryInfoSection img1={images.intro.primary} img2={images.intro.secondary} span={texts.intro.subtitle} header={texts.intro.title} texts={textsClinary} />
+      <MainRestaurantSection content={texts.mainRestaurant} image={images.mainRestaurant}/>
+      <CuisinesCarousel span={texts.alacarteCarousel.subtitle} header={texts.alacarteCarousel.title} text={texts.alacarteCarousel.text} cuisines={cuisines}/>
+      <ClinaryReverseInfo img1={images.reverse.primary} img2={images.reverse.secondary} span={texts.reverse.span} header={texts.reverse.title} text1={texts.reverse.text} text2={texts.reverse.text2}/>
+      <div className='flex flex-col relative'>
+        <CuisinesCarousel span={texts.dessertsCarousel.subtitle} header={texts.dessertsCarousel.title} text={texts.dessertsCarousel.text} cuisines={cuisines2}/>
+      </div>
+      <DiscoverBackground span={texts.discover.subtitle} header={texts.discover.title} text={texts.discover.text} link="/bars" img={images.discover}/>
       <ContactSection2/>
     </div>
   )

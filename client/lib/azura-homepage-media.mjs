@@ -31,6 +31,10 @@ export function roomsMediaDir(paths = resolveAzuraPaths()) {
   return mediaDir("rooms", paths);
 }
 
+export function restaurantsMediaDir(paths = resolveAzuraPaths()) {
+  return mediaDir("restaurants", paths);
+}
+
 function mediaDir(page, paths) {
   return path.join(paths.uploadsRoot, "pages", page);
 }
@@ -112,6 +116,10 @@ export async function saveRoomsImage(bytes, mimeType, paths = resolveAzuraPaths(
   return savePageImage("rooms", bytes, mimeType, paths, idFactory);
 }
 
+export async function saveRestaurantsImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("restaurants", bytes, mimeType, paths, idFactory);
+}
+
 async function savePageImage(page, bytes, mimeType, paths, idFactory) {
   const info = await inspectHomepageImage(bytes, mimeType);
   const folder = await safeMediaDir(paths, page, true);
@@ -151,6 +159,10 @@ export async function listHomepageImages(paths = resolveAzuraPaths()) {
 
 export async function listRoomsImages(paths = resolveAzuraPaths()) {
   return listPageImages("rooms", paths);
+}
+
+export async function listRestaurantsImages(paths = resolveAzuraPaths()) {
+  return listPageImages("restaurants", paths);
 }
 
 async function listPageImages(page, paths) {

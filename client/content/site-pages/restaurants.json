@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "restaurants",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "Özenle Hazırlanmış Gurme Deneyimler",
+        "title": "Restoranlar",
+        "text": "Özenle seçilmiş yemek seçeneklerimizle keyifli bir lezzet yolculuğuna çıkın. Otantik Türk ve Akdeniz tatlarından uluslararası gurme uzmanlıklarına kadar Azura Deluxe Resort & Spa, her öğünü unutulmaz kılacak geniş bir restoran yelpazesi sunar."
+      },
+      "intro": {
+        "subtitle": "",
+        "title": "Azura Deluxe'de Lezzet Sanatı",
+        "text": "Azura Deluxe Resort & Spa’da olağanüstü lezzet deneyimlerinin tadını çıkarın. Şık À la Carte restoranlarımızda en seçkin uluslararası mutfakların keyfini sürebilir veya zengin açık büfemizdeki Türk özel tatları ve taze Akdeniz lezzetleriyle her öğünü unutulmaz kılabilirsiniz",
+        "span": "Yemek Seçenekleri:",
+        "list1": "Ana Restoran: Erken Kahvaltı, Kahvaltı, Geç Kahvaltı, Öğle Yemeği, Akşam Yemeği, Gece Kahvaltısı (23:00–03:00)"
+      },
+      "mainRestaurant": {
+        "subtitle": "EŞSİZ BİR LEZZET ŞÖLENİ",
+        "title": "Ana Restoran",
+        "text": "Kahvaltı, öğle ve akşam yemeklerinde, Türk mutfağının otantik lezzetlerini ve mevsimsel uzmanlıkları sergileyen zengin açık büfemizde keşfedin.",
+        "span": "Yemek Saatleri:",
+        "list1": "Kahvaltı: 07:00 - 10:30",
+        "list2": "Öğle Yemeği: 12:30 - 14:00",
+        "list3": "Akşam Yemeği: 19:00 - 21:00"
+      },
+      "alacarteCarousel": {
+        "subtitle": "Mükemmel Gurme Deneyimler",
+        "title": "À la Carte Restoranlar",
+        "text": "Özel à la carte restoranlarımızda olağanüstü uluslararası lezzetlerin tadını çıkarın. Yetenekli ve ödüllü şeflerimiz tarafından ustalıkla hazırlanan enfes yemeklerle tatilinizi benzersiz kılın.",
+        "cards": {
+          "orchestra": {
+            "title": " Ana Restoran",
+            "subtitle": " MUTFAK: Uluslararası",
+            "text": "Ana restoranımızın sıcak atmosferinde yetenekli şeflerimiz tarafından hazırlanan uluslararası lezzetlerin zengin çeşitliliğini keşfedin. Dünyanın farklı mutfaklarından özenle seçilmiş, lezzetli ve şık sunumlu açık büfemizin keyfini kahvaltı, öğle ve akşam yemeklerinde çıkarabilirsiniz."
+          },
+          "bellaAzura": {
+            "title": " MUTFAK: İtalyan",
+            "subtitle": " İtalyan À la Carte Restoranı",
+            "text": " İtalyan À la Carte Restoranımızda Güney İtalya mutfağının birbirinden leziz tatlarını keşfedin. Carpaccio, risotto, makarna ve salata gibi özel lezzetlerin yanında kaliteli kırmızı şarapların eşsiz aromasını duyumsayın. Akdeniz boyunca büyüleyici bir gastronomi yolculuğuna çıkacağınız sihirli bir yemek deneyimi yaşayın."
+          },
+          "ottoman": {
+            "title": " Türk À la Carte Restoran",
+            "subtitle": " MUTFAK: Türk",
+            "text": "Muhteşem Osmanlı Saray mutfağının nadir tarifleriyle hazırlanan benzersiz menümüzü keşfedin. Klasik Türk müziğinin huzur veren ezgileri eşliğinde, Türkiye’nin zengin mutfak mirasının tadına varacağınız unutulmaz bir yemek deneyimi yaşayın."
+          }
+        }
+      },
+      "reverse": {
+        "span": "",
+        "title": "Tatlıların Dayanılmaz Lezzeti",
+        "text": "Azura Deluxe Resort & Spa, tatlı severlere unutulmaz bir deneyim sunuyor. Tesisimizin patisserie bölümünde, her damak tadına hitap eden lezzetlerle tatilinizi daha da tatlandırabilirsiniz. Zengin çeşitlilikteki tuzlu ve tatlı kurabiyeler, ıslak kekler ve özel sandviçlerle günün her anında tatlı bir mola verebilir, kahvenizin ya da çayınızın yanında seçkin lezzetlerin tadını çıkarabilirsiniz.",
+        "text2": "Birbirinden leziz tatlılarımız, profesyonel şeflerimizin elinden çıkarak özenle hazırlanır. Taze ve doğal malzemelerle hazırlanan bu tatlar, Azura Deluxe'ın lezzet anlayışının en güzel örneklerini sergiler ve tatilinize özel bir dokunuş katmaya hazırdır."
+      },
+      "dessertsCarousel": {
+        "subtitle": "Mükemmel Gurme Deneyimler",
+        "title": "À la Carte Restoranlar",
+        "text": "Özel à la carte restoranlarımızda olağanüstü uluslararası lezzetlerin tadını çıkarın. Yetenekli ve ödüllü şeflerimiz tarafından ustalıkla hazırlanan enfes yemeklerle tatilinizi benzersiz kılın.",
+        "cards": {
+          "patisserie": {
+            "title": "Patisserie",
+            "subtitle": "TATLILAR & SICAK İÇECEKLER",
+            "text": "Çekici pastanemizde taze pişmiş hamur işleri, enfes tatlılar, lezzetli kekler ve sıcak içeceklerden oluşan zengin bir seçkiyle tatlı anların tadını çıkarın. Gün boyu keyifle dinlenmek ve kendinizi şımartmak için ideal bir mekan. Öne çıkanlar: Çeşitli kahveler, demlenmiş çay, baklava, kurabiye ve sandviçler."
+          },
+          "mazurka": {
+            "title": "Mazurka Snack Restoranı",
+            "subtitle": "À LA CARTE ATIŞTIRMALIKLAR",
+            "text": "Mazurka Snack Restoranı'nda taze ızgara spesiyaliteler, lezzetli sandviçler ve nefis salatalardan oluşan à la carte atıştırmalıkların tadını çıkarın.  Otel içinde rahat bir yemek deneyimiyle gece saatlerindeki atıştırmalık ihtiyaçlarınızı karşılayın. Mutfak: Izgara ürünler, burgerler, sandviçler, salatalar ve meyveler."
+          },
+          "lyric": {
+            "title": "Lyric",
+            "subtitle": "PLAJ ATIŞTIRMALIKLARI",
+            "text": "Plaj ve iskele kenarındaki Lyric Snack Bar’da rahatlatıcı bir deniz kenarı yemek deneyimi yaşayın. Lezzetli taze salatalar, çıtır pizzalar, sulu kebaplar, taze meyveler, waffle’lar, atıştırmalıklar ve ferahlatıcı içecekler eşliğinde güneşin ve sonsuz deniz manzarasının keyfini çıkarın. Öne çıkanlar: Salatalar, pizza, kebaplar, meyveler, waffle ve çeşitli atıştırmalıklar."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "EŞSİZ BİR LEZZET ŞÖLENİ",
+        "title": "Barlarımızı Keşfedin",
+        "text": "Azura Deluxe Resort & Spa’nın şık barlarında keyifli bir atmosferin tadını çıkarın. Ferahlatıcı kokteyllerden premium içeceklere, sosyalleşme veya dinlenme için ideal rahat alanlara kadar her barımız, ruh halinize göre benzersiz bir deneyim sunar."
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": " Curated Culinary Experiences",
+        "title": "Restaurants",
+        "text": "Embark on a delightful culinary journey with our carefully curated dining options. From authentic Turkish and Mediterranean delicacies to international gourmet specialties, Azura Deluxe Resort & Spa offers an exceptional variety of restaurants, ensuring every meal becomes an unforgettable experience."
+      },
+      "intro": {
+        "subtitle": "",
+        "title": "Culinary Art at Azura Deluxe",
+        "text": "At Azura Deluxe Resort & Spa, indulge in extraordinary culinary experiences. Savor the finest international cuisines in our elegant A'la Carte restaurants, or enjoy our rich open buffet featuring delightful Turkish specialties and fresh Mediterranean flavors, making each meal unforgettable",
+        "span": " Dining Options:",
+        "list1": "Main Restaurant: Early Breakfast, Breakfast, Late Breakfast, Lunch, Dinner, Night Breakfast (23:00–03:00)"
+      },
+      "mainRestaurant": {
+        "subtitle": "A UNIQUE FEAST OF TASTE",
+        "title": "Main Restaurant",
+        "text": "For breakfast, lunch, and dinner, enjoy a rich open buffet showcasing the authentic flavors of Turkish cuisine and delightful seasonal specialties, all carefully prepared for your dining pleasure",
+        "span": "Meal Hours:",
+        "list1": "Breakfast: 07:00 - 10:30",
+        "list2": "Lunch: 12:30 - 14:00",
+        "list3": "Dinner: 19:00 - 21:00"
+      },
+      "alacarteCarousel": {
+        "subtitle": "Perfect Fine Dining Experiences",
+        "title": "A'la Carte Restaurants",
+        "text": "Embark on a culinary journey at our exclusive à la carte restaurants, where exquisite international flavors await, masterfully prepared by our talented and award-winning chefs. Enhance your holiday experience by indulging in exceptional dishes and memorable dining moments",
+        "cards": {
+          "orchestra": {
+            "title": " Main Restaurant",
+            "subtitle": "CUISINE: International",
+            "text": "  Explore the rich variety of international flavors prepared by our talented chefs in the welcoming atmosphere of our Main Restaurant. Enjoy a carefully curated, beautifully presented buffet offering a wide selection of delicious dishes from around the world, available each day for breakfast, lunch, and dinner."
+          },
+          "bellaAzura": {
+            "title": "  CUISINE: Italian",
+            "subtitle": "  Italian À la Carte Restaurant",
+            "text": " Discover the irresistible flavors of Southern Italian cuisine at our Italian À la Carte Restaurant. Delight your senses with signature dishes such as carpaccio, risotto, pasta, and salads paired beautifully with the aroma of fine red wine. Enjoy a magical dining experience that will take you on a culinary journey through the Mediterranean."
+          },
+          "ottoman": {
+            "title": " Turkish À la Carte Restaurant",
+            "subtitle": " CUISINE: Turkish",
+            "text": " Enjoy an extraordinary dining experience featuring rare recipes from the magnificent Ottoman Palace cuisine. Accompanied by the gentle melodies of classical Turkish music, each dish invites you to savor the rich culinary heritage of Turkey."
+          }
+        }
+      },
+      "reverse": {
+        "span": "Irresistible Sweet Delights",
+        "title": "Irresistible Sweet Delights",
+        "text": "Azura Deluxe Resort & Spa offers an unforgettable experience for dessert lovers. In our patisserie, you can sweeten your holiday with flavors that appeal to every palate. Enjoy a sweet break at any time of the day with a rich variety of salty and sweet cookies, moist cakes, and special sandwiches, paired perfectly with your coffee or tea.",
+        "text2": "Our delicious desserts are carefully prepared by our professional chefs. Made with fresh and natural ingredients, these treats exemplify Azura Deluxe's approach to culinary excellence, ready to add a special touch to your vacation."
+      },
+      "dessertsCarousel": {
+        "subtitle": "Bar & Café Delights",
+        "title": "Patisserie, Bars & Snacks",
+        "text": "Brighten your holiday with an array of delightful drinks and snacks at Azura Deluxe Resort & Spa's exclusive bars and cafés. Savor hot and cold specialties crafted by our talented chefs in a cozy atmosphere perfect for relaxing moments.",
+        "cards": {
+          "patisserie": {
+            "title": "Patisserie",
+            "subtitle": "Desserts & Hot Drinks",
+            "text": "Indulge in freshly baked pastries, exquisite desserts, flavorful cakes, and a variety of hot beverages at our patisserie. It’s the ideal spot to treat yourself throughout the day."
+          },
+          "mazurka": {
+            "title": "Mazurka Snack Restaurant",
+            "subtitle": "À LA CARTE SNACKS",
+            "text": "Enjoy the à la carte snacks at Mazurka Snack Restaurant, featuring fresh grilled specialties, delicious sandwiches, and exquisite salads. Satisfy your late-night snack cravings with a comfortable dining experience within the hotel. Cuisine: grilled dishes, burgers, sandwiches, salads, and fruits."
+          },
+          "lyric": {
+            "title": "Lyric",
+            "subtitle": "Beach Snacks",
+            "text": "At Lyric Snack Bar by the beach, enjoy grilled specialties, pita, doner, burgers, salads, and fresh fruits, along with an ice-cream corner at select hours. Perfect for a seaside snack with panoramic views."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "A UNIQUE FEAST OF TASTE",
+        "title": "Discover Our Bars",
+        "text": "Immerse yourself in a delightful atmosphere at Azura Deluxe Resort & Spa's stylish bars. From refreshing cocktails and premium beverages to cozy settings ideal for socializing or relaxing, each of our bars offers a unique experience tailored to your mood"
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "Ausgewählte kulinarische Erlebnisse",
+        "title": "Restaurants",
+        "text": "Begeben Sie sich auf eine genussvolle kulinarische Reise mit unseren sorgfältig ausgewählten Speiseoptionen. Von authentischen türkischen und mediterranen Spezialitäten bis hin zu internationalen Gourmet‑Kreationen bietet das Azura Deluxe Resort & Spa eine außergewöhnliche Vielfalt an Restaurants und macht jede Mahlzeit zu einem unvergesslichen Erlebnis."
+      },
+      "intro": {
+        "subtitle": "",
+        "title": "Kulinarische Kunst im Azura Deluxe",
+        "text": "Im Azura Deluxe Resort & Spa verwöhnen Sie sich mit außergewöhnlichen kulinarischen Genüssen. Kosten Sie die besten internationalen Speisen in unseren eleganten À‑la‑carte‑Restaurants oder genießen Sie unser reichhaltiges Buffet mit köstlichen türkischen Spezialitäten und frischen mediterranen Aromen.",
+        "span": "Speiseoptionen:",
+        "list1": "Hauptrestaurant: Early Breakfast, Frühstück, Late Breakfast, Mittagessen, Abendessen, Mitternachtsfrühstück (23:00–03:00)"
+      },
+      "mainRestaurant": {
+        "subtitle": "Einzigartiges Geschmackserlebnis",
+        "title": "Hauptrestaurant",
+        "text": "Genießen Sie zum Frühstück, Mittag‑ und Abendessen ein reichhaltiges Buffet mit authentischen Aromen der türkischen Küche und köstlichen saisonalen Spezialitäten, sorgfältig für Ihr kulinarisches Vergnügen zubereitet.",
+        "span": "Essenszeiten:",
+        "list1": "Frühstück: 07:00 - 10:30",
+        "list2": "Mittagessen: 12:30 - 14:00",
+        "list3": "Abendessen: 19:00 - 21:00"
+      },
+      "alacarteCarousel": {
+        "subtitle": "Perfekte Fine‑Dining‑Erlebnisse",
+        "title": "À‑la‑carte‑Restaurants",
+        "text": "Begeben Sie sich auf eine kulinarische Reise in unseren exklusiven À‑la‑carte‑Restaurants, in denen exquisite internationale Aromen auf Sie warten – meisterhaft zubereitet von unseren talentierten und preisgekrönten Küchenchefs. Verfeinern Sie Ihr Urlaubserlebnis mit außergewöhnlichen Gerichten und unvergesslichen Genussmomenten.",
+        "cards": {
+          "orchestra": {
+            "title": " Hauptrestaurant",
+            "subtitle": " KÜCHE: International",
+            "text": " Entdecken Sie die Vielfalt internationaler Spezialitäten, liebevoll zubereitet von unseren talentierten Küchen der gemütlichen Atmosphäre unseres Hauptrestaurants. Genießen Sie täglich zum Frühstück, Mittag- und Abendessen unser sorgfältig zusammengestelltes und geschmackvoll präsentiertes Buffet mit köstlichen Gerichten aus aller Welt."
+          },
+          "bellaAzura": {
+            "title": " KÜCHE: Italienisch",
+            "subtitle": " Italienisches À-la-Carte-Restaurant",
+            "text": "Entdecken Sie die unwiderstehlichen Aromen der süditalienischen Küche in unserem italienischen À-la-Carte-Restaurant. Genießen Sie besondere Gerichte wie Carpaccio, Risotto, Pasta und Salate, begleitet vom verführerischen Aroma edler Rotweine. Erleben Sie ein magisches kulinarisches Erlebnis und reisen Sie mit uns geschmacklich durch das Mittelmeer."
+          },
+          "ottoman": {
+            "title": " Türkisches À-la-Carte-Restaurant",
+            "subtitle": "KÜCHE: Türkisch",
+            "text": " Genießen Sie ein außergewöhnliches kulinarisches Erlebnis mit seltenen Rezepten aus der prunkvollen osmanischen Palastküche. Begleitet von sanfter klassischer türkischer Musik laden unsere Gerichte Sie dazu ein, das reiche kulinarische Erbe der Türkei zu entdecken."
+          }
+        }
+      },
+      "reverse": {
+        "span": "Unwiderstehliche süße Köstlichkeiten",
+        "title": "Unwiderstehliche süße Köstlichkeiten",
+        "text": "Das Azura Deluxe Resort & Spa bietet Dessertliebhabern ein unvergessliches Erlebnis. In unserer Patisserie können Sie Ihren Urlaub mit Geschmacksrichtungen versüßen, die jeden Gaumen erfreuen. Genießen Sie zu jeder Tageszeit eine süße Pause mit einer reichhaltigen Auswahl an süßen und herzhaften Keksen, saftigen Kuchen und speziellen Sandwiches, perfekt kombiniert mit Ihrem Kaffee oder Tee.",
+        "text2": "Unsere köstlichen Desserts werden von unseren professionellen Küchenchefs sorgfältig zubereitet. Mit frischen und natürlichen Zutaten hergestellt, verkörpern diese Leckereien den kulinarischen Anspruch von Azura Deluxe und verleihen Ihrem Urlaub eine besondere Note."
+      },
+      "dessertsCarousel": {
+        "subtitle": "Perfekte Fine‑Dining‑Erlebnisse",
+        "title": "À‑la‑carte‑Restaurants",
+        "text": "Begeben Sie sich auf eine kulinarische Reise in unseren exklusiven À‑la‑carte‑Restaurants, in denen exquisite internationale Aromen auf Sie warten – meisterhaft zubereitet von unseren talentierten und preisgekrönten Küchenchefs. Verfeinern Sie Ihr Urlaubserlebnis mit außergewöhnlichen Gerichten und unvergesslichen Genussmomenten.",
+        "cards": {
+          "patisserie": {
+            "title": "Patisserie",
+            "subtitle": "DESSERTS & HEISSE GETRÄNKE",
+            "text": "Können Sie sich süße Momente in unserer charmanten Patisserie mit frisch gebackenen Backwaren, köstlichen Desserts, raffinierten Kuchen und einer erlesenen Auswahl an Heißgetränken. Ein perfekter Ort zum Entspannen und Genießen den ganzen Tag über. Highlights: Kaffeespezialitäten, aufgebrühter Tee, süße Gebäckspezialitäten, Kekse und Sandwiches."
+          },
+          "mazurka": {
+            "title": "Mazurka Snack Restaurant",
+            "subtitle": "À‑LA‑CARTE‑SNACKS",
+            "text": "Genießen Sie im Mazurka Snack Restaurant à la carte Snacks mit frischen gegrillten Spezialitäten, leckeren Sandwiches und köstlichen Salaten. Stillen Sie Ihre nächtlichen Snack-Gelüste bei einem entspannten Esserlebnis im Hotel. Küche: Grillgerichte, Burger, Sandwiches, Salate und Früchte."
+          },
+          "lyric": {
+            "title": "Lyric",
+            "subtitle": "STRANDSNACKS",
+            "text": "Direkt am Strand und an der Seebrücke bietet die Lyric Snack Bar ein entspanntes Dining‑Erlebnis mit Meerblick. Genießen Sie frische Salate, knusprige Pizzen, saftige Kebabs, frisches Obst, Waffeln, köstliche Snacks und erfrischende Getränke in der Sonne. Highlights: Salate, Pizza, Kebabs, Obst, Waffeln und verschiedene Snacks."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "Einzigartiges Geschmackserlebnis",
+        "title": "Entdecken Sie unsere Bars",
+        "text": "Tauchen Sie ein in die stilvolle Atmosphäre der Bars im Azura Deluxe Resort & Spa. Von erfrischenden Cocktails und hochwertigen Getränken bis zu gemütlichen Bereichen zum Entspannen oder geselligen Beisammensein – jede Bar bietet ein einzigartiges Erlebnis, das perfekt auf Ihre Stimmung abgestimmt ist."
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "Отборные кулинарные впечатления",
+        "title": "Рестораны",
+        "text": "Отправьтесь в восхитительное кулинарное путешествие с нашими тщательно подобранными вариантами питания. От аутентичных турецких и средиземноморских деликатесов до международных гурманских специалитетов Azura Deluxe Resort & Spa предлагает исключительное разнообразие ресторанов, чтобы каждый приём пищи стал незабываемым."
+      },
+      "intro": {
+        "subtitle": "",
+        "title": "Кулинарное искусство в Azura Deluxe",
+        "text": "В Azura Deluxe Resort & Spa погрузитесь в необыкновенные кулинарные впечатления. Наслаждайтесь лучшими блюдами мировой кухни в наших элегантных ресторанах À la Carte или оцените разнообразие богатого шведского стола с турецкими деликатесами и свежими средиземноморскими вкусами.",
+        "span": "Варианты питания:",
+        "list1": "Главный ресторан: Ранний завтрак, Завтрак, Поздний завтрак, Обед, Ужин, Ночной завтрак (23:00–03:00)"
+      },
+      "mainRestaurant": {
+        "subtitle": "Уникальный праздник вкуса",
+        "title": "Главный ресторан",
+        "text": "На завтрак, обед и ужин наслаждайтесь богатым шведским столом с аутентичными вкусами турецкой кухни и восхитительными сезонными блюдами, тщательно приготовленными для вашего удовольствия.",
+        "span": "Время приёмов пищи:",
+        "list1": "Завтрак: 07:00 - 10:30",
+        "list2": "Обед: 12:30 - 14:00",
+        "list3": "Ужин: 19:00 - 21:00"
+      },
+      "alacarteCarousel": {
+        "subtitle": "Идеальные впечатления от высокой кухни",
+        "title": "Рестораны à la Carte",
+        "text": "Отправьтесь в кулинарное путешествие по нашим эксклюзивным ресторанам à la carte, где вас ждут изысканные международные вкусы, мастерски приготовленные нашими талантливыми и отмеченными наградами шеф‑поварами. Подарите себе исключительные блюда и незабываемые гастрономические впечатления.",
+        "cards": {
+          "orchestra": {
+            "title": " Главный ресторан",
+            "subtitle": " КУХНЯ: Международная",
+            "text": " Откройте для себя богатое разнообразие блюд международной кухни, приготовленных нашими талантливыми поварами в уютной атмосфере Главного ресторана. Ежедневно на завтрак, обед и ужин вас ждёт тщательно подобранный, красиво оформленный шведский стол с изысканными блюдами разных стран мира."
+          },
+          "bellaAzura": {
+            "title": " КУХНЯ: Итальянская",
+            "subtitle": " Итальянский ресторан À la Carte",
+            "text": " Откройте для себя изысканные вкусы южно-итальянской кухни в нашем итальянском ресторане À la Carte. Побалуйте себя фирменными блюдами, такими как карпаччо, ризотто, паста и салаты, гармонично дополненные ароматом изысканных красных вин. Насладитесь волшебной атмосферой и отправьтесь в гастрономическое путешествие по Средиземноморью."
+          },
+          "ottoman": {
+            "title": " Турецкий ресторан À la Carte",
+            "subtitle": " КУХНЯ: Турецкая",
+            "text": " Насладитесь исключительными блюдами, приготовленными по уникальным рецептам великолепной османской дворцовой кухни. В сопровождении нежных мелодий классической турецкой музыки каждое блюдо позволит вам погрузиться в богатое кулинарное наследие Турции."
+          }
+        }
+      },
+      "reverse": {
+        "span": "Непревзойденные сладкие удовольствия",
+        "title": "Непревзойденные сладкие удовольствия",
+        "text": "Azura Deluxe Resort & Spa предлагает незабываемые впечатления для любителей десертов. В нашей кондитерской вы сможете подсластить свой отдых вкусами, которые понравятся каждому гурману. Наслаждайтесь сладкой паузой в любое время дня благодаря богатому выбору соленого и сладкого печенья, влажных пирожных и особых сэндвичей, идеально подходящих к вашему кофе или чаю.",
+        "text2": "Наши восхитительные десерты тщательно готовятся нашими профессиональными шеф-поварами. Приготовленные из свежих и натуральных ингредиентов, эти лакомства прекрасно отражают кулинарные традиции Azura Deluxe и готовы добавить особую изюминку вашему отдыху."
+      },
+      "dessertsCarousel": {
+        "subtitle": "Идеальные впечатления от высокой кухни",
+        "title": "Рестораны à la Carte",
+        "text": "Отправьтесь в кулинарное путешествие по нашим эксклюзивным ресторанам à la carte, где вас ждут изысканные международные вкусы, мастерски приготовленные нашими талантливыми и отмеченными наградами шеф‑поварами. Подарите себе исключительные блюда и незабываемые гастрономические впечатления.",
+        "cards": {
+          "patisserie": {
+            "title": "Патиссерия",
+            "subtitle": "ДЕСЕРТЫ И ГОРЯЧИЕ НАПИТКИ",
+            "text": "Побалуйте себя сладкими моментами в нашей очаровательной патиссерии: свежая выпечка, восхитительные десерты, ароматные торты и богатый выбор горячих напитков. Идеальное место для отдыха и вкусного перекуса в течение дня. Главные позиции: сорта кофе, чай, сладкая выпечка, печенье и сэндвичи."
+          },
+          "mazurka": {
+            "title": "Mazurka Snack Restaurant",
+            "subtitle": "À LA CARTE ЗАКУСКИ",
+            "text": "Наслаждайтесь блюдами à la carte в ресторане Mazurka Snack, среди которых свежие гриль-специальности, вкусные сэндвичи и изысканные салаты. Удовлетворите ночные перекусы в комфортной обстановке прямо в отеле. Кухня: блюда на гриле, бургеры, сэндвичи, салаты и фрукты."
+          },
+          "lyric": {
+            "title": "Lyric ",
+            "subtitle": "ПЛЯЖНЫЕ ЗАКУСКИ",
+            "text": "Прямо у пляжа и пирса Lyric Snack Bar предлагает расслабляющий отдых у моря. Наслаждайтесь свежими салатами, хрустящей пиццей, сочными кебабами, свежими фруктами, вафлями, вкусными закусками и освежающими напитками под солнцем с панорамным видом на море. Главные позиции: салаты, пицца, кебабы, фрукты, вафли и разнообразные закуски."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "Уникальный праздник вкуса",
+        "title": "Откройте наши бары",
+        "text": "Погрузитесь в атмосферу уюта в стильных барах Azura Deluxe Resort & Spa. От освежающих коктейлей и премиальных напитков до зон для общения и отдыха – каждый бар предлагает уникальный опыт под ваше настроение."
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/restaurants/hero-banner.jpg",
+      "width": 2160,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": "Azura restoranları"
+        },
+        "en": {
+          "alt": "Azura restaurants"
+        },
+        "de": {
+          "alt": "Azura Restaurants"
+        },
+        "ru": {
+          "alt": "Рестораны Azura"
+        }
+      }
+    },
+    "intro": {
+      "primary": {
+        "image": "/uploads/pages/restaurants/intro-primary.jpg",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Azura restoran tanıtımı birinci görsel"
+          },
+          "en": {
+            "alt": "Azura dining introduction first image"
+          },
+          "de": {
+            "alt": "Erstes Bild zur Azura Gastronomie"
+          },
+          "ru": {
+            "alt": "Первое изображение ресторанов Azura"
+          }
+        }
+      },
+      "secondary": {
+        "image": "/uploads/pages/restaurants/intro-secondary.jpg",
+        "width": 300,
+        "height": 450,
+        "translations": {
+          "tr": {
+            "alt": "Azura restoran tanıtımı ikinci görsel"
+          },
+          "en": {
+            "alt": "Azura dining introduction second image"
+          },
+          "de": {
+            "alt": "Zweites Bild zur Azura Gastronomie"
+          },
+          "ru": {
+            "alt": "Второе изображение ресторанов Azura"
+          }
+        }
+      }
+    },
+    "mainRestaurant": {
+      "image": "/uploads/pages/restaurants/main-restaurant-background.jpg",
+      "width": 2160,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": "Azura ana restoranı"
+        },
+        "en": {
+          "alt": "Azura main restaurant"
+        },
+        "de": {
+          "alt": "Azura Hauptrestaurant"
+        },
+        "ru": {
+          "alt": "Главный ресторан Azura"
+        }
+      }
+    },
+    "alacarteCarousel": {
+      "cards": {
+        "orchestra": {
+          "image": "/uploads/pages/restaurants/carousel-orchestra.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Orchestra restoranı"
+            },
+            "en": {
+              "alt": "Orchestra restaurant"
+            },
+            "de": {
+              "alt": "Orchestra Restaurant"
+            },
+            "ru": {
+              "alt": "Ресторан Orchestra"
+            }
+          }
+        },
+        "bellaAzura": {
+          "image": "/uploads/pages/restaurants/carousel-bella-azura.webp",
+          "width": 2158,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Bella Azura restoranı"
+            },
+            "en": {
+              "alt": "Bella Azura restaurant"
+            },
+            "de": {
+              "alt": "Bella Azura Restaurant"
+            },
+            "ru": {
+              "alt": "Ресторан Bella Azura"
+            }
+          }
+        },
+        "ottoman": {
+          "image": "/uploads/pages/restaurants/carousel-ottoman.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Osmanlı restoranı"
+            },
+            "en": {
+              "alt": "Ottoman restaurant"
+            },
+            "de": {
+              "alt": "Osmanisches Restaurant"
+            },
+            "ru": {
+              "alt": "Османский ресторан"
+            }
+          }
+        }
+      }
+    },
+    "reverse": {
+      "primary": {
+        "image": "/uploads/pages/restaurants/reverse-primary.jpg",
+        "width": 300,
+        "height": 450,
+        "translations": {
+          "tr": {
+            "alt": "Azura pastane tanıtımı birinci görsel"
+          },
+          "en": {
+            "alt": "Azura patisserie introduction first image"
+          },
+          "de": {
+            "alt": "Erstes Bild zur Azura Patisserie"
+          },
+          "ru": {
+            "alt": "Первое изображение кондитерской Azura"
+          }
+        }
+      },
+      "secondary": {
+        "image": "/uploads/pages/restaurants/reverse-secondary.webp",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Azura pastane tanıtımı ikinci görsel"
+          },
+          "en": {
+            "alt": "Azura patisserie introduction second image"
+          },
+          "de": {
+            "alt": "Zweites Bild zur Azura Patisserie"
+          },
+          "ru": {
+            "alt": "Второе изображение кондитерской Azura"
+          }
+        }
+      }
+    },
+    "dessertsCarousel": {
+      "cards": {
+        "patisserie": {
+          "image": "/uploads/pages/restaurants/carousel-patisserie.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Azura pastanesi"
+            },
+            "en": {
+              "alt": "Azura patisserie"
+            },
+            "de": {
+              "alt": "Azura Patisserie"
+            },
+            "ru": {
+              "alt": "Кондитерская Azura"
+            }
+          }
+        },
+        "mazurka": {
+          "image": "/uploads/pages/restaurants/carousel-mazurka.jpg",
+          "width": 2048,
+          "height": 1367,
+          "translations": {
+            "tr": {
+              "alt": "Mazurka restoranı"
+            },
+            "en": {
+              "alt": "Mazurka restaurant"
+            },
+            "de": {
+              "alt": "Mazurka Restaurant"
+            },
+            "ru": {
+              "alt": "Ресторан Mazurka"
+            }
+          }
+        },
+        "lyric": {
+          "image": "/uploads/pages/restaurants/carousel-lyric.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": "Lyric restoranı"
+            },
+            "en": {
+              "alt": "Lyric restaurant"
+            },
+            "de": {
+              "alt": "Lyric Restaurant"
+            },
+            "ru": {
+              "alt": "Ресторан Lyric"
+            }
+          }
+        }
+      }
+    },
+    "discover": {
+      "image": "/uploads/pages/restaurants/discover-bars-background.jpg",
+      "width": 2048,
+      "height": 1365,
+      "translations": {
+        "tr": {
+          "alt": "Azura barları"
+        },
+        "en": {
+          "alt": "Azura bars"
+        },
+        "de": {
+          "alt": "Azura Bars"
+        },
+        "ru": {
+          "alt": "Бары Azura"
+        }
+      }
+    }
+  }
+}
