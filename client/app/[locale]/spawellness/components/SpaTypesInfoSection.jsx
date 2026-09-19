@@ -25,8 +25,8 @@ const SpaTypesInfoSection = ({
           </h3>
         </div>
         <Image 
-          src={img} 
-          alt="indoor" 
+          src={img.src ?? img}
+          alt={img.alt ?? "indoor"}
           width={img.width} 
           height={img.height} 
           className="w-[100%] md:w-[49.5%]" 

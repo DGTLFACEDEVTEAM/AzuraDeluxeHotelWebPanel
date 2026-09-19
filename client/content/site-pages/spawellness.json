@@ -1,0 +1,576 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "spawellness",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "SENFONY SPA & WELLNESS MERKEZİMİZDE RAHATLAYIN",
+        "title": "Spa & Wellness",
+        "text": "Azura Deluxe Resort & Spa’nın Symphony Spa & Wellness Merkezi'nde rahatlayın, yenilenin ve enerjinizi tazeleyin. Yüksek kalitede profesyonel masajlar ve bakımlarla hem bedensel hem zihinsel tam rahatlama sağlayın; tatiliniz huzurlu ve unutulmaz geçsin."
+      },
+      "info": {
+        "intro": {
+          "subtitle": "Bedeninizi ve Zihninizi Yenileyin",
+          "title": "Azura Deluxe Resort & Spa’da Wellness",
+          "text": "Tam donanımlı fitness merkezimizde formunuzu koruyun. Antrenmandan sonra Symphony Spa & Wellness Merkezi'nde profesyonel masajla gevşeyin, geleneksel Türk Hamamı’nda yenilenin veya Finlandiya Saunası’nda detoks yaparak rahatlayın."
+        },
+        "sauna": {
+          "subtitle": "Symphony Spa’da Türk Hamamı ve Sauna Konforu",
+          "title": "Sauna & Türk Hamamı",
+          "text": "Çalışma Saatleri: 07:00 – 20:00"
+        },
+        "wellness": {
+          "subtitle": "Spa Bakımları",
+          "title": "Spa & Wellness",
+          "text": "Çalışma Saatleri: 08:00 – 19:00",
+          "list1": "10 Masaj Odası",
+          "list2": "1 VIP Çift Kişilik Spa Süiti",
+          "list3": "Türk Hamamı",
+          "list4": "Sauna",
+          "list5": "Buhar Odası",
+          "list6": "Dinlenme Alanları",
+          "list7": "Profesyonel Fitness Merkezi"
+        }
+      },
+      "gallery": {
+        "subtitle": "Duyularınızı Yenileyin",
+        "title": "Symphony Spa & Wellness",
+        "text": "Azura Deluxe Resort & Spa’nın Symphony Spa’sında kendinizi şımartın; huzur ve dinlenme sizi bekliyor. Zihninizi tazeleyen bakımlar, rahatlatıcı masajlar, geleneksel Türk hamamı deneyimleri ve huzurlu sauna seanslarını keşfedin."
+      },
+      "massage": {
+        "subtitle": "RAHATLAYIN VE UNUTUN",
+        "title": "Masaj Seçenekleri",
+        "text": "Symphony Spa & Wellness Merkezi'nde geniş profesyonel masaj seçenekleriyle nihai rahatlamayı yaşayın. Stresi azaltın, bedeninizi yenileyin ve zihninizi dinlendirin.",
+        "time": "SÜRE: 60 DAK",
+        "cards": {
+          "spa-massage-aromatic": {
+            "title": "Aromaterapi Masajı"
+          },
+          "spa-massage-oriental": {
+            "title": "Oryantal Masaj"
+          },
+          "spa-massage-classic": {
+            "title": "Klasik Masaj"
+          },
+          "spa-massage-facial": {
+            "title": "Özel Yüz Masajı"
+          }
+        }
+      },
+      "types": {
+        "indoor": {
+          "subtitle": "Çalışma Saatleri: 08:00 – 19:00",
+          "title": "Kapalı Havuz",
+          "text": "Mevsimsel olarak ısıtılan Kapalı Havuzumuzda huzur ve sakinliğin tadını çıkarın. Azura Deluxe Resort & Spa’daki konaklamanız sırasında dinlenmek ve enerji toplamak için ideal bir mekandır."
+        },
+        "turkishBath": {
+          "subtitle": "Geleneksel Kültürü Deneyimleyin",
+          "title": "Türk Hamamı",
+          "text": "Symphony Spa & Wellness Merkezi'mizde lüks Türk Hamamı deneyimi yaşayın. Geleneksel banyo ritüelleri, köpük masajları ve nazik peelinglerle cildinizi yenileyin ve canlandırın."
+        }
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": " RELAX AT OUR SYMPHONY SPA & WELLNESS CENTER",
+        "title": " Spa & Wellness",
+        "text": "Relax, rejuvenate, and recharge at Azura Deluxe Resort & Spa’s Symphony Spa & Wellness Center. Indulge in high-quality professional massages and treatments, designed to provide complete physical and mental relaxation, ensuring your holiday is peaceful and unforgettable."
+      },
+      "info": {
+        "intro": {
+          "subtitle": " Renew Your Body and Mind",
+          "title": " Wellness at Azura Deluxe Resort & Spa",
+          "text": "Keep fit during your vacation at our fully-equipped fitness center, featuring professional-grade equipment. After your workout, indulge in relaxation at Symphony Spa & Wellness Center with a professional massage, rejuvenate yourself in our traditional Turkish Bath, or unwind and detox in our Finnish Sauna."
+        },
+        "sauna": {
+          "subtitle": " Relax in our Turkish Bath and Sauna at Symphony Spa.",
+          "title": "Sauna & Turkish Bath",
+          "text": "Opening Hours: 07:00 – 20:00"
+        },
+        "wellness": {
+          "subtitle": " SPA Treatments",
+          "title": " Spa & Wellness",
+          "text": "Opening Hours: 08:00 – 19:00",
+          "list1": "10 Massage Rooms",
+          "list2": "1 VIP Double Spa Suite",
+          "list3": "Turkish Bath",
+          "list4": "Sauna",
+          "list5": "Steam Room",
+          "list6": "Relaxation Areas",
+          "list7": "Professional Fitness Center"
+        }
+      },
+      "gallery": {
+        "subtitle": " Rejuvenate Your Senses",
+        "title": " Symphony Spa & Wellness",
+        "text": "Indulge yourself at Azura Deluxe Resort & Spa's Symphony Spa, where tranquility and relaxation await. Discover soothing treatments, calming massages, traditional Turkish bath experiences, and serene sauna sessions designed to refresh your mind and revitalize your body."
+      },
+      "massage": {
+        "subtitle": "RELAX AND FORGET",
+        "title": " Massage Options",
+        "text": "Enjoy ultimate relaxation with a wide variety of professional massage treatments at Symphony Spa & Wellness Center. Relieve stress, refresh your body, and unwind your mind during your stay at Azura Deluxe Resort & Spa.",
+        "time": "DURATION: 60 MIN",
+        "cards": {
+          "spa-massage-aromatic": {
+            "title": "Aromatherapy Massage"
+          },
+          "spa-massage-oriental": {
+            "title": "Oriental Massage"
+          },
+          "spa-massage-classic": {
+            "title": "Classic Massage"
+          },
+          "spa-massage-facial": {
+            "title": "Facial Special Massage"
+          }
+        }
+      },
+      "types": {
+        "indoor": {
+          "subtitle": "Working Hours: 08:00 – 19:00",
+          "title": "Indoor Pool",
+          "text": " Enjoy tranquility and relaxation at our Indoor Pool, available seasonally heated for your comfort. It's the perfect spot to unwind and recharge in a peaceful atmosphere during your stay at Azura Deluxe Resort & Spa"
+        },
+        "turkishBath": {
+          "subtitle": " Experience Traditional Culture",
+          "title": " Turkish Hammam",
+          "text": "Immerse yourself in authentic Turkish tradition at our luxurious Turkish Hammam. Experience relaxation and renewal through a traditional bathing ritual, rejuvenating foam massages, and gentle exfoliation that leave your skin refreshed and revitalized at Azura Deluxe Resort & Spa’s Symphony Spa & Wellness Center."
+        }
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "ENTSPANNEN SIE IN UNSEREM SYMPHONY SPA & WELLNESS CENTER",
+        "title": "Spa & Wellness",
+        "text": "Entspannen, regenerieren und auftanken im Symphony Spa & Wellness Center des Azura Deluxe Resort & Spa. Genießen Sie hochwertige professionelle Massagen und Behandlungen für völlige körperliche und geistige Entspannung – für einen ruhigen und unvergesslichen Urlaub."
+      },
+      "info": {
+        "intro": {
+          "subtitle": "Erneuern Sie Körper und Geist",
+          "title": "Wellness im Azura Deluxe Resort & Spa",
+          "text": "Bleiben Sie im voll ausgestatteten Fitnesscenter fit. Nach dem Workout genießen Sie eine professionelle Massage im Symphony Spa & Wellness Center, erholen sich im traditionellen Türkischen Bad oder entspannen und entgiften in der Finnischen Sauna."
+        },
+        "sauna": {
+          "subtitle": "Entspannen im Türkischen Bad und in der Sauna",
+          "title": "Sauna & Türkisches Bad",
+          "text": "Öffnungszeiten: 07:00 – 20:00"
+        },
+        "wellness": {
+          "subtitle": "Spa‑Behandlungen",
+          "title": "Spa & Wellness",
+          "text": "Öffnungszeiten: 08:00 – 19:00",
+          "list1": "10 Massageräume",
+          "list2": "1 VIP Doppel Spa Suite",
+          "list3": "Türkisches Bad",
+          "list4": "Sauna",
+          "list5": "Dampfbad",
+          "list6": "Ruhebereiche",
+          "list7": "Professionelles Fitnesscenter"
+        }
+      },
+      "gallery": {
+        "subtitle": "Erfrischen Sie Ihre Sinne",
+        "title": "Symphony Spa & Wellness",
+        "text": "Gönnen Sie sich im Symphony Spa des Azura Deluxe Resort & Spa Entspannung pur. Entdecken Sie beruhigende Anwendungen, entspannende Massagen, traditionelle Türkische Bad‑Erlebnisse und ruhige Saunagänge."
+      },
+      "massage": {
+        "subtitle": "ENTSPANNEN UND LOSLASSEN",
+        "title": "Massage‑Optionen",
+        "text": "Erleben Sie ultimative Entspannung mit einer Vielzahl professioneller Massagetherapien im Symphony Spa & Wellness Center. Reduzieren Sie Stress, erfrischen Sie Ihren Körper und entspannen Sie Ihren Geist.",
+        "time": "DAUER: 60 MIN",
+        "cards": {
+          "spa-massage-aromatic": {
+            "title": "Aromatherapie-Massage"
+          },
+          "spa-massage-oriental": {
+            "title": "Orientalische Massage"
+          },
+          "spa-massage-classic": {
+            "title": "Klassische Massage"
+          },
+          "spa-massage-facial": {
+            "title": "Spezial-Gesichtsmassage"
+          }
+        }
+      },
+      "types": {
+        "indoor": {
+          "subtitle": "Öffnungszeiten: 08:00 – 19:00",
+          "title": "Innenpool",
+          "text": "Genießen Sie Ruhe und Erholung in unserem saisonal beheizten Innenpool – der perfekte Ort, um in friedlicher Atmosphäre zu entspannen und Energie zu tanken."
+        },
+        "turkishBath": {
+          "subtitle": "Tradition erleben",
+          "title": "Türkisches Hammam",
+          "text": "Tauchen Sie ein in die authentische türkische Tradition im luxuriösen Türkischen Hammam. Erleben Sie Entspannung durch traditionelle Badezeremonien, belebende Schaummassagen und sanftes Peeling."
+        }
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "РАССЛАБЬТЕСЬ В НАШЕМ SYMPHONY Спа и велнес ЦЕНТРЕ",
+        "title": "Спа и велнес",
+        "text": "Расслабьтесь, восстановите силы и зарядитесь энергией в Symphony Спа и велнес Center Azura Deluxe Resort & Spa. Побалуйте себя профессиональными массажами и процедурами высокого качества для полного физического и душевного расслабления – ваш отдых будет мирным и незабываемым."
+      },
+      "info": {
+        "intro": {
+          "subtitle": "Обновите тело и разум",
+          "title": "Wellness в Azura Deluxe Resort & Spa",
+          "text": "Оставайтесь в форме в нашем полностью оборудованном фитнес‑центре. После тренировки насладитесь профессиональным массажем в Symphony Спа и велнес Center, восстановитесь в традиционной турецкой бане или расслабьтесь и пройдите детокс в финской сауне."
+        },
+        "sauna": {
+          "subtitle": "Расслабьтесь в турецкой бане и сауне",
+          "title": "Сауна & Турецкая баня",
+          "text": "Часы работы: 07:00 – 20:00"
+        },
+        "wellness": {
+          "subtitle": "Spa‑процедуры",
+          "title": "Спа и велнес",
+          "text": "Часы работы: 08:00 – 19:00",
+          "list1": "10 массажных кабинетов",
+          "list2": "1 VIP‑двойной спа‑сьют",
+          "list3": "Турецкая баня",
+          "list4": "Сауна",
+          "list5": "Паровая баня",
+          "list6": "Зоны релаксации",
+          "list7": "Профессиональный фитнес‑центр"
+        }
+      },
+      "gallery": {
+        "subtitle": "Обновите свои чувства",
+        "title": "Symphony Спа и велнес",
+        "text": "Побалуйте себя в Symphony Spa Azura Deluxe Resort & Spa, где вас ждут тишина и расслабление. Откройте для себя успокаивающие процедуры, расслабляющие массажи, традиционную турецкую баню и умиротворяющие сеансы в сауне."
+      },
+      "massage": {
+        "subtitle": "РАССЛАБЬТЕСЬ И ЗАБУДЬТЕ",
+        "title": "Варианты массажа",
+        "text": "Наслаждайтесь полным расслаблением с профессиональными массажными процедурами в Symphony Спа и велнес Center. Уменьшите стресс, освежите тело и успокойте ум.",
+        "time": "ДЛИТЕЛЬНОСТЬ: 60 МИН",
+        "cards": {
+          "spa-massage-aromatic": {
+            "title": "Ароматерапевтический массаж"
+          },
+          "spa-massage-oriental": {
+            "title": "Восточный массаж"
+          },
+          "spa-massage-classic": {
+            "title": "Классический массаж"
+          },
+          "spa-massage-facial": {
+            "title": "Специальный массаж лица"
+          }
+        }
+      },
+      "types": {
+        "indoor": {
+          "subtitle": "Часы работы: 08:00 – 19:00",
+          "title": "Крытый бассейн",
+          "text": "Наслаждайтесь спокойствием и релаксом в нашем сезонно подогреваемом крытом бассейне — идеальное место для отдыха и восстановления."
+        },
+        "turkishBath": {
+          "subtitle": "Погрузитесь в традиции",
+          "title": "Турецкий хаммам",
+          "text": "Окунитесь в аутентичную турецкую традицию в нашем роскошном хаммаме. Испытайте релакс и обновление через традиционный ритуал купания, пенящиеся массажи и мягкое отшелушивание."
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/spawellness/hero.webp",
+      "width": 1876,
+      "height": 1038,
+      "translations": {
+        "tr": {
+          "alt": "Spa & Wellness"
+        },
+        "en": {
+          "alt": " Spa & Wellness"
+        },
+        "de": {
+          "alt": "Spa & Wellness"
+        },
+        "ru": {
+          "alt": "Спа и велнес"
+        }
+      }
+    },
+    "info": {
+      "wellness": {
+        "image": "/uploads/pages/spawellness/wellness.webp",
+        "width": 1001,
+        "height": 1500,
+        "translations": {
+          "tr": {
+            "alt": "Spa & Wellness"
+          },
+          "en": {
+            "alt": " Spa & Wellness"
+          },
+          "de": {
+            "alt": "Spa & Wellness"
+          },
+          "ru": {
+            "alt": "Спа и велнес"
+          }
+        }
+      },
+      "sauna": {
+        "image": "/uploads/pages/spawellness/sauna.webp",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Sauna & Türk Hamamı"
+          },
+          "en": {
+            "alt": "Sauna & Turkish Bath"
+          },
+          "de": {
+            "alt": "Sauna & Türkisches Bad"
+          },
+          "ru": {
+            "alt": "Сауна & Турецкая баня"
+          }
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "spa-gallery-1",
+          "order": 0,
+          "image": "/uploads/pages/spawellness/gallery-1.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "en": {
+              "alt": " Symphony Spa & Wellness"
+            },
+            "de": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "ru": {
+              "alt": "Symphony Спа и велнес"
+            }
+          }
+        },
+        {
+          "id": "spa-gallery-2",
+          "order": 1,
+          "image": "/uploads/pages/spawellness/gallery-2.webp",
+          "width": 961,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "en": {
+              "alt": " Symphony Spa & Wellness"
+            },
+            "de": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "ru": {
+              "alt": "Symphony Спа и велнес"
+            }
+          }
+        },
+        {
+          "id": "spa-gallery-3",
+          "order": 2,
+          "image": "/uploads/pages/spawellness/gallery-3.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "en": {
+              "alt": " Symphony Spa & Wellness"
+            },
+            "de": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "ru": {
+              "alt": "Symphony Спа и велнес"
+            }
+          }
+        },
+        {
+          "id": "spa-gallery-4",
+          "order": 3,
+          "image": "/uploads/pages/spawellness/wellness.webp",
+          "width": 1001,
+          "height": 1500,
+          "translations": {
+            "tr": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "en": {
+              "alt": " Symphony Spa & Wellness"
+            },
+            "de": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "ru": {
+              "alt": "Symphony Спа и велнес"
+            }
+          }
+        },
+        {
+          "id": "spa-gallery-5",
+          "order": 4,
+          "image": "/uploads/pages/spawellness/sauna.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "en": {
+              "alt": " Symphony Spa & Wellness"
+            },
+            "de": {
+              "alt": "Symphony Spa & Wellness"
+            },
+            "ru": {
+              "alt": "Symphony Спа и велнес"
+            }
+          }
+        }
+      ]
+    },
+    "massage": {
+      "images": [
+        {
+          "id": "spa-massage-aromatic",
+          "order": 0,
+          "image": "/uploads/pages/spawellness/massage-aromatic.webp",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Aromaterapi Masajı"
+            },
+            "en": {
+              "alt": "Aromatherapy Massage"
+            },
+            "de": {
+              "alt": "Aromatherapie-Massage"
+            },
+            "ru": {
+              "alt": "Ароматерапевтический массаж"
+            }
+          }
+        },
+        {
+          "id": "spa-massage-oriental",
+          "order": 1,
+          "image": "/uploads/pages/spawellness/massage-oriental.webp",
+          "width": 360,
+          "height": 540,
+          "translations": {
+            "tr": {
+              "alt": "Oryantal Masaj"
+            },
+            "en": {
+              "alt": "Oriental Massage"
+            },
+            "de": {
+              "alt": "Orientalische Massage"
+            },
+            "ru": {
+              "alt": "Восточный массаж"
+            }
+          }
+        },
+        {
+          "id": "spa-massage-classic",
+          "order": 2,
+          "image": "/uploads/pages/spawellness/massage-classic.webp",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Klasik Masaj"
+            },
+            "en": {
+              "alt": "Classic Massage"
+            },
+            "de": {
+              "alt": "Klassische Massage"
+            },
+            "ru": {
+              "alt": "Классический массаж"
+            }
+          }
+        },
+        {
+          "id": "spa-massage-facial",
+          "order": 3,
+          "image": "/uploads/pages/spawellness/massage-facial.webp",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Özel Yüz Masajı"
+            },
+            "en": {
+              "alt": "Facial Special Massage"
+            },
+            "de": {
+              "alt": "Spezial-Gesichtsmassage"
+            },
+            "ru": {
+              "alt": "Специальный массаж лица"
+            }
+          }
+        }
+      ]
+    },
+    "types": {
+      "indoor": {
+        "image": "/uploads/pages/spawellness/indoor.webp",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Kapalı Havuz"
+          },
+          "en": {
+            "alt": "Indoor Pool"
+          },
+          "de": {
+            "alt": "Innenpool"
+          },
+          "ru": {
+            "alt": "Крытый бассейн"
+          }
+        }
+      },
+      "turkishBath": {
+        "image": "/uploads/pages/spawellness/turkish-bath.webp",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Türk Hamamı"
+          },
+          "en": {
+            "alt": " Turkish Hammam"
+          },
+          "de": {
+            "alt": "Türkisches Hammam"
+          },
+          "ru": {
+            "alt": "Турецкий хаммам"
+          }
+        }
+      }
+    }
+  }
+}

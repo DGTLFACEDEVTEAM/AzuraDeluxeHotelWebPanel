@@ -60,7 +60,7 @@ const SpaHeaderSection = ({span, header,text,images=[]}) => {
                   layout="cover"
                   width={image.width}
                   height={image.height}
-                  alt={`Slide ${index + 1}`}
+                  alt={image.alt ?? `Slide ${index + 1}`}
                   objectPosition="center"
                  className="flex h-[25vh] sm:h-[30vh] lg:h-full md:min-h-[420px] md:h-[38vh] w-auto"
                 />

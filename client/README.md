@@ -195,3 +195,179 @@ Başarı `200`; yetkisiz istek `401`, eksik If-Match `428`, biçimsiz If-Match v
 Yükleme yalnızca dosyayı kaydeder, about.json değişmez. Panel görsel seçildiğinde ilgili media nesnesinin image/width/height değerlerini birlikte güncelleyip dört dilde alt açıklamalarla page-content PUT yapmalıdır. Moments id/order değerleri değiştirilmez. Lago panel bağlantısı bu aşamada yoktur; belge veya keşif carousel'i eklenmez.
 
 Doğrulama komutları: `npm run test:about`, `npm run lint`, `npm run build`, build sonrasında `npm run test:about-http`. Birim testleri metin/görsel eşliğini, şemayı, seed'i, kanonik revision'ı, kuyruk ve metadata korumasını doğrular. HTTP testi yetki/hatalı istekleri, paralel 200/409 kaydı, sekiz görseli, yükleme ve seçimi, dört dilde yayını ve production sunucusu yeniden başlatıldıktan sonra kalıcılığı kontrol eder. Ortak medya regresyonu için `test:homepage-api`, `test:homepage-http`, `test:rooms`, `test:rooms-http`, `test:restaurants`, `test:restaurants-http` çalıştırılır.
+
+### Spa & Wellness: kalıcı sayfa içeriği
+
+Aktif `/[locale]/spawellness` sayfası `${AZURA_CONTENT_ROOT}/site-pages/spawellness.json` dosyasını `azura-spawellness-content.js` server-only girişinden, `readSpaWellnessPageLocale(locale)` ile okur. `force-dynamic` sayesinde sonraki sunucu isteği güncel kalıcı dosyayı okur; yeniden build veya restart gerekmez. JSON/dil/alan/görsel eksik ya da geçersizse açık hata oluşur; next-intl veya statik görsele sessiz geri dönüş yoktur. `ContactSection2` kendi mevcut ortak içeriğini kullanmaya devam eder.
+
+Kesin şema aşağıdadır. `Group` tam olarak üç metin alanıdır; `tr/en/de/ru` dört dilin tamamı zorunludur. İç nesnelerde gösterilmeyen alanlar kabul edilmez; ek kök metadata kayıt sırasında korunur.
+
+```text
+{
+  schemaVersion: 1,
+  pageKey: "spawellness",
+  translations: { tr: LocaleContent, en: LocaleContent, de: LocaleContent, ru: LocaleContent },
+  media: {
+    hero: Image,
+    info: { wellness: Image, sauna: Image },
+    gallery: { images: [Gallery1, Gallery2, Gallery3, Gallery4, Gallery5] },
+    massage: { images: [Aromatic, Oriental, Classic, Facial] },
+    types: { indoor: Image, turkishBath: Image }
+  }
+}
+Group = { subtitle: string, title: string, text: string }
+LocaleContent = {
+  hero: Group,
+  info: {
+    intro: Group,
+    sauna: Group,
+    wellness: { subtitle, title, text, list1, list2, list3, list4, list5, list6, list7 }
+  },
+  gallery: Group,
+  massage: {
+    subtitle, title, text, time,
+    cards: {
+      "spa-massage-aromatic": { title: string },
+      "spa-massage-oriental": { title: string },
+      "spa-massage-classic": { title: string },
+      "spa-massage-facial": { title: string }
+    }
+  },
+  types: { indoor: Group, turkishBath: Group }
+}
+Image = {
+  image: "/uploads/pages/spawellness/<dosya>.webp",
+  width: pozitif tamsayı,
+  height: pozitif tamsayı,
+  translations: { tr: {alt: string}, en: {alt: string}, de: {alt: string}, ru: {alt: string} }
+}
+GalleryN = { id: "spa-gallery-N", order: N-1, ...Image } // N: 1..5
+Aromatic = { id: "spa-massage-aromatic", order: 0, ...Image }
+Oriental = { id: "spa-massage-oriental", order: 1, ...Image }
+Classic = { id: "spa-massage-classic", order: 2, ...Image }
+Facial = { id: "spa-massage-facial", order: 3, ...Image }
+```
+
+Metinlerin başlangıç/son boşlukları değiştirilmez. Metinler 1–4000, alt açıklamalar 1–300 karakterdir; yalnızca boşluk veya kontrol karakteri içeren değerler geçersizdir. Başlangıç verisinde boş metin yoktur. Görseller yalnızca `/uploads/pages/spawellness/` altında JPEG/PNG/WebP olabilir. Gerçek dosya imzası, çözülebilirlik, en fazla 8 MiB/16 milyon piksel ve JSON'daki gerçek width/height eşliği doğrulanır. Yol taşması, olmayan dosya ve symlink reddedilir. Aynı kaynak tekrar kullanıldığında her medya kaydının ölçüleri kontrol edilir, dosya bir sunucu okumasında yalnızca bir kez çözümlenir.
+
+| Kalıcı alan | Görünen bileşen / eski Spa anahtarı |
+| --- | --- |
+| `hero` metin ve medya | `BannerDark`; `Spa.subtitle/title/text` |
+| `info.intro` | `SpaInfoSection` ilk metin grubu; `InfoSection.subtitle1/title1/text1` |
+| `info.sauna`, `media.info.sauna` | Sol alttaki görsel ve ikinci grup; `InfoSection.*2`, `spa2.webp` |
+| `info.wellness`, `media.info.wellness` | Sağ dikey görsel ve üçüncü grup; `InfoSection.*3`, `list1`…`list7`, `spa1.webp` |
+| `gallery`, `media.gallery.images` | `SpaHeaderSection`; `GallerySection` ve beş görsel |
+| `massage`, `media.massage.images` | `MassageCarousel`; `CarouselSection`, `Spa.time`, `Spa.title1`…`title4` |
+| `types.indoor` metin ve medya | `SpaTypesInfoSection`; `SpaTypes.*1` |
+| `types.turkishBath` metin ve medya | `SpaReverseInfo`; `SpaTypes.*2` |
+
+Masaj başlıkları ve medya ayrı konumsal listelerle eşleştirilmez: `media.massage.images[].id` aynı dilin `massage.cards[id].title` kaydına bağlanır. Sunucu bileşene tek `{id,order,src,width,height,alt,title}` kart nesnesi verir. Kimlikler ve sıra doğrulanır. Carousel'in dört kartı iki kere render etmesi, 3000 ms autoplay ayarı, boyutları ve animasyonu korunmuştur. Kaynak masaj görselleri 720×1080 veya 360×540'tır; mevcut `Image` sunum ölçüsü 360×540 ve CSS kırpması aynıdır. Galeri gerçek kaynak ölçülerini kullanmaya devam eder.
+
+**Görsel envanteri:** 14 mantıksal kullanım, 12 benzersiz dosya. Masajın döngü için yaptığı dört tekrar sayılırsa HTML'de 17 img ve bir hero CSS arka planı vardır (ortak iletişim bölümü hariç). Tüm dosyalar `/uploads/pages/spawellness/` altındadır; orijinal dosyalar korunur.
+
+| Yeni dosya | Orijinal Spa images dosyası | Gerçek ölçü |
+| --- | --- | --- |
+| hero.webp | spaBanner.webp | 1876×1038 |
+| wellness.webp | spa1.webp | 1001×1500 |
+| sauna.webp | spa2.webp | 2160×1440 |
+| gallery-1.webp | spa4.webp | 2160×1440 |
+| gallery-2.webp | spa3.webp | 961×1440 |
+| gallery-3.webp | spa5.webp | 2160×1440 |
+| massage-aromatic.webp | aromatic.webp | 720×1080 |
+| massage-oriental.webp | oriental.webp | 360×540 |
+| massage-classic.webp | clasmassage.webp | 720×1080 |
+| massage-facial.webp | masagefaci.webp | 720×1080 |
+| indoor.webp | indoor.webp | 2160×1440 |
+| turkish-bath.webp | spa9.webp | 2160×1440 |
+
+Galeri sırası `gallery-1 → gallery-2 → gallery-3 → wellness → sauna`dır; son iki kayıt için yeni dosya kopyası üretilmez. Alt açıklamalar ilgili dildeki mevcut bölüm/kart başlıklarından türetilmiştir. CSS banner alt bilgisi veri modelinde bulunur; arka plan görselinin HTML alt niteliği yoktur.
+
+**Kalıcı kurulum:** `client` dizininde, production için her iki mutlak yol tanımlanmışken çalıştırın:
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads node scripts/seed-persistent-spawellness.mjs
+```
+
+Bunlar örnek yollardır; canlı sunucudaki kalıcı mount dizinlerini kullanın. Seed `COPYFILE_EXCL` ve JSON için `wx` kullanır; mevcut içerik/görseller ezilmez. Tekrar çalıştırma eksik başlangıç dosyalarını ekler, mevcut bozuk dosyayı sessizce onarmaz. Development varsayılanları `client/content` ve `client/public/uploads`tur. Salt okunur medya route'u spawellness kapsamına genişletilmiştir.
+
+**Lago uyumu ve farklar:** Lago'nun `content/site-pages/spawellness.json`, `SpaWellnessMediaEditor.jsx`, `panel/icerikler/page.js` ve `lib/admin/site-pages.js` dosyaları yalnızca okunarak incelendi. `hero`, `info.wellness`, `info.sauna`, `gallery`, `massage`, `types.indoor`, `types.turkishBath` medya yolları uyumludur. Lago koleksiyonlarda `src`, Azura ise her medya kaydında `image` kullanır; ayrıca Azura gerçek width/height ister. Lago'nun mevcut galerisi 14, Azura'nınki 5 öğedir. Masaj dört karttır ve Lago'nun mevcut kimlikleriyle aynıdır. Lago şu anda Spa metinleri için `ObjectEditor`, medya için ayrı `SpaWellnessMediaEditor` kullanır. Azura bağlanırken yukarıdaki metin eşleme tablosu, koleksiyon `src ↔ image` dönüşümü, ölçüler ve otel bazlı 5/4 sınırı uyarlanmalıdır. Masaj başlıkları eski `title1..4` alanlarından sabit kart kimliklerine eşlenmelidir. Lago kodu bu geçişte değiştirilmemiştir.
+
+**Mevcut davranış notları:** SpaInfoSection `texts3.slice(3)` ile gönderilen yedi maddenin tamamını gösterir. Önceden masaj görsel nesnelerindeki title kullanılmıyor, ayrı headers dizisi gösteriliyordu; mevcut sırada metin-görsel uyuşmazlığı yoktu, yeni model bu konumsal bağımlılığı kaldırır. Kapalı havuz ve hamam düğmeleri `showLink=false` kalır. Farklı bloklardaki 07:00–20:00 ve 08:00–19:00 saatleri değiştirilmedi. SpaReverseInfo bileşeninin iç adının SpaTypesInfoSection olması eski bir adlandırma tutarsızlığıdır; davranışını ve Hakkımızda kullanımını değiştirmedik. SpaInfoSection, SpaHeaderSection ve SpaTypesInfoSection'ın eski static image prop kullanımları/alt varsayılanları Spor sayfası için korunur. Mesaj dosyaları başlangıç eşliği referansı olarak tutulmuştur; canlı Spa bölümleri artık bunları okumaz. ContactSection2 değişmez.
+
+**Doğrulama:** `npm run test:spawellness`, `npm run test:about`, `npm run lint`, `npm run build`, ardından `npm run test:spawellness-http` ve `npm run test:about-http`; son olarak `git diff --check`. Spa birim testleri dört dil/boşluk eşliği, 14/12 medya sayısı, bayt/ölçü/sıra eşliği, sabit kimlikle kart eşleşmesi, geçersiz veri/dosya ve seed'in veri ezmemesini kapsar. HTTP testi tüm görünür Spa metinlerini, görsel DOM sırasını/alt açıklamalarını, 12 URL'nin baytlarını, dört dilde About/Spor sayfalarını ve kalıcı dosya değişikliğinin restart öncesi/sonrası yayınını doğrular. Piksel karşılaştırması yapılmadı; kaynak className eşliği ve production HTML kontrolü kullanıldı.
+
+### Spa & Wellness içerik ve görsel yönetim API'leri
+
+Tüm yöntemler `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister; token yalnızca panel sunucusunda tutulmalıdır. Yanıtlar `Cache-Control: no-store` taşır. Servis tokenı yapılandırılmamışsa `503`, yanlış/eksik yetkilendirmede `401` döner. Lago panel bağlantısı bu aşamada eklenmemiştir.
+
+`GET /api/azura/spawellness/page-content` ve başarılı `PUT` yanıtının tam biçimi:
+
+```text
+{
+  "bundle": <spawellness.json.translations>,
+  "media": <spawellness.json.media>,
+  "revision": "<64 karakterlik küçük harf SHA-256>"
+}
+```
+
+`PUT /api/azura/spawellness/page-content` başlıkları:
+
+```http
+Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>
+Content-Type: application/json
+If-Match: "<GET revision>"
+```
+
+Gövde **yalnızca** `{ "bundle": <dört dilin tamamı>, "media": <14 medya kaydının tamamı> }` içerir. Yukarıdaki kesin şema değişmez. `schemaVersion`, `pageKey`, `revision` ve başka alanlar istek gövdesinde kabul edilmez. JSON gövdesi en fazla **128 KiB** olabilir; Content-Length olmasa bile okunan bayt sayısı sınırlanır. Metinler 1–4000, alt metinler 1–300 karakterdir; boş veya yalnızca boşluk içeren değerler ve kontrol karakterleri reddedilir. Başlangıçtaki geçerli baş/son boşluklar kırpılmaz. Dört dil, yedi liste maddesi, 14 medya kaydı ve gerçek ölçüler zorunludur. Birden fazla medya kaydı aynı görsel yolunu paylaşabilir; her kaydın ölçüleri doğrulanır.
+
+Galeri kimlikleri sırayla `spa-gallery-1`, `spa-gallery-2`, `spa-gallery-3`, `spa-gallery-4`, `spa-gallery-5`; order değerleri `0,1,2,3,4` olmalıdır. Masaj kimlikleri `spa-massage-aromatic`, `spa-massage-oriental`, `spa-massage-classic`, `spa-massage-facial`; order `0,1,2,3` olmalıdır. Her dilin `massage.cards` nesnesi aynı dört kimliği içerir. Kimlikler, sıralar ve kart sayıları bu API ile değiştirilemez; başlık-görsel eşleşmesi kimlikle yapılır.
+
+Revision, doğrulanmış `{bundle,media}` nesnesinin anahtarları her seviyede sıralanmış kanonik JSON içeriğinin SHA-256 değeridir. Dizi sırası korunur; kök metadata revision'a dahil edilmez, revision dosyaya yazılmaz. PUT aynı Spa yazma kuyruğunda dosyayı yeniden okur, güncel revision ile karşılaştırır, yeni medyanın dosya imzası/çözülebilirlik/ölçülerini doğrular ve geçici dosya + fsync + atomik rename ile kaydeder. Yalnızca translations/media değiştirilir; schemaVersion, pageKey ve diğer kök alanlar korunur. Başarısız işlem kuyruğu kilitlemez. **Kuyruk yalnızca aynı Node.js süreci içindeki yazmaları korur; ayrı worker/process veya sunucular arasında kilit sağlamaz.** Çok süreçli kurulumda ayrıca ortak kilit veya veritabanı gerekir.
+
+Başarılı PUT `200` döner ve `/tr/spawellness`, `/en/spawellness`, `/de/spawellness`, `/ru/spawellness` yollarını yeniden doğrular. Hata yanıtı `{ "error": "..." }` biçimindedir:
+
+| Kod | Durum |
+| --- | --- |
+| 401 | Yetkisiz istek |
+| 400 | Geçersiz JSON/şema/görsel veya biçimsiz If-Match |
+| 415 | Yanlış Content-Type |
+| 428 | If-Match eksik |
+| 409 | Eski revision; dosya değiştirilmez |
+| 413 | İstek boyutu sınırı aşıldı |
+
+409 sonrasında panel güncel bundle/media/revision'ı tekrar GET ile alıp çakışmayı değerlendirmelidir. Tırnaksız hash, zayıf ETag ve yıldız If-Match kabul edilmez. Aynı revision ile iki farklı eşzamanlı değişiklikte yalnızca biri başarılı olur.
+
+`GET /api/azura/spawellness/images` yanıtı:
+
+```json
+{
+  "images": [
+    {
+      "image": "/uploads/pages/spawellness/hero.webp",
+      "mimeType": "image/webp",
+      "size": 123,
+      "width": 1876,
+      "height": 1038,
+      "modifiedAt": "2026-09-19T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+Örnekte size/tarih temsildir; gerçek değerler dosyadan okunur. Liste yalnızca `${AZURA_UPLOADS_ROOT}/pages/spawellness/` içindeki uygun dosyaları döndürür. Bozuk/sahte dosyalar ve symlink'ler listelenmez.
+
+`POST /api/azura/spawellness/images` aynı Bearer tokenıyla tek `file` alanlı multipart/form-data kabul eder. Başarıda `201` yanıtı (boyutlar örnektir):
+
+```json
+{
+  "image": "/uploads/pages/spawellness/spawellness-<sunucu-uuid>.webp",
+  "mimeType": "image/webp",
+  "size": 123,
+  "width": 720,
+  "height": 1080
+}
+```
+
+Ortak medya doğrulaması gerçek JPEG/PNG/WebP, en fazla **8 MiB** ve **16 milyon piksel**, dosya imzası/MIME uyumu ve çözülebilirlik kontrolü uygular. Multipart gövde sınırı 8 MiB + 128 KiB'dir. Kullanıcı dosya adı kullanılmaz; güvenli benzersiz ad sunucuda üretilir. Mevcut dosyanın veya symlink'in üzerine yazılmaz. Tür/imza hatası 415, boyut aşımı 413, bozuk multipart/tek file kuralı ihlali 400 döner. Yükleme spawellness.json'u değiştirmez. Yayın için panel ilgili medya kaydındaki image/width/height alanlarını birlikte değiştirmeli ve dört dilde alt metinlerle page-content PUT yapmalıdır. Paylaşılan yolun tek kaydını değiştirmek diğer medya kayıtlarını otomatik değiştirmez.
+
+Doğrulama: `npm run test:spawellness` ve build sonrası `npm run test:spawellness-http`. API HTTP testi yetki, 400/415/428/409/413, geçersiz istekte bayt koruması, paralel 200/409, yükleyip seçme, dört dilde yayın, metadata ve restart sonrası revision kalıcılığını kapsar. Önceki sayfa HTTP testi ve About/Spor regresyonu korunur. Ortak medya regresyonları için `test:about`, `test:about-http`, `test:restaurants`, `test:restaurants-http`, `test:rooms`, `test:rooms-http`, `test:homepage-api`, `test:homepage-http` çalıştırılır.

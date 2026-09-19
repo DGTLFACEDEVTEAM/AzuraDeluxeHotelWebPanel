@@ -4,11 +4,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { MdArrowBackIosNew,MdArrowForwardIos } from "react-icons/md";
-import {useTranslations} from 'next-intl';
 
-const MassageCarousel = ({ span, header, text, headers = [], images = [] }) => {
-  const t = useTranslations("Spa");
-  const imagesOriginal = images || DEFAULT_SLIDES;
+const MassageCarousel = ({ span, header, text, time, images = [] }) => {
+  const imagesOriginal = images;
   const imagesCombined = [...imagesOriginal, ...imagesOriginal];
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -80,17 +78,17 @@ const MassageCarousel = ({ span, header, text, headers = [], images = [] }) => {
                   src={image.src}
                   width={360}
                   height={540}
-                  alt={`Slide ${index + 1}`}
+                  alt={image.alt}
                   className="lg:w-full lg:h-full md:w-[270px] md:h-[405px] h-[266px] w-[177.3px] object-cover"
                 />
                 <div className="absolute inset-0 text-center top-[9%] w-full items-center justify-center">
                   <div className="w-[100%] flex flex-col items-center justify-center text-center">
                     <h3 className="text-[25px] md:text-[30px] -tracking-[0.66px] font-normal font-marcellus text-white lg:w-[46%] leading-[36px] mb-[23px]">
-                      {headers[index % headers.length]}
+                      {image.title}
                     </h3>
                     <div className="flex w-[50%] h-[1px] bg-white"></div>
                     <p className="text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] font-jost text-white mt-[10px]">
-                      {t("time")}
+                      {time}
                     </p>
                   </div>
                 </div>

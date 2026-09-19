@@ -211,3 +211,11 @@ export async function saveAboutImage(bytes, mimeType, paths = resolveAzuraPaths(
 export async function listAboutImages(paths = resolveAzuraPaths()) {
   return listPageImages("about", paths);
 }
+
+export async function saveSpaWellnessImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("spawellness", bytes, mimeType, paths, idFactory);
+}
+
+export async function listSpaWellnessImages(paths = resolveAzuraPaths()) {
+  return listPageImages("spawellness", paths);
+}

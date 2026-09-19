@@ -14,7 +14,9 @@
     "test:restaurants": "node --test lib/azura-restaurants-storage.test.mjs",
     "test:restaurants-http": "node --test lib/azura-restaurants-http.test.mjs",
     "test:about": "node --test lib/azura-about-storage.test.mjs",
-    "test:about-http": "node --test lib/azura-about-http.test.mjs"
+    "test:about-http": "node --test lib/azura-about-http.test.mjs",
+    "test:spawellness": "node --test lib/azura-spawellness-storage.test.mjs",
+    "test:spawellness-http": "node --test --test-concurrency=1 lib/azura-spawellness-http.test.mjs lib/azura-spawellness-api-http.test.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",
