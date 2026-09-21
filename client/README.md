@@ -371,3 +371,185 @@ Başarılı PUT `200` döner ve `/tr/spawellness`, `/en/spawellness`, `/de/spawe
 Ortak medya doğrulaması gerçek JPEG/PNG/WebP, en fazla **8 MiB** ve **16 milyon piksel**, dosya imzası/MIME uyumu ve çözülebilirlik kontrolü uygular. Multipart gövde sınırı 8 MiB + 128 KiB'dir. Kullanıcı dosya adı kullanılmaz; güvenli benzersiz ad sunucuda üretilir. Mevcut dosyanın veya symlink'in üzerine yazılmaz. Tür/imza hatası 415, boyut aşımı 413, bozuk multipart/tek file kuralı ihlali 400 döner. Yükleme spawellness.json'u değiştirmez. Yayın için panel ilgili medya kaydındaki image/width/height alanlarını birlikte değiştirmeli ve dört dilde alt metinlerle page-content PUT yapmalıdır. Paylaşılan yolun tek kaydını değiştirmek diğer medya kayıtlarını otomatik değiştirmez.
 
 Doğrulama: `npm run test:spawellness` ve build sonrası `npm run test:spawellness-http`. API HTTP testi yetki, 400/415/428/409/413, geçersiz istekte bayt koruması, paralel 200/409, yükleyip seçme, dört dilde yayın, metadata ve restart sonrası revision kalıcılığını kapsar. Önceki sayfa HTTP testi ve About/Spor regresyonu korunur. Ortak medya regresyonları için `test:about`, `test:about-http`, `test:restaurants`, `test:restaurants-http`, `test:rooms`, `test:rooms-http`, `test:homepage-api`, `test:homepage-http` çalıştırılır.
+
+### Oda detayları: ilk kalıcı içerik — Deluxe
+
+Yalnızca aktif `/[locale]/rooms/deluxeroom` dönüştürülmüştür. `${AZURA_CONTENT_ROOT}/site-pages/deluxeroom.json` kullanılır; oda liste sayfasına ait `rooms.json` değişmez. `azura-room-detail-content.js` server-only giriş noktası, ortak `readRoomDetailLocale("deluxe", locale)` okuyucusunu sunar. Dosya adı ve medya sahipliği `roomDetailConfig` içindeki sabit izin listesinden gelir; kullanıcı girdisi dosya adına eklenmez. Bu aşamada `deluxe` dışında oda okumak/seed yapmak hata verir. Family/Fantasy verileri ve sayfaları dönüştürülmemiştir.
+
+Kesin başlangıç şeması (tüm gösterilen alanlar zorunlu, ek alanlar reddedilir):
+
+```text
+{
+  schemaVersion: 1,
+  pageKey: "deluxeroom",
+  roomKey: "deluxe",
+  translations: { tr: LocaleContent, en: LocaleContent, de: LocaleContent, ru: LocaleContent },
+  media: {
+    hero: Image,
+    gallery: { images: [Gallery1, ..., Gallery9] },
+    background: Image,
+    otherOptions: { images: [FamilyOption, FantasyOption] }
+  },
+  tours: [
+    {id: "land", order: 0, url: KuulaURL},
+    {id: "sea", order: 1, url: KuulaURL},
+    {id: "partialSea", order: 2, url: KuulaURL}
+  ]
+}
+LocaleContent = {
+  subtitle, title, text1, text2, text3,
+  RoomInfo: {
+    subtitle, title, text, title2, title3, text2,
+    amenities: {doubleBed, singleBed, sofa},
+    features: {area, dresser, nonSmoking, minibar, safe, hairdryer,
+               bathEssentials, teaCoffee, tvWifi, balcony, shower}
+  },
+  BackgroundSection: {subtitle, title, text},
+  RoomTour: {
+    land: {subtitle, title, text},
+    sea: {subtitle, title, text},
+    partialSea: {subtitle, title, text}
+  },
+  OtherOptions: {
+    span, title, buttonText,
+    cards: {
+      family: {subtitle, title, m, capacity, text},
+      fantasy: {subtitle, title, m, capacity, text}
+    }
+  }
+}
+Image = {
+  image: "/uploads/pages/deluxeroom/<dosya>.jpg",
+  width: pozitif tamsayı, height: pozitif tamsayı,
+  translations: {tr:{alt}, en:{alt}, de:{alt}, ru:{alt}}
+}
+GalleryN = {id: "deluxe-gallery-N", order: N-1, ...Image} // N: 1..9
+FamilyOption = {id: "family", order: 0, ...Image}
+FantasyOption = {id: "fantasy", order: 1, ...Image}
+```
+
+Metin yapısındaki bütün yapraklar string'dir. En fazla 4000 karakter, alt açıklamalarda 300 karakter; yalnızca boşluk, HTML etiketi/kontrol karakteri içeren değerler reddedilir. Geçerli baş/son boşluklar aynen korunur. Özellik kimlikleri yukarıdaki 11 anahtardır; `ROOM_FEATURE_IDS` sırası mevcut `RoomFeatures` ikon dizisine eşlenir. İkon/SVG/JSX veride tutulmaz. Galeri, öneri ve tur kimlikleri/sıraları sabittir. Kart başlığı, görseli ve hedef aynı `family`/`fantasy` kimliğiyle eşleşir; serbest URL veya hedef alanı yoktur. `roomDetailLink` kod içindeki izin listesiyle `/rooms/familyroom` ve `/rooms/fantasyroom` üretir; Deluxe kendisini önermez.
+
+Kuula URL'si yalnızca `https://kuula.co/share/collection/<5 alfanümerik karakter>` yapısını kabul eder. Kullanıcı bilgisi, fragment, başka host/protokol/yol ve bilinmeyen/tekrarlanan query parametreleri reddedilir. İzinli parametreler: logo/info/fs/vr/autopalt (0 veya 1), autorotate (pozitif sayısal biçim), autop/thumbs/margin (tam sayı biçimi), alpha (0–1). İlk mevcut URL'nin sonunda bulunan boş `alph` parametresi açık bir geriye uyumluluk istisnasıdır; URL normalize edilmez. Üç mevcut koleksiyon kimliği `7brmW`, `7brpw`, `7bBZw` sırasıyla korunmuştur. Iframe HTML'i saklanmaz; `RoomTour` mevcut iframe davranışını korur. Dış Kuula servisinin ağ erişilebilirliği bu testlerin kapsamında değildir.
+
+| Veri | Görünen bileşen / kaynak mesaj |
+| --- | --- |
+| subtitle/title/text1..3 + media.hero | SubRoomBanner; DeluxeRoom.subtitle/title/span1..3 |
+| media.gallery.images | SubroomCarousel; deluxe1..9, aynı sıra ve modal davranışı |
+| RoomInfo | RoomFeatures; DeluxeRoom.RoomFeatures, subtitle2→title2, subtitle3→title3; özellikler sabit kimliklere eşlenir |
+| BackgroundSection + media.background | BackgroundSection; yalnızca mevcut subtitle/title/text |
+| RoomTour[id] + tours[id].url | Üç RoomTour; span→subtitle ve mevcut diğer metinler |
+| OtherOptions + media.otherOptions | İki OtherOptions kartı; area→m, person→capacity, ortak subtitle→kart subtitle |
+
+**Parallax yoktur.** `BackgroundSection` normal CSS cover arka planıdır; kaydırma/parallax işlevi eklenmez. Background düğmesi yorum satırında kalır. Deluxe'ün gönderilmeyen list1/list2 ve buttonText alanları, boş ve gösterilmeyen DeluxeRoom.text, kullanılmayan OtherOptions.span1/span2 yeni içerik olarak eklenmez. Ortak rezervasyon widget'ı Reservation mesajlarını, mevcut telefon ve rezervasyon bağlantısını kullanmayı sürdürür; bu ortak işlevler ve ContactSection2 kapsam dışındadır. Mesaj dosyaları korunur: OtherOptions'ın dönüştürülmemiş kullanımları hâlâ DeluxeRoom.OtherOptions başlık/düğmesini okur.
+
+**Medya sahipliği ve kopyalar:** 13 mantıksal medya kaydı, 10 benzersiz dosya. Galeri ve iki öneri 11 img üretir; hero/background iki CSS arka planıdır (modalın isteğe bağlı tekrar gösterimi ve ContactSection2 hariç).
+
+- `/uploads/pages/deluxeroom/deluxe1.jpg` … `deluxe9.webp`: orijinal uzantılar korunur (`1,2,3,4,8` jpg; `5,6,7,9` webp). İlk görsel hero'da, üçüncü background'da, dördüncü Family önerisinde yeniden kullanılır; ek kopya yoktur.
+- `/uploads/pages/room-options/fantasy-preview.jpg`: orijinal Fantasy `fantasy4.jpg` dosyasının ortak öneri görseli kopyasıdır. Sahibi ortak oda öneri medya alanıdır; diğer odalar sonraki geçişte aynı yolu kullanabilir. Family/Fantasy JSON'una veya onların özel medya dizinine yazılmaz.
+- Deluxe dosyaları Deluxe'e aittir; ileride başka oda önerileri aynı Deluxe dosyasını referans alabilir. Dosya silme politikası sonraki yönetim aşamasında referansları dikkate almalıdır.
+
+Gerçek ölçüler: deluxe1 2048×1365; deluxe2/3 2048×1367; deluxe4..9 2160×1440; fantasy-preview 2159×1440. Başlangıç dosyaları kaynaklarla bayt düzeyinde aynıdır. Hero/galeri/background yalnızca `pages/deluxeroom` altında olabilir. OtherOptions ayrıca `pages/room-options` kullanabilir. JPEG/PNG/WebP gerçek imzası, çözülebilirlik, 8 MiB/16 milyon piksel ve JSON ölçülerinin dosyayla eşliği kontrol edilir; eksik/sahte/symlink dosya ve yol taşması açık hata verir. Aynı yolun tüm kayıtları doğrulanır, tek okuma içinde tekrar decode edilmez.
+
+Kalıcı kurulum (`client` dizininden; yollar örnektir):
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads node scripts/seed-persistent-room-details.mjs deluxe
+```
+
+Seed JSON için `wx`, görseller için `COPYFILE_EXCL` kullanır; var olan kayıtları veya ortak görsel dosyasını ezmez. Var olan bozuk veri sessizce düzeltilmez. Salt okunur `/uploads/...` sunumu yalnızca iki yeni izinli dizine genişletilmiştir. Sayfa `force-dynamic` olarak her istekte kalıcı JSON'u doğrulayarak okur; dosya değişikliği restart/build olmadan görünür.
+
+**Lago eşlemesi:** Lago'nun `superiorroom.json`, `rooms/superiorroom/page.js`, `SuperiorRoomMediaEditor.jsx`, panel ObjectEditor kullanımı ve `normalizeRoomDetailContent` şeması yalnızca referans olarak okunmuştur. Banner text1..3, RoomInfo başlık/metin alanları, RoomTour subtitle/title/text, OtherOptions span/title/buttonText ve kart m/capacity alanları, hero/gallery/background medya adları eşdeğerdir. Lago'daki madde1..12/list1..3 özellikleri Azura'nın sabit özellik/olanak kimliklerine; numaralı RoomTour alanları üç tur kimliğine; numaralı öneri alanları family/fantasy kartlarına uyarlanmalıdır. Koleksiyon src→image, gerçek width/height ve otel bazlı 9 galeri/3 tur/2 öneri sınırı gerekir. Lago'nun üç önerisi ve parallax'ı Azura'ya taşınmaz. Family (12 galeri/2 tur/ek background listeleri) ve Fantasy (11 galeri/1 tur/farklı olanaklar) daha sonra aynı ortak okuyucunun oda konfigürasyonuyla etkinleştirilmeli; bu aşamada izin listesinde değildir.
+
+**Mevcut tutarsızlıklar korunmuştur:** Family önerisi Deluxe `deluxe4.jpg` kullanır. Rusça Deluxe banner ve RoomFeatures başlıkları Fantasy der; `SСейф`/`Фенr` yazımları da kaynaktaki gibidir. Background metni iki yatak odasından söz eder. İlk tur URL'si `&alph` ile biter. OtherOptions kart açıklaması span1/span2 yerine ortak subtitle'dan gelir. Mobil göstergedeki tanımsız `handleJump` çağrısı yönetim API geçişinde düzeltildi: her gösterge mevcut Embla örneğinin `scrollTo(i)` yöntemini çağırır. Mevcut %33.3 sınıfı ve diğer tasarım sınıfları korunur. Fantasy sayfasının kendisini öneren eski kartı yalnızca tespit edildi; bu görevde o sayfaya dokunulmadı.
+
+**Doğrulama:** `npm run test:room-details`, `npm run lint`, `npm run build`, ardından `npm run test:room-details-http` ve `git diff --check`. Birim testleri dört dil/boşluk eşliği, bayt/ölçü/kimlik/sıra eşliği, hedef eşlemesi, geçersiz oda/özellik/tur/görsel ve seed korumasını kapsar. HTTP testi dört dilde Deluxe yayınını, on URL'nin baytlarını, dokuz galeri/iki öneri sırasını, üç iframe URL'sini, Family/Fantasy/Handicap ortak bileşen regresyonunu ve dosya değişikliğinin restart öncesi/sonrası görünmesini kontrol eder. Piksel karşılaştırması yapılmamıştır; className kaynak eşliği ve production HTML doğrulaması kullanılır.
+
+Son doğrulama (21 Eylül 2026): depolama/seed testleri **6/6**, production HTTP testi **1/1**, lint ve `git diff --check` başarılı. Production build, çalışan geliştirme sunucusunun `.next` çıktısıyla çakışmaması için aynı kaynakların geçici kopyasında başarıyla çalıştırıldı. HTTP sunucusu ve istekleri aynı `localhost` adını kullanır; `-H 127.0.0.1` ile `localhost` karışımı middleware rewrite isteklerinde yönlendirme döngüsüne yol açtığı için test düzeltildi. Uygulamanın routing/middleware kodu değiştirilmedi. İlk denemelerdeki karışmış geliştirme/build çıktısı ve sandbox Google Fonts DNS hatası temiz production doğrulamasında giderildi. Mevcut next lint kaldırılma, birden fazla lockfile ve webpack next-intl cache uyarıları bu değişiklikten bağımsızdır.
+
+### Deluxe oda detay yönetim API'leri
+
+Şimdilik yalnızca `roomKey=deluxe` etkindir. Yetkilendirmeden sonra diğer oda kimlikleri (Family/Fantasy/Handicap dahil) 404 döner. Dosya adı `roomDetailConfig` izin listesinden gelir. Lago, başlangıç metinleri, tur URL'leri ve diğer odaların içerikleri değiştirilmez.
+
+`GET /api/azura/room-details/deluxe/page-content` ve başarılı PUT **yalnızca** şu üç alanı döndürür:
+
+```text
+{
+  "bundle": {
+    "translations": {"tr": LocaleContent, "en": LocaleContent, "de": LocaleContent, "ru": LocaleContent},
+    "tours": [
+      {"id":"land", "order":0, "url":KuulaURL},
+      {"id":"sea", "order":1, "url":KuulaURL},
+      {"id":"partialSea", "order":2, "url":KuulaURL}
+    ]
+  },
+  "media": {
+    "hero": Image,
+    "gallery": {"images": [Gallery1, ..., Gallery9]},
+    "background": Image,
+    "otherOptions": {"images": [FamilyOption, FantasyOption]}
+  },
+  "revision": "<64 küçük harf hexadecimal SHA-256>"
+}
+```
+
+`LocaleContent`, `Image`, `GalleryN`, `FamilyOption` ve `FantasyOption` yukarıdaki kesin şemayla aynıdır. JSON örneğindeki tip adları yer tutucudur; gerçek başlangıç gövdesi `content/site-pages/deluxeroom.json` içindeki translations/tours/media alanlarından oluşur. Metinler 1–4000, alt metinler 1–300 karakter; yalnızca boşluk, HTML ve kontrol karakterleri kabul edilmez, geçerli baş/son boşluklar silinmez. Tur URL sınırı 1500 karakterdir. 11 özellik kimliği, 9 galeri kimliği (`deluxe-gallery-1`…`9`, order 0…8), 3 tur ve `family`→`fantasy` önerileri (order 0→1) zorunludur. Serbest link, iframe, özellik, parallax veya ek bölüm alanı kabul edilmez. Toplam 13 medya kaydı korunur.
+
+İstek örneği (`client` dizini dışında da çalışır; token ortamdan alınır):
+
+```sh
+curl -H "Authorization: Bearer $AZURA_PANEL_SERVICE_TOKEN" \
+  http://localhost:3000/api/azura/room-details/deluxe/page-content
+```
+
+PUT gövdesi **yalnızca** `{ "bundle": <GET.bundle>, "media": <GET.media> }` olmalı; revision gövdeye eklenmez:
+
+```http
+PUT /api/azura/room-details/deluxe/page-content
+Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>
+Content-Type: application/json
+If-Match: "<GET.revision>"
+
+{"bundle":{"translations":<dört dil>,"tours":<üç tur>},"media":<tam medya nesnesi>}
+```
+
+128 KiB içerik sınırı hem bildirilen Content-Length hem gerçekten okunan byte sayısıyla uygulanır. GET/PUT yanıtları `Cache-Control: no-store` kullanır. Revision kanonik (nesne anahtarları sıralı, diziler sırası korunmuş) bundle+media SHA-256 değeridir; kök metadata dahil değildir ve dosyaya yazılmaz. JSON'un `schemaVersion/pageKey/roomKey` ve diğer kök alanları korunur; API bunları düzenleyemez. Sunucu genelindeki Symbol kayıtlı ortak Promise kuyruğunda dosya yeniden okunur, revision kontrol edilir, bütün görseller yeniden doğrulanır, geçici dosya fsync+rename ile atomik kaydedilir. Hatalı işlem sonraki kayıtları kilitlemez. **Kuyruk yalnızca aynı Node.js sürecini korur; birden fazla worker/instance için ayrı ortak kilit veya veritabanı gerekir.** Başarılı kayıt dört dilde Deluxe yolunu revalidate eder; force-dynamic okuyucu yeni veriyi her istekte okur.
+
+| Kod | Anlam |
+| --- | --- |
+| 401 | Eksik/geçersiz Bearer token |
+| 404 | Etkin olmayan oda kimliği |
+| 400 | Geçersiz içerik/görsel veya biçimsiz If-Match |
+| 415 | Yanlış Content-Type |
+| 428 | Eksik If-Match |
+| 409 | Eski revision; dosya değişmez |
+| 413 | Gövde sınırı aşıldı |
+
+Token sunucuda yapılandırılmamışsa mevcut API'lerle tutarlı 503 döner. Diğer hatalar `{ "error": "..." }` biçimindedir.
+
+`GET/POST /api/azura/room-details/deluxe/images` aynı Bearer yetkisini ve oda izin listesini kullanır. GET yanıtı:
+
+```json
+{"images":[{"image":"/uploads/pages/deluxeroom/deluxe1.jpg","mimeType":"image/jpeg","size":123,"width":2048,"height":1365,"modifiedAt":"2026-09-21T00:00:00.000Z"}]}
+```
+
+`size` ve tarih örnektir; gerçek dosya bilgileri döner. GET yalnızca `pages/deluxeroom/` ve `pages/room-options/` köklerindeki güvenli, geçerli görselleri listeler; alt dizin, sahte dosya ve symlink listelenmez. Ortak görseller yalnızca `media.otherOptions.images` içinde seçilebilir; hero/galeri/background için reddedilir. Başka oda dizini veya istemciden gelen dizin parametresi kullanılmaz.
+
+POST yalnızca tek `file` alanlı multipart kabul eder. Sunucu dosya adını üretir, yalnızca `${AZURA_UPLOADS_ROOT}/pages/deluxeroom/` dizinine yazar. Ortak dosyalara yazmaz, mevcut dosyayı ezmez. JPEG/PNG/WebP gerçek imza ve decode kontrolü, 8 MiB/16 milyon piksel sınırı uygulanır. Multipart sınırı 8 MiB + 128 KiB; geçersiz tür 415, bozuk/ek alan 400, boyut aşımı 413 döner.
+
+```sh
+curl -H "Authorization: Bearer $AZURA_PANEL_SERVICE_TOKEN" \
+  -F 'file=@oda.jpg' http://localhost:3000/api/azura/room-details/deluxe/images
+```
+
+201 yanıtı (modifiedAt olmadan):
+
+```json
+{"image":"/uploads/pages/deluxeroom/<sunucu-adi>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600}
+```
+
+Yükleme JSON'u değiştirmez. Yayın için ilgili medya kaydının `image`, `width`, `height` değerleri birlikte içerik PUT'unda seçilir; dört dilde alt metinler de korunmalı/güncellenmelidir.
+
+Testler: `npm run test:room-details` depolama, kuyruk ve gerçek OtherOptions bileşeninin derlenmiş tıklama işleyicisini kontrollü Embla örneğiyle doğrular. Bu test tarayıcı/piksel testi değildir. `npm run test:room-details-production` kaynakları geçici dizine kopyalar (node_modules paylaşılır, .next/.env kopyalanmaz), orada production build ve HTTP testini çalıştırır; çalışan dev sunucusunun build çıktısına dokunmaz. HTTP testi yetki/oda izin listesi, hatalı isteklerin dosyayı koruması, 200/409 paralel kayıt, yükleyip seçme, ortak görsel kuralları, dört dil ve restart sonrası revision/içerik kalıcılığını kapsar.
+
+Bu API geçişinin doğrulama sonucu (21 Eylül 2026): oda/etkileşim/medya testleri **9/9**, izole production build ve API+sayfa HTTP testi **1/1**, lint ve `git diff --check` başarılı. Ortak medya/About/Spa/restoran/oda regresyon grubu **30/33**: restoran Almanca list2 içindeki mevcut `hetheth` ve oda liste verisindeki mevcut `azure` ekleri nedeniyle üç eski metin eşliği testi başarısızdır. İlgili içerik, mesaj ve test dosyaları bu görevde değiştirilmedi; medya güvenliği testleri geçti. Gerçek tarayıcıda mobil dokunma veya piksel karşılaştırması yapılmadı; tıklama testi gerçek derlenmiş bileşenin olay işleyicisini kontrollü Embla API'siyle çalıştırır, dört oda sayfası da production HTTP regresyonundan geçer.

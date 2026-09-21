@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "deluxeroom",
+  "roomKey": "deluxe",
+  "translations": {
+    "tr": {
+      "subtitle": "Zarif Konfor ve Rahatlama",
+      "title": " Deluxe Oda",
+      "text1": "Deniz, kara ve kısmi deniz manzaralı",
+      "text2": "3 Yetişkin + 1 Çocuk",
+      "text3": "1 Çift Kişilik Yatak + 1 Tek Kişilik Yatak + 1 Sofa",
+      "RoomInfo": {
+        "subtitle": "Konfor Şıklıkla Buluşuyor ",
+        "title": "Deluxe Oda herhrt",
+        "text": "Deluxe Odalarımız, 30-32 m² şık ve konforlu yaşam alanı sunar ve muhteşem deniz, kara veya kısmi deniz manzaralarına sahiptir. Zarif bir şekilde tasarlanmış bu odada bir çift kişilik yatak , bir tek kişilik yatak, bir kanepe, modern bir banyo ve dinlenme alanı bulunur; çiftler veya küçük gruplar için idealdir. Toplamda 288 adet standart deluxe oda ve 4 adet özel tasarlanmış engelli odası mevcuttur. Tüm misafirlerimizin konforu için engelli odaları zemin katta yer almaktadır.",
+        "title2": "Seçkin Olanaklar",
+        "title3": "Oda Özellikleri",
+        "text2": "Azura Deluxe Resort & Spa’daki tüm odalarda elektronik kartlı kilit sistemi, günlük minibar yenilemesi, seçkin banyo kozmetik ürünleri ve çay-kahve yapma imkânı bulunmaktadır.",
+        "amenities": {
+          "doubleBed": "1 Çift Kişilik Yatak",
+          "singleBed": "1 Tek Kişilik Yatak ",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "30-32 m2",
+          "dresser": "Makyaj Masası",
+          "nonSmoking": "Sigara İçilmez het",
+          "minibar": "Mini Bar",
+          "safe": "Kasa",
+          "hairdryer": "Saç Kurutma Makinesi",
+          "bathEssentials": "Banyo Ürünleri",
+          "teaCoffee": "Çay-Kahve Seti ",
+          "tvWifi": "LED TV ve Wi-Fi",
+          "balcony": "Balkon",
+          "shower": "Duş"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "  AYRICALIKLI HİZMETLER",
+        "title": " Deluxe Odası Avantajları",
+        "text": "Odalarımızda konaklayan misafirler, iki ayrı yatak odasının sunduğu konfor ve etkileyici deniz veya kara manzaralarının tadını çıkarır."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Deluxe Oda – Kara Manzarası 360°",
+          "text": "Geniş ve konforlu Deluxe odamızın doğal kara manzarasını, bulunduğunuz her açıdan görebileceğiniz 360° sanal tur ile keşfedin."
+        },
+        "sea": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Deluxe Oda – Deniz Manzarası 360°",
+          "text": "Şık tasarımlı Deluxe odamızın eşsiz deniz manzarasını, 360° sanal tur ile doyasıya deneyimleyin."
+        },
+        "partialSea": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Deluxe Oda – Kısmi Deniz Manzarası 360°",
+          "text": "Özenle tasarlanmış Deluxe odamızın kısmi deniz manzarasını her açıdan keşfedebileceğiniz 360° sanal tur ile deneyimleyin."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Size Uygun Odayı Seçin",
+        "title": "  Diğer Konforlu Seçenekleri Keşfedin",
+        "buttonText": " DAHA FAZLASINI KEŞFET",
+        "cards": {
+          "family": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Aile Odası",
+            "m": " 50 m²",
+            "capacity": "En fazla 4 yetişkin + 1 çocuk",
+            "text": " İç kapı ile ayrılmış iki yatak odası bulunan Aile Odalarımız, ailelerin rahatça konaklayabileceği şekilde tasarlanmıştır. Deniz veya kara manzarası seçenekleriyle unutulmaz aile anıları için idealdir."
+          },
+          "fantasy": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Fantazi Oda",
+            "m": " 58 m²",
+            "capacity": "2 yetişkin (yalnızca çiftler)",
+            "text": "Özel tasarımlı Fantazi Odalar, muhteşem deniz manzaraları ve jakuzili 25 m² özel teras ile çiftlere romantik ve huzurlu bir tatil sunar."
+          }
+        }
+      }
+    },
+    "en": {
+      "subtitle": " Elegant Comfort & Relaxation",
+      "title": " Deluxe Room",
+      "text1": "Sea, land, and partial sea view",
+      "text2": "3 Adults + 1 child",
+      "text3": "1 Double Bed + 1 Single Bed + 1 Sofa",
+      "RoomInfo": {
+        "subtitle": "Comfort Meets Elegance",
+        "title": "Deluxe Room",
+        "text": "Our Deluxe Rooms offer 30–32 m² of stylish and comfortable living space with magnificent sea, land, or partial sea views. Elegantly designed, these rooms feature one double bed, one single bed, a sofa, a modern bathroom, and a seating area; ideal for couples or small groups seeking a peaceful getaway. There are a total of 288 standard deluxe rooms and 4 specially designed accessible rooms. For the comfort of all our guests, the accessible rooms are located on the ground floor.",
+        "title2": " Thoughtful Amenities",
+        "title3": "Room Features",
+        "text2": "All rooms at Azura Deluxe Resort & Spa feature an Electronic Key Card System, daily minibar refill, premium bathroom cosmetics, and tea-coffee making facilities.",
+        "amenities": {
+          "doubleBed": "1 Double Bed",
+          "singleBed": "1 Single Bed",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "30-32 m2",
+          "dresser": "Makeup Table",
+          "nonSmoking": "No Smoke",
+          "minibar": "Mini Bar",
+          "safe": "Safe Box",
+          "hairdryer": "Hair Dryer",
+          "bathEssentials": "Bath Essentials",
+          "teaCoffee": "Tea & Coffee Setup",
+          "tvWifi": "LedTv & Wifi",
+          "balcony": "Balcony",
+          "shower": "Shower"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXCLUSIVE PRIVILEGES",
+        "title": " Deluxe Room Benefits",
+        "text": " Guests staying in our rooms enjoy comfortable accommodations featuring two separate bedrooms with stunning sea or land views. For stays of 7 nights or more, enjoy a complimentary dinner at one of our elegant A’la Carte restaurants"
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Deluxe Room – Land View 360°",
+          "text": "Explore every angle of our spacious and comfortable Deluxe Room’s natural land view through a fully immersive 360° virtual tour."
+        },
+        "sea": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Deluxe Room – Sea View 360°",
+          "text": "Experience the stunning sea vistas of our elegantly designed Deluxe Room in full 360° with our virtual tour."
+        },
+        "partialSea": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Deluxe Room – Partial Sea View 360°",
+          "text": "Discover the elegant design and partial sea vistas of our Deluxe Room through an immersive 360° virtual tour focused on its stunning partial sea views."
+        }
+      },
+      "OtherOptions": {
+        "span": " Choose Your Ideal Room",
+        "title": " Explore Other Comfortable Options",
+        "buttonText": " LEARN MORE",
+        "cards": {
+          "family": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Family Room",
+            "m": " 50 m²",
+            "capacity": "Up to 4 adults + 1 child",
+            "text": " Our Family Rooms offer spacious and comfortable accommodation designed especially for families. Featuring two separate bedrooms connected by an interior door—one with a double bed and one with two single beds—these rooms provide relaxing sea or land views, making them perfect for creating unforgettable family memories."
+          },
+          "fantasy": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Fantasy Room",
+            "m": " 58 m²",
+            "capacity": "2 adults (couples only)",
+            "text": "Our exclusive Fantasy Rooms offer a romantic getaway, featuring stunning sea views and a luxurious 25 m² terrace complete with a private jacuzzi and comfortable sunbeds. With one elegantly designed bedroom including a double bed, these rooms are perfect for couples seeking privacy and relaxation."
+          }
+        }
+      }
+    },
+    "de": {
+      "subtitle": "Eleganter Komfort & Entspannung",
+      "title": "Deluxe-Zimmer",
+      "text1": "Meer-, Land- und seitlicher Meerblick",
+      "text2": "3 Erwachsene + 1 Kind",
+      "text3": "1 Doppelbett + 1 Einzelbett + 1 Sofa",
+      "RoomInfo": {
+        "subtitle": " Komfort trifft Eleganz",
+        "title": "Deluxe Room",
+        "text": "Unsere Deluxe-Zimmer bieten 30–32 m² stilvollen und komfortablen Wohnraum mit herrlichem Meer-, Land- oder Teilmeerblick. Elegant gestaltet, verfügen diese Zimmer über ein Doppelbett, ein Einzelbett, ein Sofa, ein modernes Badezimmer und einen Sitzbereich – ideal für Paare oder kleine Gruppen, die eine ruhige Auszeit suchen. Insgesamt stehen 288 Standard-Deluxe-Zimmer und 4 speziell gestaltete barrierefreie Zimmer zur Verfügung. Zum Komfort aller Gäste befinden sich die barrierefreien Zimmer im Erdgeschoss.",
+        "title2": "  Durchdachte Annehmlichkeiten",
+        "title3": "Zimmerausstattung",
+        "text2": "Alle Zimmer im Azura Deluxe Resort & Spa verfügen über ein elektronisches Schlüsselkartensystem, eine tägliche Minibar-Auffüllung, hochwertige Badezimmerkosmetik und Einrichtungen zur Tee- und Kaffeezubereitung.",
+        "amenities": {
+          "doubleBed": "1 Doppelbett",
+          "singleBed": "1 Einzelbett",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "30-32 m2",
+          "dresser": "Schminktisch",
+          "nonSmoking": "Nichtraucher",
+          "minibar": "Mini Bar",
+          "safe": "Safe",
+          "hairdryer": "Haartrockner",
+          "bathEssentials": "Pflegeprodukte",
+          "teaCoffee": "Tee-/Kaffee-Set ",
+          "tvWifi": "LedTv & WLAN",
+          "balcony": "Balkon",
+          "shower": "Dusche"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXKLUSIVE VORTEILE",
+        "title": "Deluxe-Vorteile",
+        "text": " Gäste in unseren Familienzimmern genießen zwei separate Schlafzimmer mit herrlichem Blick auf Meer oder Land."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Deluxe-Zimmer – 360° Landblick",
+          "text": "Erkunden Sie jeden Winkel des geräumigen und komfortablen Deluxe-Zimmers mit natürlichem Landblick durch eine vollständig immersive 360°-Tour."
+        },
+        "sea": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Deluxe-Zimmer – 360° Meerblick",
+          "text": "Erleben Sie die atemberaubende Meersicht unseres elegant gestalteten Deluxe-Zimmers in voller 360°-Ansicht mit unserer virtuellen Tour."
+        },
+        "partialSea": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Deluxe-Zimmer – 360° Teilmeerblick",
+          "text": "Erkunden Sie das elegant gestaltete Deluxe-Zimmer mit teilweisem Meerblick in einer vollständig immersiven 360°-Tour."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Wählen Sie Ihr Ideales Zimmer",
+        "title": "  Weitere komfortable Optionen entdecken",
+        "buttonText": " MEHR ENTDECKEN",
+        "cards": {
+          "family": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": "Familienzimmer",
+            "m": " 50 m²",
+            "capacity": "Bis zu 4 Erwachsene + 1 Kind",
+            "text": " Zwei durch eine Tür verbundene Schlafzimmer bieten Komfort und Privatsphäre für Familien. Mit Meer- oder Landblick ideal für unvergessliche Familienmomente."
+          },
+          "fantasy": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": " Fantasy Zimmer",
+            "m": " 58 m²",
+            "capacity": "2 Erwachsene (nur Paare)",
+            "text": " Die exklusiven Fantasy Zimmer bieten Paaren einen romantischen Rückzugsort mit spektakulärem Meerblick und einer privaten Terrasse mit Whirlpool."
+          }
+        }
+      }
+    },
+    "ru": {
+      "subtitle": " Элегантный комфорт и отдых",
+      "title": "Номер Fantasy",
+      "text1": "С видом на море, сушу и частичным видом на море",
+      "text2": "3 взрослых + 1 ребенок",
+      "text3": "1 Двуспальная кровать + 1 Односпальная кровать + 1 Диван",
+      "RoomInfo": {
+        "subtitle": "Комфорт встречает элегантность",
+        "title": "Fantasy Room",
+        "text": "Наши номера Deluxe предлагают 30–32 м² стильного и комфортного пространства для проживания с великолепным видом на море, сушу или частичный вид на море. Эти элегантно оформленные номера оснащены одной двуспальной кроватью, односпальной кроватью, диваном, современной ванной комнатой и зоной отдыха; идеально подходят для пар или небольших групп, ищущих спокойный отдых. Всего доступны 288 стандартных номеров Deluxe и 4 специально оборудованных номера для гостей с ограниченными возможностями. Для удобства всех наших гостей такие номера расположены на первом этаже.",
+        "title2": " Заботливые удобства",
+        "title3": " Оснащение номера",
+        "text2": "Во всех номерах Azura Deluxe Resort & Spa предусмотрена электронная система ключ-карта, ежедневное пополнение мини-бара, премиальная косметика для ванной и оборудование для приготовления чая и кофе.",
+        "amenities": {
+          "doubleBed": "1 Двуспальная кровать",
+          "singleBed": "1 Односпальная кровать",
+          "sofa": "1 Диван"
+        },
+        "features": {
+          "area": "30–32 m2",
+          "dresser": "Туалетный столик",
+          "nonSmoking": " Некурящий номер • ",
+          "minibar": "Мини-бар",
+          "safe": "SСейф",
+          "hairdryer": "Фенr",
+          "bathEssentials": "Косметика",
+          "teaCoffee": " Чай/Кофе",
+          "tvWifi": "LED TV и Wi-Fi ",
+          "balcony": "Балкон",
+          "shower": "Душ"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "ЭКСКЛЮЗИВНЫЕ ПРИВИЛЕГИИ",
+        "title": "Преимущества номера",
+        "text": "Гости могут наслаждаться двумя отдельными спальнями и прекрасными видами на море или суша."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Номер Deluxe – Вид на землю 360°",
+          "text": "Откройте для себя каждый уголок нашего просторного и уютного номера Deluxe с видом на землю в формате полного 360° виртуального тура."
+        },
+        "sea": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Номер Deluxe – Вид на море 360°",
+          "text": "Ощутите прекрасные виды на море из нашего элегантно оформленного номера Deluxe в полном 360° формате с помощью виртуального тура."
+        },
+        "partialSea": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Номер Deluxe – 360° Частичный Вид на Море",
+          "text": "Откройте для себя элегантное оформление и частичный вид на море в нашем номере Deluxe с помощью полного 360° виртуального тура."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Выберите свой идеальный номер",
+        "title": " Откройте для себя другие комфортные варианты",
+        "buttonText": " Узнать больше",
+        "cards": {
+          "family": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": " Семейный номер",
+            "m": " 50 m²",
+            "capacity": "До 4 взрослых и 1 ребёнка",
+            "text": " Две спальни, соединённые внутренней дверью, одна с двуспальной, другая — с двумя односпальными кроватями. Отличный выбор для незабываемого семейного отдыха с видом на море или суша."
+          },
+          "fantasy": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": "Фантазийный номер",
+            "m": " 58 m²",
+            "capacity": "2 взрослых (только для пар)",
+            "text": "Романтический номер с великолепным видом на море и частной террасой 25 м² с джакузи и шезлонгами."
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/deluxeroom/deluxe1.jpg",
+      "width": 2048,
+      "height": 1365,
+      "translations": {
+        "tr": {
+          "alt": " Deluxe Oda"
+        },
+        "en": {
+          "alt": " Deluxe Room"
+        },
+        "de": {
+          "alt": "Deluxe-Zimmer"
+        },
+        "ru": {
+          "alt": "Номер Fantasy"
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "deluxe-gallery-1",
+          "order": 0,
+          "image": "/uploads/pages/deluxeroom/deluxe1.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-2",
+          "order": 1,
+          "image": "/uploads/pages/deluxeroom/deluxe2.jpg",
+          "width": 2048,
+          "height": 1367,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-3",
+          "order": 2,
+          "image": "/uploads/pages/deluxeroom/deluxe3.jpg",
+          "width": 2048,
+          "height": 1367,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-4",
+          "order": 3,
+          "image": "/uploads/pages/deluxeroom/deluxe4.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-5",
+          "order": 4,
+          "image": "/uploads/pages/deluxeroom/deluxe5.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-6",
+          "order": 5,
+          "image": "/uploads/pages/deluxeroom/deluxe6.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-7",
+          "order": 6,
+          "image": "/uploads/pages/deluxeroom/deluxe7.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-8",
+          "order": 7,
+          "image": "/uploads/pages/deluxeroom/deluxe8.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "deluxe-gallery-9",
+          "order": 8,
+          "image": "/uploads/pages/deluxeroom/deluxe9.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Deluxe Oda"
+            },
+            "en": {
+              "alt": " Deluxe Room"
+            },
+            "de": {
+              "alt": "Deluxe-Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        }
+      ]
+    },
+    "background": {
+      "image": "/uploads/pages/deluxeroom/deluxe3.jpg",
+      "width": 2048,
+      "height": 1367,
+      "translations": {
+        "tr": {
+          "alt": " Deluxe Oda"
+        },
+        "en": {
+          "alt": " Deluxe Room"
+        },
+        "de": {
+          "alt": "Deluxe-Zimmer"
+        },
+        "ru": {
+          "alt": "Номер Fantasy"
+        }
+      }
+    },
+    "otherOptions": {
+      "images": [
+        {
+          "id": "family",
+          "order": 0,
+          "image": "/uploads/pages/deluxeroom/deluxe4.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": " Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "fantasy",
+          "order": 1,
+          "image": "/uploads/pages/room-options/fantasy-preview.jpg",
+          "width": 2159,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": "Fantasy Room"
+            },
+            "de": {
+              "alt": " Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Фантазийный номер"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "land",
+      "order": 0,
+      "url": "https://kuula.co/share/collection/7brmW?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alph"
+    },
+    {
+      "id": "sea",
+      "order": 1,
+      "url": "https://kuula.co/share/collection/7brpw?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"
+    },
+    {
+      "id": "partialSea",
+      "order": 2,
+      "url": "https://kuula.co/share/collection/7bBZw?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"
+    }
+  ]
+}

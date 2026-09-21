@@ -53,7 +53,7 @@ const SubroomCarousel = ({images}) => {
             >
               <Image
                 src={img}
-                alt={`Slide ${index}`}
+                alt={img.alt ?? `Slide ${index}`}
                 className="w-auto h-full object-cover"
                 width={img.width}
                 height={img.height}
@@ -81,7 +81,7 @@ const SubroomCarousel = ({images}) => {
           <div className="relative flex items-center justify-center mt-1">
             <Image
               src={selectedImage}
-              alt="Selected Image"
+              alt={selectedImage.alt ?? "Selected Image"}
               className=" w-[90vw] h-[80vh] object-contain shadow-lg transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
               width={800}
               height={600}

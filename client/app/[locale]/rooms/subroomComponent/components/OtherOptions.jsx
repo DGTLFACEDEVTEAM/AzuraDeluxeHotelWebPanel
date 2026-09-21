@@ -11,7 +11,7 @@ import UserSvg from "../../components/svg/UserSvg";
 import { BiArea, BiGroup } from "react-icons/bi";
 import {useTranslations} from 'next-intl';
 
-const OtherOptions = ({rooms}) => {
+const OtherOptions = ({rooms, content}) => {
   const t = useTranslations('DeluxeRoom.OtherOptions');
 
   const [emblaRef, emblaApi] = useEmblaCarousel({  loop: true,
@@ -20,6 +20,10 @@ const OtherOptions = ({rooms}) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
     
+  const handleJump = useCallback((index) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi && emblaApi.scrollPrev) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -42,10 +46,10 @@ const OtherOptions = ({rooms}) => {
       <div className="flex flex-col w-[87.79%] md:w-[91.4%] lg:w-[76.8%] items-start justify-center gap-[30px] lg:gap-[50px] lg:min-w-[960px]">
         <div className="flex flex-col items-start justify-center w-full text-black gap-[15px] md:gap-[25px] lg:gap-[35px]">
           <span className="text-[12px] font-medium uppercase tracking-[0.48px] leading-[14px] font-jost">
-            {t("subtitle")}
+            {content ? content.span : t("subtitle")}
           </span>
           <h2 className="text-[28px] md:text-[36px] lg:text-[48px] font-marcellus font-normal leading-[120%] lg:leading-[57.6px] lg:capsizedText2">
-          {t("title")}
+          {content ? content.title : t("title")}
           </h2>
         </div>
 
@@ -60,7 +64,7 @@ const OtherOptions = ({rooms}) => {
                 <div className="flex flex-col w-full items-start text-start justify-center gap-[15px] lg:gap-[20px] font-jost text-black ">
                   <Image
                     src={room.img}
-                    alt={room.title}
+                    alt={room.img.alt ?? room.title}
                     width={room.img.width}
                     height={room.img.height}
                   />
@@ -93,7 +97,7 @@ const OtherOptions = ({rooms}) => {
                     href={room.link}
                     className="flex text-lagoBrown leading-[30px] uppercase font-medium text-[12px] lg:text-[14px] px-[40px] py-[20px] border border-lagoBrown text-center justify-center items-center h-[41px]"
                   >
-                  {t("buttonText")}
+                  {content ? content.buttonText : t("buttonText")}
                   </Link>
                 </div>
               </div>

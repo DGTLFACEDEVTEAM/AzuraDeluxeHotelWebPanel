@@ -219,3 +219,11 @@ export async function saveSpaWellnessImage(bytes, mimeType, paths = resolveAzura
 export async function listSpaWellnessImages(paths = resolveAzuraPaths()) {
   return listPageImages("spawellness", paths);
 }
+
+// Room-detail API resolves the room allowlist before calling these fixed scopes.
+export async function saveDeluxeImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("deluxeroom", bytes, mimeType, paths, idFactory);
+}
+export async function listDeluxeImages(paths = resolveAzuraPaths()) {
+  return [...await listPageImages("deluxeroom", paths), ...await listPageImages("room-options", paths)];
+}
