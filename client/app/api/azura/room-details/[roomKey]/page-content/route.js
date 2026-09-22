@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 import { HomepageContentError, LOCALES } from "@/lib/azura-homepage-storage.mjs";
 import {
-  roomDetailConfig, parseRoomDetailIfMatch, readRoomDetailPageContent, RoomDetailContentError,
+  roomDetailApiConfig, parseRoomDetailIfMatch, readRoomDetailPageContent, RoomDetailContentError,
   writeRoomDetailPageContent,
 } from "@/lib/azura-room-detail-storage.mjs";
 
@@ -53,14 +53,14 @@ async function readLimitedBody(request) {
 export async function GET(request, { params }) {
   const denied = authorize(request);
   if (denied) return denied;
-  try { const {roomKey} = await params; roomDetailConfig(roomKey); return json(await readRoomDetailPageContent(roomKey)); } catch (error) { return failure(error); }
+  try { const {roomKey} = await params; roomDetailApiConfig(roomKey); return json(await readRoomDetailPageContent(roomKey)); } catch (error) { return failure(error); }
 }
 
 export async function PUT(request, { params }) {
   const denied = authorize(request);
   if (denied) return denied;
   try {
-    const {roomKey} = await params; roomDetailConfig(roomKey);
+    const {roomKey} = await params; roomDetailApiConfig(roomKey);
     const expectedRevision = parseRoomDetailIfMatch(request.headers.get("if-match"));
     if (!/^application\/json(?:\s*;|\s*$)/i.test(request.headers.get("content-type") || "")) {
       return json({ error: "Content-Type application/json olmalıdır." }, 415);
@@ -76,7 +76,7 @@ export async function PUT(request, { params }) {
       return json({ error: "Yalnızca bundle ve media alanları güncellenebilir." }, 400);
     }
     const result = await writeRoomDetailPageContent(roomKey, body.bundle, body.media, expectedRevision);
-    for (const locale of LOCALES) revalidatePath(`/${locale}/rooms/deluxeroom`);
+    for (const locale of LOCALES) revalidatePath(`/${locale}/rooms/${roomDetailApiConfig(roomKey).pageKey}`);
     return json(result);
   } catch (error) { return failure(error); }
 }

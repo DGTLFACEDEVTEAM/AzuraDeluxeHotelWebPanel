@@ -17,7 +17,7 @@
     "test:about-http": "node --test lib/azura-about-http.test.mjs",
     "test:spawellness": "node --test lib/azura-spawellness-storage.test.mjs",
     "test:spawellness-http": "node --test --test-concurrency=1 lib/azura-spawellness-http.test.mjs lib/azura-spawellness-api-http.test.mjs",
-    "test:room-details": "node --test lib/azura-room-detail-storage.test.mjs lib/azura-other-options.test.mjs",
+    "test:room-details": "node --test lib/azura-room-detail-storage.test.mjs lib/azura-other-options.test.mjs lib/azura-family-detail-storage.test.mjs",
     "test:room-details-http": "node --test lib/azura-room-detail-http.test.mjs",
     "test:room-details-production": "node scripts/test-room-details-production.mjs"
   },

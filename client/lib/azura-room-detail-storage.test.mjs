@@ -82,7 +82,7 @@ test("iki önerinin metni, mevcut görseli ve izinli hedefi aynı kimlikle eşle
 });
 
 test("oda izin listesi, kesin kimlikler, düz metin ve güvenli Kuula URL şeması", async () => {
-  for (const key of ["family", "fantasy", "../deluxe", "__proto__", "constructor"]) {
+  for (const key of ["fantasy", "../deluxe", "__proto__", "constructor"]) {
     assert.throws(() => roomDetailFile(key)); await assert.rejects(readRoomDetailContent(key));
   }
   assert.throws(() => roomDetailLink("https://example.com"));
@@ -132,7 +132,7 @@ test("seed ilk kurulum ve tekrar çalıştırmada mevcut oda/ortak görsel baytl
   await writeFile(file, JSON.stringify(custom)); const before = await readFile(file);
   await run(process.execPath, ["scripts/seed-persistent-room-details.mjs", "deluxe"], { cwd: root, env });
   assert.deepEqual(await readFile(file), before); assert.deepEqual(await readFile(target), bytes);
-  await assert.rejects(run(process.execPath, ["scripts/seed-persistent-room-details.mjs", "family"], { cwd: root, env }));
+  await assert.rejects(run(process.execPath, ["scripts/seed-persistent-room-details.mjs", "fantasy"], { cwd: root, env }));
 });
 
 test("oda kayıtları: kanonik revision, paralel çakışma, kök koruma ve başarısız işlem sonrası kuyruk", async t => {

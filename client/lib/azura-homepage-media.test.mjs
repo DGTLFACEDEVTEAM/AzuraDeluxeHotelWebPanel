@@ -107,3 +107,39 @@ test("oda görselleri aynı sınırlarla yüklenir; liste symlink ve sahte dosya
   await saveRoomsImage(jpeg, "image/jpeg", paths, () => "fixed");
   await assert.rejects(saveRoomsImage(jpeg, "image/jpeg", paths, () => "fixed"), { status: 409 });
 });
+
+test("sıfır fstat boyutunda gerçek bayt doğrulaması sürer; boş/büyük/sahte/symlink dosya listelenmez", async t => {
+  const paths = await fixture(t);
+  const saved = await saveHomepageImage(jpeg, "image/jpeg", paths);
+  const folder = path.join(paths.uploadsRoot, "pages/homepage");
+  await writeFile(path.join(folder, "empty.jpg"), Buffer.alloc(0));
+  await writeFile(path.join(folder, "large.jpg"), Buffer.alloc(MAX_IMAGE_BYTES + 1));
+  await writeFile(path.join(folder, "fake.jpg"), Buffer.from("%PDF-fake"));
+  await symlink(path.join(folder, path.basename(saved.image)), path.join(folder, "linked.jpg"));
+  const {default: fs} = await import("node:fs");
+  const {syncBuiltinESMExports} = await import("node:module");
+  const originalOpen = fs.promises.open;
+  let inspected = 0;
+  t.mock.method(fs.promises, "open", async (...args) => {
+    const handle = await originalOpen(...args);
+    const originalStat = handle.stat.bind(handle);
+    handle.stat = async (...statArgs) => {
+      const info = await originalStat(...statArgs);
+      info.size = 0;
+      inspected++;
+      return info;
+    };
+    return handle;
+  });
+  syncBuiltinESMExports();
+  try {
+    const images = await listHomepageImages(paths);
+    assert.equal(inspected, 4);
+    assert.deepEqual(images.map(i => i.image), [saved.image]);
+    assert.equal(images[0].size, jpeg.length);
+    assert.deepEqual([images[0].width, images[0].height], [600, 900]);
+  } finally {
+    t.mock.restoreAll();
+    syncBuiltinESMExports();
+  }
+});

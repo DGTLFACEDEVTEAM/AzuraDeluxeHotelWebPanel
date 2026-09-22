@@ -469,7 +469,7 @@ Son doğrulama (21 Eylül 2026): depolama/seed testleri **6/6**, production HTTP
 
 ### Deluxe oda detay yönetim API'leri
 
-Şimdilik yalnızca `roomKey=deluxe` etkindir. Yetkilendirmeden sonra diğer oda kimlikleri (Family/Fantasy/Handicap dahil) 404 döner. Dosya adı `roomDetailConfig` izin listesinden gelir. Lago, başlangıç metinleri, tur URL'leri ve diğer odaların içerikleri değiştirilmez.
+Güncel yönetim izin listesi `roomKey=deluxe` ve `roomKey=family` içerir. Yetkilendirmeden sonra Fantasy/Handicap ve bilinmeyen oda kimlikleri 404 döner. Dosya adı `roomDetailConfig` izin listesinden gelir. Lago, başlangıç metinleri, tur URL'leri ve diğer odaların içerikleri değiştirilmez.
 
 `GET /api/azura/room-details/deluxe/page-content` ve başarılı PUT **yalnızca** şu üç alanı döndürür:
 
@@ -553,3 +553,140 @@ Yükleme JSON'u değiştirmez. Yayın için ilgili medya kaydının `image`, `wi
 Testler: `npm run test:room-details` depolama, kuyruk ve gerçek OtherOptions bileşeninin derlenmiş tıklama işleyicisini kontrollü Embla örneğiyle doğrular. Bu test tarayıcı/piksel testi değildir. `npm run test:room-details-production` kaynakları geçici dizine kopyalar (node_modules paylaşılır, .next/.env kopyalanmaz), orada production build ve HTTP testini çalıştırır; çalışan dev sunucusunun build çıktısına dokunmaz. HTTP testi yetki/oda izin listesi, hatalı isteklerin dosyayı koruması, 200/409 paralel kayıt, yükleyip seçme, ortak görsel kuralları, dört dil ve restart sonrası revision/içerik kalıcılığını kapsar.
 
 Bu API geçişinin doğrulama sonucu (21 Eylül 2026): oda/etkileşim/medya testleri **9/9**, izole production build ve API+sayfa HTTP testi **1/1**, lint ve `git diff --check` başarılı. Ortak medya/About/Spa/restoran/oda regresyon grubu **30/33**: restoran Almanca list2 içindeki mevcut `hetheth` ve oda liste verisindeki mevcut `azure` ekleri nedeniyle üç eski metin eşliği testi başarısızdır. İlgili içerik, mesaj ve test dosyaları bu görevde değiştirilmedi; medya güvenliği testleri geçti. Gerçek tarayıcıda mobil dokunma veya piksel karşılaştırması yapılmadı; tıklama testi gerçek derlenmiş bileşenin olay işleyicisini kontrollü Embla API'siyle çalıştırır, dört oda sayfası da production HTTP regresyonundan geçer.
+
+### Family oda detayları — yalnızca kalıcı okuma
+
+Family artık `${AZURA_CONTENT_ROOT}/site-pages/familyroom.json` üzerinden aynı `readRoomDetailLocale("family", locale)` ve server-only giriş noktasını kullanır. Yukarıdaki ilk Deluxe geçişindeki “Family dönüştürülmedi” notu tarihsel kapsamı anlatır; güncel okunabilir odalar `deluxe` ve `family`'dir. **İlk okuma geçişinde Family yönetimi kapalıydı; aşağıdaki yönetim adımıyla mevcut ortak API Family için de etkinleştirildi.** Güncel `roomDetailApiConfig` izin listesi Deluxe ve Family içerir; genel içerik API okuma/yazma fonksiyonları da bu kontrolü yapar. Kopya route veya ayrı depolama sistemi yoktur.
+
+Kesin Family şeması:
+
+```text
+{
+  schemaVersion: 1, pageKey: "familyroom", roomKey: "family",
+  translations: {tr: FamilyTexts, en: FamilyTexts, de: FamilyTexts, ru: FamilyTexts},
+  media: {
+    hero: Image,
+    gallery: {images: [{id:"family-gallery-1",order:0,...Image}, ...,
+                       {id:"family-gallery-12",order:11,...Image}]},
+    background: Image,
+    otherOptions: {images: [{id:"deluxe",order:0,...Image},
+                           {id:"fantasy",order:1,...Image}]}
+  },
+  tours: [{id:"land",order:0,url:KuulaURL}, {id:"sea",order:1,url:KuulaURL}]
+}
+FamilyTexts = {
+  subtitle, title, text1, text2, text3,
+  RoomInfo: {
+    subtitle, title, text, title2, title3, text2,
+    amenities: {doubleBed, singleBed, sofa},
+    features: {area, dresser, nonSmoking, minibar, safe, hairdryer,
+               bathEssentials, teaCoffee, tvWifi, balcony, shower}
+  },
+  BackgroundSection: {subtitle, title, text, list1, list2},
+  RoomTour: {land:{subtitle,title,text}, sea:{subtitle,title,text}},
+  OtherOptions: {
+    span, title, buttonText,
+    cards: {deluxe:{subtitle,title,m,capacity,text},
+            fantasy:{subtitle,title,m,capacity,text}}
+  }
+}
+Image = {image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+```
+
+Bütün metin yaprakları string'dir. Genel Deluxe sınırları (4000 karakter metin, 300 alt, 1500 tur URL'si, 8 MiB/16 milyon piksel, gerçek tür/ölçü doğrulaması) aynen geçerlidir. Fazladan metin/medya alanları reddedilir; mevcut kök metadata korunabilir. İkonlar kodda kalır; 11 özellik sırası Deluxe ile aynıdır. Galeri/tur/öneri kimlikleri ve background alanları oda konfigürasyonundan doğrulanır.
+
+| Aktif bileşen | Family verisi ve Deluxe farkı |
+| --- | --- |
+| SubRoomBanner | subtitle/title/text1..3 + hero; ilk Family görseli |
+| SubroomCarousel | 12 görsel (Deluxe 9), family-gallery-1…12 |
+| RoomFeatures | Aynı 11 ikon; Family metinleri ve doubleBed/singleBed/sofa |
+| BackgroundSection | subtitle/title/text **ve görünür list1/list2**; üçüncü Family görseli |
+| RoomTour | land→sea: **2 tur**, koleksiyonlar 71LrW→715J7; URL/query aynen korunur |
+| OtherOptions | **Deluxe→Fantasy**, iki kart; hedefler kodda /rooms/deluxeroom ve /rooms/fantasyroom |
+
+Parallax yoktur. Arka plan düğmesi yorum satırında kalır. Kullanılmayan FamilyRoom.text, BackgroundSection.buttonText, OtherOptions.span1/span2 taşınmaz. Reservation widget ve ContactSection2 değişmez. Ortak bileşenler değiştirilmemiştir; mevcut mobil scrollTo düzeltmesi korunur. Mesaj anahtarları bu geçişte kaldırılmamıştır.
+
+**Medya:** 16 kullanım (hero 1 + galeri 12 + background 1 + öneri 2), **14 benzersiz dosya**. 12 Family dosyası `/uploads/pages/familyroom/family1.webp`…`family12.jpg` altındadır; orijinal uzantılar korunur (2,6,11,12 jpg; diğerleri webp). Hero galeri1'i, background galeri3'ü paylaşır. Diğer iki yol `/uploads/pages/room-options/deluxe-preview.jpg` ve mevcut `fantasy-preview.jpg`'dir. Bu adım 12 Family ve 1 ortak Deluxe kopyası ekler; mevcut Fantasy kopyasını tekrar üretmez. Ortak Deluxe kopyasının kaynağı deluxe4.jpg; bu ortak öneri alanına aittir. Family'nin başka odanın özel dizinini okumasına izin açılmaz. Ortak dizin yalnızca önerilerde kabul edilir. Deluxe'ün mevcut JSON veya görselleri taşınmaz/değiştirilmez. Tüm kopyaların bayt ve gerçek ölçü eşliği test edilir; orijinaller silinmez.
+
+Kurulum (`client` içinde):
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads node scripts/seed-persistent-room-details.mjs family
+```
+
+Aynı seed betiği oda konfigürasyonuyla çalışır; yeni depolama/seed sistemi yoktur. `wx`/`COPYFILE_EXCL` mevcut Family, Deluxe ve ortak dosyaları ezmez. Salt okunur medya sunumuna familyroom izinli dizini eklenmiştir. Family sayfası force-dynamic okur; dosya değişikliği build/restart gerektirmez.
+
+**Bilerek korunan mevcut tutarsızlıklar:** İlk önerinin hedefi ve görseli Deluxe iken FamilyRoom.OtherOptions.title1/text1 alanları Aile Odası anlatır. İsteğin metin eşliği şartı nedeniyle aynen taşınır; kimliği/hedefi `deluxe` olarak kalır, Family kendisine bağlantı vermez. OtherOptions bölüm başlığı/düğmesi eski ortak bileşende DeluxeRoom.OtherOptions'tan okunuyordu; başlangıç değerleri gerçekten görünen bu kaynaktan alınır. Almanca FamilyRoom.RoomFeatures.feature1 yoktur; mevcut next-intl ekranda `FamilyRoom.RoomFeatures.feature1` döndürür. Bu gerçek görünen metin `features.area` içinde saklandı; 50 m² gibi tahmini bir çeviri eklenmedi. Rusça `SСейф`/`Фенr`, diller arasında Fantasy 50/58 m² farkı ve diğer boşluklar korunmuştur.
+
+Doğrulama: `npm run test:room-details`, `npm run test:room-details-production`, `npm run lint`, `git diff --check`. Family testleri dört dilde görünür eşlik (eksik Almanca anahtar dahil), dosya eşliği, oda şeması, API kapalı kalması ve tekrar seed korumasını kapsar. Ortak production HTTP testi Family/Deluxe metin ve görsellerini, iki/dokuz/on iki öğelik koleksiyonları, dört dilde Family JSON değişikliğinin restart öncesi/sonrası görünmesini, Deluxe API 200/409 ve Family yönetim API'lerinin 404 kalmasını, Fantasy/Handicap regresyonlarını kontrol eder. Production build geçici dizinde çalışır; geliştirme sunucusunun .next dizinine dokunmaz. Piksel karşılaştırması yapılmamıştır.
+
+Family geçişi test sonucu: Family'ye özel **4/4** test geçti; toplam oda/etkileşim grubu **12/13**. Tek başarısız test eski Deluxe mesaj eşliği testidir: HEAD'de zaten bulunan `Deluxe Oda herhrt`, `Sigara İçilmez het` ve subtitle son boşluğu eski mesajlarla farklıdır. Deluxe JSON ve mesaj dosyaları bu geçişte değiştirilmedi. İzole production build, genişletilmiş HTTP testi **1/1**, lint ve `git diff --check` başarılı. Family page.js className değerleri önceki sürümle birebir karşılaştırıldı; ortak bileşenler değiştirilmedi.
+
+
+### Family yönetimi — güncel Lago sözleşmesi
+
+Aynı dinamik route'lar çalışır:
+
+- `GET/PUT /api/azura/room-details/family/page-content`
+- `GET/POST /api/azura/room-details/family/images`
+
+Tüm yöntemlerde `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` zorunludur. Yalnızca deluxe/family yönetilebilir; diğer kimlikler geçerli yetkiyle 404 döner. GET ve başarılı PUT yanıtı tam olarak şöyledir:
+
+```text
+{
+  "bundle": {
+    "translations": {"tr": FamilyTexts, "en": FamilyTexts, "de": FamilyTexts, "ru": FamilyTexts},
+    "tours": [{"id":"land","order":0,"url":KuulaURL},
+              {"id":"sea","order":1,"url":KuulaURL}]
+  },
+  "media": {
+    "hero": Image,
+    "gallery": {"images": [{"id":"family-gallery-1","order":0,...Image}, ...,
+                           {"id":"family-gallery-12","order":11,...Image}]},
+    "background": Image,
+    "otherOptions": {"images": [{"id":"deluxe","order":0,...Image},
+                               {"id":"fantasy","order":1,...Image}]}
+  },
+  "revision": "<64 karakter küçük harf hexadecimal SHA-256>"
+}
+```
+
+`FamilyTexts` ve `Image` yukarıdaki kesin Family şemasıdır. `BackgroundSection` **subtitle/title/text/list1/list2** ister. Dört dil, 11 özellik, üç olanak, 12 galeri, iki tur, iki öneri ve toplam **16 medya kaydı** korunur. Parallax yoktur. Deluxe şeması ayrı oda konfigürasyonunda kalır; Family sınırları Deluxe'e uygulanmaz.
+
+```http
+PUT /api/azura/room-details/family/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle":{"translations":<tam dört dil nesnesi>,"tours":<iki tur dizisi>},"media":<tam medya nesnesi>}
+```
+
+PUT yalnızca bundle/media kabul eder; gövdede revision, metadata veya kimlik düzenleme alanı yoktur. 128 KiB; metin 4000, alt 300, tur URL 1500 karakter sınırları ve geçerli boşlukları koruma davranışı aynıdır. Hatalar 401 yetkisiz, 404 oda kapalı, 400 geçersiz veri/If-Match, 415 Content-Type, 428 eksik If-Match, 409 eski revision, 413 boyut aşımıdır. Token yapılandırılmamışsa 503. GET/PUT no-store döner.
+
+Revision yalnızca odanın kanonik bundle+media içeriğine aittir; dosyaya yazılmaz. Ortak kuyrukta o odanın dosyası tekrar okunur, revision kontrol edilir ve atomik kaydedilir. schemaVersion/pageKey/roomKey ve ek kök alanlar korunur. Family kaydı Deluxe dosyasını veya revision'ını değiştirmez. Başarılı kayıt, oda konfigürasyonundaki pageKey üzerinden dört dilde `/rooms/familyroom` sayfasını revalidate eder; force-dynamic okuma yeni içeriği gösterir. **Kuyruk yalnızca aynı Node.js sürecindeki işlemleri korur; çok süreç/instance için ayrıca ortak kilit gerekir.**
+
+Görsel GET:
+
+```json
+{"images":[{"image":"/uploads/pages/familyroom/<dosya>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600,"modifiedAt":"2026-09-21T00:00:00.000Z"}]}
+```
+
+POST tek file alanlı multipart kabul eder:
+
+```sh
+curl -H "Authorization: Bearer $AZURA_PANEL_SERVICE_TOKEN" \
+  -F 'file=@family.jpg' http://localhost:3000/api/azura/room-details/family/images
+```
+
+201 yanıtı:
+
+```json
+{"image":"/uploads/pages/familyroom/<sunucu-adi>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600}
+```
+
+Örnek sayısal değerlerin yerine gerçek dosya bilgileri döner. JPEG/PNG/WebP, 8 MiB ve 16 milyon piksel; gerçek tür/decode/ölçü doğrulaması, symlink koruması ve mevcut dosyayı ezmeyen sunucu adı kullanılır. Multipart sınırı 8 MiB + 128 KiB. Yükleme yalnızca `${AZURA_UPLOADS_ROOT}/pages/familyroom/` altına yapılır. GET yalnızca Family ve room-options köklerindeki geçerli dosyaları listeler; Deluxe veya başka odaların özel dizinlerini göstermez. Ortak görseller yalnızca öneri kartlarında seçilir; hero/galeri/background alanlarında reddedilir. Ortak dizine yükleme yapılmaz. Yükleme JSON'u değiştirmez: yayın için image/width/height içerik PUT'unda birlikte seçilir.
+
+Test verileri yalnızca geçici content/uploads dizinlerine yazılır. `npm run test:room-details-production` ayrı build dizini kullanır. Family HTTP kontrolleri token, 400/404/409/413/415/428, hatada dosya koruma, paralel 200/409, Family+Deluxe paralel 200/200, yükleme/listeleme/seçme, ortak medya sınırlaması, dört dilde yayın ve restart sonrası içerik/revision kalıcılığını kapsar. Önceki “Family 404” testleri yalnızca Fantasy/Handicap/bilinmeyen odalar için devam eder. Seed koruma testleri aynen çalışır. Mevcut hatalı görünen Family öneri metni ve Almanca çeviri anahtarı değiştirilmemiştir.
+
+Family yönetim geçişi doğrulama sonucu: Family testleri **5/5**, Family + mevcut homepage/oda medya güvenliği grubu **11/11**, toplam oda/etkileşim grubu **13/14**. Tek eski başarısızlık, Deluxe JSON ile eski mesajlar arasındaki `herhrt`/`het`/boşluk farkını kontrol eden metin eşliği testidir; bu içerikler değiştirilmedi. İzole production build ve genişletilmiş Family+Deluxe API HTTP testi **1/1**, lint ve `git diff --check` başarılı. Testler gerçek içerikleri değiştirmeden geçici dizinlerde çalıştı. Tasarım, ContactSection2, Lago ve mevcut Family çeviri tutarsızlıkları değiştirilmedi.

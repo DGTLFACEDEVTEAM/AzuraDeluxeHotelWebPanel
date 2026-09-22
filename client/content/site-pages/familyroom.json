@@ -1,0 +1,653 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "familyroom",
+  "roomKey": "family",
+  "translations": {
+    "tr": {
+      "subtitle": "Deniz veya Kara Manzaralı Konforlu Aile Konaklaması",
+      "title": " Aile Odası",
+      "text1": "Kara / Deniz Manzarası ",
+      "text2": " 1-4 Yetişkin + 1-3 Çocuk ",
+      "text3": "1 Çift Kişilik Yatak + 2 Tek Kişilik Yatak",
+      "RoomInfo": {
+        "subtitle": " HER YAŞA UYGUN EĞLENCE",
+        "title": "Aile Odası",
+        "text": "  Ana binada yer alan, 50 m² genişliğe sahip Aile Odalarımız; deniz veya kara manzarası seçenekleriyle ferah bir konaklama sunar. Bu odalarda ara kapı ile ayrılmış iki ayrı yatak odası bulunur: biri çift kişilik yataklı, diğeri ise iki tek kişilik yataklıdır. Ortak banyo ile birlikte gelen bu alanlar, 2 yetişkin + 2 çocuk, 3 yetişkin + 1 çocuk veya 4 yetişkin + 1 çocuk için idealdir.",
+        "title2": " Ailelere Özel Olanaklar",
+        "title3": "Oda Özellikleri",
+        "text2": "Tüm odalarda Elektronik Anahtar Kart Sistemi, günlük minibar yenilemesi, özel banyo kozmetikleri, çay-kahve yapma olanakları mevcuttur.",
+        "amenities": {
+          "doubleBed": " 1 Çift Kişilik Yatak",
+          "singleBed": "2 Tek Kişilik Yatak ",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "50 m2",
+          "dresser": "Makyaj Masası",
+          "nonSmoking": "Sigara İçilmez",
+          "minibar": "Mini Bar",
+          "safe": "Kasa",
+          "hairdryer": "Saç Kurutma Makinesi",
+          "bathEssentials": "Banyo Ürünleri",
+          "teaCoffee": "Çay-Kahve Seti ",
+          "tvWifi": "LED TV ve Wi-Fi",
+          "balcony": "Balkon",
+          "shower": "Duş"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "  AYRICALIKLI HİZMETLER",
+        "title": " Aile Odası Avantajları",
+        "text": " Aile Odalarımızda konaklayan misafirler, iki ayrı yatak odasının sunduğu konfor ve etkileyici deniz veya kara manzaralarının tadını çıkarır.",
+        "list1": "  A’la Carte Yemek: 7 gece ve üzeri konaklamalarda bir defaya mahsus ücretsiz A’la Carte akşam yemeği.",
+        "list2": "Spa & Wellness: Türk hamamı, sauna, buhar odası ve fitness merkezi kullanımı ücretsizdir."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Family Oda – Kara Manzarası 360°",
+          "text": "Geniş ve konforlu Family odamızın doğal kara manzarasını, her açıdan keşfedebileceğiniz 360° sanal tur ile deneyimleyin."
+        },
+        "sea": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Family Oda – Deniz Manzarası 360°",
+          "text": "Ferahlık ve şıklığı bir araya getiren Family odamızın muhteşem deniz manzarasını, 360° sanal tur ile doyasıya keşfedin."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Size Uygun Odayı Seçin",
+        "title": "  Diğer Konforlu Seçenekleri Keşfedin",
+        "buttonText": " DAHA FAZLASINI KEŞFET",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Aile Odası",
+            "m": " 50 m²",
+            "capacity": "En fazla 4 yetişkin + 1 çocuk",
+            "text": " İç kapı ile ayrılmış iki yatak odası bulunan Aile Odalarımız, ailelerin rahatça konaklayabileceği şekilde tasarlanmıştır. Deniz veya kara manzarası seçenekleriyle unutulmaz aile anıları için idealdir."
+          },
+          "fantasy": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Fantazi Oda",
+            "m": " 50 m²",
+            "capacity": "2 yetişkin (yalnızca çiftler)",
+            "text": "Özel tasarımlı Fantazi Odalar, muhteşem deniz manzaraları ve jakuzili 25 m² özel teras ile çiftlere romantik ve huzurlu bir tatil sunar."
+          }
+        }
+      }
+    },
+    "en": {
+      "subtitle": "Comfortable Family Stay with Sea or Land View",
+      "title": "Family Room",
+      "text1": "Land / Sea View",
+      "text2": "1-4 Adult + 1-3 Children",
+      "text3": " 1 Double Bed and 2 Single Beds",
+      "RoomInfo": {
+        "subtitle": "FUN FOR ALL AGES",
+        "title": "Family Room",
+        "text": " Our Family Rooms, perfectly located in the main building with a generous 50 m² space, offer beautiful sea or land views. Each room features two separate bedrooms (connected by an intermediate door): one bedroom with a comfortable double bed and one bedroom with two single beds, along with one shared bathroom. Ideal for families or groups, these rooms comfortably accommodate up to 2 adults + 2 children, 3 adults + 1 child, or 4 adults + 1 child.",
+        "title2": " Amenities Designed for Families",
+        "title3": "Room Features",
+        "text2": "Services provided in all rooms include an Electronic Key Card System, daily minibar refill, premium bathroom cosmetics, and tea-coffee making facilities.",
+        "amenities": {
+          "doubleBed": "1 Double Bed",
+          "singleBed": "2 Single Beds",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "50 m2",
+          "dresser": "Makeup Table",
+          "nonSmoking": "No Smoke",
+          "minibar": "Mini Bar",
+          "safe": "Safe Box",
+          "hairdryer": "Hair Dryer",
+          "bathEssentials": "Bath Essentials",
+          "teaCoffee": "Tea & Coffee Setup",
+          "tvWifi": "LedTv & Wifi",
+          "balcony": "Balcony",
+          "shower": "Shower"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXCLUSIVE PRIVILEGES",
+        "title": " Family Room Benefits",
+        "text": " Guests staying in our Family Rooms enjoy comfortable accommodations featuring two separate bedrooms with stunning sea or land views. For stays of 7 nights or more, enjoy a complimentary dinner at one of our elegant A’la Carte restaurants",
+        "list1": " A’la Carte Dining: One complimentary visit for stays of 7+ nights.",
+        "list2": "Spa & Wellness: Complimentary access to our Turkish Bath, sauna, steam room, and fitness center."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Family Room – Land View 360°",
+          "text": "Explore every angle of our spacious and comfortable Family Room’s natural land view through an immersive 360° virtual tour."
+        },
+        "sea": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Family Room – Sea View 360°",
+          "text": "Discover the stunning sea vistas of our stylish Family Room in full 360° with our virtual room tour."
+        }
+      },
+      "OtherOptions": {
+        "span": " Choose Your Ideal Room",
+        "title": " Explore Other Comfortable Options",
+        "buttonText": " LEARN MORE",
+        "cards": {
+          "deluxe": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Family Room",
+            "m": " 50 m²",
+            "capacity": "Up to 4 adults + 1 child",
+            "text": " Our Family Rooms offer spacious and comfortable accommodation designed especially for families. Featuring two separate bedrooms connected by an interior door—one with a double bed and one with two single beds—these rooms provide relaxing sea or land views, making them perfect for creating unforgettable family memories."
+          },
+          "fantasy": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Fantasy Room",
+            "m": " 58 m²",
+            "capacity": "2 adults (couples only)",
+            "text": "Our exclusive Fantasy Rooms offer a romantic getaway, featuring stunning sea views and a luxurious 25 m² terrace complete with a private jacuzzi and comfortable sunbeds. With one elegantly designed bedroom including a double bed, these rooms are perfect for couples seeking privacy and relaxation."
+          }
+        }
+      }
+    },
+    "de": {
+      "subtitle": "Komfortabler Familienaufenthalt mit Meer- oder Landblick",
+      "title": "Familienzimmer",
+      "text1": "Land- / Meerblick",
+      "text2": "1–4 Erwachsene + 1–3 Kinder ",
+      "text3": " 1 Doppelbett & 2 Einzelbetten",
+      "RoomInfo": {
+        "subtitle": "SPASS FÜR ALLE ALTERSGRUPPEN",
+        "title": "Familienzimmer",
+        "text": " Unsere geräumigen Familienzimmer befinden sich im Hauptgebäude und bieten mit 50 m² ausreichend Platz sowie einen schönen Blick auf das Meer oder den Land. Jedes Zimmer verfügt über zwei getrennte Schlafzimmer (durch eine Verbindungstür): eines mit einem Doppelbett, das andere mit zwei Einzelbetten. Mit einem gemeinsamen Badezimmer sind sie ideal für 2 Erwachsene + 2 Kinder, 3 Erwachsene + 1 Kind oder 4 Erwachsene + 1 Kind.",
+        "title2": " Familienfreundliche Ausstattung",
+        "title3": "Zimmerausstattung",
+        "text2": "Alle Zimmer verfügen über ein elektronisches Schlüsselkartensystem, tägliche Minibar-Auffüllung, Premium-Badeartikel und Tee-/Kaffeezubereitung. ",
+        "amenities": {
+          "doubleBed": "1 Doppelbett",
+          "singleBed": "2 Einzelbetten",
+          "sofa": "1 Sofa"
+        },
+        "features": {
+          "area": "FamilyRoom.RoomFeatures.feature1",
+          "dresser": "Schminktisch",
+          "nonSmoking": "Nichtraucher",
+          "minibar": "Mini Bar",
+          "safe": "Safe",
+          "hairdryer": "Haartrockner",
+          "bathEssentials": "Pflegeprodukte",
+          "teaCoffee": "Tee-/Kaffee-Set ",
+          "tvWifi": "LedTv & WLAN",
+          "balcony": "Balkon",
+          "shower": "Dusche"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXKLUSIVE VORTEILE",
+        "title": "Familienzimmer-Vorteile",
+        "text": " Gäste in unseren Familienzimmern genießen zwei separate Schlafzimmer mit herrlichem Blick auf Meer oder Land.",
+        "list1": "A’la Carte Abendessen: Bei Aufenthalten ab 7 Nächten ist ein A’la Carte-Abendessen kostenfrei.",
+        "list2": "Spa & Wellness: Kostenfreier Zugang zu Hammam, Sauna, Dampfbad und Fitnesscenter."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Family-Zimmer – 360° Landblick",
+          "text": "Erkunden Sie jeden Winkel unseres geräumigen und komfortablen Family-Zimmers mit Landblick in einer vollständig immersiven 360°-Tour."
+        },
+        "sea": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Family-Zimmer – 360° Meerblick",
+          "text": "Erleben Sie die beeindruckende Meersicht unseres stilvollen Family-Zimmers in voller 360°-Ansicht mit unserer virtuellen Tour."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Wählen Sie Ihr Ideales Zimmer",
+        "title": "  Weitere komfortable Optionen entdecken",
+        "buttonText": " MEHR ENTDECKEN",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": "Familienzimmer",
+            "m": " 50 m²",
+            "capacity": "Bis zu 4 Erwachsene + 1 Kind",
+            "text": " Zwei durch eine Tür verbundene Schlafzimmer bieten Komfort und Privatsphäre für Familien. Mit Meer- oder Landblick ideal für unvergessliche Familienmomente."
+          },
+          "fantasy": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": " Fantasy Zimmer",
+            "m": " 58 m²",
+            "capacity": "2 Erwachsene (nur Paare)",
+            "text": " Die exklusiven Fantasy Zimmer bieten Paaren einen romantischen Rückzugsort mit spektakulärem Meerblick und einer privaten Terrasse mit Whirlpool."
+          }
+        }
+      }
+    },
+    "ru": {
+      "subtitle": "Комфортное семейное размещение с видом на море или сушу",
+      "title": "Семейный номер",
+      "text1": "Вид на сушу / море",
+      "text2": "1–4 взрослых + 1–3 детей",
+      "text3": " 1 двуспальная и 2 односпальные кровати",
+      "RoomInfo": {
+        "subtitle": " РАЗВЛЕЧЕНИЯ ДЛЯ ВСЕХ ВОЗРАСТОВ",
+        "title": "Семейный номер",
+        "text": " Просторные семейные номера площадью 50 м² находятся в основном корпусе отеля и предлагают вид на море или суша. В номере две отдельные спальни, соединённые дверью: одна с двуспальной, другая с двумя односпальными кроватями, а также общая ванная комната. Идеально подойдут для 2 взрослых + 2 детей, 3 взрослых + 1 ребёнка или 4 взрослых + 1 ребёнка.",
+        "title2": "Удобства для всей семьи",
+        "title3": "Оснащение номера",
+        "text2": "В каждом номере: электронная система доступа по карте, ежедневное пополнение мини-бара, премиальная косметика, чай/кофе набор.",
+        "amenities": {
+          "doubleBed": "1 двуспальная кровать",
+          "singleBed": "2 односпальные кровати",
+          "sofa": "1 Диван"
+        },
+        "features": {
+          "area": "50 m2",
+          "dresser": "Туалетный столик",
+          "nonSmoking": " Некурящий номер • ",
+          "minibar": "Мини-бар",
+          "safe": "SСейф",
+          "hairdryer": "Фенr",
+          "bathEssentials": "Косметика",
+          "teaCoffee": " Чай/Кофе",
+          "tvWifi": "LED TV и Wi-Fi ",
+          "balcony": "Балкон",
+          "shower": "Душ"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "ЭКСКЛЮЗИВНЫЕ ПРИВИЛЕГИИ",
+        "title": "Преимущества семейного номера",
+        "text": "Гости могут наслаждаться двумя отдельными спальнями и прекрасными видами на море или суша.",
+        "list1": "A’la Carte ужин: при проживании от 7 ночей – один бесплатный ужин в ресторане A’la Carte.",
+        "list2": "Спа и велнес: бесплатный доступ к турецкой бане, сауне, паровой комнате и фитнес-центру."
+      },
+      "RoomTour": {
+        "land": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Семейный Номер – Вид на землю 360°",
+          "text": "Изучите каждый уголок нашего просторного и уютного семейного номера с видом на землю в формате полного 360° виртуального тура."
+        },
+        "sea": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Семейный Номер – Вид на море 360°",
+          "text": "Откройте для себя захватывающий морской пейзаж нашего стильного семейного номера в полном 360° формате с помощью виртуального тура."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Выберите свой идеальный номер",
+        "title": " Откройте для себя другие комфортные варианты",
+        "buttonText": " Узнать больше",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": " Семейный номер",
+            "m": " 50 m²",
+            "capacity": "До 4 взрослых и 1 ребёнка",
+            "text": " Две спальни, соединённые внутренней дверью, одна с двуспальной, другая — с двумя односпальными кроватями. Отличный выбор для незабываемого семейного отдыха с видом на море или суша."
+          },
+          "fantasy": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": "Фантазийный номер",
+            "m": " 58 m²",
+            "capacity": "2 взрослых (только для пар)",
+            "text": "Романтический номер с великолепным видом на море и частной террасой 25 м² с джакузи и шезлонгами."
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/familyroom/family1.webp",
+      "width": 2160,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": " Aile Odası"
+        },
+        "en": {
+          "alt": "Family Room"
+        },
+        "de": {
+          "alt": "Familienzimmer"
+        },
+        "ru": {
+          "alt": "Семейный номер"
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "family-gallery-1",
+          "order": 0,
+          "image": "/uploads/pages/familyroom/family1.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-2",
+          "order": 1,
+          "image": "/uploads/pages/familyroom/family2.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-3",
+          "order": 2,
+          "image": "/uploads/pages/familyroom/family3.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-4",
+          "order": 3,
+          "image": "/uploads/pages/familyroom/family4.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-5",
+          "order": 4,
+          "image": "/uploads/pages/familyroom/family5.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-6",
+          "order": 5,
+          "image": "/uploads/pages/familyroom/family6.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-7",
+          "order": 6,
+          "image": "/uploads/pages/familyroom/family7.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-8",
+          "order": 7,
+          "image": "/uploads/pages/familyroom/family8.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-9",
+          "order": 8,
+          "image": "/uploads/pages/familyroom/family9.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-10",
+          "order": 9,
+          "image": "/uploads/pages/familyroom/family10.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-11",
+          "order": 10,
+          "image": "/uploads/pages/familyroom/family11.jpg",
+          "width": 2048,
+          "height": 1149,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family-gallery-12",
+          "order": 11,
+          "image": "/uploads/pages/familyroom/family12.jpg",
+          "width": 2048,
+          "height": 1367,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": "Семейный номер"
+            }
+          }
+        }
+      ]
+    },
+    "background": {
+      "image": "/uploads/pages/familyroom/family3.webp",
+      "width": 2160,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": " Aile Odası"
+        },
+        "en": {
+          "alt": "Family Room"
+        },
+        "de": {
+          "alt": "Familienzimmer"
+        },
+        "ru": {
+          "alt": "Семейный номер"
+        }
+      }
+    },
+    "otherOptions": {
+      "images": [
+        {
+          "id": "deluxe",
+          "order": 0,
+          "image": "/uploads/pages/room-options/deluxe-preview.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": " Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "fantasy",
+          "order": 1,
+          "image": "/uploads/pages/room-options/fantasy-preview.jpg",
+          "width": 2159,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": "Fantasy Room"
+            },
+            "de": {
+              "alt": " Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Фантазийный номер"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "land",
+      "order": 0,
+      "url": "https://kuula.co/share/collection/71LrW?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"
+    },
+    {
+      "id": "sea",
+      "order": 1,
+      "url": "https://kuula.co/share/collection/715J7?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"
+    }
+  ]
+}

@@ -185,7 +185,9 @@ async function listPageImages(page, paths) {
       handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW);
       const details = await handle.stat();
       if (!details.isFile()) continue;
-      if (details.size === 0 || details.size > MAX_IMAGE_BYTES) continue;
+      // Actual bytes are checked for emptiness and size by inspectHomepageImage.
+      // This also handles runtimes reporting zero descriptor size for nonempty files.
+      if (details.size > MAX_IMAGE_BYTES) continue;
       const info = await inspectHomepageImage(await handle.readFile(), mimeType);
       records.push({
         image: `/uploads/pages/${page}/${entry.name}`,
@@ -226,4 +228,11 @@ export async function saveDeluxeImage(bytes, mimeType, paths = resolveAzuraPaths
 }
 export async function listDeluxeImages(paths = resolveAzuraPaths()) {
   return [...await listPageImages("deluxeroom", paths), ...await listPageImages("room-options", paths)];
+}
+
+export async function saveFamilyImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("familyroom", bytes, mimeType, paths, idFactory);
+}
+export async function listFamilyImages(paths = resolveAzuraPaths()) {
+  return [...await listPageImages("familyroom", paths), ...await listPageImages("room-options", paths)];
 }

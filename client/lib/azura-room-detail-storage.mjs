@@ -13,6 +13,15 @@ const ROOMS = Object.freeze({ deluxe: Object.freeze({
   galleryIds: Object.freeze(Array.from({ length: 9 }, (_, i) => `deluxe-gallery-${i + 1}`)),
   tourIds: Object.freeze(["land", "sea", "partialSea"]),
   optionIds: Object.freeze(["family", "fantasy"]),
+  featureIds: ROOM_FEATURE_IDS,
+  backgroundFields: Object.freeze(["subtitle", "title", "text"]),
+}), family: Object.freeze({
+  pageKey: "familyroom", file: "familyroom.json", folder: "familyroom",
+  galleryIds: Object.freeze(Array.from({ length: 12 }, (_, i) => `family-gallery-${i + 1}`)),
+  tourIds: Object.freeze(["land", "sea"]),
+  optionIds: Object.freeze(["deluxe", "fantasy"]),
+  featureIds: ROOM_FEATURE_IDS,
+  backgroundFields: Object.freeze(["subtitle", "title", "text", "list1", "list2"]),
 }) });
 
 export class RoomDetailContentError extends Error {
@@ -22,6 +31,12 @@ export class RoomDetailContentError extends Error {
 export function roomDetailConfig(roomKey) {
   if (typeof roomKey !== "string" || !Object.hasOwn(ROOMS, roomKey)) throw new RoomDetailContentError("Etkin olmayan veya geçersiz oda kimliği.", 404);
   return ROOMS[roomKey];
+}
+
+// Readability does not imply management access. Enable each API room explicitly.
+export function roomDetailApiConfig(roomKey) {
+  if (!["deluxe", "family"].includes(roomKey)) throw new RoomDetailContentError("Oda yönetimi etkin değil.", 404);
+  return roomDetailConfig(roomKey);
 }
 
 export function roomDetailLink(roomKey) {
@@ -100,8 +115,8 @@ export function validateRoomDetailContent(roomKey, content) {
     keys(t.RoomInfo, [...fields, "amenities", "features"], `${locale}.RoomInfo`);
     texts(Object.fromEntries(fields.map(key => [key, t.RoomInfo[key]])), fields, `${locale}.RoomInfo`);
     texts(t.RoomInfo.amenities, ["doubleBed", "singleBed", "sofa"], `${locale}.amenities`);
-    texts(t.RoomInfo.features, ROOM_FEATURE_IDS, `${locale}.features`);
-    texts(t.BackgroundSection, ["subtitle", "title", "text"], `${locale}.BackgroundSection`);
+    texts(t.RoomInfo.features, config.featureIds, `${locale}.features`);
+    texts(t.BackgroundSection, config.backgroundFields, `${locale}.BackgroundSection`);
     keys(t.RoomTour, config.tourIds, `${locale}.RoomTour`);
     for (const id of config.tourIds) texts(t.RoomTour[id], ["subtitle", "title", "text"], `${locale}.RoomTour.${id}`);
     keys(t.OtherOptions, ["span", "title", "buttonText", "cards"], `${locale}.OtherOptions`);
@@ -175,7 +190,7 @@ export async function readRoomDetailLocale(roomKey, locale, paths = resolveAzura
   const content = await readRoomDetailContent(roomKey, paths);
   const texts = content.translations[locale];
   const localized = r => ({ src: r.image, width: r.width, height: r.height, alt: r.translations[locale].alt });
-  return { texts, featureTexts: ROOM_FEATURE_IDS.map(id => texts.RoomInfo.features[id]),
+  return { texts, featureTexts: roomDetailConfig(roomKey).featureIds.map(id => texts.RoomInfo.features[id]),
     images: { hero: localized(content.media.hero), gallery: content.media.gallery.images.map(r => ({ id: r.id, ...localized(r) })), background: localized(content.media.background) },
     tours: content.tours.map(tour => ({ ...tour, ...texts.RoomTour[tour.id] })),
     rooms: content.media.otherOptions.images.map(r => {
@@ -233,11 +248,13 @@ export function roomDetailRevision(roomKey, bundle, media) {
   return createHash("sha256").update(canonicalJson({bundle, media})).digest("hex");
 }
 export async function readRoomDetailPageContent(roomKey, paths = resolveAzuraPaths()) {
+  roomDetailApiConfig(roomKey);
   const {translations, tours, media} = await readRoomDetailContent(roomKey, paths);
   const bundle = {translations, tours};
   return {bundle, media, revision:roomDetailRevision(roomKey, bundle, media)};
 }
 export async function writeRoomDetailPageContent(roomKey, bundle, media, expectedRevision, paths = resolveAzuraPaths()) {
+  roomDetailApiConfig(roomKey);
   // Capture a validated snapshot before waiting; callers cannot mutate queued input.
   bundle = structuredClone(bundle); media = structuredClone(media);
   validateRoomDetailPageContent(roomKey, bundle, media);

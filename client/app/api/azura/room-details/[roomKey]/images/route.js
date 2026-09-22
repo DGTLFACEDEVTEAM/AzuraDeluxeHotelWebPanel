@@ -1,13 +1,18 @@
-import {roomDetailConfig, RoomDetailContentError} from "@/lib/azura-room-detail-storage.mjs";
+import {roomDetailApiConfig, RoomDetailContentError} from "@/lib/azura-room-detail-storage.mjs";
 import { NextResponse } from "next/server";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 import {
   HomepageMediaError, MAX_IMAGE_BYTES, MAX_MULTIPART_BYTES,
-  listDeluxeImages, saveDeluxeImage,
+  listDeluxeImages, saveDeluxeImage, listFamilyImages, saveFamilyImage,
 } from "@/lib/azura-homepage-media.mjs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const mediaHandlers = Object.freeze({
+  deluxe: { list: listDeluxeImages, save: saveDeluxeImage },
+  family: { list: listFamilyImages, save: saveFamilyImage },
+});
 
 function json(body, status = 200) {
   return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
@@ -49,14 +54,15 @@ async function readLimitedMultipart(request) {
 export async function GET(request, { params }) {
   const denied = authorize(request);
   if (denied) return denied;
-  try { const {roomKey} = await params; roomDetailConfig(roomKey); return json({ images: await listDeluxeImages() }); }
+  try { const {roomKey} = await params; roomDetailApiConfig(roomKey); return json({ images: await mediaHandlers[roomKey].list() }); }
   catch (error) { return failure(error); }
 }
 
 export async function POST(request, { params }) {
   const denied = authorize(request);
   if (denied) return denied;
-  try { const {roomKey} = await params; roomDetailConfig(roomKey); } catch(error) { return failure(error); }
+  let roomKey;
+  try { ({roomKey} = await params); roomDetailApiConfig(roomKey); } catch(error) { return failure(error); }
   const contentType = request.headers.get("content-type") || "";
   if (!/^multipart\/form-data\s*;/i.test(contentType)) {
     return json({ error: "Content-Type multipart/form-data olmalıdır." }, 415);
@@ -78,6 +84,6 @@ export async function POST(request, { params }) {
     }
     const file = entries[0][1];
     if (file.size > MAX_IMAGE_BYTES) throw new HomepageMediaError("Görsel 8 MiB sınırını aşıyor.", 413);
-    return json(await saveDeluxeImage(Buffer.from(await file.arrayBuffer()), file.type), 201);
+    return json(await mediaHandlers[roomKey].save(Buffer.from(await file.arrayBuffer()), file.type), 201);
   } catch (error) { return failure(error); }
 }
