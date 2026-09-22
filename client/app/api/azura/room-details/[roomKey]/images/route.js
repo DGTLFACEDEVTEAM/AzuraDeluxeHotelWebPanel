@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 import {
   HomepageMediaError, MAX_IMAGE_BYTES, MAX_MULTIPART_BYTES,
-  listDeluxeImages, saveDeluxeImage, listFamilyImages, saveFamilyImage,
+  listDeluxeImages, saveDeluxeImage, listFamilyImages, saveFamilyImage, listFantasyImages, saveFantasyImage,
 } from "@/lib/azura-homepage-media.mjs";
 
 export const runtime = "nodejs";
@@ -12,6 +12,7 @@ export const dynamic = "force-dynamic";
 const mediaHandlers = Object.freeze({
   deluxe: { list: listDeluxeImages, save: saveDeluxeImage },
   family: { list: listFamilyImages, save: saveFamilyImage },
+  fantasy: { list: listFantasyImages, save: saveFantasyImage },
 });
 
 function json(body, status = 200) {

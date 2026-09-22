@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "fantasyroom",
+  "roomKey": "fantasy",
+  "translations": {
+    "tr": {
+      "subtitle": "ÖZEL VE ROMANTİK KAÇAMAK",
+      "title": " Fantazi Oda gwrg",
+      "text1": "Deniz Manzaralı ",
+      "text2": "2 Yetişkin (Sadece Çiftler)",
+      "text3": "1 Yatak Odası / 1 King Size Yatak",
+      "RoomInfo": {
+        "subtitle": "ÖZEL VE ROMANTİK KAÇAMAK",
+        "title": "Fantazi Room",
+        "text": " Ana binamızda yer alan Fantazi Odalar, 58 m² genişliğinde romantizm ve mahremiyet arayan çiftler için özel olarak tasarlanmıştır. Her odada lüks bir çift kişilik yatak bulunan zarif bir yatak odası ve 25 m²'lik özel bir teras yer almakta; terasta ise jakuzili ve şezlonglu eşsiz bir manzara sunulmaktadır. Bu odalar yalnızca 2 yetişkini ağırlamakta olup, romantik bir deneyim için mükemmel bir seçenektir.",
+        "title2": "Özel Romantik Olanaklar",
+        "title3": "Oda Özellikleri",
+        "text2": "Tüm Fantazi Odalarda Elektronik Kartlı Giriş Sistemi, günlük minibar yenilemesi, lüks banyo kozmetikleri, çay-kahve seti, konforlu terlikler ve ücretsiz Wi-Fi mevcuttur. Bu odalar yalnızca romantik çift konaklamaları için tasarlanmıştır. Oda 58 m² genişliğindedir ve 25 m² özel jakuzili terasa sahiptir. Not: Fantasy Odalar sadece 2 yetişkin (çift) için uygundur. Bu oda tipinde ilave yatak, bebek yatağı veya özel havuz bulunmamaktadır.",
+        "amenities": {
+          "couples": "Özellikle Çiftler İçin Tasarlandı",
+          "kingBed": "1 King Size Yatak",
+          "jacuzziTerrace": "Jakuzili Özel Teras"
+        },
+        "features": {
+          "area": "58 m2",
+          "dresser": "Makyaj Masası",
+          "nonSmoking": "Sigara İçilmez",
+          "minibar": "Mini Bar",
+          "safe": "Kasa",
+          "hairdryer": "Saç Kurutma Makinesi",
+          "bathEssentials": "Banyo Ürünleri",
+          "teaCoffee": "Çay-Kahve Seti ",
+          "tvWifi": "LED TV ve Wi-Fi",
+          "balcony": "Balkon",
+          "shower": "Duş"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "  AYRICALIKLI HİZMETLER",
+        "title": " Fantazi Odası Avantajları",
+        "text": " Fantazi Odalarımızda konaklayan misafirler, yatak odasının sunduğu konfor ve etkileyici deniz manzaralarının tadını çıkarır.",
+        "list1": "  A’la Carte Yemek: 7 gece ve üzeri konaklamalarda bir defaya mahsus ücretsiz A’la Carte akşam yemeği.",
+        "list2": "Spa & Wellness: Türk hamamı, sauna, buhar odası ve fitness merkezi kullanımı ücretsizdir."
+      },
+      "RoomTour": {
+        "sea": {
+          "subtitle": "360° Sanal Oda Turu",
+          "title": "Fantazi Oda – Deniz Manzarası 360°",
+          "text": "Romantik Fantazi odamızın eşsiz deniz manzarasını ve şık iç mekanını, sadece deniz manzarasına odaklanan 360° sanal tur ile keşfedin."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Size Uygun Odayı Seçin",
+        "title": "  Diğer Konforlu Seçenekleri Keşfedin",
+        "buttonText": " DAHA FAZLASINI KEŞFET",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Aile Odası",
+            "m": " 50 m²",
+            "capacity": "En fazla 4 yetişkin + 1 çocuk",
+            "text": " İç kapı ile ayrılmış iki yatak odası bulunan Aile Odalarımız, ailelerin rahatça konaklayabileceği şekilde tasarlanmıştır. Deniz veya kara manzarası seçenekleriyle unutulmaz aile anıları için idealdir."
+          },
+          "family": {
+            "subtitle": "  Size Uygun Odayı Seçin",
+            "title": " Aile Odası",
+            "m": " 50 m²",
+            "capacity": "En fazla 4 yetişkin + 1 çocuk",
+            "text": " İç kapı ile ayrılmış iki yatak odası bulunan Aile Odalarımız, ailelerin rahatça konaklayabileceği şekilde tasarlanmıştır. Deniz veya kara manzarası seçenekleriyle unutulmaz aile anıları için idealdir."
+          }
+        }
+      }
+    },
+    "en": {
+      "subtitle": " EXCLUSIVE ROMANTIC ESCAPE",
+      "title": " Fantasy Room ttttt",
+      "text1": " Sea View",
+      "text2": "2 Adults (Couples Only)",
+      "text3": "1 Bedrooms / 1 King Size Bed",
+      "RoomInfo": {
+        "subtitle": "EXCLUSIVE & ROMANTIC ESCAPE",
+        "title": "Fantasy Room",
+        "text": " Located in our main building, Fantasy Rooms offer an exclusive space of 58 m² designed especially for couples seeking romance and privacy. Featuring a beautifully appointed bedroom with one luxurious double bed, each room has a private 25 m² terrace with breathtaking sea views, complete with an elegant jacuzzi and comfortable sunbeds. These rooms comfortably accommodate 2 adults and promise an unforgettable, romantic experience.",
+        "title2": "  Exclusive Romantic Amenities",
+        "title3": "Room Features",
+        "text2": "All Fantasy Rooms feature an Electronic Key Card System, daily minibar refill, premium bathroom cosmetics, tea and coffee making facilities, comfortable slippers, and free Wi-Fi.These rooms are exclusively designed for romantic stays, featuring a spacious 58 m² area, one bedroom with a double bed, and a 25 m² terrace offering a private jacuzzi and sunbeds. Please Note: Fantasy Rooms accommodate only 2 adults (couples). Extra beds, cribs, or independent pools are not available for this room type.",
+        "amenities": {
+          "couples": "Designed Specifically for Couples",
+          "kingBed": "1 King Size Bed ",
+          "jacuzziTerrace": " Private Terrace with Jacuzzi"
+        },
+        "features": {
+          "area": "58 m2",
+          "dresser": "Makeup Table",
+          "nonSmoking": "No Smoke",
+          "minibar": "Mini Bar",
+          "safe": "Safe Box",
+          "hairdryer": "Hair Dryer",
+          "bathEssentials": "Bath Essentials",
+          "teaCoffee": "Tea & Coffee Setup",
+          "tvWifi": "LedTv & Wifi",
+          "balcony": "Balcony",
+          "shower": "Shower"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXCLUSIVE PRIVILEGES",
+        "title": " Fantasy Room Benefits",
+        "text": " Guests staying in our Fantasy Rooms enjoy comfortable accommodations featuring bedroom with stunning sea views. For stays of 7 nights or more, enjoy a complimentary dinner at one of our elegant A’la Carte restaurants",
+        "list1": " A’la Carte Dining: One complimentary visit for stays of 7+ nights.",
+        "list2": "Spa & Wellness: Complimentary access to our Turkish Bath, sauna, steam room, and fitness center."
+      },
+      "RoomTour": {
+        "sea": {
+          "subtitle": "360° Virtual Room Tour",
+          "title": "Fantasy Room – Sea View 360°",
+          "text": "Explore our romantic Fantasy Room with a fully immersive 360° virtual tour focused solely on its stunning sea views and elegant interiors."
+        }
+      },
+      "OtherOptions": {
+        "span": " Choose Your Ideal Room",
+        "title": " Explore Other Comfortable Options",
+        "buttonText": " LEARN MORE",
+        "cards": {
+          "deluxe": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Family Room",
+            "m": " 50 m²",
+            "capacity": "Up to 4 adults + 1 child",
+            "text": " Our Family Rooms offer spacious and comfortable accommodation designed especially for families. Featuring two separate bedrooms connected by an interior door—one with a double bed and one with two single beds—these rooms provide relaxing sea or land views, making them perfect for creating unforgettable family memories."
+          },
+          "family": {
+            "subtitle": " Choose Your Ideal Room",
+            "title": "Family Room",
+            "m": " 50 m²",
+            "capacity": "Up to 4 adults + 1 child",
+            "text": " Our Family Rooms offer spacious and comfortable accommodation designed especially for families. Featuring two separate bedrooms connected by an interior door—one with a double bed and one with two single beds—these rooms provide relaxing sea or land views, making them perfect for creating unforgettable family memories."
+          }
+        }
+      }
+    },
+    "de": {
+      "subtitle": "EXKLUSIVER ROMANTISCHER URLAUB",
+      "title": "Fantasy Zimmer ddddd",
+      "text1": " Meerblick",
+      "text2": "2 Erwachsene (Nur Paare))",
+      "text3": "1 Schlafzimmer / 1 Kingsize-Bett",
+      "RoomInfo": {
+        "subtitle": " EXKLUSIVES & ROMANTISCHES ERLEBNIS",
+        "title": "Fantasy Room",
+        "text": "Die Fantasy Zimmer befinden sich im Hauptgebäude und bieten auf 58 m² einen exklusiven Raum, der speziell für Paare entworfen wurde. Jedes Zimmer verfügt über ein geschmackvoll eingerichtetes Schlafzimmer mit einem luxuriösen Doppelbett sowie eine 25 m² große private Terrasse mit beeindruckendem Meerblick, Whirlpool und Sonnenliegen. Diese Zimmer sind ideal für zwei Erwachsene und versprechen ein unvergessliches romantisches Erlebnis.",
+        "title2": "  Exklusive Romantische Annehmlichkeiten",
+        "title3": "Zimmerausstattung",
+        "text2": "Alle Fantasy Zimmer verfügen über ein elektronisches Schlüsselkartensystem, tägliche Minibar-Auffüllung, hochwertige Badezimmerkosmetik, Tee- und Kaffeezubereitungsmöglichkeiten, bequeme Hausschuhe und kostenloses WLAN. Diese Zimmer wurden ausschließlich für romantische Aufenthalte konzipiert und bieten 58 m² Wohnfläche sowie eine 25 m² große Terrasse mit privatem Whirlpool. Hinweis: Fantasy Zimmer sind ausschließlich für 2 Erwachsene (Paare). Zustellbetten, Babybetten oder separate Pools sind für diesen Zimmertyp nicht verfügbar.",
+        "amenities": {
+          "couples": "Speziell für Paare konzipiert",
+          "kingBed": "1 Kingsize-Bett",
+          "jacuzziTerrace": "Private Terrasse mit Jacuzzi"
+        },
+        "features": {
+          "area": "58 m2",
+          "dresser": "Schminktisch",
+          "nonSmoking": "Nichtraucher",
+          "minibar": "Mini Bar",
+          "safe": "Safe",
+          "hairdryer": "Haartrockner",
+          "bathEssentials": "Pflegeprodukte",
+          "teaCoffee": "Tee-/Kaffee-Set ",
+          "tvWifi": "LedTv & WLAN",
+          "balcony": "Balkon",
+          "shower": "Dusche"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": " EXKLUSIVE VORTEILE",
+        "title": "Fantasy Zimmer-Vorteile",
+        "text": " Gäste in unseren Fantasy Zimmer genießen  Schlafzimmer mit herrlichem Blick auf Meer.",
+        "list1": "A’la Carte Abendessen: Bei Aufenthalten ab 7 Nächten ist ein A’la Carte-Abendessen kostenfrei.",
+        "list2": "Spa & Wellness: Kostenfreier Zugang zu Hammam, Sauna, Dampfbad und Fitnesscenter."
+      },
+      "RoomTour": {
+        "sea": {
+          "subtitle": "360° Virtuelle Zimmertour",
+          "title": "Fantasy-Zimmer – 360° Meerblick",
+          "text": "Entdecken Sie unser romantisches Fantasy-Zimmer in einer 360°-Tour, die sich ganz auf den atemberaubenden Meerblick und das elegante Interieur konzentriert."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Wählen Sie Ihr Ideales Zimmer",
+        "title": "  Weitere komfortable Optionen entdecken",
+        "buttonText": " MEHR ENTDECKEN",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": "Familienzimmer",
+            "m": " 50 m²",
+            "capacity": "Bis zu 4 Erwachsene + 1 Kind",
+            "text": " Zwei durch eine Tür verbundene Schlafzimmer bieten Komfort und Privatsphäre für Familien. Mit Meer- oder Landblick ideal für unvergessliche Familienmomente."
+          },
+          "family": {
+            "subtitle": "  Wählen Sie Ihr Ideales Zimmer",
+            "title": "Familienzimmer",
+            "m": " 50 m²",
+            "capacity": "Bis zu 4 Erwachsene + 1 Kind",
+            "text": " Zwei durch eine Tür verbundene Schlafzimmer bieten Komfort und Privatsphäre für Familien. Mit Meer- oder Landblick ideal für unvergessliche Familienmomente."
+          }
+        }
+      }
+    },
+    "ru": {
+      "subtitle": "  ЭКСКЛЮЗИВНЫЙ РОМАНТИЧЕСКИЙ ОТДЫХ",
+      "title": "Номер Fantasy",
+      "text1": " Вид на море",
+      "text2": "2 взрослых (только для пар)",
+      "text3": "1 спальня /1 кровать king-size",
+      "RoomInfo": {
+        "subtitle": "ЭКСКЛЮЗИВНЫЙ И РОМАНТИЧЕСКИЙ ОТДЫХ",
+        "title": "Fantasy Room",
+        "text": " Номера Fantasy расположены в главном корпусе и предлагают 58 м² эксклюзивного пространства, разработанного специально для романтического пребывания. В каждом номере имеется элегантная спальня с роскошной двуспальной кроватью и частная терраса 25 м² с захватывающим видом на море, джакузи и шезлонгами. Номера предназначены для размещения 2 взрослых и гарантируют незабываемое романтическое впечатление.",
+        "title2": " Эксклюзивные романтические удобства",
+        "title3": " Оснащение номера",
+        "text2": "Все номера Fantasy оснащены системой электронного ключа, ежедневно пополняемым мини-баром, элитной косметикой для ванной, принадлежностями для приготовления чая и кофе, удобными тапочками и бесплатным Wi-Fi. Номера предназначены исключительно для романтического отдыха. Площадь номера — 58 м², терраса — 25 м² с джакузи и шезлонгами. Внимание: Номера Fantasy рассчитаны только на 2 взрослых (пары). Дополнительные кровати, детские кроватки или частные бассейны не предусмотрены.",
+        "amenities": {
+          "couples": "Специально разработано для пар",
+          "kingBed": "1 Кровать King Size",
+          "jacuzziTerrace": "Частная терраса с джакузи rrrrrrr"
+        },
+        "features": {
+          "area": "58 m2",
+          "dresser": "Туалетный столик",
+          "nonSmoking": " Некурящий номер • ",
+          "minibar": "Мини-бар",
+          "safe": "SСейф",
+          "hairdryer": "Фенr",
+          "bathEssentials": "Косметика",
+          "teaCoffee": " Чай/Кофе",
+          "tvWifi": "LED TV и Wi-Fi ",
+          "balcony": "Балкон",
+          "shower": "Душ"
+        }
+      },
+      "BackgroundSection": {
+        "subtitle": "ЭКСКЛЮЗИВНЫЕ ПРИВИЛЕГИИ",
+        "title": "Преимущества номера",
+        "text": "Гости, остановившиеся в наших номерах Fantasy, наслаждаются комфортом спальни и впечатляющим видом на море.",
+        "list1": "A’la Carte ужин: при проживании от 7 ночей – один бесплатный ужин в ресторане A’la Carte.",
+        "list2": "Спа и велнес: бесплатный доступ к турецкой бане, сауне, паровой комнате и фитнес-центру."
+      },
+      "RoomTour": {
+        "sea": {
+          "subtitle": "360° Виртуальный Тур по Номеру",
+          "title": "Номер Fantasy – 360° Вид на море",
+          "text": "Погрузитесь в романтический номер Fantasy с помощью 360° виртуального тура, полностью сосредоточенного на великолепном виде на море и элегантном интерьере."
+        }
+      },
+      "OtherOptions": {
+        "span": "  Выберите свой идеальный номер",
+        "title": " Откройте для себя другие комфортные варианты",
+        "buttonText": " Узнать больше",
+        "cards": {
+          "deluxe": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": " Семейный номер",
+            "m": " 50 m²",
+            "capacity": "До 4 взрослых и 1 ребёнка",
+            "text": " Две спальни, соединённые внутренней дверью, одна с двуспальной, другая — с двумя односпальными кроватями. Отличный выбор для незабываемого семейного отдыха с видом на море или суша."
+          },
+          "family": {
+            "subtitle": "  Выберите свой идеальный номер",
+            "title": " Семейный номер",
+            "m": " 50 m²",
+            "capacity": "До 4 взрослых и 1 ребёнка",
+            "text": " Две спальни, соединённые внутренней дверью, одна с двуспальной, другая — с двумя односпальными кроватями. Отличный выбор для незабываемого семейного отдыха с видом на море или суша."
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/fantasyroom/fantasy1.webp",
+      "width": 2158,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": " Fantazi Oda"
+        },
+        "en": {
+          "alt": " Fantasy Room"
+        },
+        "de": {
+          "alt": "Fantasy Zimmer"
+        },
+        "ru": {
+          "alt": "Номер Fantasy"
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "fantasy-gallery-1",
+          "order": 0,
+          "image": "/uploads/pages/fantasyroom/fantasy1.webp",
+          "width": 2158,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-2",
+          "order": 1,
+          "image": "/uploads/pages/fantasyroom/fantasy2.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-3",
+          "order": 2,
+          "image": "/uploads/pages/fantasyroom/fantasy3.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-4",
+          "order": 3,
+          "image": "/uploads/pages/fantasyroom/fantasy4.jpg",
+          "width": 2159,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-5",
+          "order": 4,
+          "image": "/uploads/pages/fantasyroom/fantasy5.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-6",
+          "order": 5,
+          "image": "/uploads/pages/fantasyroom/fantasy6.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-7",
+          "order": 6,
+          "image": "/uploads/pages/fantasyroom/fantasy7.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-8",
+          "order": 7,
+          "image": "/uploads/pages/fantasyroom/fantasy8.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-9",
+          "order": 8,
+          "image": "/uploads/pages/fantasyroom/fantasy9.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-10",
+          "order": 9,
+          "image": "/uploads/pages/fantasyroom/fantasy10.jpg",
+          "width": 2048,
+          "height": 1437,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        },
+        {
+          "id": "fantasy-gallery-11",
+          "order": 10,
+          "image": "/uploads/pages/fantasyroom/fantasy11.jpg",
+          "width": 2048,
+          "height": 1365,
+          "translations": {
+            "tr": {
+              "alt": " Fantazi Oda"
+            },
+            "en": {
+              "alt": " Fantasy Room"
+            },
+            "de": {
+              "alt": "Fantasy Zimmer"
+            },
+            "ru": {
+              "alt": "Номер Fantasy"
+            }
+          }
+        }
+      ]
+    },
+    "background": {
+      "image": "/uploads/pages/fantasyroom/fantasy3.webp",
+      "width": 2160,
+      "height": 1440,
+      "translations": {
+        "tr": {
+          "alt": " Fantazi Oda"
+        },
+        "en": {
+          "alt": " Fantasy Room"
+        },
+        "de": {
+          "alt": "Fantasy Zimmer"
+        },
+        "ru": {
+          "alt": "Номер Fantasy"
+        }
+      }
+    },
+    "otherOptions": {
+      "images": [
+        {
+          "id": "deluxe",
+          "order": 0,
+          "image": "/uploads/pages/room-options/deluxe-preview.jpg",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": " Семейный номер"
+            }
+          }
+        },
+        {
+          "id": "family",
+          "order": 1,
+          "image": "/uploads/pages/room-options/family-preview.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": " Aile Odası"
+            },
+            "en": {
+              "alt": "Family Room"
+            },
+            "de": {
+              "alt": "Familienzimmer"
+            },
+            "ru": {
+              "alt": " Семейный номер"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "sea",
+      "order": 0,
+      "url": "https://kuula.co/share/collection/7brLW?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"
+    }
+  ]
+}

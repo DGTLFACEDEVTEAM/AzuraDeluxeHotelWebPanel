@@ -236,3 +236,10 @@ export async function saveFamilyImage(bytes, mimeType, paths = resolveAzuraPaths
 export async function listFamilyImages(paths = resolveAzuraPaths()) {
   return [...await listPageImages("familyroom", paths), ...await listPageImages("room-options", paths)];
 }
+
+export async function saveFantasyImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("fantasyroom", bytes, mimeType, paths, idFactory);
+}
+export async function listFantasyImages(paths = resolveAzuraPaths()) {
+  return [...await listPageImages("fantasyroom", paths), ...await listPageImages("room-options", paths)];
+}

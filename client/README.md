@@ -690,3 +690,129 @@ curl -H "Authorization: Bearer $AZURA_PANEL_SERVICE_TOKEN" \
 Test verileri yalnızca geçici content/uploads dizinlerine yazılır. `npm run test:room-details-production` ayrı build dizini kullanır. Family HTTP kontrolleri token, 400/404/409/413/415/428, hatada dosya koruma, paralel 200/409, Family+Deluxe paralel 200/200, yükleme/listeleme/seçme, ortak medya sınırlaması, dört dilde yayın ve restart sonrası içerik/revision kalıcılığını kapsar. Önceki “Family 404” testleri yalnızca Fantasy/Handicap/bilinmeyen odalar için devam eder. Seed koruma testleri aynen çalışır. Mevcut hatalı görünen Family öneri metni ve Almanca çeviri anahtarı değiştirilmemiştir.
 
 Family yönetim geçişi doğrulama sonucu: Family testleri **5/5**, Family + mevcut homepage/oda medya güvenliği grubu **11/11**, toplam oda/etkileşim grubu **13/14**. Tek eski başarısızlık, Deluxe JSON ile eski mesajlar arasındaki `herhrt`/`het`/boşluk farkını kontrol eden metin eşliği testidir; bu içerikler değiştirilmedi. İzole production build ve genişletilmiş Family+Deluxe API HTTP testi **1/1**, lint ve `git diff --check` başarılı. Testler gerçek içerikleri değiştirmeden geçici dizinlerde çalıştı. Tasarım, ContactSection2, Lago ve mevcut Family çeviri tutarsızlıkları değiştirilmedi.
+
+### Fantasy kalıcı okuma — ortak oda sözleşmesi
+
+Fantasy de aynı `schemaVersion:1` oda detay sözleşmesini, `azura-room-detail-storage.mjs` okuyucu/doğrulamasını, server-only `azura-room-detail-content.js` girişini ve `seed-persistent-room-details.mjs` betiğini kullanır. Yeni depolama veya form sistemi yoktur. Okunabilir odalar Deluxe/Family/Fantasy; **yönetilebilir odalar yalnızca Deluxe/Family**. Fantasy page-content GET/PUT ve images GET/POST geçerli token ile 404 döner.
+
+Kesin Fantasy yapısı (metinlerde gösterilen yapraklar string, bütün alanlar zorunludur):
+
+```text
+{
+  schemaVersion: 1, pageKey: "fantasyroom", roomKey: "fantasy",
+  translations: {tr: RoomTexts, en: RoomTexts, de: RoomTexts, ru: RoomTexts},
+  media: {
+    hero: Image,
+    gallery: {images: [{id:"fantasy-gallery-1",order:0,...Image}, ...,
+                       {id:"fantasy-gallery-11",order:10,...Image}]},
+    background: Image,
+    otherOptions: {images: [{id:"deluxe",order:0,...Image},
+                           {id:"family",order:1,...Image}]}
+  },
+  tours: [{id:"sea",order:0,url:KuulaURL}]
+}
+RoomTexts = {
+  subtitle, title, text1, text2, text3,
+  RoomInfo: {
+    subtitle, title, text, title2, title3, text2,
+    amenities: {couples, kingBed, jacuzziTerrace},
+    features: {area, dresser, nonSmoking, minibar, safe, hairdryer,
+               bathEssentials, teaCoffee, tvWifi, balcony, shower}
+  },
+  BackgroundSection: {subtitle, title, text, list1, list2},
+  RoomTour: {sea: {subtitle, title, text}},
+  OtherOptions: {
+    span, title, buttonText,
+    cards: {deluxe: {subtitle,title,m,capacity,text},
+            family: {subtitle,title,m,capacity,text}}
+  }
+}
+Image = {image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+```
+
+Kök, bölüm, dil, görsel, koleksiyon, sıra ve hedef bağlantı sözleşmesi diğer odalarla aynıdır. Sadece `amenityIds`, galeri/tur/öneri kimlikleri ve background alanları oda konfigürasyonunda tanımlanır; Deluxe/Family JSON şeması değiştirilmez. Fantasy'nin üç olanağı couples/kingBed/jacuzziTerrace'dir; eski span1/span2/span3 değerleri aynı yatak/yatak/havuz ikonlarına aktarılır, sofa gösterilmez. Ayrı Fantasy bileşeni, SVG verisi, HTML, serbest bağlantı veya parallax alanı eklenmez. Ortak 4000 karakter metin, 300 karakter alt, 1500 karakter güvenli Kuula URL sınırları ve gerçek JPEG/PNG/WebP, 8 MiB/16 milyon piksel kontrolleri korunur.
+
+| Bölüm | Aktif veri ve fark |
+| --- | --- |
+| SubRoomBanner | subtitle/title/text1..3; fantasy1.webp |
+| SubroomCarousel | 11 öğe, fantasy-gallery-1…11, order 0…10 |
+| RoomFeatures | Aynı 11 özellik ikonu, Fantasy'ye ait üç olanak, sofa=false |
+| BackgroundSection | Metin + iki görünür liste maddesi, fantasy3.webp; parallax yok |
+| RoomTour | Tek sea turu; Kuula koleksiyonu 7brLW, query parametreleri aynen korunur |
+| OtherOptions | deluxe→family; iki sabit hedef /rooms/deluxeroom ve /rooms/familyroom |
+
+**Öneri düzeltmesi ve metin eşliği:** Eski ikinci kart Fantasy'yi kendisine öneriyordu. Kullanıcının “Fantasy kendisini önermesin” talebi doğrultusunda yalnızca bu öneri Family ile değiştirildi. Yeni Family kartı, mevcut DeluxeRoom.OtherOptions içindeki Family başlık/alan/kapasite/açıklama metinlerini ve Family family1.webp görselini kullanır; yeni metin yazılmaz. İlk kart Deluxe'e bağlanmasına rağmen FantasyRoom.OtherOptions.title1/text1 içinde Family anlatır; bu mevcut tutarsızlık değiştirilmez. Bölüm başlığı/düğmesi eski ortak bileşenin gerçekten kullandığı DeluxeRoom.OtherOptions değerlerinden alınır. Bunların dışında görünür Fantasy metinleri baş/son boşluklarıyla aynıdır. Almanca çift kapanış parantezi, Rusça SСейф/Фенr ve çevrilmemiş Fantasy Room başlıkları korunur. Görünmeyen FantasyRoom.text, BackgroundSection.buttonText ve OtherOptions.span1/span2 aktarılmaz; yorumdaki düğme açılmaz. Messages dosyaları ve ContactSection2 değişmez.
+
+**Medya:** 15 kullanım = hero 1 + galeri 11 + background 1 + öneri 2; **13 benzersiz dosya**. Hero galeri1'i, background galeri3'ü kullanır. 11 özgün Fantasy kopyası `/uploads/pages/fantasyroom/` altında orijinal dosya adı/uzantısıyla tutulur. Öneriler mevcut `/uploads/pages/room-options/deluxe-preview.jpg` ve yeni `/uploads/pages/room-options/family-preview.webp` kullanır. Ortak dosyalar ezilmez; başka odanın özel dizinine erişim açılmaz. Fantasy'nin diğer odalarda kullanılan eski ortak fantasy-preview.jpg dosyası korunur; Fantasy'nin kendi galeri dosyası oda sahipliği için özel dizinde kalır. Kaynak dosyalar silinmez; kopyalar bayt ve gerçek ölçü testinden geçer.
+
+```sh
+# client dizininden; yalnızca eksik JSON/görsel dosyalarını kurar
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads node scripts/seed-persistent-room-details.mjs fantasy
+```
+
+`${AZURA_CONTENT_ROOT}/site-pages/fantasyroom.json` force-dynamic sunucu okumasıyla bileşenlere aktarılır. Önceden metinler next-intl'den ve görseller statik importlardan geliyordu; şimdi aynı görsel yapı ve bileşen props'ları kalıcı JSON'dan gelir. Shared rezervasyon widget ve iletişim bileşeni kendi mevcut kaynaklarını kullanmayı sürdürür. Seed aynı wx/COPYFILE_EXCL korumasıyla çalışır. Salt okunur uploads sunumuna yalnızca fantasyroom eklenmiştir.
+
+**Sonraki aşama önerisi — uygulanmadı:** Aynı `/api/azura/room-details/fantasy/page-content` GET/PUT sözleşmesi `{bundle:{translations,tours},media,revision}` ile yönetim izin listesine eklenebilir. Bearer, application/json, tırnaklı If-Match, 128 KiB, ortak process kuyruğu ve atomik kayıt kuralları değişmemeli. `/images` GET/POST aynı liste/yükleme nesnesini kullanmalı; yüklemeler yalnızca fantasyroom, ortak öneriler yalnızca seçilebilir olmalı. Bu aşamada iki endpoint'in tüm yöntemleri 404 kalır; panel bağlantısı kurulmamıştır.
+
+Testler: `test:room-details` Fantasy başlangıç/boşluk ve öneri kaynağı eşliği, 15/13 medya, sıra/kimlik/tur, bozuk/eksik JSON, yanlış alan/ölçü/yol, symlink ve tekrar seed korumasını kapsar. `test:room-details-production` izole build altında dört dilde Fantasy metin/görsel/tur yayınını, dosya değişikliğinin restart öncesi/sonrası görünmesini, Deluxe/Family sayfa ve API regresyonlarını ve Fantasy API 404 sınırını doğrular. Ortak medya testindeki sıfır fstat boyutu regresyonu korunur. Ortak bileşen dosyaları değiştirilmedi; Family/Deluxe sözleşmesi aynı kaldı. Piksel karşılaştırması yapılmadı.
+
+Fantasy geçişi sonucu (22 Eylül 2026): Fantasy'ye özel **4/4**, ortak medya güvenliği ve sıfır fstat regresyonu **7/7**, toplam oda testleri **17/18** geçti. Tek eski başarısızlık Deluxe JSON'daki `herhrt`/`het` ve boşluk farklarının eski mesajlarla eşliğidir; ilgili içerik değiştirilmedi. İzole production build, genişletilmiş HTTP testi **1/1**, lint ve `git diff --check` başarılı. Fantasy page.js className değerleri eski sürümle birebir doğrulandı; piksel karşılaştırması yapılmadı.
+
+### Fantasy yönetimi — güncel durum
+
+Önceki Fantasy bölümündeki “salt okunur / API 404” ifadeleri ilk veri dönüşümünün durumudur. Artık mevcut ortak API yönetim izin listesi **deluxe, family, fantasy** içerir. Handicap ve bilinmeyen kimlikler 404 kalır. Aynı oda JSON'u, bileşenler ve veri sözleşmesi kullanılır; sayfa tasarımı/başlangıç içeriği değişmez, Lago henüz bağlanmamıştır.
+
+- `GET/PUT /api/azura/room-details/fantasy/page-content`
+- `GET/POST /api/azura/room-details/fantasy/images`
+
+Bütün yöntemler `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` gerektirir. GET ve başarılı PUT yanıtı tam olarak:
+
+```text
+{
+  "bundle": {
+    "translations": {"tr":RoomTexts,"en":RoomTexts,"de":RoomTexts,"ru":RoomTexts},
+    "tours": [{"id":"sea","order":0,"url":KuulaURL}]
+  },
+  "media": {
+    "hero":Image,
+    "gallery":{"images":[{"id":"fantasy-gallery-1","order":0,...Image}, ...,
+                         {"id":"fantasy-gallery-11","order":10,...Image}]},
+    "background":Image,
+    "otherOptions":{"images":[{"id":"deluxe","order":0,...Image},
+                              {"id":"family","order":1,...Image}]}
+  },
+  "revision":"<64 karakter küçük harf hexadecimal SHA-256>"
+}
+```
+
+RoomTexts/Image yukarıdaki kesin Fantasy şemasıyla aynıdır; değişmemiştir. 11 özellik, üç amenities anahtarı (couples/kingBed/jacuzziTerrace), 11 galeri, tek sea turu, deluxe→family önerileri ve 15 medya kaydı oda konfigürasyonundan doğrulanır. BackgroundSection subtitle/title/text/list1/list2 içerir; parallax yoktur.
+
+```http
+PUT /api/azura/room-details/fantasy/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle":{"translations":<dört dilin tam metinleri>,"tours":<tek tur>},"media":<tam medya>}
+```
+
+Yalnızca bundle/media gövdesi kabul edilir. 128 KiB, metin 4000, alt 300, güvenli Kuula URL 1500 karakter sınırları aynıdır. Revision kanonik bundle+media hash'idir; kök metadata dahil değildir ve JSON'a yazılmaz. Kuyruk içinde ilgili oda dosyası yeniden okunur, revision karşılaştırılır ve atomik yazılır; diğer kök alanlar ve diğer odalar korunur. Başarılı PUT dört dilin Fantasy yolunu revalidate eder. **Ortak kuyruk yalnızca aynı Node.js sürecini korur; çok süreç için ayrı ortak kilit gerekir.** 401/404/400/415/428/409/413 ve no-store davranışı korunur; eski revision dosyayı değiştirmez. Token yapılandırılmamışsa 503.
+
+Medya GET `{images:[{image,mimeType,size,width,height,modifiedAt}]}` döndürür. Liste yalnızca fantasyroom ve room-options köklerindeki geçerli dosyalardır; Deluxe/Family özel dizinleri dahil değildir. Ortak görseller sadece önerilerde seçilebilir, hero/galeri/background için reddedilir.
+
+```sh
+curl -H "Authorization: Bearer $AZURA_PANEL_SERVICE_TOKEN" \\
+  -F 'file=@fantasy.jpg' http://localhost:3000/api/azura/room-details/fantasy/images
+```
+
+POST tek file alanlı multipart kabul eder; 201 yanıtı:
+
+```json
+{"image":"/uploads/pages/fantasyroom/<sunucu-adi>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600}
+```
+
+Sayılar örnektir; gerçek dosya ölçü/boyut bilgileri döner. JPEG/PNG/WebP, 8 MiB/16 milyon piksel, gerçek tür/decode, güvenli ad, symlink koruması ve üzerine yazmama kuralları aynıdır. Multipart sınırı 8 MiB + 128 KiB'dir. Ortak dizine veya başka odanın özel dizinine yükleme yapılmaz. Yükleme JSON'u değiştirmez; yayın için image/width/height içerik PUT'unda birlikte seçilir. Önceki sıfır fstat boyutu düzeltmesi korunur.
+
+Testler geçici content/uploads ve izole production build kullanır. Fantasy için yetki/oda izinleri, 400/415/428/409/413, dosya koruma, paralel 200/409, yükleme/listeleme/seçme, ortak görsel sınırları, kök metadata, dört dil ve restart sonrası revision kalıcılığı kontrol edilir. Deluxe/Family API ve sayfa kontrolleri aynı HTTP testinde sürer. Seed ve mevcut içerik eşliği testleri korunur; gerçek düzenlenmiş içeriklere test yazması yapılmaz.
+
+Fantasy API doğrulama sonucu: Fantasy testleri **5/5**, ortak medya güvenliği/sıfır fstat regresyonu **7/7**, toplam oda testleri **18/19** geçti. Tek eski başarısızlık Deluxe JSON'daki herhrt/het/boşluk farklarının eski mesajlarla eşliğidir; içerikler değiştirilmedi. İzole production build ve kapsamlı üç oda HTTP testi **1/1**, lint ve git diff --check başarılı. Yönetim izni değiştiği için eski Family testindeki “Fantasy 404” beklentisi Handicap 404 olarak güncellendi. Sayfa bileşenlerinde bu API adımı için ek değişiklik gerekmedi; Lago bağlantısı, commit ve deploy yapılmadı.

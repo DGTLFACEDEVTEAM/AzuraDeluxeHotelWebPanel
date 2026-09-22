@@ -14,6 +14,7 @@ const ROOMS = Object.freeze({ deluxe: Object.freeze({
   tourIds: Object.freeze(["land", "sea", "partialSea"]),
   optionIds: Object.freeze(["family", "fantasy"]),
   featureIds: ROOM_FEATURE_IDS,
+  amenityIds: Object.freeze(["doubleBed", "singleBed", "sofa"]),
   backgroundFields: Object.freeze(["subtitle", "title", "text"]),
 }), family: Object.freeze({
   pageKey: "familyroom", file: "familyroom.json", folder: "familyroom",
@@ -21,6 +22,15 @@ const ROOMS = Object.freeze({ deluxe: Object.freeze({
   tourIds: Object.freeze(["land", "sea"]),
   optionIds: Object.freeze(["deluxe", "fantasy"]),
   featureIds: ROOM_FEATURE_IDS,
+  amenityIds: Object.freeze(["doubleBed", "singleBed", "sofa"]),
+  backgroundFields: Object.freeze(["subtitle", "title", "text", "list1", "list2"]),
+}), fantasy: Object.freeze({
+  pageKey: "fantasyroom", file: "fantasyroom.json", folder: "fantasyroom",
+  galleryIds: Object.freeze(Array.from({ length: 11 }, (_, i) => `fantasy-gallery-${i + 1}`)),
+  tourIds: Object.freeze(["sea"]),
+  optionIds: Object.freeze(["deluxe", "family"]),
+  featureIds: ROOM_FEATURE_IDS,
+  amenityIds: Object.freeze(["couples", "kingBed", "jacuzziTerrace"]),
   backgroundFields: Object.freeze(["subtitle", "title", "text", "list1", "list2"]),
 }) });
 
@@ -35,7 +45,7 @@ export function roomDetailConfig(roomKey) {
 
 // Readability does not imply management access. Enable each API room explicitly.
 export function roomDetailApiConfig(roomKey) {
-  if (!["deluxe", "family"].includes(roomKey)) throw new RoomDetailContentError("Oda yönetimi etkin değil.", 404);
+  if (!["deluxe", "family", "fantasy"].includes(roomKey)) throw new RoomDetailContentError("Oda yönetimi etkin değil.", 404);
   return roomDetailConfig(roomKey);
 }
 
@@ -114,7 +124,7 @@ export function validateRoomDetailContent(roomKey, content) {
     const fields = ["subtitle", "title", "text", "title2", "title3", "text2"];
     keys(t.RoomInfo, [...fields, "amenities", "features"], `${locale}.RoomInfo`);
     texts(Object.fromEntries(fields.map(key => [key, t.RoomInfo[key]])), fields, `${locale}.RoomInfo`);
-    texts(t.RoomInfo.amenities, ["doubleBed", "singleBed", "sofa"], `${locale}.amenities`);
+    texts(t.RoomInfo.amenities, config.amenityIds, `${locale}.amenities`);
     texts(t.RoomInfo.features, config.featureIds, `${locale}.features`);
     texts(t.BackgroundSection, config.backgroundFields, `${locale}.BackgroundSection`);
     keys(t.RoomTour, config.tourIds, `${locale}.RoomTour`);
