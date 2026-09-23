@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 import { HomepageContentError, LOCALES } from "@/lib/azura-homepage-storage.mjs";
-export function createPageContentHandlers({ readContent, writeContent, parseIfMatch, ContentError, pageKey }) {
+export function createPageContentHandlers({ readContent, writeContent, parseIfMatch, ContentError, pageKey, revalidationPaths = LOCALES.map(locale => `/${locale}/${pageKey}`) }) {
 const MAX_BODY_BYTES = 128 * 1024;
 
 function json(body, status = 200) {
@@ -69,7 +69,7 @@ async function PUT(request) {
       return json({ error: "Yalnızca bundle ve media alanları güncellenebilir." }, 400);
     }
     const result = await writeContent(body.bundle, body.media, expectedRevision);
-    for (const locale of LOCALES) revalidatePath(`/${locale}/${pageKey}`);
+    for (const pagePath of revalidationPaths) revalidatePath(pagePath);
     return json(result);
   } catch (error) { return failure(error); }
 }

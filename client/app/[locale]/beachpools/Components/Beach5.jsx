@@ -56,7 +56,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[]}) => {
         <div className='relative group'>
           <Image 
             src={pool.src} 
-            alt={pool.title}
+            alt={pool.alt ?? pool.title}
             width={349} 
             height={233}
             className="object-cover w-full transition-opacity duration-300 group-hover:opacity-0"
@@ -103,7 +103,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[]}) => {
         <div className='relative group'>
           <Image 
             src={pool.src} 
-            alt={pool.title}
+            alt={pool.alt ?? pool.title}
             width={349} 
             height={233}
             className="object-cover w-full transition-opacity duration-300 group-hover:opacity-0"
@@ -156,7 +156,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[]}) => {
                 <div className="flex flex-col w-full items-start text-start justify-center gap-[15px] lg:gap-[20px] font-jost text-black ">
                   <Image
                     src={pool.src}
-                    alt={pool.title}
+                    alt={pool.alt ?? pool.title}
                     width={349}
                     height={233}
                   />
@@ -184,7 +184,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[]}) => {
       className={`transition-all w-[33.3%] h-[1px] bg-[#24292C] rounded-full ${
         selectedIndex === i ? "p-[1px]" : "bg-[#848383] "
       }`}
-      onClick={() => handleJump(i)}
+      onClick={() => emblaApi?.scrollTo(i)}
     />
   ))}
 </div>

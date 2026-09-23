@@ -1,0 +1,647 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "beachpools",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "DENİZ KENARINDA RAHATLA & YENİLEN",
+        "title": "Plaj & Havuzlar",
+        "text": "70 metre uzunluğundaki özel plajımızda yumuşak kum, konforlu şezlonglar, şemsiyeler ve dinlendirici anlar için lüks bir iskele sizi bekliyor."
+      },
+      "info": {
+        "subtitle": "DENİZ KENARINDA RAHAT ANLAR",
+        "title": "Özel Plajımızı Keşfedin",
+        "text": "Sakin turkuaz sularıyla yüzme ve su sporları için ideal özel kumlu plajımızda rahatlama anlarının keyfini çıkarın. Konforlu şezlonglar, şemsiyeler ve ücretsiz havlular bir günlük keyif için hazır. Gün boyu plaj barlarımızda sunulan serinletici içecekler ve lezzetli atıştırmalıklarla kendinizi yenileyin.",
+        "span": "Özel Ayrıcalıklar",
+        "list1": "Ücretsiz şezlong, şemsiye ve havlular.",
+        "list2": "Plaj barlarında serinletici içecekler ve hafif atıştırmalıklar.",
+        "list3": "Yüzme ve su sporları için sakin sular."
+      },
+      "activities": {
+        "subtitle": "DENİZ KENARINDA EĞLENCE & GÜNEŞ",
+        "title": "Plaj Aktiviteleri ve Daha Fazlası",
+        "text": "Yüzme, su sporları ve her yaşa uygun heyecan verici eğlenceler de dahil olmak üzere çeşitli plaj aktiviteleri ile canlı bir atmosferin keyfini çıkarın. Deniz kenarında eğlence ve heyecan dolu unutulmaz anlar yaratın.",
+        "cards": {
+          "activity1": {
+            "title": "Yüzme & Dinlenme",
+            "span": "Kokteyller & Atıştırmalıklar"
+          },
+          "activity2": {
+            "title": "Plaj Barında Ferahlayın",
+            "span": "Tüm Gün Açık"
+          },
+          "activity3": {
+            "title": "Su Sporları",
+            "span": "Tüm Gün Açık"
+          },
+          "activity4": {
+            "title": "Plajda Kutlama",
+            "span": "SÜRE: 60 DAKİKA"
+          }
+        }
+      },
+      "video": {
+        "subtitle": "Her An İçin Tasarlanmış Havuzlar",
+        "title": "Rahatlamaya Yelken Açın",
+        "text": "Her ruh haline uygun tasarlanmış havuzlarımızda dinlenin ve yenilenin. Geniş açık yüzme havuzumuzda dalın veya ısıtmalı kapalı havuzumuzda huzurun tadını çıkarın. Küçük misafirlerimiz için özel çocuk havuzları ve heyecan verici su kaydırakları, herkes için neşe dolu anlar yaratır."
+      },
+      "pools": {
+        "subtitle": "Özel Havuz Seçkimize Dalın",
+        "title": "Tüm Havuzlar Bir Bakışta",
+        "text": "Azura Deluxe Resort & Spa, her tercihe uygun havuzlar sunar. Ferah açık havuzumuzda serinleyin, ısıtmalı kapalı havuzumuzda rahatlayın veya Aqua Park’ımızdaki heyecanlı su kaydıraklarının keyfini çıkarın. Özel çocuk havuzları küçük misafirlerimize eğlence vadediyor. İdeal havuz deneyiminizi burada keşfedin.",
+        "cards": {
+          "main": {
+            "subtitle": "Herkese Uygun Aile Dostu Havuz",
+            "title": "Açık Yüzme Havuzu",
+            "text": "Geniş açık yüzme havuzumuzda ferahlatıcı yüzmelerin ve rahatlatıcı anların tadını çıkarın. Her yaştan misafire uygun tasarlanmış havuz, konforlu şezlonglar ve şemsiyelerle güneş altında huzurlu bir deneyim sunar.",
+            "outdoor": "Açık",
+            "area": "750 m²",
+            "depth": "140 cm"
+          },
+          "indoor": {
+            "subtitle": "Rahatlama İçin Sakin Ortam",
+            "title": "Kapalı Havuz",
+            "text": "Serin sezonlarda hizmet veren ısıtmalı kapalı havuzumuzda huzur ve rahatlama bulun. Güneşten uzak sakin bir yüzme deneyimi sunarak tatilinizde yenilenmenizi sağlar.",
+            "outdoor": "Açık",
+            "area": "100 m²",
+            "depth": "140 cm"
+          },
+          "kids": {
+            "subtitle": "Çocuk Kulübü",
+            "title": "Çocuk Havuzu",
+            "text": "Özel tasarlanmış ısıtmalı çocuk havuzumuz, küçük misafirlerimiz için güvenli ve eğlenceli bir ortam sunar. Sığ su ve mini kaydırakla çocuklar güvenle oynayıp unutulmaz anılar biriktirir.",
+            "outdoor": "Açık",
+            "area": "90 m²",
+            "depth": "40 cm"
+          },
+          "aqua": {
+            "subtitle": "Heyecan Dolu Kaydırak Keyfi",
+            "title": "Kaydırak Havuzu",
+            "text": "Tatilinize macera katın! Dört farklı su kaydırağına sahip ısıtmalı Kaydırak Havuzu, hem çocuklar hem yetişkinler için heyecan ve eğlenceli anlar sunar.",
+            "outdoor": "Açık",
+            "area": "80 m²",
+            "depth": "120 cm"
+          },
+          "indoorKids": {
+            "subtitle": "Küçük Yüzücüler İçin Güvenli ve Eğlenceli",
+            "title": "Kapalı Çocuk Havuzu",
+            "text": "En küçük misafirlerimize özel Kapalı Çocuk Havuzu, sıcak ve güvenli bir ortam sunar. Sığ ve ısıtmalı suyu sayesinde hava koşullarına bakılmaksızın eğlenceli su oyunları yaşanır.",
+            "outdoor": "Açık",
+            "area": "14 m²",
+            "depth": "40 cm"
+          }
+        }
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": "RELAX & REFRESH BY THE SEA",
+        "title": "Beach & Pools",
+        "text": "Enjoy our beautiful private beach stretching 70 meters, offering soft sand, comfortable sun loungers, umbrellas, and a luxurious pier for relaxing moments."
+      },
+      "info": {
+        "subtitle": "RELAXING MOMENTS BY THE SEA",
+        "title": " Discover Our Exclusive Beach",
+        "text": "Enjoy relaxing moments on our private sandy beach, featuring calm turquoise waters perfect for swimming and various water sports. Comfortable sun loungers, umbrellas, and complimentary towels await you for a day of leisure. Refresh yourself throughout the day with delightful drinks and tasty snacks served at our convenient beach bars.",
+        "span": "Special Features",
+        "list1": "Complimentary sun loungers, umbrellas, and towels.",
+        "list2": "Beach bars serving refreshing drinks and light snacks.",
+        "list3": "Calm waters ideal for swimming and water sports."
+      },
+      "activities": {
+        "subtitle": "FUN & SUN BY THE SEA",
+        "title": "Beach Activities & More",
+        "text": "Enjoy a vibrant atmosphere with various beach activities, including swimming, water sports, and exciting entertainment options suitable for all ages. Create unforgettable memories filled with fun and excitement by the sea",
+        "cards": {
+          "activity1": {
+            "title": "Swimming & Lounging",
+            "span": "Cocktails & Snacks"
+          },
+          "activity2": {
+            "title": "Refresh at the Beach Bar",
+            "span": "All Day Round"
+          },
+          "activity3": {
+            "title": "Water Sports",
+            "span": "All Day Round"
+          },
+          "activity4": {
+            "title": "Celebrate at the Beach",
+            "span": "DURATION: 60 MIN"
+          }
+        }
+      },
+      "video": {
+        "subtitle": "Pools Designed for Every Moment",
+        "title": " Float Into Relaxation",
+        "text": "Relax and unwind in our beautifully designed pools, perfect for every mood. Dive into our large outdoor swimming pool, or find tranquility in our heated indoor pool. Our little guests can enjoy special children's pools and exciting water slides, creating joyful moments for everyone."
+      },
+      "pools": {
+        "subtitle": "Dive Into Our Exclusive Pool Selection",
+        "title": "All Pools at a Glance",
+        "text": "Azura Deluxe Resort & Spa offers pools designed for every preference. Enjoy our spacious outdoor pool for refreshing swims, our heated indoor pool for relaxation, or experience thrilling water slides in our Aqua Park. Dedicated children's pools ensure fun for our younger guests. Discover your ideal pool experience right here.",
+        "cards": {
+          "main": {
+            "subtitle": "Family-friendly Pool for General Use",
+            "title": " Outdoor Swimming Pool",
+            "text": "Enjoy refreshing swims and relaxing moments at our spacious outdoor swimming pool. Perfectly designed for guests of all ages, our pool provides a welcoming atmosphere with comfortable sun loungers and umbrellas, ensuring a pleasant and relaxing experience under the sun.",
+            "outdoor": "Outdoor",
+            "area": "750 m²",
+            "depth": "140 cm"
+          },
+          "indoor": {
+            "subtitle": "Peaceful Environment for Relaxation",
+            "title": "Indoor Swimming Pool",
+            "text": "Discover tranquility and relaxation in our heated indoor swimming pool, available during cooler seasons. Ideal for a peaceful swim, it offers a soothing environment away from the sun, perfect for unwinding and rejuvenating during your stay.",
+            "outdoor": "Outdoor",
+            "area": "100 m²",
+            "depth": "140 cm"
+          },
+          "kids": {
+            "subtitle": " Kids Club",
+            "title": "Children's Pool",
+            "text": "Our specially designed heated children’s pool provides a safe and fun environment for our little guests. With shallow water and a mini slide, children can play safely and create unforgettable memories.",
+            "outdoor": "Outdoor",
+            "area": "90 m²",
+            "depth": "40 cm"
+          },
+          "aqua": {
+            "subtitle": "Exciting Fun with Thrilling Slides",
+            "title": "Slide Pool",
+            "text": "Add adventure to your holiday! The heated Slide Pool with four different water slides offers excitement and fun for both children and adults.",
+            "outdoor": "Outdoor",
+            "area": "80 m²",
+            "depth": "120 cm"
+          },
+          "indoorKids": {
+            "subtitle": "Safe and Fun for Little Swimmers",
+            "title": "Indoor Children's Pool",
+            "text": "Specially created for our youngest guests, the Indoor Children's Pool provides a warm and safe environment ideal for playful swimming. With shallow water, this heated pool ensures comfort and fun, allowing kids to enjoy delightful water activities regardless of the weather.",
+            "outdoor": "Outdoor",
+            "area": "14 m²",
+            "depth": "40 cm"
+          }
+        }
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "ENTSPANNEN & ERFRISCHEN AM MEER",
+        "title": "Strand & Pools",
+        "text": "Genießen Sie unseren wunderschönen 70 Meter langen Privatstrand mit feinem Sand, bequemen Liegen, Sonnenschirmen und einer luxuriösen Seebrücke für entspannte Momente."
+      },
+      "info": {
+        "subtitle": "ENTSPANNENDE MOMENTE AM MEER",
+        "title": "Entdecken Sie unseren exklusiven Strand",
+        "text": "Genießen Sie entspannende Momente an unserem privaten Sandstrand mit ruhigem türkisblauem Wasser – ideal zum Schwimmen und für Wassersport. Bequeme Liegen, Sonnenschirme und kostenlose Handtücher erwarten Sie für einen Tag der Erholung. Erfrischen Sie sich tagsüber mit köstlichen Getränken und leckeren Snacks an unseren Strandbars.",
+        "span": "Besondere Merkmale",
+        "list1": "Kostenlose Liegen, Sonnenschirme und Handtücher.",
+        "list2": "Strandbars mit erfrischenden Getränken und leichten Snacks.",
+        "list3": "Ruhiges Wasser – ideal zum Schwimmen und für Wassersport."
+      },
+      "activities": {
+        "subtitle": "SPAß & SONNE AM MEER",
+        "title": "Strandaktivitäten & mehr",
+        "text": "Genießen Sie eine lebhafte Atmosphäre mit verschiedenen Strandaktivitäten – Schwimmen, Wassersport und unterhaltsame Angebote für alle Altersgruppen. Schaffen Sie unvergessliche Erinnerungen voller Spaß und Spannung am Meer.",
+        "cards": {
+          "activity1": {
+            "title": "Schwimmen & Entspannen",
+            "span": "Cocktails & Snacks"
+          },
+          "activity2": {
+            "title": "Erfrischen an der Strandbar",
+            "span": "Den ganzen Tag"
+          },
+          "activity3": {
+            "title": "Wassersport",
+            "span": "Den ganzen Tag"
+          },
+          "activity4": {
+            "title": "Feiern am Strand",
+            "span": "DAUER: 60 MIN"
+          }
+        }
+      },
+      "video": {
+        "subtitle": "Für jeden Moment gestaltete Pools",
+        "title": "Entspannen Sie sich im Wasser",
+        "text": "Entspannen und erholen Sie sich in unseren wunderschön gestalteten Pools, perfekt für jede Stimmung. Tauchen Sie in unseren großen Außenpool ein oder genießen Sie Ruhe in unserem beheizten Innenpool. Für unsere kleinen Gäste gibt es spezielle Kinderpools und aufregende Wasserrutschen – für fröhliche Momente für alle."
+      },
+      "pools": {
+        "subtitle": "Eintauchen in unsere exklusive Poolauswahl",
+        "title": "Alle Pools auf einen Blick",
+        "text": "Das Azura Deluxe Resort & Spa bietet Pools für jeden Geschmack. Genießen Sie erfrischende Bahnen im großzügigen Außenpool, entspannen Sie im beheizten Innenpool oder erleben Sie spannende Wasserrutschen im Aqua Park. Spezielle Kinderpools sorgen für Spaß bei unseren jüngsten Gästen. Finden Sie hier Ihr perfektes Pool-Erlebnis.",
+        "cards": {
+          "main": {
+            "subtitle": "Familienfreundlicher Pool für alle",
+            "title": "Außenpool",
+            "text": "Genießen Sie erfrischende Schwimmzüge und entspannte Momente im großzügigen Außenpool. Ideal für Gäste jeden Alters, mit bequemen Liegen und Sonnenschirmen für eine ruhige Zeit unter der Sonne.",
+            "outdoor": "Außen",
+            "area": "750 m²",
+            "depth": "140 cm"
+          },
+          "indoor": {
+            "subtitle": "Ruhige Umgebung zum Entspannen",
+            "title": "Innenpool",
+            "text": "Erleben Sie Ruhe und Entspannung im beheizten Innenpool, verfügbar in kühleren Jahreszeiten. Perfekt für ein friedliches Schwimmen fernab der Sonne.",
+            "outdoor": "Außen",
+            "area": "100 m²",
+            "depth": "140 cm"
+          },
+          "kids": {
+            "subtitle": "Kinderclub",
+            "title": "Kinderpool",
+            "text": "Unser speziell gestalteter beheizter Kinderpool bietet unseren kleinen Gästen eine sichere und unterhaltsame Umgebung. Mit flachem Wasser und einer Mini-Rutsche können Kinder sicher spielen und unvergessliche Erinnerungen sammeln.",
+            "outdoor": "Außen",
+            "area": "90 m²",
+            "depth": "40 cm"
+          },
+          "aqua": {
+            "subtitle": "Spannender Spaß mit Rutschen",
+            "title": "Rutschenpool",
+            "text": "Verleihen Sie Ihrem Urlaub Abenteuer! Der beheizte Rutschenpool mit vier verschiedenen Wasserrutschen bietet sowohl Kindern als auch Erwachsenen Spannung und Spaß.",
+            "outdoor": "Außen",
+            "area": "80 m²",
+            "depth": "120 cm"
+          },
+          "indoorKids": {
+            "subtitle": "Sicherer Spaß für kleine Schwimmer",
+            "title": "Innen‑Kinderpool",
+            "text": "Der beheizte Innen‑Kinderpool bietet eine warme, sichere Umgebung mit flachem Wasser – ideal für spielerisches Schwimmen bei jedem Wetter.",
+            "outdoor": "Außen",
+            "area": "14 m²",
+            "depth": "40 cm"
+          }
+        }
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "Расслабьтесь и освежитесь у моря",
+        "title": "Пляж и бассейны",
+        "text": "Наслаждайтесь нашим красивым частным пляжем длиной 70 метров с мягким песком, удобными шезлонгами, зонтиками и роскошным причалом для расслабляющих моментов."
+      },
+      "info": {
+        "subtitle": "Расслабляющие моменты у моря",
+        "title": "Откройте наш эксклюзивный пляж",
+        "text": "Наслаждайтесь расслабляющими моментами на нашем частном песчаном пляже с спокойными бирюзовыми водами — идеальными для плавания и водных видов спорта. Удобные шезлонги, зонтики и бесплатные полотенца ждут вас для приятного отдыха. Освежитесь в течение дня вкусными напитками и закусками в наших пляжных барах.",
+        "span": "Особенности",
+        "list1": "Бесплатные шезлонги, зонтики и полотенца.",
+        "list2": "Пляжные бары с освежающими напитками и легкими закусками.",
+        "list3": "Спокойная вода — идеально для плавания и водных видов спорта."
+      },
+      "activities": {
+        "subtitle": "ВЕСЕЛЬЕ И СОЛНЦЕ У МОРЯ",
+        "title": "Пляжные развлечения и не только",
+        "text": "Наслаждайтесь живой атмосферой с разнообразными пляжными развлечениями: плаванием, водными видами спорта и увлекательными активностями для всех возрастов. Создайте незабываемые моменты веселья и азарта у моря.",
+        "cards": {
+          "activity1": {
+            "title": "Плавание & Отдых",
+            "span": "Коктейли & Закуски"
+          },
+          "activity2": {
+            "title": "Освежение в пляжном баре",
+            "span": "Круглосуточно"
+          },
+          "activity3": {
+            "title": "Водные виды спорта",
+            "span": "Круглосуточно"
+          },
+          "activity4": {
+            "title": "Празднование на пляже",
+            "span": "ДЛИТЕЛЬНОСТЬ: 60 МИН"
+          }
+        }
+      },
+      "video": {
+        "subtitle": "Бассейны на любой момент",
+        "title": "Погрузитесь в расслабление",
+        "text": "Расслабьтесь и отдохните в наших прекрасно оформленных бассейнах, идеально подходящих для любого настроения. Погрузитесь в наш большой открытый бассейн или найдите спокойствие в нашем подогреваемом крытом бассейне. Наши маленькие гости могут насладиться отдельными детскими бассейнами и захватывающими водными горками, создавая радостные моменты для всех."
+      },
+      "pools": {
+        "subtitle": "Погрузитесь в эксклюзивный выбор бассейнов",
+        "title": "Все бассейны на обзор",
+        "text": "Azura Deluxe Resort & Spa предлагает бассейны на любой вкус. Наслаждайтесь освежающим плаванием в просторном открытом бассейне, отдыхайте в подогреваемом крытом бассейне или испытайте захватывающие водные горки в аквапарке. Детские бассейны гарантируют веселье для малышей. Найдите здесь идеальное бассейновое приключение.",
+        "cards": {
+          "main": {
+            "subtitle": "Семейный бассейн для всех гостей",
+            "title": "Открытый бассейн",
+            "text": "Наслаждайтесь освежающим плаванием и спокойным отдыхом в просторном открытом бассейне. Подходит для гостей всех возрастов, с удобными лежаками и зонтиками для расслабления на солнце.",
+            "outdoor": "Открытый",
+            "area": "750 м²",
+            "depth": "140 см"
+          },
+          "indoor": {
+            "subtitle": "Тихая обстановка для отдыха",
+            "title": "Крытый бассейн",
+            "text": "Обретите покой в подогреваемом крытом бассейне, доступном в прохладные сезоны. Идеально для спокойного плавания вдали от солнца.",
+            "outdoor": "Открытый",
+            "area": "100 м²",
+            "depth": "140 см"
+          },
+          "kids": {
+            "subtitle": "Детский клуб",
+            "title": "Детский бассейн",
+            "text": "Наш специально разработанный подогреваемый детский бассейн обеспечивает безопасную и веселую обстановку для наших маленьких гостей. Благодаря не большому колличеству воды и мини-горке дети могут безопасно играть и создавать незабываемые воспоминания.",
+            "outdoor": "Открытый",
+            "area": "90 м²",
+            "depth": "40 см"
+          },
+          "aqua": {
+            "subtitle": "Захватывающий отдых с горками",
+            "title": "Бассейн с горками",
+            "text": "Добавьте приключений в свой отпуск! Подогреваемый бассейн с четырьмя различными горками дарит азарт и веселье как детям, так и взрослым.",
+            "outdoor": "Открытый",
+            "area": "80 м²",
+            "depth": "120 см"
+          },
+          "indoorKids": {
+            "subtitle": "Безопасно и весело для малышей",
+            "title": "Крытый детский бассейн",
+            "text": "Крытый детский бассейн с подогревом и мелкой водой — идеальная зона для безопасных и веселых игр у воды в любую погоду.",
+            "outdoor": "Открытый",
+            "area": "14 м²",
+            "depth": "40 см"
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "desktopBackground": {
+        "image": "/uploads/pages/beachpools/hero.webp",
+        "width": 2160,
+        "height": 1440
+      }
+    },
+    "info": {
+      "primary": {
+        "image": "/uploads/pages/beachpools/info-primary.jpg",
+        "width": 600,
+        "height": 900,
+        "translations": {
+          "tr": {
+            "alt": "Özel Plajımızı Keşfedin"
+          },
+          "en": {
+            "alt": " Discover Our Exclusive Beach"
+          },
+          "de": {
+            "alt": "Entdecken Sie unseren exklusiven Strand"
+          },
+          "ru": {
+            "alt": "Откройте наш эксклюзивный пляж"
+          }
+        }
+      },
+      "secondary": {
+        "image": "/uploads/pages/beachpools/info-secondary.jpg",
+        "width": 600,
+        "height": 900,
+        "translations": {
+          "tr": {
+            "alt": "Özel Plajımızı Keşfedin"
+          },
+          "en": {
+            "alt": " Discover Our Exclusive Beach"
+          },
+          "de": {
+            "alt": "Entdecken Sie unseren exklusiven Strand"
+          },
+          "ru": {
+            "alt": "Откройте наш эксклюзивный пляж"
+          }
+        }
+      }
+    },
+    "activities": {
+      "activity1": {
+        "id": "activity1",
+        "order": 0,
+        "image": "/uploads/pages/beachpools/activity1.jpg",
+        "width": 720,
+        "height": 1080,
+        "translations": {
+          "tr": {
+            "alt": "Yüzme & Dinlenme"
+          },
+          "en": {
+            "alt": "Swimming & Lounging"
+          },
+          "de": {
+            "alt": "Schwimmen & Entspannen"
+          },
+          "ru": {
+            "alt": "Плавание & Отдых"
+          }
+        }
+      },
+      "activity2": {
+        "id": "activity2",
+        "order": 1,
+        "image": "/uploads/pages/beachpools/activity2.jpg",
+        "width": 720,
+        "height": 1080,
+        "translations": {
+          "tr": {
+            "alt": "Plaj Barında Ferahlayın"
+          },
+          "en": {
+            "alt": "Refresh at the Beach Bar"
+          },
+          "de": {
+            "alt": "Erfrischen an der Strandbar"
+          },
+          "ru": {
+            "alt": "Освежение в пляжном баре"
+          }
+        }
+      },
+      "activity3": {
+        "id": "activity3",
+        "order": 2,
+        "image": "/uploads/pages/beachpools/activity3.jpg",
+        "width": 720,
+        "height": 1080,
+        "translations": {
+          "tr": {
+            "alt": "Su Sporları"
+          },
+          "en": {
+            "alt": "Water Sports"
+          },
+          "de": {
+            "alt": "Wassersport"
+          },
+          "ru": {
+            "alt": "Водные виды спорта"
+          }
+        }
+      },
+      "activity4": {
+        "id": "activity4",
+        "order": 3,
+        "image": "/uploads/pages/beachpools/activity4.jpg",
+        "width": 720,
+        "height": 1080,
+        "translations": {
+          "tr": {
+            "alt": "Plajda Kutlama"
+          },
+          "en": {
+            "alt": "Celebrate at the Beach"
+          },
+          "de": {
+            "alt": "Feiern am Strand"
+          },
+          "ru": {
+            "alt": "Празднование на пляже"
+          }
+        }
+      }
+    },
+    "pools": {
+      "main": {
+        "id": "main",
+        "order": 0,
+        "image": {
+          "image": "/uploads/pages/beachpools/pool-main.jpg",
+          "width": 1076,
+          "height": 624,
+          "translations": {
+            "tr": {
+              "alt": "Açık Yüzme Havuzu"
+            },
+            "en": {
+              "alt": " Outdoor Swimming Pool"
+            },
+            "de": {
+              "alt": "Außenpool"
+            },
+            "ru": {
+              "alt": "Открытый бассейн"
+            }
+          }
+        },
+        "hover": {
+          "image": "/uploads/pages/beachpools/pool-main-hover.jpg",
+          "width": 1076,
+          "height": 624
+        }
+      },
+      "indoor": {
+        "id": "indoor",
+        "order": 1,
+        "image": {
+          "image": "/uploads/pages/beachpools/pool-indoor.jpg",
+          "width": 1076,
+          "height": 624,
+          "translations": {
+            "tr": {
+              "alt": "Kapalı Havuz"
+            },
+            "en": {
+              "alt": "Indoor Swimming Pool"
+            },
+            "de": {
+              "alt": "Innenpool"
+            },
+            "ru": {
+              "alt": "Крытый бассейн"
+            }
+          }
+        },
+        "hover": {
+          "image": "/uploads/pages/beachpools/pool-indoor-hover.jpg",
+          "width": 1076,
+          "height": 624
+        }
+      },
+      "kids": {
+        "id": "kids",
+        "order": 2,
+        "image": {
+          "image": "/uploads/pages/beachpools/pool-kids.jpg",
+          "width": 698,
+          "height": 466,
+          "translations": {
+            "tr": {
+              "alt": "Çocuk Havuzu"
+            },
+            "en": {
+              "alt": "Children's Pool"
+            },
+            "de": {
+              "alt": "Kinderpool"
+            },
+            "ru": {
+              "alt": "Детский бассейн"
+            }
+          }
+        },
+        "hover": {
+          "image": "/uploads/pages/beachpools/pool-kids-hover.jpg",
+          "width": 696,
+          "height": 466
+        }
+      },
+      "aqua": {
+        "id": "aqua",
+        "order": 3,
+        "image": {
+          "image": "/uploads/pages/beachpools/pool-aqua.jpg",
+          "width": 698,
+          "height": 466,
+          "translations": {
+            "tr": {
+              "alt": "Kaydırak Havuzu"
+            },
+            "en": {
+              "alt": "Slide Pool"
+            },
+            "de": {
+              "alt": "Rutschenpool"
+            },
+            "ru": {
+              "alt": "Бассейн с горками"
+            }
+          }
+        },
+        "hover": {
+          "image": "/uploads/pages/beachpools/pool-aqua-hover.jpg",
+          "width": 698,
+          "height": 466
+        }
+      },
+      "indoorKids": {
+        "id": "indoorKids",
+        "order": 4,
+        "image": {
+          "image": "/uploads/pages/beachpools/pool-indoorKids.jpg",
+          "width": 696,
+          "height": 466,
+          "translations": {
+            "tr": {
+              "alt": "Kapalı Çocuk Havuzu"
+            },
+            "en": {
+              "alt": "Indoor Children's Pool"
+            },
+            "de": {
+              "alt": "Innen‑Kinderpool"
+            },
+            "ru": {
+              "alt": "Крытый детский бассейн"
+            }
+          }
+        },
+        "hover": {
+          "image": "/uploads/pages/beachpools/pool-indoorKids.jpg",
+          "width": 696,
+          "height": 466
+        }
+      }
+    }
+  }
+}

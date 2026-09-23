@@ -26,8 +26,8 @@ export function createPageValidators(scope, ContentError) {
     for (const field of fields) text(value[field], `${label}.${field}`);
   }
 
-  function image(record, label, collection = false) {
-    keys(record, [...(collection ? ["id", "order"] : []), "image", "width", "height", "translations"], label);
+  function image(record, label, collection = false, withAlt = true) {
+    keys(record, [...(collection ? ["id", "order"] : []), "image", "width", "height", ...(withAlt ? ["translations"] : [])], label);
     if (typeof record.image !== "string" ||
         !imagePattern.test(record.image) ||
         record.image.includes("..")) throw new ContentError(`${label}: geçersiz görsel yolu.`);
@@ -35,6 +35,7 @@ export function createPageValidators(scope, ContentError) {
         record.height <= 0 || record.width * record.height > 16_000_000) {
       throw new ContentError(`${label}: geçersiz görsel ölçüsü.`);
     }
+    if (!withAlt) return;
     keys(record.translations, LOCALES, `${label}.translations`);
     for (const locale of LOCALES) {
       keys(record.translations[locale], ["alt"], `${label}.${locale}`);

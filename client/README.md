@@ -1098,3 +1098,312 @@ Yetki, şema, boyut, 200/409 paralel kayıt, yükleyip seçme, dört dilde yayı
 metadata koruması ve restart sonrası revision kalıcılığı doğrulandı.
 Lint ve `git diff --check` başarılı. Bu test gruplarında başarısız test yok.
 Testler yalnızca geçici içerik ve uploads dizinlerine yazdı.
+
+## Beach & Pools: kalıcı içerik ve yönetim API’leri
+
+Aktif kaynak `app/[locale]/beachpools/page.js`. Gerçek yerelleştirilmiş yollar:
+`/tr/plaj-havuz`, `/en/beach-pool`, `/de/strand-pool`, `/ru/plaj-basseyn`.
+Sayfa `force-dynamic`; server-only `azura-beachpools-content.js` üzerinden
+`readBeachPoolsPageLocale` ile doğrulanmış JSON’u okur. Metinler artık
+`content/site-pages/beachpools.json` başlangıç verisinden kurulacak kalıcı
+`${AZURA_CONTENT_ROOT}/site-pages/beachpools.json` içinde tutulur.
+Görseller `${AZURA_UPLOADS_ROOT}/pages/beachpools/` altındadır.
+
+### Kesin şema
+
+Aşağıda `Group` tam olarak `{subtitle:string,title:string,text:string}` demektir.
+`Image` tam olarak `{image:string,width:integer,height:integer,translations:{tr:{alt:string},en:{alt:string},de:{alt:string},ru:{alt:string}}}`;
+`Background` yalnızca `{image:string,width:integer,height:integer}` içerir.
+Banner ve hover CSS arka planları alt metin tüketmediğinden `translations.alt`
+eklenmemiştir; bu alanlar background şemasında kabul edilmez.
+
+```text
+{
+ schemaVersion: 1,
+ pageKey: "beachpools",
+ translations: {
+  tr/en/de/ru: {
+   hero: Group,
+   info: {subtitle,title,text,span,list1,list2,list3},
+   activities: {subtitle,title,text,cards:{
+    activity1:{title,span},activity2:{title,span},
+    activity3:{title,span},activity4:{title,span}
+   }},
+   video: Group,
+   pools: {subtitle,title,text,cards:{
+    main:{subtitle,title,text,outdoor,area,depth},
+    indoor:{subtitle,title,text,outdoor,area,depth},
+    kids:{subtitle,title,text,outdoor,area,depth},
+    aqua:{subtitle,title,text,outdoor,area,depth},
+    indoorKids:{subtitle,title,text,outdoor,area,depth}
+   }}
+  }
+ },
+ media: {
+  hero:{desktopBackground:Background},
+  info:{primary:Image,secondary:Image},
+  activities:{
+   activity1:{id:"activity1",order:0,...Image},
+   activity2:{id:"activity2",order:1,...Image},
+   activity3:{id:"activity3",order:2,...Image},
+   activity4:{id:"activity4",order:3,...Image}
+  },
+  pools:{
+   main:{id:"main",order:0,image:Image,hover:Background},
+   indoor:{id:"indoor",order:1,image:Image,hover:Background},
+   kids:{id:"kids",order:2,image:Image,hover:Background},
+   aqua:{id:"aqua",order:3,image:Image,hover:Background},
+   indoorKids:{id:"indoorKids",order:4,image:Image,hover:Background}
+  }
+ }
+}
+```
+
+Kart metinleri ve görseller aynı sabit anahtardan birleştirilir; nesnenin JSON
+içindeki yazılış sırasına güvenilmez. Kimlikler ve `order` değerleri doğrulanır.
+Metin/alt metin sınırları 4000/300 karakterdir; boş, eksik/fazla dil veya alan,
+kontrol karakteri, güvensiz yol, yanlış tür/ölçü, eksik/sahte/symlink dosya
+reddedilir. Geçerli metin boşlukları korunur. JPEG/PNG/WebP, 8 MiB ve 16 milyon
+piksel sınırları aynıdır; bu sayfada sınır aşan dosya veya istisna yoktur.
+Ortak doğrulama yardımcısına yalnızca CSS kayıtları için açık `withAlt=false`
+seçeneği eklendi; diğer sayfalar için varsayılan zorunlu alt şeması korunur.
+Eksik/geçersiz kalıcı veride statik kaynağa sessiz dönüş yapılmaz.
+
+### Bileşen ve medya eşleşmesi
+
+| Alan | Görünür bileşen / eski kaynak |
+| --- | --- |
+| hero | BannerDark; BeachPools.subtitle/title/text; banner.webp |
+| info | ClinaryInfoSection; TwoImageSection; primary=blok2.jpg, secondary=blok1.jpg |
+| activities | Beach3 → Slider2; BeachCarousel; dört kart |
+| video metinleri | Beach4; BeachGif |
+| pools | Beach5; PoolSection; beş normal/hover çifti |
+
+Aktiviteler sırayla `activity1…4`: `Group427319248.jpg`, `Group427319247.jpg`,
+`Group427319249.jpg`, `Group427319250.jpg`. Başlangıç alt metni dört dilde
+ilgili kart başlığından alınır. Slider2 mevcut döngü davranışıyla bu dört kartı
+DOM’da iki kez oluşturur; yeni kart eklenmemiştir. Slider2’ye yalnızca opsiyonel
+alt prop desteği eklendi, yoksa eski başlık davranışı sürer.
+
+| Havuz kimliği / sıra | Normal orijinal (`Images/hoversız/`) | Hover orijinal (`Images/hover/`) |
+| --- | --- | --- |
+| main / 0 | beach4.jpg | beach3.jpg |
+| indoor / 1 | beach1.jpg | beach2.jpg |
+| kids / 2 | beach5.jpg | beach5.jpg |
+| aqua / 3 | beach3.jpg | beach4.jpg |
+| indoorKids / 4 | beach2.jpg | beach1.jpg |
+
+Kalıcı dosyalar: `hero.webp`, `info-primary.jpg`, `info-secondary.jpg`,
+`activity1.jpg…activity4.jpg`, `pool-main.jpg/pool-main-hover.jpg`,
+`pool-indoor.jpg/pool-indoor-hover.jpg`, `pool-kids.jpg/pool-kids-hover.jpg`,
+`pool-aqua.jpg/pool-aqua-hover.jpg`, `pool-indoorKids.jpg`.
+Son havuzun kaynak normal ve hover dosyalarının baytları aynı olduğundan aynı
+kalıcı dosya iki alanda kullanılır. **17 mantıksal medya kullanımı / 16 benzersiz
+dosya** vardır; carousel ve responsive DOM tekrarları bu sayıya dahil değildir.
+Bütün kopyalar bayt düzeyinde aynı; orijinaller korunmuştur. Gerçek ölçüler
+JSON’dan doğrulanır; kartların mevcut 349×233 ve slider’ın 360×540 sunum ölçüleri,
+sınıfları ve animasyonları değiştirilmez.
+
+### Video ve korunmuş davranışlar
+
+Tek video `/videos/azuramob2.mp4`; mobil/masaüstü aynı element ve kaynağı
+kullanır. autoPlay, loop, muted, playsInline, object-cover/object-center,
+loading ve Türkçe tarayıcı fallback metni aynen korunur. Video medya JSON’una
+konulmadı, kopyalanmadı ve yönetilebilir yapılmadı. `translations.video`
+yalnızca videonun üzerindeki üç görünür metindir. İleride ayrı bir sözleşmede
+izinli video yolu, MIME, dosya boyutu, codec/süre sınırları, isteğe bağlı poster
+ve responsive kaynaklar kararlaştırılmalı; ham iframe/HTML kabul edilmemeli.
+Bu görev video yükleme veya doğrulama altyapısı eklemez.
+
+- ClinaryInfoSection `span` değerini liste başlığı değil ilk liste maddesi olarak
+  gösterir: span + list1…3 = dört madde. Liste mobilde gizlidir, korunur.
+- Havuzlar masaüstünde 2+3 grid ve hover; mobilde beş kartlı carousel, hover
+  istatistikleri olmadan gösterilir. Bağlantılar `showLink=false`, etkinleştirilmedi.
+- Kapalı havuzlar dahil tüm hover kartlarında mevcut `outdoor` (Açık) etiketi
+  korunur; kullanılmayan `indoor` ve `span1…5` alanları taşınmadı.
+- İlk aktivitenin Yüzme & Dinlenme başlığı ile Kokteyller & Atıştırmalıklar
+  etiketi dahil mevcut metin eşleşmeleri düzeltilmedi.
+- Beach5 mobil göstergesindeki tanımsız `handleJump(i)` çağrısı API adımında
+  `emblaApi?.scrollTo(i)` ile düzeltildi. Mevcut carousel, sınıflar ve kart sırası korunur.
+- Kullanılmayan BeachMobile, harita/grafik/wave/cabana görselleri kapsama alınmadı.
+- ContactSection2 ve Form değiştirilmedi. Form `isOpen` verilmediği için görünmez;
+  mevcut ESC işleyicisinde `onClose` verilmemiş olması da ayrı mevcut sorundur.
+- Mesaj anahtarları silinmedi. Ortak ClinaryInfoSection dosyası değiştirilmedi.
+
+### Lago referansı ve sınırlar
+
+Salt okunur incelenen Lago dosyaları:
+`client/content/site-pages/beachpools.json`,
+`client/app/[locale]/panel/icerikler/BeachPoolsMediaEditor.jsx` ve bu editörü
+bağlayan `page.js`. `info.primary/secondary`, `activities.activity1…4`,
+`pools.<id>.image/hover` ve `hero.desktopBackground` alan adları uyumludur.
+Azura tek hero arka planını her ekran boyutunda kullanır; Lago’nun ayrı mobil
+arka planı, başlık grafiği, dalga katmanı ve cabana arka planı eklenmedi.
+Lago dokuz havuz bekliyor, Azura beş; `main/indoor/aqua` ortak, `kids/indoorKids`
+Azura yapılandırmasıdır. Formda otel bazlı izinli alanlar/kimlikler, gerçek ölçüler,
+CSS alanlarında alt metin göstermeme ve metin bundle eşlemesi gerekir.
+Lago reposuna yazılmadı.
+
+### Kurulum, test ve sonraki adım
+
+```sh
+AZURA_CONTENT_ROOT=/kalici/azura/content \
+AZURA_UPLOADS_ROOT=/kalici/azura/uploads npm run seed:beachpools
+npm run test:beachpools
+npm run test:beachpools-production
+```
+
+Seed `COPYFILE_EXCL` ve `wx` ile yalnızca eksik dosyaları kurar; tekrarında
+mevcut JSON/görselleri ezmez. Salt okunur medya sunumu beachpools dizinini
+kabul eder. Production testleri ayrı geçici checkout/build ve içerik/uploads
+kullanır; çalışan dev sunucusunun `.next` çıktısını veya kullanıcı içeriğini
+değiştirmez. Dört dil, kaynak baytları/ölçüler, kart kimlikleri/sırası/hover
+çiftleri, video kodu, geçersiz veri, seed koruması, HTTP ve restart kontrol edilir.
+Piksel karşılaştırması ve gerçek tarayıcı hover/video oynatma testi yapılmadı.
+
+**Uygulanan sözleşmenin özeti:**
+`GET/PUT /api/azura/beachpools/page-content` → `{bundle,media,revision}`;
+bundle yukarıdaki dört dil metinleri, media mevcut şema, revision kanonik SHA-256.
+Bearer token, tırnaklı If-Match, 128 KiB, ortak kuyruk/atomik kayıt ve mevcut
+401/400/415/428/409/413 davranışları kullanılmalı. Yayında gerçek yerelleştirilmiş
+dört yol revalidate edilmeli.
+`GET/POST /api/azura/beachpools/images`: mevcut güvenli görsel sözleşmesi;
+video kabul edilmez. Kesin API ayrıntıları aşağıdadır.
+
+Lago metin referansı (`client/messages/tr.json → BeachPools`) aynı birebir
+bundle değildir: mevcut `ClinaryInfoSection` Azura `info`, `Carousel` Azura
+`activities`, `PoolSection/PoolList` Azura `pools` alanlarına adapter ile
+bağlanmalıdır. Lago’nun `mobileTitle`, `buttonText` ve `ImageBackground`
+alanları Azura’ya eklenmedi; video metinleri Azura’ya özgü `video` grubundadır.
+
+Doğrulama sonucu: Beach & Pools 6/6, Spa 8/8, ortak medya 7/7 başarılı.
+Spor regresyonları 5/6; tek hata mevcut `spor.json` Türkçe `hero.subtitle`
+sonundaki boşluğun eski mesajla eşleşmemesi (`" FORMUNUZU KORUYUN "` /
+`" FORMUNUZU KORUYUN"`). Spor JSON’u bu görevde değiştirilmedi; kullanıcı
+metinlerini test geçirmek için düzeltmedik. Toplam 26/27 birim testi geçti.
+İzole production build başarılı; Beach HTTP 1/1, Spa HTTP 2/2 başarılı.
+Beach HTTP testinde dört dil, 16 dosyanın URL/bayt eşliği, kart/hover sırası,
+video URL ve playback attribute’ları, restart kalıcılığı; Restaurants/About/Spa
+sayfaları doğrulandı. Lint ve `git diff --check` geçti. Beş değişen görünüm
+dosyasındaki className değerleri ve Beach4 video bloğu HEAD ile birebir
+karşılaştırıldı; değişmedi. Gerçek tarayıcı hover ve piksel testi yapılmadı.
+
+
+### Beach & Pools API — Lago bağlantısı
+
+Her iki uçtaki bütün yöntemler mevcut
+`Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` gerektirir.
+Token yok/yanlışsa 401; sunucuda yapılandırılmamışsa mevcut ortak davranışla 503.
+Yanıtlar `Cache-Control: no-store` taşır.
+
+`GET /api/azura/beachpools/page-content` ve başarılı PUT yanıtı tam olarak:
+
+```text
+{ "bundle": <beachpools.json.translations>,
+  "media": <beachpools.json.media>,
+  "revision": "<64 küçük harf hexadecimal SHA-256>" }
+```
+
+Yukarıdaki kesin JSON şemasındaki bütün tr/en/de/ru metin alanları zorunludur.
+`video` yalnızca subtitle/title/text grubudur; video yolu, HTML veya dosya alanı
+kabul edilmez. Kart anahtarları, id/order ve medya alt alanları değişmedi.
+PUT yalnızca `{bundle,media}` gövdesini kabul eder:
+
+```http
+PUT /api/azura/beachpools/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle": <GET bundle nesnesinin düzenlenmiş tamamı>, "media": <GET media nesnesinin düzenlenmiş tamamı>}
+```
+
+Başarı 200 güncel bundle/media ve yeni revision döndürür. `revision` gövdeye
+veya kalıcı dosyaya yazılmaz. Eksik If-Match 428, biçimsiz başlık/geçersiz
+JSON/şema/görsel 400, yanlış Content-Type 415, eski revision 409, 128 KiB üstü
+gövde 413. Gövde sınırı Content-Length ve gerçek okunan baytlarda uygulanır.
+Metinler 1–4000, alt açıklamalar 1–300 karakter; yalnızca boşluk ve kontrol
+karakterleri reddedilir. Geçerli baş/son boşluklar korunur.
+
+Medya alanlarının **tam yolları** (N=alt metinli normal görsel, B=alt metinsiz
+CSS arka planı):
+
+```text
+media.hero.desktopBackground       B
+media.info.primary                 N
+media.info.secondary               N
+media.activities.activity1         N + id:"activity1", order:0
+media.activities.activity2         N + id:"activity2", order:1
+media.activities.activity3         N + id:"activity3", order:2
+media.activities.activity4         N + id:"activity4", order:3
+media.pools.main.image              N
+media.pools.main.hover              B
+media.pools.indoor.image            N
+media.pools.indoor.hover            B
+media.pools.kids.image              N
+media.pools.kids.hover              B
+media.pools.aqua.image              N
+media.pools.aqua.hover              B
+media.pools.indoorKids.image        N
+media.pools.indoorKids.hover        B
+```
+
+N: `{image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}`.
+B: `{image,width,height}`; B’ye translations/alt eklenmesi reddedilir.
+Aktivitelerde id/order doğrudan görsel kaydı üzerindedir. Havuzlarda
+`media.pools.<key>` **üst kaydı** `{id,order,image,hover}` biçimindedir;
+image ve hover alt kayıtlarına id/order konmaz. Havuz kimlik/sırası:
+main/0 → indoor/1 → kids/2 → aqua/3 → indoorKids/4.
+
+Kanonik revision doğrulanmış bundle+media’dan hesaplanır. Aynı dosyaya yazma
+ortak process kuyruğunda yapılır: kilit içinde güncel dosya okunur, revision
+karşılaştırılır; yalnızca translations/media değişir. schemaVersion, pageKey
+ve diğer kök alanlar korunur. Görseller yeniden doğrulanır; fsync+rename ile
+atomik kayıt yapılır. Başarısız işlem kuyruğu kilitlemez. **Bu kuyruk yalnızca
+aynı Node.js sürecini korur; çoklu worker/instance için ayrı kilit gerekir.**
+Başarılı PUT gerçek `/tr/plaj-havuz`, `/en/beach-pool`, `/de/strand-pool`,
+`/ru/plaj-basseyn` yollarını revalidate eder. Ortak HTTP yardımcısına yalnızca
+bu yerelleştirilmiş yolları geçebilmek için opsiyonel yol listesi eklendi;
+Spa ve Spor’un varsayılan davranışı değişmedi.
+
+`GET /api/azura/beachpools/images`:
+
+```json
+{"images":[{"image":"/uploads/pages/beachpools/beachpools-<uuid>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600,"modifiedAt":"2026-09-23T00:00:00.000Z"}]}
+```
+
+Aynı adrese POST tek `file` alanlı multipart/form-data kabul eder.
+201 yanıt `{image,mimeType,size,width,height}`; modifiedAt içermez.
+Yalnızca gerçek JPEG/PNG/WebP, en fazla 8 MiB ve 16 milyon piksel kabul edilir.
+Dosya adı sunucudan gelir; mevcut dosyaya yazılmaz. Scope yalnızca
+`/uploads/pages/beachpools/`; başka sayfa dizini, symlink ve sahte dosya
+reddedilir. Önceki sıfır FileHandle.stat boyutu düzeltmesi aynen korunur;
+nihai boyut kontrolü okunan baytlardadır.
+
+Yükleme içerik JSON’unu değiştirmez. Panel normal/hover seçiminde yükleme
+veya liste yanıtından image/width/height değerlerini ilgili kayda birlikte
+aktarır. Normal kaydın dört dil alt metinleri korunur/düzenlenir; hover’a alt
+metin eklenmez. Yayın için içerik PUT’u gerekir. `/videos/azuramob2.mp4`, video
+oynatma kodu ve kapalı havuzlardaki Açık etiketi değiştirilmedi.
+
+Mobil düzeltme testi gerçek Beach5 JSX’ini derleyip beş göstergenin click
+handler’ını çalıştırır; mevcut Embla mock’una 4,0,3,1,2 indekslerinin sırayla
+iletildiğini ve API hazır değilken hata çıkmadığını doğrular. Gerçek tarayıcı
+carousel/hover testi veya piksel karşılaştırması yapılmadı.
+
+Beach API adımı doğrulaması: Beach birim 6/6 + mobil gösterge 1/1; Spa 8/8,
+ortak medya 7/7; Spor 5/6 (yukarıda belgelenen mevcut son boşluk farkı).
+Toplam 27/28; yeni başarısızlık yok. İzole production build, Beach sayfa/API
+HTTP 2/2, Spa HTTP 2/2, Spor HTTP 2/2 başarılı. HTTP’de 16 başlangıç dosyası
+listelendi ve URL’leri açıldı; yüklenen görsel normal ve hover alanlarında
+seçilerek dört dilde yayınlandı. 200/409 paralel kayıt, hatalarda dosyanın
+korunması, metadata, video kaynağı ve restart sonrası revision doğrulandı.
+Lint ve git diff --check başarılı. Başlangıç/kullanıcı içerikleri değiştirilmedi.
+
+Bu API adımının dosyaları: yeni `app/api/azura/beachpools/page-content/route.js`
+ve `images/route.js`; güncellenen `lib/azura-beachpools-storage.mjs`,
+`lib/azura-homepage-media.mjs`, `lib/azura-page-api.js`; tek davranış düzeltmesi
+`Beach5.jsx`; yeni `azura-beachpools-api-http.test.mjs` ve
+`azura-beachpools-indicator.test.mjs`; test komutları için package.json ve
+`scripts/test-beachpools-production.mjs`; bu README. Diğer kirli dönüşüm
+dosyaları önceki kalıcı içerik adımına aittir.

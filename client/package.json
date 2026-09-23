@@ -23,7 +23,11 @@
     "seed:spor": "node scripts/seed-persistent-spor.mjs",
     "test:spor": "node --test lib/azura-spor-storage.test.mjs",
     "test:spor-http": "node --test --test-concurrency=1 lib/azura-spor-http.test.mjs lib/azura-spor-api-http.test.mjs",
-    "test:spor-production": "node scripts/test-spor-production.mjs"
+    "test:spor-production": "node scripts/test-spor-production.mjs",
+    "seed:beachpools": "node scripts/seed-persistent-beachpools.mjs",
+    "test:beachpools": "node --test lib/azura-beachpools-storage.test.mjs lib/azura-beachpools-indicator.test.mjs",
+    "test:beachpools-http": "node --test --test-concurrency=1 lib/azura-beachpools-http.test.mjs lib/azura-beachpools-api-http.test.mjs",
+    "test:beachpools-production": "node scripts/test-beachpools-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

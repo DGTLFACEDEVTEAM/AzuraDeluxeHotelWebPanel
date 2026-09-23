@@ -250,3 +250,10 @@ export async function saveSporImage(bytes, mimeType, paths = resolveAzuraPaths()
 export async function listSporImages(paths = resolveAzuraPaths()) {
   return listPageImages("spor", paths);
 }
+
+export async function saveBeachPoolsImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("beachpools", bytes, mimeType, paths, idFactory);
+}
+export async function listBeachPoolsImages(paths = resolveAzuraPaths()) {
+  return listPageImages("beachpools", paths);
+}
