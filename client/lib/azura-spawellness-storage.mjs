@@ -1,9 +1,9 @@
-import { createHash, randomUUID } from "node:crypto";
-import { constants } from "node:fs";
-import { mkdir, open, readFile, realpath, rename, unlink } from "node:fs/promises";
+import { canonicalJson, writePageAtomically } from "./azura-page-storage.mjs";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { LOCALES, parseIfMatch, resolveAzuraPaths } from "./azura-homepage-storage.mjs";
-import { inspectHomepageImage, MAX_IMAGE_BYTES } from "./azura-homepage-media.mjs";
+import { createPageValidators, validatePageImageFiles } from "./azura-page-content-validation.mjs";
 
 export const SPA_GALLERY_IDS = Object.freeze(Array.from({ length: 5 }, (_, i) => `spa-gallery-${i + 1}`));
 export const SPA_MASSAGE_IDS = Object.freeze(["aromatic", "oriental", "classic", "facial"].map(key => `spa-massage-${key}`));
@@ -14,52 +14,7 @@ export class SpaWellnessContentError extends Error {
   constructor(message, status = 400) { super(message); this.name = "SpaWellnessContentError"; this.status = status; }
 }
 
-function keys(value, expected, label) {
-  if (!value || typeof value !== "object" || Array.isArray(value) ||
-      Object.keys(value).length !== expected.length || expected.some(key => !Object.hasOwn(value, key))) {
-    throw new SpaWellnessContentError(`${label}: eksik veya geçersiz alan.`);
-  }
-}
-
-function text(value, label, max = 4000) {
-  if (typeof value !== "string" || !value.trim() || value.length > max || /[\u0000-\u001f\u007f]/.test(value)) {
-    throw new SpaWellnessContentError(`${label}: geçersiz metin.`);
-  }
-}
-
-function texts(value, fields, label) {
-  keys(value, fields, label);
-  for (const field of fields) text(value[field], `${label}.${field}`);
-}
-
-function image(record, label, collection = false) {
-  keys(record, [...(collection ? ["id", "order"] : []), "image", "width", "height", "translations"], label);
-  if (typeof record.image !== "string" ||
-      !/^\/uploads\/pages\/spawellness\/[A-Za-z0-9][A-Za-z0-9._-]{0,127}\.(jpg|jpeg|png|webp)$/i.test(record.image) ||
-      record.image.includes("..")) throw new SpaWellnessContentError(`${label}: geçersiz görsel yolu.`);
-  if (!Number.isInteger(record.width) || !Number.isInteger(record.height) || record.width <= 0 ||
-      record.height <= 0 || record.width * record.height > 16_000_000) {
-    throw new SpaWellnessContentError(`${label}: geçersiz görsel ölçüsü.`);
-  }
-  keys(record.translations, LOCALES, `${label}.translations`);
-  for (const locale of LOCALES) {
-    keys(record.translations[locale], ["alt"], `${label}.${locale}`);
-    text(record.translations[locale].alt, `${label}.${locale}.alt`, 300);
-  }
-}
-
-function collection(value, ids, label) {
-  keys(value, ["images"], label);
-  if (!Array.isArray(value.images) || value.images.length !== ids.length) {
-    throw new SpaWellnessContentError(`${label}: tam ${ids.length} görsel zorunludur.`);
-  }
-  value.images.forEach((record, index) => {
-    image(record, `${label}.${index}`, true);
-    if (record.id !== ids[index] || record.order !== index) {
-      throw new SpaWellnessContentError(`${label}: kimlik veya sıra geçersiz.`);
-    }
-  });
-}
+const { keys, text, texts, image, collection } = createPageValidators("spawellness", SpaWellnessContentError);
 
 export function validateSpaWellnessContent(content) {
   if (!content || typeof content !== "object" || Array.isArray(content) ||
@@ -117,28 +72,7 @@ export async function readSpaWellnessContent(paths = resolveAzuraPaths()) {
 }
 
 async function validateSpaWellnessImages(media, paths) {
-  // Reused media is decoded once per read; every record still has its dimensions checked.
-  const inspected = new Map();
-  for (const record of spaWellnessImages(media)) {
-    let handle;
-    try {
-      let actual = inspected.get(record.image);
-      if (!actual) {
-        const root = await realpath(paths.uploadsRoot);
-        const file = path.join(paths.uploadsRoot, record.image.slice("/uploads/".length));
-        if (await realpath(path.dirname(file)) !== path.join(root, "pages", "spawellness")) throw new Error("Güvenli olmayan dizin");
-        handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW);
-        const stat = await handle.stat();
-        if (!stat.isFile() || stat.size > MAX_IMAGE_BYTES) throw new Error("Geçersiz dosya");
-        const ext = path.extname(file).toLowerCase();
-        const mime = ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
-        actual = await inspectHomepageImage(await handle.readFile(), mime);
-        inspected.set(record.image, actual);
-      }
-      if (actual.width !== record.width || actual.height !== record.height) throw new Error("Gerçek ölçüler JSON ile eşleşmiyor");
-    } catch (error) { throw new SpaWellnessContentError(`Spa görseli okunamadı: ${record.image} (${error.message})`); }
-    finally { if (handle) await handle.close(); }
-  }
+  await validatePageImageFiles(spaWellnessImages(media), "spawellness", paths, SpaWellnessContentError, "Spa");
 }
 
 export async function readSpaWellnessPageLocale(locale, paths = resolveAzuraPaths()) {
@@ -164,14 +98,6 @@ export function validateSpaWellnessPageContent(bundle, media) {
   return { bundle, media };
 }
 
-function canonicalJson(value) {
-  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
-  if (value && typeof value === "object") {
-    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
-  }
-  return JSON.stringify(value);
-}
-
 export function spaWellnessPageRevision(bundle, media) {
   validateSpaWellnessPageContent(bundle, media);
   return createHash("sha256").update(canonicalJson({ bundle, media })).digest("hex");
@@ -182,27 +108,6 @@ export async function readSpaWellnessPageContent(paths = resolveAzuraPaths()) {
   const bundle = content.translations;
   const { media } = content;
   return { bundle, media, revision: spaWellnessPageRevision(bundle, media) };
-}
-
-async function writeSpaWellnessAtomically(content, paths) {
-  const target = spaWellnessFile(paths);
-  await mkdir(path.dirname(target), { recursive: true });
-  const temporary = path.join(path.dirname(target), `.${path.basename(target)}.${randomUUID()}.tmp`);
-  let handle;
-  try {
-    handle = await open(temporary, "wx", 0o600);
-    await handle.writeFile(`${JSON.stringify(content, null, 2)}\n`);
-    await handle.sync();
-    await handle.close();
-    handle = null;
-    await rename(temporary, target);
-    const directory = await open(path.dirname(target), "r");
-    try { await directory.sync(); } finally { await directory.close(); }
-  } catch (error) {
-    if (handle) await handle.close();
-    await unlink(temporary).catch(() => {});
-    throw error;
-  }
 }
 
 function enqueueSpaWellnessWrite(operation) {
@@ -221,7 +126,7 @@ export async function writeSpaWellnessPageContent(bundle, media, expectedRevisio
     const next = { ...current, translations: bundle, media };
     validateSpaWellnessContent(next);
     await validateSpaWellnessImages(media, paths);
-    await writeSpaWellnessAtomically(next, paths);
+    await writePageAtomically(next, spaWellnessFile(paths));
     return { bundle, media, revision: spaWellnessPageRevision(bundle, media) };
   });
 }

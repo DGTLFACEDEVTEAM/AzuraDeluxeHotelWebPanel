@@ -816,3 +816,285 @@ Sayılar örnektir; gerçek dosya ölçü/boyut bilgileri döner. JPEG/PNG/WebP,
 Testler geçici content/uploads ve izole production build kullanır. Fantasy için yetki/oda izinleri, 400/415/428/409/413, dosya koruma, paralel 200/409, yükleme/listeleme/seçme, ortak görsel sınırları, kök metadata, dört dil ve restart sonrası revision kalıcılığı kontrol edilir. Deluxe/Family API ve sayfa kontrolleri aynı HTTP testinde sürer. Seed ve mevcut içerik eşliği testleri korunur; gerçek düzenlenmiş içeriklere test yazması yapılmaz.
 
 Fantasy API doğrulama sonucu: Fantasy testleri **5/5**, ortak medya güvenliği/sıfır fstat regresyonu **7/7**, toplam oda testleri **18/19** geçti. Tek eski başarısızlık Deluxe JSON'daki herhrt/het/boşluk farklarının eski mesajlarla eşliğidir; içerikler değiştirilmedi. İzole production build ve kapsamlı üç oda HTTP testi **1/1**, lint ve git diff --check başarılı. Yönetim izni değiştiği için eski Family testindeki “Fantasy 404” beklentisi Handicap 404 olarak güncellendi. Sayfa bileşenlerinde bu API adımı için ek değişiklik gerekmedi; Lago bağlantısı, commit ve deploy yapılmadı.
+
+## Spor: kalıcı içerik ve yönetim API’si
+
+Aktif route `app/[locale]/spor/page.js`, `/tr/spor`, `/en/spor`, `/de/spor`,
+`/ru/spor` adreslerinde çalışır. Önceden `messages/{locale}.json` içindeki
+`Sport` metinlerini ve yerel statik görselleri okurdu. Artık `force-dynamic`
+sunucu sayfası, `azura-spor-content.js` server-only girişinden
+`readSporPageLocale` çağırır; doğrulanmış metinleri ve `{src,width,height,alt}`
+görselleri aynı bileşenlere verir. Mevcut sınıflar, sıralama, gizli düğmeler ve
+ContactSection2 değişmedi. Mesaj anahtarları silinmedi.
+
+### Tam veri sözleşmesi ve görünür alan eşlemesi
+
+`content/site-pages/spor.json` başlangıç verisidir. Kalıcı dosya
+`${AZURA_CONTENT_ROOT}/site-pages/spor.json`, medya dizini
+`${AZURA_UPLOADS_ROOT}/pages/spor/` olur. Ortak `resolveAzuraPaths` geliştirme
+varsayılanlarını ve production ortam değişkenlerini kullanır.
+
+Aşağıdaki gösterimde `Group` tam olarak `{subtitle:string,title:string,text:string}`,
+`Image` ise `{image:string,width:integer,height:integer,translations:{tr:{alt:string},
+en:{alt:string},de:{alt:string},ru:{alt:string}}}` anlamına gelir:
+
+```text
+{
+  schemaVersion: 1,
+  pageKey: "spor",
+  translations: {
+    tr/en/de/ru: {
+      hero: Group,
+      info: {
+        intro: Group,
+        sauna: Group,
+        wellness: {subtitle,title,text,list1,list2,list3,list4}
+      },
+      gallery: Group,
+      types: {
+        fitness: Group,
+        personalTrainer: {title:string,text:string}
+      }
+    }
+  },
+  media: {
+    hero: Image,
+    info: {wellness:Image,sauna:Image},
+    gallery: {images:[
+      {id:"spor-gallery-1",order:0,...Image},
+      {id:"spor-gallery-2",order:1,...Image},
+      {id:"spor-gallery-3",order:2,...Image}
+    ]},
+    types: {fitness:Image,personalTrainer:Image}
+  }
+}
+```
+
+| JSON alanı | Bileşen / eski kaynak |
+| --- | --- |
+| `hero` | BannerDark; `Sport.subtitle/title/text` |
+| `info.intro` | SpaInfoSection ilk metin grubu; `InfoSection.*1` |
+| `info.sauna` | SpaInfoSection sol görsel üzeri; `InfoSection.*2` |
+| `info.wellness` | SpaInfoSection sağ görsel üzeri; `InfoSection.*3` ve görünür `list1…4` |
+| `gallery` | SpaHeaderSection; `GallerySection` |
+| `types.fitness` | SpaTypesInfoSection; `SpaTypes.*2` |
+| `types.personalTrainer` | SpaReverseInfo; `SpaTypes.title1/text1` |
+
+`info.wellness/sauna` isimleri Spa formunun mevcut yapısal yuvalarıyla uyumludur;
+Spor sayfasına sauna/hamam içeriği eklenmiş değildir. Panel bu yuvaların
+etiketlerini Spor için değiştirmelidir. Form yapılandırması: dört liste maddesi,
+üç galeri öğesi, `fitness/personalTrainer` tür anahtarları; personalTrainer üst
+başlık alanı yok. Spa’da beş galeri, yedi liste maddesi ve dört masaj kartı vardır.
+Spor şemasında `massage` kabul edilmez. Galeri kimlikleri ve sıra kesin olarak
+yukarıdaki gibidir; liste kimlikleri mevcut sözleşmeyle `list1…list4` anahtarlarıdır.
+
+### Medya, doğrulama ve seed
+
+Sekiz medya kaydı altı benzersiz kaynak dosyasını kullanır:
+
+| Kalıcı dosya (`/uploads/pages/spor/`) | Orijinal (`app/[locale]/spor/images/`) | Kullanım |
+| --- | --- | --- |
+| fitness-centre.jpg | fitnessBanner.jpg | hero ve info.sauna |
+| group-fitness.jpg | group_fit.jpg | info.wellness |
+| table-tennis.jpg | table_ten.jpg | galeri 1 ve personalTrainer |
+| dumbbells.jpg | gallery_orta.jpg | galeri 2 |
+| treadmills-4800x3200.jpg | gallery_sag.jpg | galeri 3; orantılı küçültme |
+| aqua-fitness.jpg | aqua.jpg | fitness |
+
+Alt açıklamaları dört dilde görselin gerçek içeriğini anlatır. Orijinaller
+korunur. Ortak `azura-page-content-validation.mjs`, Spa’dan çıkarılan kesin
+alan/metin/medya doğrulayıcılarını ve güvenli dosya okumasını paylaşır;
+Spor kendi bölüm şemasını tanımlar, Spa şeması gevşetilmez.
+Metinler boş olamaz, en fazla 4000 karakterdir; alt metin en fazla 300 karakterdir.
+Kontrol karakterleri reddedilir, baştaki/sondaki boşluklar değiştirilmez.
+Dört dil ve tanımlı alt anahtarlar eksiksiz olmalıdır; fazladan alt alanlar reddedilir.
+Medya yalnızca Spor dizinindeki güvenli dosya adlarını kabul eder;
+JPEG/PNG/WebP imzası, çözülebilirlik, dosya boyutu, gerçek ölçüler ve symlink
+kontrolleri uygulanır. Eksik/bozuk JSON veya görsel açık hata verir; statik
+kaynağa veya başka sayfaya sessiz dönüş yoktur.
+
+```sh
+AZURA_CONTENT_ROOT=/kalici/azura/content \
+AZURA_UPLOADS_ROOT=/kalici/azura/uploads npm run seed:spor
+```
+
+Seed yalnızca eksik dosyaları `COPYFILE_EXCL` ve JSON’u `wx` ile ekler.
+Mevcut JSON ve görselleri ezmez; işlem sonunda kalıcı veriyi doğrular.
+Salt okunur `/uploads/pages/spor/...` sunumu etkindir. Yönetim/yükleme sözleşmesi aşağıdadır.
+
+### Korunan mevcut tutarsızlıklar
+
+- Eski sayfa son bölüme `sspan` gönderiyordu, bileşen `span` okuyordu.
+  `Sport.SpaTypes.subtitle1` hiç görünmüyordu. Görünmeyen üst başlık bu şemaya
+  alınmadı ve etkinleştirilmedi; eski mesajda duruyor.
+- “Fitness Merkezi” tanıtımı su jimnastiği fotoğrafı, “Kişisel Eğitmen” tanıtımı
+  masa tenisi fotoğrafı kullanmaya devam eder. Galeri de masa tenisiyle başlar.
+- Giriş metninde masaj/hamam/sauna anlatımı mevcut metnin parçasıdır; Spor’a
+  masaj bölümü veya yeni bir işlev eklenmedi.
+
+### Kontroller ve sonraki adım önerisi
+
+`npm run test:spor` metin/boşluk eşliğini, kaynak baytlarını, ölçüleri,
+kimlikleri/sırayı, geçersiz veriyi ve tekrar seed’i sınar.
+`npm run test:spor-production` ayrı geçici proje/build kullanır; düzenlenmiş
+kalıcı içeriğe veya çalışan geliştirme sunucusunun `.next` dizinine dokunmaz.
+Dört dilin HTTP çıktısı, görsel URL’leri, restart öncesi/sonrası JSON değişikliği,
+Spa/About regresyonları ve mevcut Spa API HTTP testleri çalışır.
+Piksel karşılaştırması yapılmadı; ortak bileşen dosyaları değiştirilmedi.
+
+**Uygulanan Spor API sözleşmesinin özeti:**
+
+- Bearer servis tokenıyla `GET /api/azura/spor/page-content` →
+  `{bundle: translations, media, revision: "64 küçük harf SHA-256"}`.
+- Aynı adres `PUT`, yalnızca `{bundle,media}`, JSON Content-Type,
+  tırnaklı `If-Match`, 128 KiB sınırı; ortak kuyruk içinde yeniden okuma,
+  revision kontrolü, diğer kök alanları koruyan atomik yazma.
+  401/400/415/428/409/413 davranışı mevcut Spa API’siyle aynı olmalı.
+- `GET /api/azura/spor/images` → `{images:[{image,mimeType,size,width,height,modifiedAt}]}`;
+  `POST` tek `file` multipart → 201 `{image,mimeType,size,width,height}`.
+  Yeni yüklemeler yalnızca Spor dizinine; dosyayı yüklemek içeriği yayınlamaz.
+  Yayın için içerik PUT’unda seçilir. Yeni yüklemelerde mevcut 8 MiB / 16 milyon
+  piksel güvenlik sınırları korunmalı.
+
+Panel bağlandığında yalnızca kalıcı JSON güncellenir; sayfa ve bileşenlerin
+tekrar dönüştürülmesi gerekmez.
+
+Spor galeri 3 için onaylı dönüşüm: orijinal `gallery_sag.jpg` (5472×3648)
+korundu; yeni `treadmills-4800x3200.jpg` 4800×3200 (15.360.000 piksel)
+olarak kırpılmadan, otomatik yön düzeltmesi ve JPEG kalite 95 / 4:4:4 ile
+üretildi. JSON ölçüleri çıktı dosyasından okundu. Yalnızca bu kopyada bayt eşliği
+beklenmez; diğer beş benzersiz kaynakta bayt eşliği zorunludur. 16 milyon piksel
+sınırı değişmedi; hash kontrollü okuma istisnası yoktur.
+
+Eski `treadmills.jpg` dosyasının üzerine yazılmadı. Seed yalnızca yeni adı ekler.
+Daha önce kurulmuş kalıcı `spor.json`, eski `/uploads/pages/spor/treadmills.jpg`
+yolunu içeriyorsa seed bu JSON’u değiştirmez: `media.gallery.images[2]` kaydının
+`image` alanını `/uploads/pages/spor/treadmills-4800x3200.jpg`, `width` alanını
+4800, `height` alanını 3200 olarak ayrıca güncellemek gerekir. Eski dosya
+19,96 milyon piksel olduğu için güncellenmeden doğrulama hatası vermeye devam
+eder. Bu görevde gerçek kalıcı kurulum dosyaları değiştirilmedi.
+
+Son doğrulama (23 Eylül 2026): Spor birim testleri 5/5, Spa 8/8, ortak medya
+7/7; izole production Spor HTTP 1/1, Spa sayfa/API HTTP 2/2 başarılı.
+Production build, lint ve `git diff --check` geçti. Test edilen gruplarda
+başarısız test yok. Next lint kullanım dışı bırakılma/çoklu lockfile ve webpack
+next-intl önbellek uyarıları mevcut; derlemeyi engellemedi. Piksel karşılaştırması
+yapılmadı. Kullanılan altı benzersiz dosyaya ek olarak eski, artık JSON'un
+referans vermediği `treadmills.jpg` yerinde korundu; seed bu eski dosyayı taşımaz.
+
+
+### Spor API: Lago entegrasyonu için kesin sözleşme
+
+`GET/PUT /api/azura/spor/page-content` ve `GET/POST /api/azura/spor/images`
+mevcut `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` gerektirir.
+Yanıtlar `Cache-Control: no-store` kullanır. Token yok/yanlış ise 401;
+sunucuda token yapılandırılmamışsa mevcut API yaklaşımıyla 503 döner.
+
+İçerik GET ve başarılı PUT yanıtı tam olarak:
+
+```json
+{
+  "bundle": { "tr": {}, "en": {}, "de": {}, "ru": {} },
+  "media": {},
+  "revision": "<64 karakter küçük harf SHA-256>"
+}
+```
+
+Buradaki boş nesneler aşağıdaki **zorunlu** alanların yer tutucularıdır;
+gerçek istek/yanıtta boş olamaz. Her dilin tam metin alanları:
+
+```text
+hero: {subtitle, title, text}
+info:
+  intro: {subtitle, title, text}
+  sauna: {subtitle, title, text}
+  wellness: {subtitle, title, text, list1, list2, list3, list4}
+gallery: {subtitle, title, text}
+types:
+  fitness: {subtitle, title, text}
+  personalTrainer: {title, text}
+```
+
+Her değer string, en fazla 4000 karakter; boş/yalnızca boşluk ve kontrol
+karakterleri geçersizdir. Geçerli baş/son boşluklar korunur. Alt metinler
+1–300 karakterdir. Eksik/fazla dil veya alt alanlar, `massage`, görünmeyen
+personalTrainer `subtitle` alanı ve beşinci liste maddesi reddedilir.
+
+Sekiz medya kaydının kesin JSON yolları ve başlangıç dosyaları:
+
+| JSON yolu | `/uploads/pages/spor/` altındaki dosya |
+| --- | --- |
+| `media.hero` | fitness-centre.jpg |
+| `media.info.wellness` | group-fitness.jpg |
+| `media.info.sauna` | fitness-centre.jpg |
+| `media.gallery.images[0]` | table-tennis.jpg |
+| `media.gallery.images[1]` | dumbbells.jpg |
+| `media.gallery.images[2]` | treadmills-4800x3200.jpg |
+| `media.types.fitness` | aqua-fitness.jpg |
+| `media.types.personalTrainer` | table-tennis.jpg |
+
+Her kayıt `{image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}`.
+Galeri kayıtları ayrıca değişmez `id/order` içerir:
+`spor-gallery-1/0`, `spor-gallery-2/1`, `spor-gallery-3/2`.
+Görsel yolları yalnızca `/uploads/pages/spor/` altında olabilir; pozitif tam
+sayı ölçüler gerçek dosya ile eşleşmelidir. Gerçek JPEG/PNG/WebP, en fazla
+8 MiB ve 16 milyon piksel; symlink veya bozuk görsel kabul edilmez.
+
+Lago kayıt akışı: GET yanıtından revision’ı sakla; yanıtın yalnızca bundle ve
+media alanlarını PUT gövdesine koy (revision’ı gövdeye ekleme):
+
+```http
+PUT /api/azura/spor/page-content
+Authorization: Bearer <servis-tokenı>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle": <dört dilin yukarıdaki tam metin nesneleri>, "media": <sekiz tam medya kaydı>}
+```
+
+Başarılı 200 yanıt güncel `{bundle,media,revision}` döndürür. Eksik If-Match
+428, biçimsiz başlık/geçersiz JSON veya şema/görsel 400, yanlış Content-Type
+415, eski revision 409, 128 KiB üstü gövde 413. Gövde sınırı hem bildirilen
+uzunluk hem gerçekten okunan baytlar üzerinden kontrol edilir.
+
+Revision doğrulanmış bundle+media’nın kanonik SHA-256 özetidir; nesne anahtar
+sırası etkisiz, koleksiyon sırası anlamlıdır. JSON’a revision yazılmaz.
+Dosya başına process genelindeki ortak kuyruk içinde güncel JSON yeniden
+okunur, revision karşılaştırılır, yalnızca translations/media değiştirilir.
+Diğer kök alanlar korunur; geçici dosya + fsync + rename ile atomik kayıt
+uygulanır. Başarısız işlem kuyruğu kilitlemez. **Kuyruk yalnızca aynı Node.js
+sürecini korur; birden fazla worker/instance için dağıtık kilit veya veritabanı
+gerekir.** Başarılı kayıt `/tr/spor`, `/en/spor`, `/de/spor`, `/ru/spor`
+yollarını yeniden doğrular; sayfa ayrıca force-dynamic okur.
+
+Görsel GET yanıtı:
+
+```json
+{"images":[{"image":"/uploads/pages/spor/spor-<uuid>.jpg","mimeType":"image/jpeg","size":123,"width":800,"height":600,"modifiedAt":"2026-09-23T00:00:00.000Z"}]}
+```
+
+POST tek `file` alanlı multipart/form-data ister; dosya adını sunucu üretir.
+201 yanıtı `{image,mimeType,size,width,height}`; `modifiedAt` içermez.
+Başka sayfanın dizinine yazılamaz; dosyalar üzerine yazılmadan kaydedilir.
+Yükleme spor.json’u değiştirmez. Yayın için yükleme yanıtındaki yol ve gerçek
+ölçüler bir medya kaydına birlikte atanıp içerik PUT’u gönderilir.
+Listeleme gerçek baytları doğrulamaya devam eder; `FileHandle.stat()` sıfır
+boyut bildirse de geçerli dosya atlanmaz. Eski 19,96 milyon piksellik
+`treadmills.jpg`, sahte dosyalar ve symlink’ler listede bulunmaz.
+
+Yerel aktif içerik kontrolü: Next ortam dosyaları yüklendikten sonra çözümlenen
+`client/content/site-pages/spor.json` ve `client/public/uploads` doğrulamadan
+geçti. Üçüncü galeri yeni dosyayı 4800×3200 kullanıyor; içerik değiştirilmedi.
+Uzak production kurulumu bu kontrol kapsamında değildir. Eski kalıcı dosya
+kullanan bir kurulumda yukarıdaki geçiş notu hâlâ geçerlidir; seed kullanıcı
+JSON’unu ezmez.
+
+API ekleme doğrulaması (23 Eylül 2026): Spor birim 6/6 (kanonik revision ve
+kuyruk sonrası toparlanma dahil), Spa birim 8/8, ortak medya 7/7 geçti.
+İzole production build ardından Spor sayfa/API HTTP 2/2 ve Spa sayfa/API HTTP
+2/2 geçti. Spor listesindeki altı geçerli başlangıç dosyası HTTP üzerinden
+listelendi ve URL’leri açıldı; eski büyük dosya/sahte/symlink kayıtları atlandı.
+Yetki, şema, boyut, 200/409 paralel kayıt, yükleyip seçme, dört dilde yayın,
+metadata koruması ve restart sonrası revision kalıcılığı doğrulandı.
+Lint ve `git diff --check` başarılı. Bu test gruplarında başarısız test yok.
+Testler yalnızca geçici içerik ve uploads dizinlerine yazdı.

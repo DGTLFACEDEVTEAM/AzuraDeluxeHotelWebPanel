@@ -19,7 +19,11 @@
     "test:spawellness-http": "node --test --test-concurrency=1 lib/azura-spawellness-http.test.mjs lib/azura-spawellness-api-http.test.mjs",
     "test:room-details": "node --test lib/azura-room-detail-storage.test.mjs lib/azura-other-options.test.mjs lib/azura-family-detail-storage.test.mjs lib/azura-fantasy-detail-storage.test.mjs",
     "test:room-details-http": "node --test lib/azura-room-detail-http.test.mjs",
-    "test:room-details-production": "node scripts/test-room-details-production.mjs"
+    "test:room-details-production": "node scripts/test-room-details-production.mjs",
+    "seed:spor": "node scripts/seed-persistent-spor.mjs",
+    "test:spor": "node --test lib/azura-spor-storage.test.mjs",
+    "test:spor-http": "node --test --test-concurrency=1 lib/azura-spor-http.test.mjs lib/azura-spor-api-http.test.mjs",
+    "test:spor-production": "node scripts/test-spor-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

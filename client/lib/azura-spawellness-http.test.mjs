@@ -43,7 +43,7 @@ test("production Spa: dört dil, tüm metinler, galeri/kart sırası, kalıcı g
   t.after(() => rm(root, { recursive: true, force: true }));
   const paths = { contentRoot: path.join(root, "content"), uploadsRoot: path.join(root, "uploads") };
   await mkdir(path.join(paths.contentRoot, "site-pages"), { recursive: true });
-  for (const page of ["spawellness", "about"]) {
+  for (const page of ["spawellness", "about", "spor"]) {
     await cp(path.join(appRoot, `content/site-pages/${page}.json`), path.join(paths.contentRoot, `site-pages/${page}.json`));
     await cp(path.join(appRoot, `public/uploads/pages/${page}`), path.join(paths.uploadsRoot, `pages/${page}`), { recursive: true });
   }

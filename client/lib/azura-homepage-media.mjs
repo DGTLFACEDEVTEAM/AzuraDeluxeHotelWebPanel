@@ -243,3 +243,10 @@ export async function saveFantasyImage(bytes, mimeType, paths = resolveAzuraPath
 export async function listFantasyImages(paths = resolveAzuraPaths()) {
   return [...await listPageImages("fantasyroom", paths), ...await listPageImages("room-options", paths)];
 }
+
+export async function saveSporImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("spor", bytes, mimeType, paths, idFactory);
+}
+export async function listSporImages(paths = resolveAzuraPaths()) {
+  return listPageImages("spor", paths);
+}

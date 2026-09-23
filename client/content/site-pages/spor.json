@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "spor",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": " FORMUNUZU KORUYUN",
+        "title": " Spor & Fitness",
+        "text": " Azura Deluxe Resort & Spa’daki tatiliniz boyunca spor rutininizi aksatmadan devam ettirebilirsiniz. Profesyonel ekipmanlarla donatılmış Fitness Merkezimizde günlük egzersizlerinizi yapabilir, tatil boyunca formda kalabilirsiniz."
+      },
+      "info": {
+        "intro": {
+          "subtitle": " Formda Kalın ve İyi Hissedin",
+          "title": " Azura Deluxe Resort & Spa’da Fitness ve Wellness",
+          "text": " Profesyonel ekipmanlarla donatılmış fitness merkezimizde spor rutininizi devam ettirin ve ardından Symphony Spa & Wellness Merkezi’nde rahatlayın. Tatiliniz boyunca, rahatlatıcı masaj seçenekleriyle yenilenin, geleneksel Türk Hamamı’nda rahatlayın veya Fin Saunası’nda vücudunuzu toksinlerden arındırarak tamamen tazelenin."
+        },
+        "sauna": {
+          "subtitle": "Spor & Fitness",
+          "title": " Grup Aktiviteleri",
+          "text": " Azura Deluxe Resort & Spa’da tatiliniz boyunca aktif ve enerjik kalmanız için sunduğumuz grup aktivitelerine katılın:"
+        },
+        "wellness": {
+          "subtitle": " Eğlenceli bir atmosferde formda kalmanın keyfini çıkarın!",
+          "title": "Spor & Fitness",
+          "text": "Çalışma Saatleri: 08:00 – 19:00",
+          "list1": " Step Aerobik",
+          "list2": " Su Jimnastiği",
+          "list3": " Havuz Oyunları",
+          "list4": " Fitness Dersleri"
+        }
+      },
+      "gallery": {
+        "subtitle": "Formda ve Enerjik Kalın",
+        "title": "Fitness Merkezi",
+        "text": "Azura Deluxe Resort & Spa’nın profesyonel ekipmanlarla donatılmış Fitness Merkezi’nde spor rutininizi devam ettirin. Modern ekipmanlarımız ve samimi ortamımızla tatiliniz boyunca aktif, sağlıklı ve enerjik kalmanız için ideal bir alan sunuyoruz."
+      },
+      "types": {
+        "fitness": {
+          "subtitle": "Günlük Enerji Takviyeniz",
+          "title": " Fitness Merkezi",
+          "text": " Azura Deluxe Resort & Spa’da spor rutininizi sürdürün ve enerjinizi her gün yenileyin. Son teknoloji fitness ekipmanları ile donatılmış modern salonumuzda egzersizin keyfine varın. Tatil boyunca formunuzu koruyun, enerjinizi yükseltin ve zinde kalın"
+        },
+        "personalTrainer": {
+          "title": " Kişisel Eğitmen",
+          "text": "Azura Deluxe Resort & Spa’daki tatiliniz boyunca profesyonel kişisel eğitmenlerimizin hazırladığı özel programlarla fitness rutininizi geliştirin. Size özel antrenman programları ve birebir çalışmalarla formda ve motive kalın."
+        }
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": " STAY ACTIVE & FIT",
+        "title": " Sport & Fitness",
+        "text": " Maintain your fitness routine during your stay at Azura Deluxe Resort & Spa. Our professionally equipped Fitness Center offers everything you need for your daily workouts, helping you keep energized and in great shape throughout your vacation."
+      },
+      "info": {
+        "intro": {
+          "subtitle": "  Stay Fit and Feel Good",
+          "title": " Fitness & Wellness at Azura Deluxe Resort & Spa",
+          "text": " Maintain your fitness routine in our professionally equipped fitness center and then unwind at Symphony Spa & Wellness Center. Refresh yourself with a soothing massage, experience relaxation in our traditional Turkish Bath, or detoxify in our Finnish Sauna for complete rejuvenation during your vacation."
+        },
+        "sauna": {
+          "subtitle": "Sport & Fitness",
+          "title": " Group Activities",
+          "text": " Join our engaging group activities to stay active and energized throughout your stay at Azura Deluxe Resort & Spa:"
+        },
+        "wellness": {
+          "subtitle": " Enjoy keeping fit and having fun in a friendly group environment!",
+          "title": "Sport & Fitness",
+          "text": "Opening Hours: 08:00 – 19:00",
+          "list1": " Step Aerobics",
+          "list2": " Water Gymnastics",
+          "list3": " Pool Games",
+          "list4": "Fitness Classes"
+        }
+      },
+      "gallery": {
+        "subtitle": "  Stay Fit & Energized",
+        "title": "  Fitness Center",
+        "text": " Maintain your fitness routine at Azura Deluxe Resort & Spa’s professionally equipped Fitness Center. With modern equipment and a welcoming atmosphere, it’s the perfect place to stay active, healthy, and energized throughout your holiday"
+      },
+      "types": {
+        "fitness": {
+          "subtitle": "  Your Daily Energy Boost",
+          "title": "  Fitness Center",
+          "text": " Boost your energy and keep your workout routine on track at Azura Deluxe Resort & Spa. Enjoy exercising with a variety of state-of-the-art fitness equipment in our modern fitness facility. Stay active, feel refreshed, and maintain your wellness during your stay."
+        },
+        "personalTrainer": {
+          "title": " Personal Trainer",
+          "text": " Enhance your fitness routine with personalized guidance from our professional trainers at Azura Deluxe Resort & Spa. Tailored fitness programs and one-on-one sessions ensure you stay active and motivated throughout your vacation."
+        }
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": " BLEIBEN SIE FIT UND AKTIV",
+        "title": " Sport & Fitness",
+        "text": "Bleiben Sie auch im Urlaub aktiv im Azura Deluxe Resort & Spa. Unser professionell ausgestattetes Fitnesscenter bietet Ihnen alles, was Sie für Ihre täglichen Trainingseinheiten benötigen, um während Ihres Aufenthalts fit und energiegeladen zu bleiben."
+      },
+      "info": {
+        "intro": {
+          "subtitle": "  Fit bleiben und Wohlfühlen",
+          "title": "  Fitness & Wellness im Azura Deluxe Resort & Spa",
+          "text": " Halten Sie Ihre Fitnessroutine in unserem professionell ausgestatteten Fitnesscenter aufrecht und entspannen Sie anschließend im Symphony Spa & Wellness Center. Erfrischen Sie sich mit einer wohltuenden Massage, entspannen Sie im traditionellen türkischen Hamam oder entgiften Sie in der finnischen Sauna, um Ihren Urlaub vollständig zu genießen."
+        },
+        "sauna": {
+          "subtitle": "Sport & Fitness",
+          "title": " Gruppenaktivitäten",
+          "text": " Bleiben Sie während Ihres Aufenthalts im Azura Deluxe Resort & Spa aktiv und voller Energie mit unseren abwechslungsreichen Gruppenaktivitäten:"
+        },
+        "wellness": {
+          "subtitle": "Halten Sie sich fit und genießen Sie den Spaß in der Gruppe!",
+          "title": "Sport & Fitness",
+          "text": "Öffnungszeiten: 08:00 – 19:00",
+          "list1": " Step-Aerobic",
+          "list2": " Wassergymnastik",
+          "list3": "Pool-Spiele",
+          "list4": "Fitnesskurse"
+        }
+      },
+      "gallery": {
+        "subtitle": " Fit & Vital Bleiben",
+        "title": " Fitnesscenter",
+        "text": " Halten Sie Ihre Fitnessroutine im professionell ausgestatteten Fitnesscenter des Azura Deluxe Resort & Spa aufrecht. Mit modernen Geräten und angenehmer Atmosphäre bieten wir Ihnen ideale Bedingungen, um während Ihres Urlaubs aktiv, gesund und energiegeladen zu bleiben."
+      },
+      "types": {
+        "fitness": {
+          "subtitle": " Ihr täglicher Energieschub",
+          "title": " Fitnesscenter",
+          "text": " Steigern Sie Ihre Energie und halten Sie Ihre Trainingsroutine im Azura Deluxe Resort & Spa aufrecht. Trainieren Sie mit vielfältigen, modernen Fitnessgeräten in unserem modernen Fitnessbereich. Bleiben Sie aktiv, fühlen Sie sich erfrischt und erhalten Sie Ihre Fitness während Ihres Aufenthalts"
+        },
+        "personalTrainer": {
+          "title": " Personal Trainer",
+          "text": " Verbessern Sie Ihre Fitnessroutine mit persönlicher Betreuung durch unsere professionellen Trainer im Azura Deluxe Resort & Spa. Individuelle Trainingsprogramme und Einzelbetreuung sorgen dafür, dass Sie während Ihres Urlaubs aktiv und motiviert bleiben."
+        }
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": " БУДЬТЕ АКТИВНЫ И В ФОРМЕ",
+        "title": " Спорт и Фитнес",
+        "text": " Поддерживайте форму и оставайтесь активными во время отдыха в Azura Deluxe Resort & Spa. Наш фитнес-центр, оснащенный профессиональным оборудованием, предлагает всё необходимое для ежедневных тренировок и поможет вам сохранить отличное самочувствие в течение всего отпуска."
+      },
+      "info": {
+        "intro": {
+          "subtitle": " Будьте в форме и наслаждайтесь отдыхом",
+          "title": " Фитнес и Велнес в Azura Deluxe Resort & Spa",
+          "text": " Продолжайте свои тренировки в нашем фитнес-центре с профессиональным оборудованием, затем расслабьтесь в Symphony Спа и велнес Center. Восстановите силы с помощью расслабляющего массажа, отдохните в традиционном турецком хаммаме или очистите организм в финской сауне, полностью обновляя себя во время отпуска."
+        },
+        "sauna": {
+          "subtitle": "Спорт и Фитнес",
+          "title": " Групповые занятия",
+          "text": "Принимайте участие в увлекательных групповых занятиях, чтобы оставаться активными и энергичными на протяжении всего отдыха в Azura Deluxe Resort & Spa:"
+        },
+        "wellness": {
+          "subtitle": "Будьте в форме и получайте удовольствие от совместных тренировок!",
+          "title": "Спорт и Фитнес",
+          "text": "Часы работы: 08:00 – 19:00",
+          "list1": " Степ-аэробика",
+          "list2": " Водная гимнастика",
+          "list3": "Игры в бассейне",
+          "list4": " Фитнес-занятия"
+        }
+      },
+      "gallery": {
+        "subtitle": " Оставайтесь в форме и полны энергии",
+        "title": " Фитнес-центр",
+        "text": " Поддерживайте спортивный режим в профессионально оборудованном фитнес-центре Azura Deluxe Resort & Spa. Современное оборудование и комфортная атмосфера создают идеальные условия, чтобы оставаться активными, здоровыми и полными энергии на протяжении всего отпуска."
+      },
+      "types": {
+        "fitness": {
+          "subtitle": " Ваш ежедневный заряд энергии",
+          "title": " Фитнес-центр",
+          "text": " Поддерживайте свою спортивную форму и повышайте энергию в Azura Deluxe Resort & Spa. Тренируйтесь на разнообразных современных тренажерах в нашем фитнес-зале. Будьте активны, чувствуйте себя свежими и поддерживайте хорошее самочувствие во время отдыха."
+        },
+        "personalTrainer": {
+          "title": "Персональный тренер",
+          "text": "Улучшите свою фитнес-программу с помощью профессиональных персональных тренеров в Azura Deluxe Resort & Spa. Индивидуальные тренировки и персонализированные занятия помогут вам оставаться активными и мотивированными на протяжении всего отпуска."
+        }
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/spor/fitness-centre.jpg",
+      "width": 2048,
+      "height": 1366,
+      "translations": {
+        "tr": {
+          "alt": "Azura fitness merkezi"
+        },
+        "en": {
+          "alt": "Azura fitness centre"
+        },
+        "de": {
+          "alt": "Azura Fitnesscenter"
+        },
+        "ru": {
+          "alt": "Фитнес-центр Azura"
+        }
+      }
+    },
+    "info": {
+      "wellness": {
+        "image": "/uploads/pages/spor/group-fitness.jpg",
+        "width": 924,
+        "height": 1364,
+        "translations": {
+          "tr": {
+            "alt": "Step platformlarında grup egzersizi"
+          },
+          "en": {
+            "alt": "Group exercise on step platforms"
+          },
+          "de": {
+            "alt": "Gruppentraining auf Step-Plattformen"
+          },
+          "ru": {
+            "alt": "Групповая тренировка на степ-платформах"
+          }
+        }
+      },
+      "sauna": {
+        "image": "/uploads/pages/spor/fitness-centre.jpg",
+        "width": 2048,
+        "height": 1366,
+        "translations": {
+          "tr": {
+            "alt": "Azura fitness merkezi"
+          },
+          "en": {
+            "alt": "Azura fitness centre"
+          },
+          "de": {
+            "alt": "Azura Fitnesscenter"
+          },
+          "ru": {
+            "alt": "Фитнес-центр Azura"
+          }
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "spor-gallery-1",
+          "order": 0,
+          "image": "/uploads/pages/spor/table-tennis.jpg",
+          "width": 1500,
+          "height": 1001,
+          "translations": {
+            "tr": {
+              "alt": "Masa tenisi raketleri ve top"
+            },
+            "en": {
+              "alt": "Table tennis paddles and ball"
+            },
+            "de": {
+              "alt": "Tischtennisschläger und Ball"
+            },
+            "ru": {
+              "alt": "Ракетки и мяч для настольного тенниса"
+            }
+          }
+        },
+        {
+          "id": "spor-gallery-2",
+          "order": 1,
+          "image": "/uploads/pages/spor/dumbbells.jpg",
+          "width": 667,
+          "height": 1000,
+          "translations": {
+            "tr": {
+              "alt": "Fitness salonunda dambıllar"
+            },
+            "en": {
+              "alt": "Dumbbells in the fitness room"
+            },
+            "de": {
+              "alt": "Hanteln im Fitnessraum"
+            },
+            "ru": {
+              "alt": "Гантели в тренажёрном зале"
+            }
+          }
+        },
+        {
+          "id": "spor-gallery-3",
+          "order": 2,
+          "image": "/uploads/pages/spor/treadmills-4800x3200.jpg",
+          "width": 4800,
+          "height": 3200,
+          "translations": {
+            "tr": {
+              "alt": "Fitness salonunda koşu bantları"
+            },
+            "en": {
+              "alt": "Treadmills in the fitness room"
+            },
+            "de": {
+              "alt": "Laufbänder im Fitnessraum"
+            },
+            "ru": {
+              "alt": "Беговые дорожки в тренажёрном зале"
+            }
+          }
+        }
+      ]
+    },
+    "types": {
+      "fitness": {
+        "image": "/uploads/pages/spor/aqua-fitness.jpg",
+        "width": 1074,
+        "height": 868,
+        "translations": {
+          "tr": {
+            "alt": "Havuzda su jimnastiği"
+          },
+          "en": {
+            "alt": "Aqua fitness in the pool"
+          },
+          "de": {
+            "alt": "Wassergymnastik im Pool"
+          },
+          "ru": {
+            "alt": "Аквааэробика в бассейне"
+          }
+        }
+      },
+      "personalTrainer": {
+        "image": "/uploads/pages/spor/table-tennis.jpg",
+        "width": 1500,
+        "height": 1001,
+        "translations": {
+          "tr": {
+            "alt": "Masa tenisi raketleri ve top"
+          },
+          "en": {
+            "alt": "Table tennis paddles and ball"
+          },
+          "de": {
+            "alt": "Tischtennisschläger und Ball"
+          },
+          "ru": {
+            "alt": "Ракетки и мяч для настольного тенниса"
+          }
+        }
+      }
+    }
+  }
+}
