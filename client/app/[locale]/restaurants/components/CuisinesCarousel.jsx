@@ -11,6 +11,10 @@ const CuisinesCarousel = ({span,header,text, cuisines}) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
     
+  const handleJump = useCallback((index) => {
+    emblaApi?.scrollTo?.(index);
+  }, [emblaApi]);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi && emblaApi.scrollPrev) emblaApi.scrollPrev();
   }, [emblaApi]);

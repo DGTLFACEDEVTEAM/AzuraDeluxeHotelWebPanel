@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "kidsclub",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "ÇOCUKLAR İÇİN EĞLENCELİ ZAMAN",
+        "title": "Mini Kulüp",
+        "text": "Azura Deluxe Resort & Spa’nın Mini Kulübü’nde 4–12 yaş arası küçük misafirlerimizi eğlence ve heyecan bekliyor. Denetimli aktiviteler, yaratıcı atölyeler, heyecanlı oyun alanları ve canlı mini diskolarla Kids Club’ımız gün boyu unutulmaz anlar ve güvenli eğlence sunar."
+      },
+      "info": {
+        "subtitle": "KÜÇÜKLER İÇİN EĞLENCE & KEYİF",
+        "title": "Mini Kulüp",
+        "text": "Azura Deluxe Resort & Spa’nın Mini Kulübü’nde 4–12 yaş arası çocuklar, denetimli günlük aktiviteler, yaratıcı oyunlar, mini diskolar, oyun alanları ve daha fazlasıyla sonsuz eğlencenin tadını çıkarır. Şefkatli ve deneyimli ekibimiz, miniklerinizin neşeli, güvenli ve unutulmaz bir tatil geçirmesini sağlarken siz de tatilinizin keyfini çıkarabilirsiniz."
+      },
+      "icons": {
+        "environment": "Güvenli Ortam",
+        "activities": "Yaşa Uygun Aktiviteler",
+        "social": "Sosyal Etkileşim",
+        "staff": "Profesyonel Personel"
+      },
+      "activities": {
+        "subtitle": "Mini Kulübe Hoş Geldiniz",
+        "title": "Eğlence ve Eğitim Buluşuyor",
+        "text": "Kids Club’ımız, her yaştan çocuğa yönelik eğitici ve eğlenceli aktiviteler sunar. Yaratıcılığı besleyen, hayal gücünü geliştiren ve çocukların hayallerini gerçeğe dönüştüren canlı bir ortam yarattık, tatilinizi unutulmaz kılacak anlar sizi bekliyor.",
+        "items": {
+          "activity1": {
+            "title": "Çocuk Aktiviteleri",
+            "repeatTitle": "Mini Disko"
+          },
+          "activity2": {
+            "title": "Mini Disko",
+            "repeatTitle": "Minik Sinema"
+          },
+          "activity3": {
+            "title": "Minik Sinema",
+            "repeatTitle": "Oyun Odaları"
+          },
+          "activity4": {
+            "title": "Oyun Odaları",
+            "repeatTitle": ""
+          },
+          "activity5": {
+            "title": "Çocuk Aktiviteleri",
+            "repeatTitle": ""
+          }
+        }
+      },
+      "pools": {
+        "subtitle": "Mini Kulüp",
+        "title": "Çocuk Havuzları",
+        "text": "Azura Deluxe Resort & Spa’daki özel çocuk havuzlarımız, miniklerinizin suyla oynayıp eğlenebileceği güvenli ve keyifli bir ortam sunar. Sığ suyu, mini kaydırağı ve konforlu atmosferiyle bu havuzlar, en küçük misafirlerimizin ihtiyaçlarına ve eğlencesine göre tasarlanmıştır.",
+        "cards": {
+          "slide": {
+            "subtitle": "Mini Kulüp",
+            "title": "Çocuk Kaydırak Havuzu",
+            "text": "Azura Deluxe Resort & Spa’daki ısıtmalı Çocuk Kaydırak Havuzu, genç misafirlerimize heyecanlı ve güvenli bir ortam sunar. Sığ havuzu ve mini kaydırağıyla çocuklar tatil boyunca su aktivitelerinin, çılgın sıçramaların ve sınırsız eğlencenin keyfini çıkarır."
+          },
+          "children": {
+            "subtitle": "Mini Kulüp",
+            "title": "Çocuk Havuzları",
+            "text": "Azura Deluxe Resort & Spa’daki özel tasarım ısıtmalı Çocuk Havuzu, miniklerimize güvenli, keyifli ve dinlendirici bir ortam sunar. Sığ sular ve mini kaydırağıyla çocuklar gözetim altında güvenle oynar, tatilin her anı neşe ve unutulmaz anlara dönüşür."
+          },
+          "indoor": {
+            "subtitle": "Mini Kulüp",
+            "title": "Kapalı Çocuk Havuzu",
+            "text": "Kapalı Çocuk Havuzumuz, Azura Deluxe Resort & Spa’nın genç misafirlerine sıcak, güvenli ve rahat bir su ortamı sunar. Sığ ve ısıtmalı suyuyla her hava koşulunda keyifle oynayıp eğlenebilecekleri ideal bir alandır."
+          }
+        }
+      },
+      "moments": {
+        "title": "Her Anı Unutulmaz Kılın"
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": "FUN TIME FOR KIDS",
+        "title": "Mini Club ",
+        "text": "At Azura Deluxe Resort & Spa’s Mini Club, fun and excitement await our younger guests aged 4 to 12. With supervised activities, creative workshops, exciting playgrounds, and lively mini discos, our Kids Club ensures unforgettable moments and safe entertainment throughout the day."
+      },
+      "info": {
+        "subtitle": "FUN & DELIGHT FOR THE LITTLE ONES",
+        "title": "Mini Club ",
+        "text": "At Azura Deluxe Resort & Spa's Mini Club, your children aged 4 to 12 will enjoy endless fun with supervised daily activities, creative games, mini discos, playgrounds, and much more. Our caring and experienced staff ensures your little ones have a joyful, safe, and memorable vacation experience, while you relax and enjoy your holiday."
+      },
+      "icons": {
+        "environment": "Secure Environment",
+        "activities": " Age-Appropriate Activities",
+        "social": "Social Interaction",
+        "staff": "Professional Staff"
+      },
+      "activities": {
+        "subtitle": "Welcome to Kids Club",
+        "title": "Where Fun and Education Meet",
+        "text": "Our Kids Club offers educational and entertaining activities tailored to children of all ages. We've created a vibrant environment designed to nurture creativity, inspire imagination, and bring their dreams to life, making your child's holiday unforgettable.",
+        "items": {
+          "activity1": {
+            "title": "Children's Activities",
+            "repeatTitle": "Mini Disco"
+          },
+          "activity2": {
+            "title": "Mini Disco",
+            "repeatTitle": "Little Cinema"
+          },
+          "activity3": {
+            "title": "Little Cinema",
+            "repeatTitle": "Game Rooms"
+          },
+          "activity4": {
+            "title": "Game Rooms",
+            "repeatTitle": ""
+          },
+          "activity5": {
+            "title": "Children's Activities",
+            "repeatTitle": ""
+          }
+        }
+      },
+      "pools": {
+        "subtitle": "Mini Club",
+        "title": "Children’s Pools",
+        "text": "Our dedicated children's pools at Azura Deluxe Resort & Spa provide a safe and fun environment for little ones to splash, play, and have endless fun. Featuring shallow water, a mini-slide, and a comfortable atmosphere, these pools are perfectly designed to meet the needs and enjoyment of our youngest guests.",
+        "cards": {
+          "slide": {
+            "subtitle": "Mini Club",
+            "title": "Kids Slide Pool",
+            "text": "The heated Children's Slide Pool at Azura Deluxe Resort & Spa offers an exciting and safe environment for our young guests. With its shallow pool and mini slide, children can enjoy water activities, wild splashes, and endless fun throughout their holiday."
+          },
+          "children": {
+            "subtitle": "Mini Club",
+            "title": "Children’s Pools",
+            "text": "The specially designed heated Children's Pool at Azura Deluxe Resort & Spa provides a safe, enjoyable, and relaxing environment for our little ones. With its shallow waters and mini slide, children can play safely under supervision, turning every moment of the holiday into joy and unforgettable memories."
+          },
+          "indoor": {
+            "subtitle": "Mini Club",
+            "title": "Indoor Kids Pool",
+            "text": " Our Indoor Kids Pool provides a warm, safe, and comfortable water environment for young guests at Azura Deluxe Resort & Spa. Featuring shallow and heated water, it is ideal for enjoyable and supervised play, ensuring endless fun for your children regardless of the weather."
+          }
+        }
+      },
+      "moments": {
+        "title": "Make Every Moment Memorable"
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "Spaßige Zeit für Kinder",
+        "title": "Mini-Disco",
+        "text": "Im Mini-Disco des Azura Deluxe Resort & Spa erwarten unsere kleinen Gäste im Alter von 4 bis 12 Jahren Spaß und Spannung. Mit beaufsichtigten Aktivitäten, kreativen Workshops, spannenden Spielplätzen und lebhaften Mini-Discos bietet unser Kinderclub sichere Unterhaltung und unvergessliche Momente den ganzen Tag."
+      },
+      "info": {
+        "subtitle": "Spaß & Vergnügen für die Kleinen",
+        "title": "Mini-Disco",
+        "text": "Im Mini-Disco des Azura Deluxe Resort & Spa erleben Ihre Kinder im Alter von 4 bis 12 Jahren endlosen Spaß mit beaufsichtigten täglichen Aktivitäten, kreativen Spielen, Mini-Discos, Spielplätzen und vielem mehr. Unser fürsorgliches und erfahrenes Personal sorgt dafür, dass Ihre Kleinen eine fröhliche, sichere und unvergessliche Urlaubserfahrung genießen können, während Sie Ihren Urlaub entspannt genießen."
+      },
+      "icons": {
+        "environment": "Sichere Umgebung",
+        "activities": "Altersgerechte Aktivitäten",
+        "social": "Soziale Interaktion",
+        "staff": "Professionelles Personal"
+      },
+      "activities": {
+        "subtitle": "Willkommen im Kinderclub",
+        "title": "Wo Spaß und Bildung aufeinandertreffen",
+        "text": "Unser Kinderclub bietet altersgerechte pädagogische und unterhaltsame Aktivitäten. Wir haben eine lebendige Umgebung geschaffen, die Kreativität fördert, die Fantasie anregt und Träume zum Leben erweckt – für unvergessliche Urlaubsmomente Ihrer Kinder.",
+        "items": {
+          "activity1": {
+            "title": "Kinderaktivitäten",
+            "repeatTitle": "Mini-Disco"
+          },
+          "activity2": {
+            "title": "Mini-Disco",
+            "repeatTitle": "Kino für Kids"
+          },
+          "activity3": {
+            "title": "Kino für Kids",
+            "repeatTitle": "Spielzimmer"
+          },
+          "activity4": {
+            "title": "Spielzimmer",
+            "repeatTitle": ""
+          },
+          "activity5": {
+            "title": "Kinderaktivitäten",
+            "repeatTitle": ""
+          }
+        }
+      },
+      "pools": {
+        "subtitle": "Mini-Disco",
+        "title": "Kinderpools",
+        "text": "Unsere speziellen Kinderpools im Azura Deluxe Resort & Spa bieten eine sichere und spaßige Umgebung, in der die Kleinen planschen, spielen und endlosen Spaß haben können. Mit flachem Wasser, einer Mini-Rutsche und einer komfortablen Atmosphäre sind diese Pools perfekt auf die Bedürfnisse und das Vergnügen unserer jüngsten Gäste abgestimmt.",
+        "cards": {
+          "slide": {
+            "subtitle": "Mini-Disco",
+            "title": "Kinder‑Rutschpool",
+            "text": "Der beheizte Kinder-Rutschenpool im Azura Deluxe Resort & Spa bietet unseren jungen Gästen eine aufregende und sichere Umgebung. Mit seinem flachen Becken und der Mini-Rutsche können Kinder während ihres Urlaubs Wasseraktivitäten, wilde Sprünge und grenzenlosen Spaß genießen."
+          },
+          "children": {
+            "subtitle": "Mini-Disco",
+            "title": "Kinderpools",
+            "text": "Der speziell gestaltete beheizte Kinderpool im Azura Deluxe Resort & Spa bietet unseren kleinen Gästen eine sichere, angenehme und entspannende Umgebung. Mit flachem Wasser und der Mini-Rutsche können Kinder unter Aufsicht sicher spielen und jeden Moment des Urlaubs in Freude und unvergessliche Erinnerungen verwandeln."
+          },
+          "indoor": {
+            "subtitle": "Mini-Disco",
+            "title": "Innenpool für Kinder",
+            "text": "Unser Indoor‑Kinderpool bietet eine warme, sichere und komfortable Wasserumgebung für junge Gäste. Mit flachem und beheiztem Wasser ist er ideal für unterhaltsames und beaufsichtigtes Spielen, sodass Ihre Kinder unabhängig vom Wetter endlosen Spaß haben."
+          }
+        }
+      },
+      "moments": {
+        "title": "Jeden Moment unvergesslich machen"
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "Весёлое время для детей",
+        "title": "Мини Клуб",
+        "text": "В Мини Клубе Azura Deluxe Resort & Spa наших молодых гостей в возрасте от 4 до 12 лет ждёт веселье и азарт. Благодаря занятиям под присмотром, творческим мастер-классам, игровым площадкам и мини-диско, наш Детский клуб обеспечивает безопасные развлечения и незабываемые моменты в течение всего дня."
+      },
+      "info": {
+        "subtitle": "Развлечения и радость для малышей",
+        "title": "Мини Клуб",
+        "text": "В Мини Клубе Azura Deluxe Resort & Spa дети от 4 до 12 лет получат нескончаемое удовольствие от ежедневных мероприятий под присмотром, творческих игр, мини-диско и игровых площадок. Наш заботливый и опытный персонал гарантирует, что ваши детки проведут радостный, безопасный и незабываемый отдых, пока вы наслаждаетесь отпуском."
+      },
+      "icons": {
+        "environment": "Безопасная среда",
+        "activities": "Активности по возрасту",
+        "social": "Социальное общение",
+        "staff": "Профессиональный персонал"
+      },
+      "activities": {
+        "subtitle": "Добро пожаловать в Детский клуб",
+        "title": "Где встречаются игра и обучение",
+        "text": "Наш Детский клуб предлагает познавательные и развлекательные мероприятия для детей всех возрастов. Мы создали яркую атмосферу, поддерживающую творчество, вдохновляющую воображение и воплощающую мечты, чтобы отпуск вашего ребёнка был незабываемым.",
+        "items": {
+          "activity1": {
+            "title": "Детские мероприятия",
+            "repeatTitle": "Мини-диско"
+          },
+          "activity2": {
+            "title": "Мини-диско",
+            "repeatTitle": "Кино для малышей"
+          },
+          "activity3": {
+            "title": "Кино для малышей",
+            "repeatTitle": "Игровые комнаты"
+          },
+          "activity4": {
+            "title": "Игровые комнаты",
+            "repeatTitle": ""
+          },
+          "activity5": {
+            "title": "Детские мероприятия",
+            "repeatTitle": ""
+          }
+        }
+      },
+      "pools": {
+        "subtitle": "Мини Клуб",
+        "title": "Детские бассейны",
+        "text": "Наши детские бассейны в Azura Deluxe Resort & Spa предлагают безопасную и увлекательную среду, где малыши могут псушакаться, играть и веселиться. С мелкой водой, мини-горкой и комфортной обстановкой эти бассейны идеально подходят для самых юных гостей.",
+        "cards": {
+          "slide": {
+            "subtitle": "Мини Клуб",
+            "title": "Бассейн с горкой для детей",
+            "text": "Подогреваемый детский бассейн с горками в Azura Deluxe Resort & Spa предлагает нашим юным гостям захватывающую и безопасную обстановку. С мелким бассейном и мини-горкой дети могут наслаждаться водными развлечениями, безумными брызгами и бесконечным весельем на протяжении всего отдыха."
+          },
+          "children": {
+            "subtitle": "Мини Клуб",
+            "title": "Детские бассейны",
+            "text": "Специально разработанный подогреваемый детский бассейн в Azura Deluxe Resort & Spa обеспечивает безопасную, приятную и расслабляющую обстановку для наших маленьких гостей. Благодаря мелкой воде и мини-горке дети могут безопасно играть под присмотром, превращая каждый момент отдыха в радость и незабываемые воспоминания."
+          },
+          "indoor": {
+            "subtitle": "Мини Клуб",
+            "title": "Крытый детский бассейн",
+            "text": "Крытый детский бассейн обеспечивает тёплую, безопасную и комфортную водную среду. С мелкой и подогреваемой водой он идеально подходит для игр и развлечений независимо от погоды."
+          }
+        }
+      },
+      "moments": {
+        "title": "Сделать к,аждый момент незабываемым"
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/kidsclub/club-main.webp",
+      "width": 2160,
+      "height": 1440
+    },
+    "info": {
+      "primary": {
+        "image": "/uploads/pages/kidsclub/club-play.webp",
+        "width": 1859,
+        "height": 1206,
+        "translations": {
+          "tr": {
+            "alt": "Mini Kulüp"
+          },
+          "en": {
+            "alt": "Mini Club "
+          },
+          "de": {
+            "alt": "Mini-Disco"
+          },
+          "ru": {
+            "alt": "Мини Клуб"
+          }
+        }
+      },
+      "secondary": {
+        "image": "/uploads/pages/kidsclub/club-main.webp",
+        "width": 2160,
+        "height": 1440,
+        "translations": {
+          "tr": {
+            "alt": "Mini Kulüp"
+          },
+          "en": {
+            "alt": "Mini Club "
+          },
+          "de": {
+            "alt": "Mini-Disco"
+          },
+          "ru": {
+            "alt": "Мини Клуб"
+          }
+        }
+      }
+    },
+    "activities": {
+      "items": {
+        "activity1": {
+          "id": "activity1",
+          "order": 0,
+          "image": "/uploads/pages/kidsclub/activity-1.jpg",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Çocuk Aktiviteleri"
+            },
+            "en": {
+              "alt": "Children's Activities"
+            },
+            "de": {
+              "alt": "Kinderaktivitäten"
+            },
+            "ru": {
+              "alt": "Детские мероприятия"
+            }
+          }
+        },
+        "activity2": {
+          "id": "activity2",
+          "order": 1,
+          "image": "/uploads/pages/kidsclub/activity-2.jpg",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Mini Disko"
+            },
+            "en": {
+              "alt": "Mini Disco"
+            },
+            "de": {
+              "alt": "Mini-Disco"
+            },
+            "ru": {
+              "alt": "Мини-диско"
+            }
+          }
+        },
+        "activity3": {
+          "id": "activity3",
+          "order": 2,
+          "image": "/uploads/pages/kidsclub/activity-3.jpg",
+          "width": 720,
+          "height": 1081,
+          "translations": {
+            "tr": {
+              "alt": "Minik Sinema"
+            },
+            "en": {
+              "alt": "Little Cinema"
+            },
+            "de": {
+              "alt": "Kino für Kids"
+            },
+            "ru": {
+              "alt": "Кино для малышей"
+            }
+          }
+        },
+        "activity4": {
+          "id": "activity4",
+          "order": 3,
+          "image": "/uploads/pages/kidsclub/activity-4.jpg",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Oyun Odaları"
+            },
+            "en": {
+              "alt": "Game Rooms"
+            },
+            "de": {
+              "alt": "Spielzimmer"
+            },
+            "ru": {
+              "alt": "Игровые комнаты"
+            }
+          }
+        },
+        "activity5": {
+          "id": "activity5",
+          "order": 4,
+          "image": "/uploads/pages/kidsclub/activity-5.jpg",
+          "width": 720,
+          "height": 1080,
+          "translations": {
+            "tr": {
+              "alt": "Oyun Alanı"
+            },
+            "en": {
+              "alt": "Playground"
+            },
+            "de": {
+              "alt": "Spielplatz"
+            },
+            "ru": {
+              "alt": "Игровая площадка"
+            }
+          }
+        }
+      }
+    },
+    "pools": {
+      "slide": {
+        "id": "slide",
+        "order": 0,
+        "image": "/uploads/pages/kidsclub/pool-slide.jpg",
+        "width": 1566,
+        "height": 1608,
+        "translations": {
+          "tr": {
+            "alt": "Çocuk Kaydırak Havuzu"
+          },
+          "en": {
+            "alt": "Kids Slide Pool"
+          },
+          "de": {
+            "alt": "Kinder‑Rutschpool"
+          },
+          "ru": {
+            "alt": "Бассейн с горкой для детей"
+          }
+        }
+      },
+      "children": {
+        "id": "children",
+        "order": 1,
+        "image": "/uploads/pages/kidsclub/pool-children.jpg",
+        "width": 696,
+        "height": 466,
+        "translations": {
+          "tr": {
+            "alt": "Çocuk Havuzları"
+          },
+          "en": {
+            "alt": "Children’s Pools"
+          },
+          "de": {
+            "alt": "Kinderpools"
+          },
+          "ru": {
+            "alt": "Детские бассейны"
+          }
+        }
+      },
+      "indoor": {
+        "id": "indoor",
+        "order": 2,
+        "image": "/uploads/pages/kidsclub/pool-indoor.jpg",
+        "width": 1000,
+        "height": 667,
+        "translations": {
+          "tr": {
+            "alt": "Kapalı Çocuk Havuzu"
+          },
+          "en": {
+            "alt": "Indoor Kids Pool"
+          },
+          "de": {
+            "alt": "Innenpool für Kinder"
+          },
+          "ru": {
+            "alt": "Крытый детский бассейн"
+          }
+        }
+      }
+    },
+    "moments": {
+      "images": [
+        {
+          "id": "kidsclub-moment-1",
+          "order": 0,
+          "image": "/uploads/pages/kidsclub/club-play.webp",
+          "width": 1859,
+          "height": 1206,
+          "translations": {
+            "tr": {
+              "alt": "Her Anı Unutulmaz Kılın"
+            },
+            "en": {
+              "alt": "Make Every Moment Memorable"
+            },
+            "de": {
+              "alt": "Jeden Moment unvergesslich machen"
+            },
+            "ru": {
+              "alt": "Сделать к,аждый момент незабываемым"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-moment-2",
+          "order": 1,
+          "image": "/uploads/pages/kidsclub/club-main.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Her Anı Unutulmaz Kılın"
+            },
+            "en": {
+              "alt": "Make Every Moment Memorable"
+            },
+            "de": {
+              "alt": "Jeden Moment unvergesslich machen"
+            },
+            "ru": {
+              "alt": "Сделать к,аждый момент незабываемым"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-moment-3",
+          "order": 2,
+          "image": "/uploads/pages/kidsclub/club-moments.webp",
+          "width": 2160,
+          "height": 1440,
+          "translations": {
+            "tr": {
+              "alt": "Her Anı Unutulmaz Kılın"
+            },
+            "en": {
+              "alt": "Make Every Moment Memorable"
+            },
+            "de": {
+              "alt": "Jeden Moment unvergesslich machen"
+            },
+            "ru": {
+              "alt": "Сделать к,аждый момент незабываемым"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -3,10 +3,9 @@ import EnvironmentSvg from './EnvironmentSvg'
 import ActiviteSvg from './ActiviteSvg'
 import SocialSvg from './SocialSvg'
 import StaffSvg from './StaffSvg'
-import {useTranslations} from 'next-intl';
 
-const KidsIconsSection = () => {
-    const t = useTranslations('KidsClub');
+
+const KidsIconsSection = ({ texts }) => {
 
   return (
     <div className='flex w-screen items-center justify-center bg-[#9fc5d3]/10 py-[40px]'>
@@ -16,7 +15,7 @@ const KidsIconsSection = () => {
                 <EnvironmentSvg className="flex" width={57} height={56}/>
             </div>
             <div className='flex flex-col items-center justify-center gap-[8px]'>
-                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{t("iconsText1")}</span>
+                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{texts.environment}</span>
                 <div className='bg-[#84C9EA] h-[6px] w-[50px]'></div>
             </div>
         </div>
@@ -26,7 +25,7 @@ const KidsIconsSection = () => {
                 <ActiviteSvg className="flex" width={57} height={56}/>
             </div>
             <div className='flex flex-col items-center justify-center gap-[8px]'>
-                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[14px] md:text-[16px] lg::text-[18px]'>{t("iconsText2")}</span>
+                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[14px] md:text-[16px] lg::text-[18px]'>{texts.activities}</span>
                 <div className='bg-[#84C9EA] h-[6px] w-[50px]'></div>
             </div>
         </div>
@@ -36,7 +35,7 @@ const KidsIconsSection = () => {
                 <SocialSvg className="flex" width={57} height={56}/>
             </div>
             <div className='flex flex-col items-center justify-center gap-[8px]'>
-                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{t("iconsText3")}</span>
+                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{texts.social}</span>
                 <div className='bg-[#84C9EA] h-[6px] w-[50px]'></div>
             </div>
         </div>
@@ -46,7 +45,7 @@ const KidsIconsSection = () => {
                 <StaffSvg className="flex" width={57} height={56}/>
             </div>
             <div className='flex flex-col items-center justify-center gap-[8px]'>
-                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{t("iconsText4")}</span>
+                <span className='text-[#121212] font-marcellus font-normal leading-[26px] text-[16px] md:text-[18px]'>{texts.staff}</span>
                 <div className='bg-[#84C9EA] h-[6px] w-[50px]'></div>
             </div>
         </div>

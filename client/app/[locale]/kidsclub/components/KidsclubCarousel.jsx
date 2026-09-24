@@ -1,23 +1,13 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from 'embla-carousel-react';
-import img1 from "../images/submenu/childactivite.jpg"
-import img2 from "../images/submenu/ballpool.jpg"
-import img3 from "../images/submenu/babyroom.jpg"
-import img4 from "../images/submenu/gamerooms.jpg"
-import img5 from "../images/submenu/childactivite-1.jpg"
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import {useTranslations} from 'next-intl';
-
-const images=[img1,img2,img3,img4,img5] 
-
-const KidsclubCarousel = () => {
-  const t = useTranslations('KidsClub.CarouselSection');
-  const headers=[t("title1") ,t("title2"),t("title3"),t("title4")]
-
- const slidesCombined = [...images, ...images]; // Loop için ekstra slaytlar
- const headerCombined = [...headers, ...headers]; // Loop için ekstra slaytlar
+const KidsclubCarousel = ({ texts, items }) => {
+ const images = items.map(item => item.image);
+ // Preserve the existing two-pass captions, including the two blank final captions.
+ const slidesCombined = [...images, ...images];
+ const headerCombined = [...items.map(item => item.title), ...items.map(item => item.repeatTitle)];
 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
@@ -61,9 +51,9 @@ const KidsclubCarousel = () => {
       <div className='flex flex-col w-[87.79%] md:w-[91.4%] lg:w-[76.8%] items-center justify-center max-w-[1106px] '>
         <div className='flex flex-col gap-[17px] items-center justify-center font-jost text-black'>
            <div className='flex flex-col gap-[15px] md:gap-[25px] lg:gap-[35px] items-center justify-center text-center w-full'>
-           <span className='text-[14px] lg:text-[18px] font-medium uppercase leading-[26px] tracking-[0.72px]'>{t("subtitle")} </span>
-            <h2  className='text-[28px] md:text-[32px] lg:text-[48px] font-normal leading-[120%] lg:leading-[26px] font-marcellus lg:capsizedText2'>{t("title")} </h2>
-            <p className='text-[14px] lg:text-[16px] font-normal leading-[18px] lg:leading-[26px]'>{t("text")} </p>
+           <span className='text-[14px] lg:text-[18px] font-medium uppercase leading-[26px] tracking-[0.72px]'>{texts.subtitle} </span>
+            <h2  className='text-[28px] md:text-[32px] lg:text-[48px] font-normal leading-[120%] lg:leading-[26px] font-marcellus lg:capsizedText2'>{texts.title} </h2>
+            <p className='text-[14px] lg:text-[16px] font-normal leading-[18px] lg:leading-[26px]'>{texts.text} </p>
            </div>
         </div>
       </div>
@@ -80,7 +70,7 @@ const KidsclubCarousel = () => {
                 layout="contain"
                 width={360}
                 height={540}
-                alt={`Slide ${index + 1}`}
+                alt={image.alt}
                 objectPosition="center"
                 className="flex h-[383px] md:h-[420px] lg:h-[540px] xl:h-auto w-auto md:w-full"
               />

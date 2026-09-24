@@ -27,7 +27,11 @@
     "seed:beachpools": "node scripts/seed-persistent-beachpools.mjs",
     "test:beachpools": "node --test lib/azura-beachpools-storage.test.mjs lib/azura-beachpools-indicator.test.mjs",
     "test:beachpools-http": "node --test --test-concurrency=1 lib/azura-beachpools-http.test.mjs lib/azura-beachpools-api-http.test.mjs",
-    "test:beachpools-production": "node scripts/test-beachpools-production.mjs"
+    "test:beachpools-production": "node scripts/test-beachpools-production.mjs",
+    "seed:kidsclub": "node scripts/seed-persistent-kidsclub.mjs",
+    "test:kidsclub": "node --test lib/azura-kidsclub-storage.test.mjs lib/azura-kidsclub-indicator.test.mjs",
+    "test:kidsclub-http": "node --test --test-concurrency=1 lib/azura-kidsclub-http.test.mjs lib/azura-kidsclub-api-http.test.mjs",
+    "test:kidsclub-production": "node scripts/test-kidsclub-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

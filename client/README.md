@@ -1407,3 +1407,233 @@ ve `images/route.js`; güncellenen `lib/azura-beachpools-storage.mjs`,
 `azura-beachpools-indicator.test.mjs`; test komutları için package.json ve
 `scripts/test-beachpools-production.mjs`; bu README. Diğer kirli dönüşüm
 dosyaları önceki kalıcı içerik adımına aittir.
+
+## Kids Club: kalıcı içerik ve yönetim API’leri
+
+Aktif `app/[locale]/kidsclub/page.js`, `azura-kidsclub-content.js` server-only girişinden
+`azura-kidsclub-storage.mjs` okuyucusunu çağırır. `force-dynamic` sayesinde dosya değişiklikleri
+sonraki istekte okunur. ContactSection2 ve mesaj dosyaları değiştirilmedi. Ortak CuisinesCarousel yalnızca mobil gösterge düzeltmesini içerir.
+Kaynaklar: `content/site-pages/kidsclub.json`, `public/uploads/pages/kidsclub/`.
+Kalıcı kurulum:
+
+```sh
+AZURA_CONTENT_ROOT=/persistent/content AZURA_UPLOADS_ROOT=/persistent/uploads npm run seed:kidsclub
+```
+
+Hedefler `AZURA_CONTENT_ROOT/site-pages/kidsclub.json` ve
+`AZURA_UPLOADS_ROOT/pages/kidsclub/`. Seed JSON'u `wx`, görselleri `COPYFILE_EXCL` ile
+**yalnızca yoklarsa** oluşturur; mevcut düzenlemeleri ezmez. Ardından mevcut dosyaları doğrular;
+geçersiz mevcut içeriği otomatik onarmaz. Gerçek içerikleri değiştirmeyen testler:
+`npm run test:kidsclub`, `npm run test:kidsclub-production` (izole kopyada build + HTTP).
+
+### Kesin sözleşme
+
+Kök `{schemaVersion:1,pageKey:"kidsclub",translations:{tr,en,de,ru},media}`.
+Aşağıdaki şekil her dil için aynıdır; nesnelerde belirtilmeyen alt alanlar reddedilir:
+
+```text
+translations.<locale>
+  hero: {subtitle,title,text}
+  info: {subtitle,title,text}
+  icons: {environment,activities,social,staff}
+  activities: {subtitle,title,text,items:{
+    activity1:{title,repeatTitle}, activity2:{title,repeatTitle},
+    activity3:{title,repeatTitle}, activity4:{title,repeatTitle},
+    activity5:{title,repeatTitle}
+  }}
+  pools: {subtitle,title,text,cards:{
+    slide:{subtitle,title,text}, children:{subtitle,title,text},
+    indoor:{subtitle,title,text}
+  }}
+  moments: {title}
+
+media
+  hero: CSSImage
+  info: {primary:Image,secondary:Image}
+  activities: {items:{activity1:OrderedImage,...,activity5:OrderedImage}}
+  pools: {slide:OrderedImage,children:OrderedImage,indoor:OrderedImage}
+  moments: {images:[OrderedImage,OrderedImage,OrderedImage]}
+
+CSSImage = {image,width,height}
+Image = {image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+OrderedImage = {id,order,...Image}
+```
+
+Metin sınırı 4000, alt metin 300 karakter; boş/kontrol karakterli değerler reddedilir,
+trim uygulanmaz. Yalnızca `activity4/5.repeatTitle` boş olabilir (mevcut görünüm).
+Dört dil zorunludur. Görseller gerçek JPEG/PNG/WebP, en fazla 8 MiB / 16 milyon piksel;
+boyutları gerçek dosyayla eşleşmelidir. Başka sayfa yolları, yol taşması, symlink,
+bozuk/eksik dosya veya JSON açık hata üretir. Önceki gerçek okunan bayt doğrulaması korunur.
+
+| Görünür bileşen | Metin | Medya |
+|---|---|---|
+| BannerDark | hero | hero (CSS; alt alanı yok) |
+| ClinaryReverseInfo | info | info.secondary arkada, info.primary önde |
+| KidsIconsSection | icons | Sabit dört SVG kodda kalır |
+| KidsclubCarousel | activities | activities.items; beş öğe iki kez render edilir |
+| CuisinesCarousel | pools | pools; slide → children → indoor |
+| KidsMomentCarousel | moments.title | moments.images; üç öğe |
+
+`id/order`, etkinlik ve havuzların **medya kaydında** bulunur; metinler aynı nesne anahtarıyla
+birleşir. Etkinlikler `activity1…activity5`, sıra `0…4`; havuzlar `slide,children,indoor`,
+sıra `0…2`; moments `kidsclub-moment-1…3`, sıra `0…2`. Kimlikler/sıralar sabittir.
+
+### Tam medya yolları ve sahiplik
+
+Aşağıdaki tüm dosya adlarının öneki `/uploads/pages/kidsclub/`:
+
+| JSON alanı | Dosya | Orijinal (`kidsclub/images/` altında) |
+|---|---|---|
+| media.hero | club-main.webp | kids4.webp |
+| media.info.primary | club-play.webp | kids3.webp |
+| media.info.secondary | club-main.webp | kids4.webp |
+| media.activities.items.activity1 | activity-1.jpg | submenu/childactivite.jpg |
+| media.activities.items.activity2 | activity-2.jpg | submenu/ballpool.jpg |
+| media.activities.items.activity3 | activity-3.jpg | submenu/babyroom.jpg |
+| media.activities.items.activity4 | activity-4.jpg | submenu/gamerooms.jpg |
+| media.activities.items.activity5 | activity-5.jpg | submenu/childactivite-1.jpg |
+| media.pools.slide | pool-slide.jpg | kids7.jpg |
+| media.pools.children | pool-children.jpg | child_pool.jpg |
+| media.pools.indoor | pool-indoor.jpg | 2149046677.jpg |
+| media.moments.images[0] | club-play.webp | kids3.webp |
+| media.moments.images[1] | club-main.webp | kids4.webp |
+| media.moments.images[2] | club-moments.webp | kids5.webp |
+
+**14 medya kaydı, 11 benzersiz dosya**; kaydırıcı tekrarlarıyla DOM'da 18 normal img ve
+1 CSS arka planı vardır. Orijinaller korunur, bütün kopyalar bayt eşidir. Video yoktur.
+Normal görsellerde yerelleştirilmiş alt metin için mevcut başlıklar kullanılır; CSS hero
+alt metni taşımaz. Görsel ölçüleri kayıtta gerçek dosyadan alınır; etkinlik kaydırıcısının
+mevcut 360×540 sunum ölçüsü ve bütün tasarım sınıfları korunur.
+
+### Bilerek korunmuş tutarsızlıklar ve kapsam dışı alanlar
+
+- Eski etkinlik kodunda 5 görsel ve 4 başlık ayrı ayrı ikiye katlanıyordu. Görünen
+  başlık dizisi `title1,title2,title3,title4,title1,title2,title3,title4,boş,boş` idi.
+  `title/repeatTitle` aynı kart kimliğinin iki render turuna aittir; kayma düzeltilmedi.
+  Mesajlardaki `CarouselSection.title5` görünür başlık olarak etkinleştirilmedi;
+  beşinci görselin alt açıklamasında kullanılabilir. İleride panelde bu farklılık açıklanmalıdır.
+- Etkinlik göstergesindeki `selectedIndex/2` davranışı korunur.
+- Ortak CuisinesCarousel mobil göstergesindeki tanımsız `handleJump` çağrısı yönetim API geçişinde düzeltildi: mevcut Embla üzerinde `emblaApi?.scrollTo?.(index)` kullanır. Sınıflar ve kart sırası korunur.
+- Almanca Mini-Disco kullanımı, Rusça yazım hataları ve fotoğraf/başlık tutarsızlıkları korunur.
+- Havuz kartlarındaki eski `link:"/"` alanı bileşen tarafından render edilmiyordu;
+  yönetilebilir bağlantı eklenmedi. İkinci tanıtım paragrafı boş kalır.
+- Kullanılmayan KidsBamboo, KidsRestaurantCarousel, RestaurantMainBanner dahil edilmedi.
+  ContactSection2 ve diğer tüketicilerin çevirileri korunur.
+
+### Lago eşleşmesi
+
+Lago `content/site-pages/kidsclub.json`, `KidsClubMediaEditor.jsx` ve genel içerik editörü
+salt okunur incelendi. `hero`, `info`, `activities.items`, `pools`, `moments.images` adları
+uyumludur. Lago'nun 9 etkinliği yerine 5; mini/junior/teenage ve bambu yerine Azura'nın iki
+örtüşen tanıtım görseli vardır. Panda, çocuk restoranı ve Lago havuz kimlikleri eklenmez.
+Lago koleksiyonlarının `src` alanı Azura'nın `image` alanına uyarlanmalı; gerçek width/height,
+CSS alt ayrımı, Azura ikon metinleri ve iki tur başlıkları sayfa yapılandırmasında tanımlanmalıdır.
+Metinler mevcut next-intl anahtarlarından yukarıdaki bölüm adlarına eşlenir; Lago'ya kod yazılmadı.
+
+### Yönetim API sözleşmesi
+
+Her iki API aynı `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` başlığını ister.
+Yanıtlar `Cache-Control: no-store` taşır. Token yapılandırılmamışsa ortak davranış 503;
+geçersiz/eksik Bearer 401'dir.
+
+```http
+GET /api/azura/kidsclub/page-content
+Authorization: Bearer <token>
+```
+
+GET ve başarılı PUT tam olarak:
+```json
+{"bundle": "kidsclub.json.translations nesnesinin tamamı", "media": "kidsclub.json.media nesnesinin tamamı", "revision": "64 karakter küçük harf SHA-256"}
+```
+Buradaki açıklama stringlerinin yerinde yukarıdaki kesin şemadaki **nesneler** bulunur.
+Eksiksiz gerçek örnek: `content/site-pages/kidsclub.json`; `translations` alanı API'de
+`bundle` adıyla taşınır. Kimlik/metaveri kök alanları API gövdesine konmaz.
+
+```http
+PUT /api/azura/kidsclub/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle": <dört dilin tamamı>, "media": <14 medya kaydının tamamı>}
+```
+
+Gövde yalnızca bu iki alanı kabul eder. Üst sınır 128 KiB; metin 4000, alt açıklama 300
+karakterdir. Eksik If-Match 428, biçimsiz If-Match/veri 400, eski revision 409,
+yanlış Content-Type 415, boyut aşımı 413. Hatalar `{error:"..."}` biçimindedir.
+
+Boş string (`""`) yalnızca **her bir tr/en/de/ru dilinde** şu alanlarda kabul edilir:
+`bundle.<locale>.activities.items.activity4.repeatTitle` ve
+`bundle.<locale>.activities.items.activity5.repeatTitle`. Bunlar başlangıçta boş olan
+iki tekrar başlığıdır. Boşluklardan oluşan string geçersizdir; bu iki alana ileride geçerli
+metin yazılabilir. Diğer zorunlu metinler boş olamaz; başlık kayması kendiliğinden düzeltilmez.
+
+Revision, doğrulanmış bundle/media'nın kanonik JSON SHA-256 hash'idir; kök metaveri
+revision'a katılmaz ve revision dosyaya yazılmaz. Ortak `enqueuePageWrite` kuyruğunda
+dosya yeniden okunur, revision karşılaştırılır, yalnızca translations/media değiştirilir,
+diğer kök alanlar korunarak atomik kaydedilir. Hatalı işlem kuyruğu kilitlemez.
+**Kuyruk yalnızca aynı Node.js süreci içindeki yazmaları korur; çok süreç/çok sunucu
+kurulumu için süreçler arası kilit veya ortak transactional depolama gerekir.**
+Başarılı PUT `/tr/kidsclub`, `/en/kidsclub`, `/de/kidsclub`, `/ru/kidsclub` yollarını
+revalidate eder; dinamik sunucu okuması güncel kalıcı veriyi gösterir.
+
+```http
+GET /api/azura/kidsclub/images
+Authorization: Bearer <token>
+```
+```json
+{"images":[{"image":"/uploads/pages/kidsclub/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":720,"height":1080,"modifiedAt":"ISO-8601 tarih"}]}
+```
+
+POST aynı adrese tek `file` alanlı multipart gönderir; Content-Type boundary istemci
+FormData tarafından üretilir. 201 yanıtı aynı görsel nesnesidir, `modifiedAt` içermez:
+```json
+{"image":"/uploads/pages/kidsclub/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":720,"height":1080}
+```
+
+Dosya adını sunucu üretir; yalnızca Kids Club dizinine yeni dosya yazılır. JPEG/PNG/WebP,
+8 MiB ve 16 milyon piksel, gerçek dosya türü/çözülebilirlik, güvenli dizin/symlink ve
+üzerine yazmama kontrolleri ortak medya katmanından gelir. FileHandle.stat() sıfır boyut
+regresyon düzeltmesi ve gerçek okunan bayt doğrulaması değiştirilmedi. Yükleme JSON'u
+kendiliğinden değiştirmez. Yayınlamak için seçilen yol ve gerçek width/height ilgili medya
+kaydına konup içerik PUT'u yapılmalıdır; CSS hero'ya alt metin eklenmez.
+
+Gerçek tarayıcı, hover veya piksel karşılaştırması yapılmadı; metin/medya/şema ve
+production HTTP kontrolleri tasarımın piksel eşliğinin kanıtı değildir.
+
+Doğrulama sonucu (bu geçiş): Kids Club birim testleri **5/5**, izole production
+HTTP testi **1/1** başarılı. HTTP; dört dilin bütün görünür metinlerini, 18 img sırasını,
+CSS hero'yu, 11 dosyanın URL/bayt eşliğini, canlı dosya değişikliğini ve restart sonrasını
+kontrol eder. Hakkımızda, restoran liste ve ana restoran detay sayfaları dört dilde 200 döner.
+About/restoran/ortak medya regresyonları **18/19**: tek eski hata restoran Almanca
+`mainRestaurant.list2` değerindeki ` hetheth` ekinin mesaj dosyasıyla eşleşmemesidir;
+içerik değiştirilmedi. Next.js **15.5.26** izole production build, lint ve
+`git diff --check` başarılı. Değişen iki Kids bileşeninin className ifadeleri HEAD ile aynıdır.
+
+Eklenen dosyalar: Kids Club JSON ve 11 uploads kopyası, `azura-kidsclub-storage.mjs`,
+`azura-kidsclub-content.js`, iki Kids test dosyası, `seed-persistent-kidsclub.mjs`,
+`test-kidsclub-production.mjs`. Değişenler: aktif Kids page.js, KidsIconsSection,
+KidsclubCarousel, salt okunur medya route izin listesi, package.json komutları ve bu README.
+
+Yönetim API geçişi dosyaları: `app/api/azura/kidsclub/page-content/route.js` ve
+`images/route.js` ortak handler fabrikalarını kullanır; `azura-kidsclub-storage.mjs`
+revision/okuma/kuyruklu yazma işlevlerini içerir. `azura-homepage-media.mjs` yalnızca
+Kids Club kapsam sarmalayıcılarıyla genişletildi. `CuisinesCarousel.jsx` içinde dört
+satırlık güvenli gezinme fonksiyonu eklendi. `azura-kidsclub-api-http.test.mjs`,
+`azura-kidsclub-indicator.test.mjs`, mevcut Kids birim/HTTP testleri ve package.json
+komutları güncellendi. Başlangıç JSON ve görsel dosyaları bu API geçişinde değiştirilmedi.
+
+Ortak CuisinesCarousel tüketicileri: Kids Club; restoran detaylarından mainrestaurant,
+orchestrarestaurant, bellaazura, ottomanrestaurant, patisserie, mazurka ve lyric.
+Restoran liste sayfası ve About da HTTP regresyon kapsamındadır. Gösterge testi gerçek
+JSX'i derleyip üç tıklamanın indekslerini doğrular; gerçek tarayıcı etkileşim testi değildir.
+
+Son yönetim API doğrulaması: Kids birim/bileşen testleri **7/7**, izole production
+HTTP testleri **2/2** başarılı. Eksik/bozuk yetki ve revision, 400/401/409/413/415/428,
+şema/boş metin/kimlik/sıra kontrolleri, paralel 200/409, dosya ve kök alanların korunması,
+11 kayıtlı görselin HTTP listesi/URL'leri, yükleme sonrası 12 öğelik liste, normal görsel
+ve CSS hero seçimi, dört dilde yayın ve restart sonrası aynı içerik/revision doğrulandı.
+Next.js **15.5.26** izole production build, lint ve `git diff --check` başarılı.
+About/restoran/ortak medya testleri **18/19**; yalnızca yukarıda belgelenen eski Almanca
+restoran metin eşliği hatası sürer. FileHandle.stat() regresyon testi geçti.
+Gerçek kullanıcı içerikleri testlerde kullanılmadı; yalnızca geçici kopyalar güncellendi.

@@ -257,3 +257,10 @@ export async function saveBeachPoolsImage(bytes, mimeType, paths = resolveAzuraP
 export async function listBeachPoolsImages(paths = resolveAzuraPaths()) {
   return listPageImages("beachpools", paths);
 }
+
+export async function saveKidsClubImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("kidsclub", bytes, mimeType, paths, idFactory);
+}
+export async function listKidsClubImages(paths = resolveAzuraPaths()) {
+  return listPageImages("kidsclub", paths);
+}
