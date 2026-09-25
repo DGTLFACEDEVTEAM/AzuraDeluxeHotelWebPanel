@@ -271,3 +271,10 @@ export async function saveBarsImage(bytes, mimeType, paths = resolveAzuraPaths()
 export async function listBarsImages(paths = resolveAzuraPaths()) {
   return listPageImages("bars", paths);
 }
+
+export async function saveEntertainmentImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("entertainment", bytes, mimeType, paths, idFactory);
+}
+export async function listEntertainmentImages(paths = resolveAzuraPaths()) {
+  return listPageImages("entertainment", paths);
+}

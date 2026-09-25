@@ -1873,3 +1873,250 @@ tek eski başarısızlık yukarıdaki Almanca restoran `hetheth` metin farkıdı
 Next.js **15.5.26** izole production build, lint ve git diff --check başarılı.
 Gösterge testi gerçek JSX'i derleyip dört tıklamanın doğru scrollTo indekslerini ve
 Embla hazır değilken güvenli davranışı doğrular; gerçek tarayıcı/piksel testi yapılmadı.
+
+## Entertainment: mevcut kullanıcı çalışmasının kalıcı sayfaya bağlanması
+
+Gerçek route `app/[locale]/entertainment/page.js`; dört dilde
+`/tr/entertainment`, `/en/entertainment`, `/de/entertainment`, `/ru/entertainment`.
+Kalıcı içerik dönüşümünü yönetim API geçişi izler; aşağıdaki uçlar uygulanmıştır.
+
+### Kullanıcının hazırladığı çalışma ve yapılan düzeltmeler
+
+- Dosya adları zaten `lib/azura-entertainment-content.js` ve
+  `lib/azura-entertainment-storage.mjs` idi; yeniden adlandırılmadı.
+- Server-only giriş, ortak doğrulama/dizin yardımcıları, sabit kimlikler, kategori/link
+  eşlemesi, dört dil ve 12 görsel kaydı doğru hazırlanmıştı; korundu.
+- JSON'da üç teknik ölçü düzeltildi: `gridSection[3]` beach-activities **1076×1200**;
+  `gridSection[6]` step-aerobics **1080×1200**; `gridSection[7]` stage-shows **699×760**.
+  Eski değerler üçünün de 698×760 idi. Görsel dosyalarının baytları değiştirilmedi.
+- İngilizce `gridSection.title1`, `text1`, `title9`, `text9` değerlerinde eski mesajlardaki
+  birer başlangıç boşluğu kullanıcı JSON'unda yoktu. Kullanıcının bu değerleri korundu;
+  mesaj dosyasıyla otomatik eşitlenmedi. Diğer kullanılan metinler boşluklarıyla eşittir.
+- Bütün kullanıcı alt açıklamaları, dosya adları, yollar ve sıra korundu.
+- Yönetilen alanlar kesin doğrulanır; API geçişinde ek kök metaverinin korunmasına izin verildi. Aktif sayfa henüz okuyucuyu çağırmıyordu; şimdi
+  async sunucu okuması ve force-dynamic ile doğru dilde props gönderir.
+- Kullanıcının storage dosyasında önceden bulunan revision/yazma yardımcıları korunmuştur;
+  API geçişinde ortak handler route’una bağlandı; normal sayfa yalnızca okuma işlevini çağırır.
+
+### Kesin JSON sözleşmesi
+
+```text
+{
+ schemaVersion:1,
+ pageKey:"entertainment",
+ translations:{tr:Locale,en:Locale,de:Locale,ru:Locale},
+ media:{hero:CSSImage,activities:[OrderedImage,OrderedImage],gridSection:[9 OrderedImage]}
+}
+Locale = {
+ activities:{subtitle,title,text,span1,span2,daytime,nighttime},
+ gridSection:{subtitle,title,text,
+   title1,text1,title2,text2,title3,text3,title4,text4,title5,text5,
+   title6,text6,title7,text7,title8,text8,title9,text9,daytime,nighttime}
+}
+CSSImage = {image,width,height}
+OrderedImage = {id,order,image,width,height,
+  translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+```
+
+Yönetilen translations/media alt alanlarında eksik/fazla anahtarlar reddedilir; ek kök metaveri korunur. Bilinçli boş metin yoktur;
+boş string/yalnızca boşluk kabul edilmez. Metin 4000, alt açıklama 300 karakter;
+baştaki/sondaki geçerli boşluklar trim edilmez. Kimlik/sıra sabittir. `activities`
+medyası `daytime → nighttime`, order `0 → 1`. Metinler bu kimliklerden `daytime/nighttime`
+ve `span1/span2` ile eşleşir. Dokuz grid kartı aşağıdaki sabit kimlik sırasından
+`titleN/textN` alanlarına eşlenir; medya id/order doğrulaması geçmeden bu birleşim yapılmaz.
+Kullanıcının düz metin anahtarları yeniden düzenlenmedi.
+
+| order / id | Metin | Sabit hedef | Kategori |
+|---|---|---|---|
+| 0 sport-fitness | title1/text1 | /spor | daytime |
+| 1 kids-teen-club | title2/text2 | /kidsclub | daytime |
+| 2 water-sports | title3/text3 | /beachpools | daytime |
+| 3 beach-activities | title4/text4 | /beachpools | daytime |
+| 4 table-tennis | title5/text5 | /spor | daytime |
+| 5 water-gymnastics | title6/text6 | /beachpools | daytime |
+| 6 step-aerobics | title7/text7 | /spor | nighttime |
+| 7 stage-shows | title8/text8 | /entertainment | nighttime |
+| 8 darts-boccia | title9/text9 | /spor | daytime |
+
+Linkler veride serbest düzenlenmez; kodda izinli sabit eşlemedir. Mevcut next/link ve
+locale öneki taşımayan hedefler aynen korunur. Masaüstünde kartlar bağlantılıdır;
+mobil carousel'de bağlantı yoktur. Başlık/kategori tutarsızlığı tahminle düzeltilmedi.
+
+### Medya ve bileşen eşleşmesi
+
+| JSON kaydı | Tam URL | Bileşen |
+|---|---|---|
+| media.hero | /uploads/pages/entertainment/ent_ban.jpg | MainBannerSection, CSS; metin ve alt yok |
+| media.activities[0] | /uploads/pages/entertainment/daytime.jpg | ActivitiesSection |
+| media.activities[1] | /uploads/pages/entertainment/nighttime.jpg | ActivitiesSection |
+| media.gridSection[0] | /uploads/pages/entertainment/sport-fitness.jpg | EntertainmentTypesSection |
+| media.gridSection[1] | /uploads/pages/entertainment/kids-teen-club.jpg | EntertainmentTypesSection |
+| media.gridSection[2] | /uploads/pages/entertainment/water-sports.jpg | EntertainmentTypesSection |
+| media.gridSection[3] | /uploads/pages/entertainment/beach-activities.jpg | EntertainmentTypesSection |
+| media.gridSection[4] | /uploads/pages/entertainment/table-tennis.jpg | EntertainmentTypesSection |
+| media.gridSection[5] | /uploads/pages/entertainment/water-gymnastics.jpg | EntertainmentTypesSection |
+| media.gridSection[6] | /uploads/pages/entertainment/step-aerobics.jpg | EntertainmentTypesSection |
+| media.gridSection[7] | /uploads/pages/entertainment/stage-shows.jpg | EntertainmentTypesSection |
+| media.gridSection[8] | /uploads/pages/entertainment/darts-boccia.jpg | EntertainmentTypesSection |
+
+12 medya kullanımı, 12 mevcut dosya yolu, **10 benzersiz dosya içeriği**:
+daytime/beach-activities ve nighttime/step-aerobics bayt eşidir. Kullanıcının mevcut
+kopyaları birleştirilmedi. Tüm dosyalar aktif eski kaynaklarla bayt eşit, gerçek JPEG ve
+8 MiB / 16 milyon piksel sınırları içindedir. Yeniden kopyalama, yeniden adlandırma,
+küçültme veya kaynak silme yapılmadı. Masaüstü/mobil DOM'da grid iki kez bulunduğundan
+20 normal img + 1 CSS arka planı vardır. Ayrı galeri/video yoktur.
+
+`activities` metni ActivitiesSection'a, `gridSection` metni EntertainmentTypesSection'a
+aktarılır. Sınıflar, HTML bölüm sırası, ölçüler ve Embla ayarları değişmez. Normal
+img alt değerleri artık kullanıcının dört dildeki alt açıklamalarını kullanır.
+MainBannerSection ve ContactSection2 değiştirilmedi. Bu iki güncellenen Entertainment
+bileşeninin başka aktif tüketicisi bulunmadı; mesaj anahtarları silinmedi.
+
+### Kurulum, güvenlik ve mevcut kalıcı dosya
+
+```sh
+AZURA_CONTENT_ROOT=/persistent/content AZURA_UPLOADS_ROOT=/persistent/uploads npm run seed:entertainment
+```
+
+Kaynak `client/content/site-pages/entertainment.json`; hedef
+`${AZURA_CONTENT_ROOT}/site-pages/entertainment.json`. Görseller mevcut public/uploads'dan
+`${AZURA_UPLOADS_ROOT}/pages/entertainment/` altına yalnızca yoksa kopyalanır.
+JSON `wx`, görseller `COPYFILE_EXCL` ile oluşturulur; mevcut düzenlemeler ezilmez.
+Ardından mevcut kalıcı dosya şema ve gerçek medya dosyalarıyla doğrulanır. Eksik/geçersiz
+JSON, alan, dil, id/order, yol, dosya türü veya gerçek ölçü açık hata verir; eski statik
+veriye sessiz dönüş yoktur. Symlink ve dizin taşması kontrolleri ortaktır.
+
+İncelenen yerel ortamda ayrı AZURA_CONTENT_ROOT yapılandırması bulunmadı; geliştirme
+client/content dosyasını kullanıyor. Başka bir üretim dizinine erişilip yazılmadı.
+Eski kalıcı dosya varsa seed onu otomatik değiştirmez. Yukarıdaki üç yanlış ölçüyü
+barındırıyorsa yalnızca ilgili kaydın width/height alanları, dosyanın gerçek ölçüleriyle
+ve diğer kullanıcı alanları korunarak ayrıca geçirilmelidir. Bozuk mevcut dosyada seed
+hata verir; bu davranış test edilir. Yerel hazırlık JSON'una yapılan geçiş yalnızca bu
+üç kaydın ölçülerini değiştirdi; metin, yol ve alt değerlerine dokunmadı.
+
+### Lago uyarlaması ve kapsam dışı konular
+
+Lago EntertainmentMediaEditor.jsx ve entertainment.json salt okunur incelendi.
+Hero aynı anlamdadır. Lago `info.daytime/nighttime` alanları Azura'nın `media.activities`
+id'lerine; Lago aktiviteleri Azura'nın `media.gridSection` kartlarına otel yapılandırmasıyla
+eşlenmelidir. Hazırlanan Azura anahtarlarını bozmak için yeniden adlandırma yapılmadı.
+Lago'nun sunset/themed gibi farklı kart isimleri ve galeri bölümü Azura'ya eklenmez;
+Azura dokuz gerçek kartını korur. Kullanılmayan ActivityBackgroundSection ve LAGO SVG
+bileşenleri etkinleştirilmez.
+
+Mevcut tutarsızlıklar: Step Aerobik kartı nighttime kategorisinde; gündüz şovlarını
+anlatan stage-shows da nighttime etiketli. Mobil göstergedeki tanımsız handleJump API geçişinde mevcut Embla üzerinde
+`emblaApi?.scrollTo?.(index)` ile düzeltildi. 9 öğeye rağmen %33.3 gösterge genişliği korunur. Masaüstü
+linklerinin mobilde bulunmaması ve locale'siz URL davranışı da korundu.
+
+### Uygulanmış yönetim API sözleşmesi
+
+Tüm yöntemler `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister.
+Yanıtlar `Cache-Control: no-store` taşır. Token yapılandırılmamışsa ortak davranış 503'tür.
+
+```http
+GET /api/azura/entertainment/page-content
+Authorization: Bearer <token>
+```
+GET ve başarılı PUT yanıtında yalnızca üç alan vardır:
+```text
+{
+ "bundle": entertainment.json.translations nesnesinin tamamı,
+ "media": entertainment.json.media nesnesinin tamamı,
+ "revision": "64 karakter küçük harf hexadecimal SHA-256"
+}
+```
+Nesnelerin kesin iç içe alanları yukarıdaki şema ve mevcut entertainment.json dosyasıdır.
+Diziler aynen korunur; nesneye dönüştürülmez. PUT:
+```http
+PUT /api/azura/entertainment/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle": <dört dilin tam nesnesi>, "media": <hero ve iki mevcut medya dizisi>}
+```
+Yalnızca bu iki gövde alanı kabul edilir. Revision, doğrulanmış bundle/media'nın kanonik
+JSON SHA-256 hash'idir; kök metaveriye bağlı değildir, dosyaya yazılmaz. Ortak process
+kuyruğunda güncel dosya tekrar okunur, revision karşılaştırılır; yalnızca translations/media
+atomik güncellenir, schemaVersion/pageKey ve diğer kök alanlar korunur. Hatalı işlem
+kuyruğu kilitlemez. **Kuyruk yalnızca aynı Node.js sürecini korur**; birden çok worker/sunucu
+kurulumunda süreçler arası kilit veya transactional depolama gerekir.
+Başarılı PUT `/tr/entertainment`, `/en/entertainment`, `/de/entertainment`,
+`/ru/entertainment` yollarını yeniden doğrular.
+
+Sınırlar: 128 KiB içerik, 4000 karakter metin, 300 karakter alt açıklama. Hiçbir zorunlu
+metinde boş string istisnası yoktur; geçerli baş/son boşluklar normalleştirilmez.
+Hatalar `{error:"..."}`: 401 yetkisiz, 400 geçersiz veri/biçimsiz If-Match,
+415 yanlış Content-Type/desteklenmeyen görsel türü, 428 eksik If-Match, 409 eski revision,
+413 boyut aşımı. Başarısız içerik isteği dosyayı değiştirmez.
+
+```http
+GET /api/azura/entertainment/images
+Authorization: Bearer <token>
+```
+```json
+{"images":[{"image":"/uploads/pages/entertainment/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":2880,"height":1024,"modifiedAt":"ISO-8601 tarih"}]}
+```
+POST aynı adrese tek multipart file alanı gönderir; 201 yanıtı:
+```json
+{"image":"/uploads/pages/entertainment/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":2880,"height":1024}
+```
+Yalnızca entertainment dizinine sunucunun oluşturduğu benzersiz adla yazılır; mevcut
+ dosya ezilmez. JPEG/PNG/WebP, 8 MiB, 16 milyon piksel, gerçek tür/çözülebilirlik/ölçü,
+güvenli yol/dizin ve symlink kontrolleri ortak katmandan gelir. Önceki FileHandle.stat()
+sıfır boyut düzeltmesi ve gerçek okunan bayt doğrulaması değişmedi. 12 mevcut yol korunur;
+aynı baytlı dosyalar birleştirilmez. Yükleme JSON'u değiştirmez; yayınlamak için yol ve
+gerçek width/height içerik PUT'unda seçilir. Hero'ya translations/alt eklenemez.
+
+Üretim kalıcı dizini bu yerel ortamda yapılandırılmadı; canlı geçiş yapılmadı. Canlıya
+kurulumda AZURA_CONTENT_ROOT/AZURA_UPLOADS_ROOT ve ayrı servis tokenı yapılandırılmalı,
+`npm run seed:entertainment` çalıştırılmalı; eski ölçülü mevcut dosya varsa yukarıdaki
+kontrollü ölçü geçişi ayrıca uygulanmalıdır. Seed mevcut içeriği ezmez.
+
+Eklenenler: veri ezmeyen seed, birim/HTTP testleri ve izole build betiği. Değişenler:
+kullanıcının JSON'unda üç ölçü kaydı, storage'da kesin kök doğrulaması, content girişinde
+son satır sonu, aktif page.js ve iki sayfa bileşeninin props bağlantısı, salt okunur medya
+izin listesi, package.json komutları ve README. .DS_Store kullanıcı değişikliği korunur.
+Gerçek tarayıcı/piksel testi yapılmadı; gerçek kullanıcı verisine test yazılmadı.
+
+Doğrulama sonucu: Entertainment birim testleri **7/7**, izole production HTTP **1/1**
+başarılı. Dört dilde kullanıcı metinleri, 12 URL'nin baytları, 20 img sırası/altları,
+masaüstü linkleri, dinamik dosya değişikliği ve restart sonrası kalıcılık doğrulandı.
+İlk veri dönüşümü aşamasında yönetim page-content/images uçları 404 idi; sonraki API geçişinde etkinleştirildi. Bars ve Kids Club dört dilde HTTP 200 verdi.
+Eski ölçülü kalıcı dosyanın seed ile ezilmediği ayrı testte doğrulandı.
+Next.js **15.5.26** izole production build, lint ve git diff --check başarılı.
+Ortak medya/Bars/Kids Club/restoran regresyonları **26/27**; tek eski başarısızlık
+restoran Almanca mainRestaurant.list2 metnindeki ` hetheth` farkıdır. Kullanıcı içeriği
+bu farkı gidermek için değiştirilmedi. Üç değişen JSX dosyasının className ifadeleri
+HEAD ile eşit; kullanıcı translations nesnesi işlem öncesi kopyasıyla birebir eşittir.
+
+### Entertainment API geçişi sonuçları
+
+Eklenen route'lar: `app/api/azura/entertainment/page-content/route.js` ve
+`images/route.js`; ortak handler fabrikalarını kullanır. Kullanıcının mevcut
+revision/read/write yardımcıları yeniden oluşturulmadı. Storage'da ek kök metaveriyi
+korumak için kök alan kısıtlaması Bars/Kids Club ile uyumlu hâle getirildi; yönetilen
+translations/media şeması değişmedi. Ortak medya dosyasına yalnızca sabit entertainment
+kapsam sarmalayıcıları eklendi. EntertainmentTypesSection yalnızca güvenli handleJump
+fonksiyonu aldı; filtreleme olmayan aynı dokuz slayt/gösterge dizisi kullanılır.
+
+Test ekleri: entertainment-api-http ve entertainment-indicator; storage'da kanonik
+revision/kök alan koruma testi; önceki HTTP testi artık yetkisiz yönetim isteklerinde
+401 bekler. package.json ve izole production betiği Entertainment, Bars, Kids Club
+HTTP paketlerini çalıştırır. Başlangıç JSON, dosya adları ve görseller bu API aşamasında
+değiştirilmedi. Önceden mevcut çalışma ağacı değişiklikleri ve .DS_Store korundu.
+
+Son doğrulama: Entertainment birim/bileşen **9/9**; production HTTP Entertainment
+**2/2**, Bars **2/2**, Kids Club **2/2** başarılı. Yetki, 400/401/409/413/415/428,
+paralel 200/409, değişmeyen hata dosyası, kök metaveri, CSS/normal şema ayrımı,
+kimlik/sıra/sayı/gerçek ölçü, symlink ve başka sayfa yolu, 12 kayıtlı görselin dolu
+listesi/URL'leri, yükleme sonrası 13 kayıt, içerikte seçim, dört dilde yayın ve restart
+sonrası aynı içerik/revision doğrulandı. Mobil test gerçek JSX'i derler; Embla
+viewport'undaki dokuz kart kimliğini ve dokuz göstergenin indekslerini eşleştirir,
+API hazır değilken hata olmadığını doğrular. Gerçek tarayıcı/piksel testi değildir.
+
+Ortak medya/Bars/Kids Club/restoran birim regresyonları **28/29**; tek eski başarısızlık
+Almanca restoran `mainRestaurant.list2` alanındaki ` hetheth` metin farkıdır.
+Next.js **15.5.26** izole production build, lint ve git diff --check başarılı.
+Canlı üretim dizini bu ortamda yapılandırılmadı; canlı geçiş/commit/deploy yapılmadı.

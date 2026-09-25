@@ -1,0 +1,409 @@
+{
+    "schemaVersion": 1,
+  "pageKey": "entertainment",
+  "translations": {
+    "tr":{
+        "activities":{
+            "subtitle": "Eğlence & Aktiviteler",
+             "title": "Sınırsız Eğlence ve Aktiviteler",
+             "text": "Azura Deluxe Resort & Spa, her yaştan misafirimiz için bitmeyen eğlence fırsatları sunar. Günlük havuz aktiviteleri, heyecanlı canlı gösteriler, fitness seansları, su aerobiği, dart, boccia ve çok daha fazlasının tadını çıkarın. Profesyonel animasyon ekibimiz, konaklamanızın her anını unutulmaz kılacak eğlence vaat eder.",
+             "span1": "Heyecan Verici Deneyim",
+             "span2": "Unutulmaz Deneyim",
+             "daytime": "Gündüz Aktiviteleri",
+             "nighttime": "Gece Eğlencesi"
+},
+        "gridSection":{
+            "subtitle": "Eğlence & Aktiviteler",
+      "title": "Etkinlikler her gün düzenlenir",
+      "text": "Azura Deluxe Resort & Spa, canlı gösteriler, özel akşam şovları, diskolar, boccia, plaj voleybolu, masa tenisi, dart, havuz oyunları, aerobik ve su jimnastiği gibi çeşitli aktiviteler sunarak sizi unutulmaz eğlence ve spor deneyimleriyle ağırlamaya hazır.",
+      "title1": "Sport & Fitness",
+      "text1": "Azura Deluxe Resort & Spa’da tatiliniz boyunca formda ve enerjik kalın. Tam donanımlı fitness merkezimizden yararlanın, canlandırıcı aerobik seanslarına, su jimnastiğine, plaj voleybolu maçlarına, boccia oyunlarına, dart ve havuz aktivitelerine katılarak tatilinizi zenginleştirin.",
+      "title2": "Çocuk & Genç Kulübü",
+      "text2": "Azura Deluxe Resort & Spa, küçük misafirlerimiz için sonsuz eğlence sunar! Özel tasarlanmış Çocuk Kulübü’ımızda denetimli günlük aktiviteler, oyun alanları, mini diskolar ve 4–12 yaş çocuklara yönelik yaratıcı etkinlikler sizi bekliyor. Gençler de güvenli ve samimi ortamda oyunlar ve sosyal aktivitelerle yeni arkadaşlar edinebilir.",
+      "title3": "Su Sporları",
+      "text3": "Azura Deluxe Resort & Spa’da heyecan dolu su sporları deneyimi yaşayın. Maceralı jet ski turlarından parasailing, muz botu gezilerine kadar çeşit çeşit aktiviteyle Akdeniz’in masmavi sularında unutulmaz anlar sizi bekliyor.",
+      "title4": "Plaj Aktiviteleri",
+      "text4": "Güzel özel plajımızda plaj voleybolu, boccia, dart, çeşitli oyunlar ve rahatlatıcı sahil eğlenceleriyle sonsuz eğlence sizi bekliyor. Akdeniz’in ışıltılı sularının kıyısında güneş altında renkli aktivitelerle günlerinizi unutulmaz kılın.",
+      "title5": "Masa Tenisi",
+      "text5": "Azura Deluxe Resort & Spa’da heyecan verici masa tenisi karşılaşmalarıyla rekabet ve eğlence bir arada. Her seviyeye uygun bu aktivite, gününüzü aktif ve keyifli geçirmenin harika bir yoludur.",
+      "title6": "Su Jimnastiği",
+      "text6": "Azura Deluxe Resort & Spa’da enerjik su jimnastiği seanslarıyla bedeninizi ve zihninizi yenileyin. Profesyonel eğitmenlerimiz eşliğinde havuzda yapılan bu antrenmanlar, tatilinizde formda kalmanızı ve eğlenmenizi sağlar.",
+      "title7": "Step Aerobik",
+      "text7": "Enerjik step aerobik seanslarımıza katılarak vücudunuzu canlandırın, modunuzu yükseltin ve eğlenceli bir grup antrenmanı deneyimi yaşayın.",
+      "title8": "Sahne Şovları",
+      "text8": "Azura Deluxe Resort & Spa’da gündüz sahne şovları ile büyülenin. Canlı performanslar, etkileşimli eğlenceler ve profesyonel gösterilerle dolu etkinliklerimiz, tüm yaşlardaki misafirlerimize unutulmaz anlar vaat eder.",
+      "title9": "Dart & Boccia",
+      "text9": "Becerilerinizi test edin ve dostça rekabetin tadını çıkarın. Dart ve boccia oyunları, konaklamanız süresince sosyalleşme ve eğlence sunar.",
+      "daytime": "GÜNDÜZ AKTİVİTELERİ",
+      "nighttime": "GECE ETKİNLİKLERİ"
+    }
+    },
+
+    "en":{
+        "activities":{
+            "subtitle":"Entertainment & Activities",
+      "title": "Unlimited Fun and Activities",
+      "text":" Azura Deluxe Resort & Spa offers endless entertainment opportunities for guests of all ages. Enjoy daily pool activities, exciting live performances, fitness sessions, water aerobics, darts, boccia, and much more. Our professional animation team ensures unforgettable fun, making every moment of your stay delightful.",
+      "span1":"Exciting Experience",
+      "span2":"Unforgettable Experience",
+      "daytime":"Daytime Activities",
+      "nighttime":"Nighttime Entertainment"
+        },
+
+        "gridSection":{
+             "subtitle":"Entertainment & Activities",
+        "title": "Events are held daily",
+        "text":"Azura Deluxe Resort & Spa, which offers a variety of activities such as live performances, special evening shows, discos, boccia, beach volleyball, table tennis, darts, pool games, aerobics, and water gymnastics, is ready to welcome you with unforgettable entertainment and sporting experiences.",
+
+        "title1": "Sport & Fitness",
+        "text1":"Stay active and energized throughout your vacation at Azura Deluxe Resort & Spa. Take advantage of our fully-equipped fitness center, participate in invigorating aerobics sessions, water gymnastics, beach volleyball matches, boccia games, darts, and various pool activities, all designed to enhance your holiday experience.",
+
+        "title2": "Kids & Teen Club",
+        "text2":"Azura Deluxe Resort & Spa offers endless fun and entertainment for our young guests! Our specially designed Kids Club provides supervised daily activities, games, playgrounds, mini discos, and creative events tailored for children aged 4 to 12. Teens can also enjoy social activities, games, and opportunities to make new friends in a safe and welcoming environment.",
+
+        "title3": "Water Sports",
+        "text3":"Experience thrilling moments with exciting water sports at Azura Deluxe Resort & Spa. Enjoy a variety of activities, from adventurous jet-ski rides to parasailing, banana boat rides, and more, all offering unforgettable fun and adventure on the crystal-clear waters of the Mediterranean Sea.",
+        
+        "title4": "Beach Activities",
+        "text4":" Enjoy endless fun on our beautiful private beach with a variety of exciting activities, including beach volleyball, boccia, darts, games, and relaxing beachside entertainment. Make your days memorable by joining vibrant activities under the sun, right by the sparkling waters of the Mediterranean Sea.",
+
+        "title5": "Table Tennis",
+        "text5":"Enjoy competitive fun with exciting table tennis matches at Azura Deluxe Resort & Spa. Ideal for players of all levels, it's a great way to spend your daytime hours, stay active, and have fun with family or friends",
+
+        "title6": "Water Gymnastics",
+        "text6":"Refresh your body and mind with energetic water gymnastics sessions at Azura Deluxe Resort & Spa. Join our professional instructors for enjoyable workouts in the pool, ideal for staying fit and having fun during your holiday.",
+
+        "title7": "Step Aerobics",
+        "text7":"Join our energetic step aerobics sessions led by professional instructors at Azura Deluxe Resort & Spa. Energize your body, boost your mood, and enjoy a fun group workout experience during your vacation.",
+
+        "title8": "Stage Shows",
+        "text8":"Experience captivating daytime stage shows at Azura Deluxe Resort & Spa. Featuring lively performances, interactive entertainment, and professional shows, our daytime activities promise endless fun and memorable moments for guests of all ages.",
+
+        "title9": "Darts & Boccia",
+        "text9":"Test your skills and enjoy friendly competitions with darts and boccia games at Azura Deluxe Resort & Spa. Perfect for guests of all ages, these activities provide entertainment, socializing, and lots of fun throughout your stay.",
+
+        "daytime":"DAYTIME ACTIVITIES",
+        "nighttime":"NIGHTTIME ACTIVITIES"
+        }
+    },
+
+    "de":{
+        "activities":{
+            "subtitle": "Unterhaltung & Aktivitäten",
+    "title": "Unbegrenzter Spaß und Aktivitäten",
+    "text": "Das Azura Deluxe Resort & Spa bietet endlose Unterhaltungsmöglichkeiten für Gäste jeden Alters. Genießen Sie tägliche Pool‑Aktivitäten, spannende Live‑Shows, Fitness‑Kurse, Wasseraerobic, Dart, Boccia und vieles mehr. Unser professionelles Animationsteam sorgt für unvergesslichen Spaß und macht jeden Moment Ihres Aufenthalts zum Vergnügen.",
+    "span1": "Spannendes Erlebnis",
+    "span2": "Unvergessliches Erlebnis",
+    "daytime": "Tagesaktivitäten",
+    "nighttime": "Abendunterhaltung"
+        },
+        "gridSection":{
+             "subtitle": "Unterhaltung & Aktivitäten",
+      "title": "Tägliche Veranstaltungen",
+      "text": "Das Azura Deluxe Resort & Spa lädt Sie zu einer Vielzahl von Aktivitäten ein – von Live‑Shows und speziellen Abendveranstaltungen über Discos, Boccia und Beachvolleyball bis hin zu Tischtennis, Dart, Pool‑Spielen, Aerobic und Wassergymnastik. Erleben Sie unvergessliche Unterhaltungs‑ und Sporterlebnisse.",
+      "title1": "Sport & Fitness",
+      "text1": "Bleiben Sie während Ihres Urlaubs aktiv und voller Energie. Nutzen Sie unser komplett ausgestattetes Fitnesscenter, nehmen Sie an belebenden Aerobic‑Einheiten, Wassergymnastik, Beachvolleyball‑Matches, Boccia‑Spielen, Dart und diversen Pool‑Aktivitäten teil – alles für ein bereicherndes Urlaubserlebnis.",
+      "title2": "Kinder- & Jugendclub",
+      "text2": "Spaß und Unterhaltung für unsere jungen Gäste! Unser speziell gestalteter Kids‑Club bietet betreute Tagesaktivitäten, Spiele, Spielplätze, Mini‑Discos und kreative Events für 4‑ bis 12‑Jährige. Teens genießen soziale Aktivitäten, Spiele und neue Freundschaften in sicherer, einladender Umgebung.",
+      "title3": "Wassersport",
+      "text3": "Erleben Sie aufregende Wassersportarten im Azura Deluxe Resort & Spa. Von abenteuerlichen Jetski‑Fahrten über Parasailing und Bananenboot bis hin zu vielem mehr – unvergesslicher Spaß auf den kristallklaren Gewässern des Mittelmeers.",
+      "title4": "Strandaktivitäten",
+      "text4": "Endloser Spaß am privaten Sandstrand mit Beachvolleyball, Boccia, Dart, Spielen und entspannender Unterhaltung. Erleben Sie lebhafte Aktivitäten unter der Sonne, direkt am funkelnden Wasser.",
+      "title5": "Tischtennis",
+      "text5": "Genießen Sie aufregende Tischtennismatches. Ideal für Spieler aller Niveaus – eine großartige Möglichkeit, den Tag aktiv und unterhaltsam mit Familie oder Freunden zu verbringen.",
+      "title6": "Wassergymnastik",
+      "text6": "Erfrischen Sie Körper und Geist mit energiegeladenen Wassergymnastik‑Kursen. Professionelle Trainer begleiten Sie bei unterhaltsamen Workouts im Pool für Fitness und Spaß.",
+      "title7": "Step‑Aerobic",
+      "text7": "Nehmen Sie an unseren energiegeladenen Step‑Aerobic‑Kursen teil, geleitet von professionellen Trainern. Aktivieren Sie Ihren Körper, steigern Sie Ihre Stimmung und genießen Sie ein spaßiges Gruppenworkout.",
+      "title8": "Bühnenshows",
+      "text8": "Fesselnde Bühnenshows am Tag: Lebendige Darbietungen, interaktive Unterhaltung und professionelle Shows versprechen endlosen Spaß für alle.",
+      "title9": "Dart & Boccia",
+      "text9": "Testen Sie Ihre Fähigkeiten in Dart und Boccia. Perfekt für alle Altersgruppen – Unterhaltung, Geselligkeit und Spaß garantiert.",
+      "daytime": "TAGESAKTIVITÄTEN",
+      "nighttime": "ABENDUNTERHALTUNG"
+        }
+    },
+
+    "ru":{
+        "activities":{
+            "subtitle": "Развлечения & Активности",
+    "title": "Неограниченное веселье и активности",
+    "text": "Azura Deluxe Resort & Spa предлагает бесконечные возможности для развлечений всех возрастов. Ежедневные занятия у бассейна, захватывающие живые выступления, фитнес‑сессии, водная аэробика, дартс, бочче и многое другое. Наша профессиональная команда анимации гарантирует незабываемое веселье, делая каждый момент вашего отдыха особенным.",
+    "span1": "Захватывающий опыт",
+    "span2": "Незабываемый опыт",
+    "daytime": "Дневные активности",
+    "nighttime": "Вечерние развлечения"
+        },
+        "gridSection":{
+            "subtitle": "Развлечения & Активности",
+      "title": "Мероприятия проходят ежедневно",
+      "text": "Azura Deluxe Resort & Spa предлагает разнообразные активности: живые шоу, специальные вечерние представления, дискотеки, бочче, пляжный волейбол, настольный теннис, дартс, игры у бассейна, аэробику и водную гимнастику. Приглашаем вас на незабываемые развлечения и спортивные впечатления.",
+      "title1": "Спорт & Фитнес",
+      "text1": "Оставайтесь активными и полными энергии во время отдыха. Пользуйтесь нашим оснащённым фитнес‑центром, участвуйте в бодрящих аэробных занятиях, водной гимнастике, пляжном волейболе, бочче, дартсе и различных играх у бассейна — все для яркого отдыха.",
+      "title2": "Кидс & Тин Клуб",
+      "text2": "Веселье и развлечения для наших юных гостей! Детский клуб предлагает контролируемые дневные занятия, игры, площадки, мини‑дискотеки и творческие мероприятия для 4–12 лет. Подростки могут участвовать в социальных активностях, играх и находить новых друзей в безопасной обстановке.",
+      "title3": "Водные виды спорта",
+      "text3": "Испытайте острые ощущения от водных видов спорта: джет‑ски, парасейлинг, катание на банане и многое другое на кристально чистой воде Средиземного моря.",
+      "title4": "Пляжные активности",
+      "text4": "На частном пляже вас ждут волейбол, бочче, дартс, игры и расслабляющие развлечения у моря. Яркие активности под солнцем у мерцающей воды подарят незабываемые моменты.",
+      "title5": "Настольный теннис",
+      "text5": "Соревнуйтесь в настольном теннисе! Идеально для всех уровней — активный и весёлый отдых с семьёй или друзьями.",
+      "title6": "Водная гимнастика",
+      "text6": "Освежите тело и дух водной гимнастикой под руководством профессиональных инструкторов. Идеально для поддержания формы и весёлого настроения.",
+      "title7": "Степ‑аэробика",
+      "text7": "Энергичные занятия степ‑аэробикой с профессионалами. Зарядитесь энергией, поднимите настроение и получите удовольствие от групповой тренировки.",
+      "title8": "Сценические шоу",
+      "text8": "Дневные сценические шоу с живыми выступлениями, интерактивными представлениями и профессиональной постановкой обещают бесконечное веселье для всех.",
+      "title9": "Дартс & Бочче",
+      "text9": "Проверьте меткость в дартсе и бочче. Отличный способ развлечься, познакомиться и весело провести время.",
+      "daytime": "ДНЕВНЫЕ АКТИВНОСТИ",
+      "nighttime": "ВЕЧЕРНИЕ РАЗВЛЕЧЕНИЯ"
+        }
+    }
+  },
+
+    "media": {
+    "hero": {
+      "image": "/uploads/pages/entertainment/ent_ban.jpg",
+      "width": 2880,
+      "height": 1024
+    },
+
+     "activities": [
+    {
+      "id": "daytime",
+      "order": 0,
+      "image": "/uploads/pages/entertainment/daytime.jpg",
+      "width": 1076,
+      "height": 1200,
+      "translations": {
+        "tr": {
+          "alt": "Gündüz aktiviteleri"
+        },
+        "en": {
+          "alt": "Daytime activities"
+        },
+        "de": {
+          "alt": "Tagesaktivitäten"
+        },
+        "ru": {
+          "alt": "Дневные активности"
+        }
+      }
+    },
+    {
+      "id": "nighttime",
+      "order": 1,
+      "image": "/uploads/pages/entertainment/nighttime.jpg",
+      "width": 1080,
+      "height": 1200,
+      "translations": {
+        "tr": {
+          "alt": "Gece eğlencesi"
+        },
+        "en": {
+          "alt": "Nighttime entertainment"
+        },
+        "de": {
+          "alt": "Abendunterhaltung"
+        },
+        "ru": {
+          "alt": "Вечерние развлечения"
+        }
+      }
+    }
+  ],
+
+  "gridSection": [
+    {
+      "id": "sport-fitness",
+      "order": 0,
+      "image": "/uploads/pages/entertainment/sport-fitness.jpg",
+     "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Sport ve fitness"
+        },
+        "en": {
+          "alt": "Sport and fitness"
+        },
+        "de": {
+          "alt": "Sport und Fitness"
+        },
+        "ru": {
+          "alt": "Спорт и фитнес"
+        }
+      }
+    },
+    {
+      "id": "kids-teen-club",
+      "order": 1,
+      "image": "/uploads/pages/entertainment/kids-teen-club.jpg",
+      "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Çocuk ve genç kulübü"
+        },
+        "en": {
+          "alt": "Kids and teen club"
+        },
+        "de": {
+          "alt": "Kinder- und Jugendclub"
+        },
+        "ru": {
+          "alt": "Детский и подростковый клуб"
+        }
+      }
+    },
+    {
+      "id": "water-sports",
+      "order": 2,
+      "image": "/uploads/pages/entertainment/water-sports.jpg",
+      "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Su sporları"
+        },
+        "en": {
+          "alt": "Water sports"
+        },
+        "de": {
+          "alt": "Wassersport"
+        },
+        "ru": {
+          "alt": "Водные виды спорта"
+        }
+      }
+    },
+    {
+      "id": "beach-activities",
+      "order": 3,
+      "image": "/uploads/pages/entertainment/beach-activities.jpg",
+     "width": 1076,
+      "height": 1200,
+      "translations": {
+        "tr": {
+          "alt": "Plaj aktiviteleri"
+        },
+        "en": {
+          "alt": "Beach activities"
+        },
+        "de": {
+          "alt": "Strandaktivitäten"
+        },
+        "ru": {
+          "alt": "Пляжные активности"
+        }
+      }
+    },
+    {
+      "id": "table-tennis",
+      "order": 4,
+      "image": "/uploads/pages/entertainment/table-tennis.jpg",
+     "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Masa tenisi"
+        },
+        "en": {
+          "alt": "Table tennis"
+        },
+        "de": {
+          "alt": "Tischtennis"
+        },
+        "ru": {
+          "alt": "Настольный теннис"
+        }
+      }
+    },
+    {
+      "id": "water-gymnastics",
+      "order": 5,
+      "image": "/uploads/pages/entertainment/water-gymnastics.jpg",
+      "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Su jimnastiği"
+        },
+        "en": {
+          "alt": "Water gymnastics"
+        },
+        "de": {
+          "alt": "Wassergymnastik"
+        },
+        "ru": {
+          "alt": "Водная гимнастика"
+        }
+      }
+    },
+    {
+      "id": "step-aerobics",
+      "order": 6,
+      "image": "/uploads/pages/entertainment/step-aerobics.jpg",
+      "width": 1080,
+      "height": 1200,
+      "translations": {
+        "tr": {
+          "alt": "Step aerobik"
+        },
+        "en": {
+          "alt": "Step aerobics"
+        },
+        "de": {
+          "alt": "Step-Aerobic"
+        },
+        "ru": {
+          "alt": "Степ-аэробика"
+        }
+      }
+    },
+    {
+      "id": "stage-shows",
+      "order": 7,
+      "image": "/uploads/pages/entertainment/stage-shows.jpg",
+      "width": 699,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Sahne şovları"
+        },
+        "en": {
+          "alt": "Stage shows"
+        },
+        "de": {
+          "alt": "Bühnenshows"
+        },
+        "ru": {
+          "alt": "Сценические шоу"
+        }
+      }
+    },
+    {
+      "id": "darts-boccia",
+      "order": 8,
+      "image": "/uploads/pages/entertainment/darts-boccia.jpg",
+      "width": 698,
+      "height": 760,
+      "translations": {
+        "tr": {
+          "alt": "Dart ve boccia"
+        },
+        "en": {
+          "alt": "Darts and boccia"
+        },
+        "de": {
+          "alt": "Dart und Boccia"
+        },
+        "ru": {
+          "alt": "Дартс и бочче"
+        }
+      }
+    }
+  ]
+  }
+}

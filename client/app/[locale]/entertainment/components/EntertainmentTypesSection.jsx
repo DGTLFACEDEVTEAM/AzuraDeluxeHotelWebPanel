@@ -2,87 +2,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from 'next/image'
-import fitness from "../images/FITNESSCENTER.jpg"
-import kids from "../images/kids3.jpg"
-import water from "../images/5042.jpg"
-import beachvoley from "../../gallery/images/entertainment/1.jpg"
-import tennis from "../images/kids4.jpg"
-import cinema from "../images/kids1.jpg"
-import sunset from "../../gallery/images/entertainment/2.jpg"
-import stage from "../images/kids2.jpg"
-import themed from "../../gallery/images/entertainment/2150407949.jpg"
 import Link from 'next/link'
-import {useTranslations} from 'next-intl';
 
-const EntertainmentTypesSection = () => {
-  const t = useTranslations('Entertainment.GridSection');
-
-  const activities = [
-    {
-      title: t("title1"),
-      category: t("daytime"),
-      description: t("text1"),
-      image: fitness,
-      link:"/spor"
-    },
-    {
-      title: t("title2"),
-      category: t("daytime"),
-      description: t("text2"),
-      image: kids,
-      link:"/kidsclub"
-    },
-    {
-      title: t("title3"),
-      category: t("daytime"),
-      description: t("text3"),
-      image: water,
-      link:"/beachpools"
-    },
-    {
-      title: t("title4"),
-      category: t("daytime"),
-      description: t("text4"),
-      image: beachvoley,
-      link:"/beachpools"
-    },
-    {
-      title: t("title5"),
-      category: t("daytime"),
-      description: t("text5"),
-      image: tennis,
-      link:"/spor"
-    },
-    {
-      title: t("title6"),
-      category: t("daytime"),
-      description: t("text6"),
-      image: cinema,
-      link:"/beachpools"
-    },
-    {
-      title: t("title7"),
-      category: t("nighttime"),
-      description: t("text7"),
-      image: sunset,
-      link:"/spor"
-    },
-    {
-      title: t("title8"),
-      category: t("nighttime"),
-      description: t("text8"),
-      image: stage,
-      link:"/entertainment"
-    },
-    {
-      title: t("title9"),
-      category: t("daytime"),
-      description: t("text9"),
-      image: themed,
-      link:"/spor"
-    }
-  ];
-
+const EntertainmentTypesSection = ({ texts, cards }) => {
+  const activities = cards;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({  loop: true,
     align: "start",
@@ -90,6 +13,10 @@ const EntertainmentTypesSection = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
     
+  const handleJump = useCallback((index) => {
+    emblaApi?.scrollTo?.(index);
+  }, [emblaApi]);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi && emblaApi.scrollPrev) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -114,21 +41,21 @@ const EntertainmentTypesSection = () => {
         {/* Başlık Bölümü */}
         <div className="flex flex-col items-start justify-center text-start gap-[15px] md:gap-[25px] lg:gap-[35px] text-black font-jost">
           <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
-          {t("subtitle")}
+          {texts.subtitle}
           </span>
           <h3 className="text-[28px] md:text-[32px] lg:text-[48px] font-normal font-marcellus leading-[120%] lg:leading-[57.6px] lg:capsizedText2">
-          {t("title")}
+          {texts.title}
           </h3>
           <p className="text-[16px] font-normal leading-[24px] lg:w-[65%] lg:capsizedText4 w-[98%] md:w-[80%]">
-          {t("text")}
+          {texts.text}
           </p>
         </div>
         {/* Dinamik Kartlar */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 w-full items-center justify-center gap-[31px]">
           {activities.map((activity, index) => (
-            <div key={index} className="flex flex-col items-center justify-center relative mb-[180px]">
+            <div key={activity.id} className="flex flex-col items-center justify-center relative mb-[180px]">
               <div className="w-full flex flex-col items-center justify-end cursor-pointer">
-                <Image src={activity.image} width={activity.image.width} height={activity.image.height} className="flex w-full" alt='activity'/>
+                <Image src={activity.img} width={activity.img.width} height={activity.img.height} className="flex w-full" alt={activity.img.alt}/>
                 <div className="absolute flex flex-col items-start justify-center bg-white gap-[25px] font-jost text-black w-[90%] p-[20px] -bottom-44">
                   <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
                     {activity.category}
@@ -152,15 +79,15 @@ const EntertainmentTypesSection = () => {
           <div className="flex items-start justify-start w-full">
             {activities.map((activity,index) => (
               <div
-                key={index}
+                key={activity.id}
                 className="flex-[0_0_auto] h-[415px] md:h-[390px] lg:h-[390px] min-w-0 mr-[1.5%]"
               >
                 <div className="flex flex-col relative w-full items-center text-start justify-center gap-[15px] lg:gap-[20px] font-jost text-black ">
                   <Image
-                    src={activity.image}
-                    alt={activity.title}
-                    width={activity.image.width}
-                    height={activity.image.height}
+                    src={activity.img}
+                    alt={activity.img.alt}
+                    width={activity.img.width}
+                    height={activity.img.height}
                      className="flex h-[300px] md:h-[400px] w-auto md:w-full"
                   />
                   <div className="absolute flex flex-col items-start justify-center bg-white gap-[25px] font-jost text-black w-[90%] p-[20px] -bottom-32">

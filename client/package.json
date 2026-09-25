@@ -35,7 +35,11 @@
     "seed:bars": "node scripts/seed-persistent-bars.mjs",
     "test:bars": "node --test lib/azura-bars-storage.test.mjs lib/azura-bars-indicator.test.mjs",
     "test:bars-http": "node --test --test-concurrency=1 lib/azura-bars-http.test.mjs lib/azura-bars-api-http.test.mjs",
-    "test:bars-production": "node scripts/test-bars-production.mjs"
+    "test:bars-production": "node scripts/test-bars-production.mjs",
+    "seed:entertainment": "node scripts/seed-persistent-entertainment.mjs",
+    "test:entertainment": "node --test lib/azura-entertainment-storage.test.mjs lib/azura-entertainment-indicator.test.mjs",
+    "test:entertainment-http": "node --test --test-concurrency=1 lib/azura-entertainment-http.test.mjs lib/azura-entertainment-api-http.test.mjs",
+    "test:entertainment-production": "node scripts/test-entertainment-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",
