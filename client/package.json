@@ -31,7 +31,11 @@
     "seed:kidsclub": "node scripts/seed-persistent-kidsclub.mjs",
     "test:kidsclub": "node --test lib/azura-kidsclub-storage.test.mjs lib/azura-kidsclub-indicator.test.mjs",
     "test:kidsclub-http": "node --test --test-concurrency=1 lib/azura-kidsclub-http.test.mjs lib/azura-kidsclub-api-http.test.mjs",
-    "test:kidsclub-production": "node scripts/test-kidsclub-production.mjs"
+    "test:kidsclub-production": "node scripts/test-kidsclub-production.mjs",
+    "seed:bars": "node scripts/seed-persistent-bars.mjs",
+    "test:bars": "node --test lib/azura-bars-storage.test.mjs lib/azura-bars-indicator.test.mjs",
+    "test:bars-http": "node --test --test-concurrency=1 lib/azura-bars-http.test.mjs lib/azura-bars-api-http.test.mjs",
+    "test:bars-production": "node scripts/test-bars-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

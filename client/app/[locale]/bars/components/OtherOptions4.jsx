@@ -25,7 +25,7 @@ const OtherOptionSlide = ({ room }) => (
     <div className="flex flex-col w-full items-start justify-center gap-[15px] md:gap-[25px] font-jost text-black">
       <Image 
         src={room.img} 
-        alt={room.title} 
+        alt={room.img.alt ?? room.title}
         width={room.img.width} 
         height={room.img.height}
         className="object-cover"
@@ -50,6 +50,10 @@ const OtherOptions4 = ({ span, header, text, images }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
     
+  const handleJump = useCallback((index) => {
+    emblaApi?.scrollTo?.(index);
+  }, [emblaApi]);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi && emblaApi.scrollPrev) emblaApi.scrollPrev();
   }, [emblaApi]);

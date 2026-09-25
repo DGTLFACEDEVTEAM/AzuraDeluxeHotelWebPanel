@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "bars",
+  "translations": {
+    "tr": {
+      "hero": {
+        "subtitle": "ÖZEL İÇECEK DENEYİMLERİ",
+        "title": "Barlar",
+        "text": "Azura Deluxe Resort & Spa’nın barlarında seçkin içecek çeşitleri ve şık atmosferler keşfedin. Ustalıkla hazırlanmış kokteyllerden premium uluslararası içeceklere, rahatlatıcı bitki çaylarından taze demlenmiş kahvelere kadar her anınıza uygun lezzet seçenekleri sunuyoruz."
+      },
+      "culinaryInfo": {
+        "subtitle": "Mükemmel İçecek Deneyimleri",
+        "title": "Seçkin Barlar",
+        "text": "Azura Deluxe Resort & Spa’nın şık barlarında tatilinizi bir üst düzeye taşıyın. Ustalıkla hazırlanmış kokteyller, premium uluslararası içecekler veya taze demlenmiş çay ve kahvelerle rahatlayın. Her bar, dinlenmek, sosyalleşmek veya özel anları kutlamak için mükemmel bir atmosfer sunar."
+      },
+      "featureBackgrounds": {
+        "bars": {
+          "subtitle": "EŞSİZ BİR TAD ZİYAFETİ",
+          "title": "Serinleyin ve Rahatlayın",
+          "text": "Özenle tasarlanmış barlarımızda dinlenip yenilenin. Şık ortamlarda çeşitli ferahlatıcı içecekler, ustaca hazırlanmış kokteyller ve premium içecekler sunuyoruz; günün her anında rahatlamak için ideal."
+        }
+      },
+      "bars": {
+        "subtitle": "Mükemmel İçecek Deneyimleri",
+        "title": "Barlar",
+        "text": "Azura Deluxe Resort & Spa’nın davetkar barlarında keyifli içecek deneyimlerinin tadını çıkarın. Ferahlatıcı kokteyller, premium içkiler, uluslararası içecekler ve rahatlatıcı ikramlar sizleri bekliyor. Her anı şıklık ve zerafetle yaşayın.",
+        "cards": {
+          "lobbyPiano": {
+            "subtitle": "Mart, Nisan, Ekim: 10:00–00:00Mayıs–Eylül: 24 Saat",
+            "title": "Lobby Piyano Barı",
+            "text": "Lobby Piyano Barı’nda uzmanlıkla hazırlanmış kokteyller, premium içecekler ve lezzetli ikramlarla rahatlayın ve sosyalleşin. Zarif bir atmosferde keyifli sohbetlerin tadını çıkarın."
+          },
+          "chacha": {
+            "subtitle": "Saat: 10:00–00:00",
+            "title": "Cha Cha Pool Bar",
+            "text": "Havuz kenarında hareketli Cha Cha Pool Bar’ımızda serinletici kokteyller, soğuk içecekler ve lezzetli atıştırmalıkların tadını çıkarın. Güneş altında veya yıldızlar altında unutulmaz anılar biriktirin."
+          },
+          "pier": {
+            "subtitle": "Saat: 10:00–18:00",
+            "title": "Pier Bar",
+            "text": "Pier Bar’ımızda deniz kenarında ferahlatıcı molanın keyfini çıkarın. Lezzetli kokteyller, soğuk içecekler ve atıştırmalıklar muhteşem manzara eşliğinde sunulur."
+          },
+          "lyricSnack": {
+            "subtitle": "Saat: 12.00-16.00",
+            "title": "Lyric Snack Bar",
+            "text": "Sahildeki Lyric Snack Bar’da ızgara çeşitleri, pide, döner, hamburger, salata ve taze meyve sunuluyor; belirli saatlerde dondurma köşesi de ziyafetinize eşlik ediyor. Deniz manzarası eşliğinde keyifli atıştırmalıklar sizi bekliyor."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "EŞSİZ BİR LEZZET ŞÖLENİ",
+        "title": "En Güzel Restoranlarımızı Keşfedin",
+        "text": "Azura Deluxe Resort & Spa’da olağanüstü gastronomik deneyimlere davetlisiniz. Restoranlarımız, özgün Türk spesiyalitelerinden Akdeniz lezzetlerine ve uluslararası gurme sunumlara kadar geniş bir yelpaze sunar; her biri unutulmaz tat anları için özenle hazırlanır."
+      }
+    },
+    "en": {
+      "hero": {
+        "subtitle": "EXCLUSIVE DRINK EXPERIENCES",
+        "title": "Bars",
+        "text": "Discover an exceptional variety of beverages and stylish atmospheres at Azura Deluxe Resort & Spa's bars. From expertly crafted cocktails and premium international drinks to relaxing herbal teas and freshly brewed coffee, we offer delightful options perfect for every moment of your stay."
+      },
+      "culinaryInfo": {
+        "subtitle": "Perfect Beverage Experiences",
+        "title": "Exceptional Bars",
+        "text": "At Azura Deluxe Resort & Spa, elevate your vacation experience at our stylish bars. Sip expertly crafted cocktails, enjoy premium international beverages, or unwind with freshly brewed coffees and teas. Each bar offers a unique atmosphere perfect for relaxing, socializing, or celebrating special moments"
+      },
+      "featureBackgrounds": {
+        "bars": {
+          "subtitle": " A UNIQUE FEAST OF TASTE",
+          "title": " Cool Down and Relax",
+          "text": "Relax and refresh yourself at our carefully designed bars. Enjoy a variety of refreshing beverages, expertly crafted cocktails, and premium drinks in stylish settings, perfect for unwinding at any moment of your day"
+        }
+      },
+      "bars": {
+        "subtitle": "Perfect Beverage Experiences",
+        "title": "Bars",
+        "text": "Indulge in delightful beverage experiences at Azura Deluxe Resort & Spa's inviting bars. Savor refreshing cocktails, premium spirits, international drinks, and soothing beverages prepared by our skilled bartenders. Enjoy each moment with style and sophistication.",
+        "cards": {
+          "lobbyPiano": {
+            "subtitle": "March, April, October: 10:00 – 00:00 May – September: 24 Hours ",
+            "title": "Lobby Piano Bar",
+            "text": "Relax and socialize in our elegant Lobby Piano Bar, the perfect spot to unwind with expertly prepared cocktails, premium beverages, and delightful refreshments. Enjoy pleasant conversations in a sophisticated ambiance"
+          },
+          "chacha": {
+            "subtitle": "HOURS: 10:00 – 00:00 ",
+            "title": "Cha Cha Pool Bar",
+            "text": "Relax poolside at our vibrant Cha Cha Pool Bar, serving refreshing cocktails, chilled beverages, and delightful snacks. Enjoy your favorite drinks under the sun or beneath the stars, creating memorable moments throughout the day."
+          },
+          "pier": {
+            "subtitle": "HOURS: 10:00 – 18:00 ",
+            "title": "Pier Bar",
+            "text": "Enjoy a refreshing seaside break at our Pier Bar, where delicious cocktails, cold beverages, and delightful snacks are served with stunning sea views. The perfect spot to relax and recharge while savoring the beauty of the Mediterranean."
+          },
+          "lyricSnack": {
+            "subtitle": "HOURS:12.00-16.00 ",
+            "title": "Lyric Snack Bar",
+            "text": "At Lyric Snack Bar by the beach, enjoy grilled specialties, pita, doner, burgers, salads, and fresh fruits, along with an ice-cream corner at select hours. Perfect for a seaside snack with panoramic views."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "A UNIQUE FEAST OF TASTE",
+        "title": "Discover Our Finest Restaurants",
+        "text": "Embark on a delightful culinary journey at Azura Deluxe Resort & Spa, featuring exceptional dining experiences. Our restaurants offer a diverse array of flavors, ranging from authentic Turkish specialties and Mediterranean delicacies to international gourmet dishes, each crafted by expert chefs dedicated to creating memorable moments for your taste buds."
+      }
+    },
+    "de": {
+      "hero": {
+        "subtitle": "Exklusive Getränkeerlebnisse",
+        "title": "Bars",
+        "text": "Entdecken Sie eine außergewöhnliche Vielfalt an Getränken und stilvollen Atmosphären in den Bars des Azura Deluxe Resort & Spa. Von meisterhaft zubereiteten Cocktails und hochwertigen internationalen Drinks bis zu beruhigenden Kräutertees und frisch gebrühtem Kaffee – wir bieten köstliche Optionen für jeden Moment Ihres Aufenthalts."
+      },
+      "culinaryInfo": {
+        "subtitle": "Perfekte Getränkeerlebnisse",
+        "title": "Außergewöhnliche Bars",
+        "text": "Im Azura Deluxe Resort & Spa heben Sie Ihr Urlaubserlebnis in unseren stilvollen Bars auf ein neues Level. Genießen Sie meisterhaft zubereitete Cocktails, Premium-Getränke oder entspannen Sie bei frisch gebrühtem Kaffee und Tee. Jede Bar bietet eine einzigartige Atmosphäre zum Entspannen, Kontakte knüpfen oder Feiern."
+      },
+      "featureBackgrounds": {
+        "bars": {
+          "subtitle": "Einzigartiger Geschmacksgenuss",
+          "title": "Abkühlen und Entspannen",
+          "text": "Entspannen und erfrischen Sie sich in unseren liebevoll gestalteten Bars. Genießen Sie eine Auswahl an erfrischenden Getränken, meisterhaft zubereiteten Cocktails und Premium-Drinks in stilvollem Ambiente – ideal für jede Entspannungspause."
+        }
+      },
+      "bars": {
+        "subtitle": "Perfekte Getränkeerlebnisse",
+        "title": "Bars",
+        "text": "Erleben Sie genussvolle Getränkemomente in den einladenden Bars des Azura Deluxe Resort & Spa. Kosten Sie erfrischende Cocktails, Premium-Spirituosen, internationale Drinks und beruhigende Getränke, die unsere erfahrenen Barkeeper kreieren. Genießen Sie jeden Moment mit Stil und Eleganz.",
+        "cards": {
+          "lobbyPiano": {
+            "subtitle": "März, April, Oktober: 10:00–00:00 Mai–September: 24 Stunden",
+            "title": "Lobby Piano Bar",
+            "text": "Entspannen und netzwerken Sie in unserer eleganten Lobby Piano Bar – der perfekte Ort für meisterhafte Cocktails, hochwertige Drinks und genussvolle Momente in stilvollem Ambiente."
+          },
+          "chacha": {
+            "subtitle": "Öffnungszeit: 10:00–00:00",
+            "title": "Cha Cha Pool Bar",
+            "text": "Relaxen Sie am Pool in der lebhaften Cha Cha Pool Bar mit erfrischenden Cocktails, gekühlten Getränken und leckeren Snacks. Genießen Sie Ihre Lieblingsdrinks unter der Sonne oder unter den Sternen."
+          },
+          "pier": {
+            "subtitle": "Öffnungszeit: 10:00–18:00",
+            "title": "Pier Bar",
+            "text": "Genießen Sie eine erfrischende Auszeit an unserer Pier Bar mit köstlichen Cocktails, kalten Getränken und leichten Snacks vor der atemberaubenden Meereskulisse."
+          },
+          "lyricSnack": {
+            "subtitle": "Öffnungszeit: 12.00-16.00",
+            "title": "Lyric Snack Bar",
+            "text": "Die Lyric Snack Bar am Strand bietet Grillgerichte, Pita, Döner, Burger, Salate und frische Früchte sowie eine Eistheke zu bestimmten Zeiten. Genießen Sie einen Snack mit Meerblick."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "Einzigartiger Geschmacksgenuss",
+        "title": "Entdecken Sie unsere besten Restaurants",
+        "text": "Tauchen Sie ein in kulinarische Vielfalt im Azura Deluxe Resort & Spa. Unsere Restaurants bieten von authentischen türkischen Spezialitäten und mediterranen Delikatessen bis hin zu internationalen Gourmetkreationen die perfekte Auswahl für unvergessliche Genussmomente."
+      }
+    },
+    "ru": {
+      "hero": {
+        "subtitle": "Эксклюзивные напитки",
+        "title": "Бары",
+        "text": "Откройте для себя исключительное разнообразие напитков и стильные интерьеры в барах Azura Deluxe Resort & Spa. От искусно приготовленных коктейлей и первоклассных международных напитков до расслабляющих травяных чаев и свежесваренного кофе — у нас найдется идеальное предложение для любого момента вашего отдыха."
+      },
+      "culinaryInfo": {
+        "subtitle": "Идеальные напитки",
+        "title": "Исключительные бары",
+        "text": "В Azura Deluxe Resort & Spa поднимите впечатления от отпуска в наших стильных барах на новый уровень. Попробуйте искусно приготовленные коктейли, насладитесь первоклассными напитками или расслабьтесь с чашкой свежесваренного кофе и чая. Каждый бар предлагает уникальную атмосферу для отдыха, общения или празднования."
+      },
+      "featureBackgrounds": {
+        "bars": {
+          "subtitle": "Уникальный праздник вкуса",
+          "title": "Охладитесь и расслабьтесь",
+          "text": "Расслабьтесь и освежитесь в наших тщательно оформленных барах. Наслаждайтесь разнообразием освежающих напитков, искусно приготовленных коктейлей и премиальных напитков в стильной обстановке — идеальное место для отдыха в любой момент дня."
+        }
+      },
+      "bars": {
+        "subtitle": "Идеальные напитки",
+        "title": "Бары",
+        "text": "Погрузитесь в восхитительные напитки в уютных барах Azura Deluxe Resort & Spa. Наслаждайтесь освежающими коктейлями, первоклассными спиртными напитками и международными элегантными напитками, созданными нашими опытными барменами. Получайте удовольствие от каждого момента с изяществом и стилем.",
+        "cards": {
+          "lobbyPiano": {
+            "subtitle": "Март, апрель, октябрь: 10:00–00:00 Май–сентябрь: круглосуточно",
+            "title": "Lobby Piano Bar",
+            "text": "Расслабьтесь и пообщайтесь в нашей элегантной Lobby Piano Bar — идеальном месте для отдыха с искусно приготовленными коктейлями, премиальными напитками и изысканными угощениями."
+          },
+          "chacha": {
+            "subtitle": "Часы работы: 10:00–00:00",
+            "title": "Cha Cha Pool Bar",
+            "text": "Отдохните у бассейна в ярком Cha Cha Pool Bar, где подают освежающие коктейли, прохладительные напитки и вкусные закуски. Наслаждайтесь любимыми напитками под солнцем или под звездами."
+          },
+          "pier": {
+            "subtitle": "Часы работы: 10:00–18:00",
+            "title": "Pier Bar",
+            "text": "Отведайте освежающую паузу в Pier Bar у моря с вкусными коктейлями, холодными напитками и лёгкими закусками на фоне захватывающего вида на море."
+          },
+          "lyricSnack": {
+            "subtitle": "Часы работы: 12.00-16.00",
+            "title": "Lyric Snack Bar",
+            "text": "В Lyric Snack Bar на пляже подают блюда на гриле, пита, донер, бургеры, салаты и свежие фрукты, а также мороженое в определённые часы. Идеальное место для перекуса с видом на море."
+          }
+        }
+      },
+      "discover": {
+        "subtitle": "Уникальный праздник вкуса",
+        "title": "Откройте наши лучшие рестораны",
+        "text": "Отправьтесь в восхитительное кулинарное путешествие в Azura Deluxe Resort & Spa. Наши рестораны предлагают разнообразие блюд — от аутентичных турецких специалитетов и средиземноморских деликатесов до международных гурманских шедевров, созданных опытными шеф‑поварами для незабываемых гастрономических моментов."
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/bars/hero.jpg",
+      "width": 2048,
+      "height": 1365
+    },
+    "culinaryInfo": {
+      "primary": {
+        "image": "/uploads/pages/bars/intro-primary.png",
+        "width": 600,
+        "height": 900,
+        "translations": {
+          "tr": {
+            "alt": "Seçkin Barlar"
+          },
+          "en": {
+            "alt": "Exceptional Bars"
+          },
+          "de": {
+            "alt": "Außergewöhnliche Bars"
+          },
+          "ru": {
+            "alt": "Исключительные бары"
+          }
+        }
+      },
+      "secondary": {
+        "image": "/uploads/pages/bars/intro-secondary.png",
+        "width": 600,
+        "height": 900,
+        "translations": {
+          "tr": {
+            "alt": "Seçkin Barlar"
+          },
+          "en": {
+            "alt": "Exceptional Bars"
+          },
+          "de": {
+            "alt": "Außergewöhnliche Bars"
+          },
+          "ru": {
+            "alt": "Исключительные бары"
+          }
+        }
+      }
+    },
+    "featureBackgrounds": {
+      "bars": {
+        "image": "/uploads/pages/bars/bars-background.png",
+        "width": 2048,
+        "height": 637
+      }
+    },
+    "bars": {
+      "lobbyPiano": {
+        "id": "lobbyPiano",
+        "order": 0,
+        "image": "/uploads/pages/bars/lobby-piano.png",
+        "width": 504,
+        "height": 466,
+        "translations": {
+          "tr": {
+            "alt": "Lobby Piyano Barı"
+          },
+          "en": {
+            "alt": "Lobby Piano Bar"
+          },
+          "de": {
+            "alt": "Lobby Piano Bar"
+          },
+          "ru": {
+            "alt": "Lobby Piano Bar"
+          }
+        }
+      },
+      "chacha": {
+        "id": "chacha",
+        "order": 1,
+        "image": "/uploads/pages/bars/chacha.png",
+        "width": 512,
+        "height": 466,
+        "translations": {
+          "tr": {
+            "alt": "Cha Cha Pool Bar"
+          },
+          "en": {
+            "alt": "Cha Cha Pool Bar"
+          },
+          "de": {
+            "alt": "Cha Cha Pool Bar"
+          },
+          "ru": {
+            "alt": "Cha Cha Pool Bar"
+          }
+        }
+      },
+      "pier": {
+        "id": "pier",
+        "order": 2,
+        "image": "/uploads/pages/bars/pier.png",
+        "width": 508,
+        "height": 466,
+        "translations": {
+          "tr": {
+            "alt": "Pier Bar"
+          },
+          "en": {
+            "alt": "Pier Bar"
+          },
+          "de": {
+            "alt": "Pier Bar"
+          },
+          "ru": {
+            "alt": "Pier Bar"
+          }
+        }
+      },
+      "lyricSnack": {
+        "id": "lyricSnack",
+        "order": 3,
+        "image": "/uploads/pages/bars/lyric-snack.png",
+        "width": 502,
+        "height": 466,
+        "translations": {
+          "tr": {
+            "alt": "Lyric Snack Bar"
+          },
+          "en": {
+            "alt": "Lyric Snack Bar"
+          },
+          "de": {
+            "alt": "Lyric Snack Bar"
+          },
+          "ru": {
+            "alt": "Lyric Snack Bar"
+          }
+        }
+      }
+    },
+    "discover": {
+      "image": "/uploads/pages/bars/discover.jpg",
+      "width": 2160,
+      "height": 1440
+    }
+  }
+}

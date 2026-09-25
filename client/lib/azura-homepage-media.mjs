@@ -264,3 +264,10 @@ export async function saveKidsClubImage(bytes, mimeType, paths = resolveAzuraPat
 export async function listKidsClubImages(paths = resolveAzuraPaths()) {
   return listPageImages("kidsclub", paths);
 }
+
+export async function saveBarsImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("bars", bytes, mimeType, paths, idFactory);
+}
+export async function listBarsImages(paths = resolveAzuraPaths()) {
+  return listPageImages("bars", paths);
+}

@@ -1637,3 +1637,239 @@ Next.js **15.5.26** izole production build, lint ve `git diff --check` başarıl
 About/restoran/ortak medya testleri **18/19**; yalnızca yukarıda belgelenen eski Almanca
 restoran metin eşliği hatası sürer. FileHandle.stat() regresyon testi geçti.
 Gerçek kullanıcı içerikleri testlerde kullanılmadı; yalnızca geçici kopyalar güncellendi.
+
+## Azura Barlar: kalıcı içerik ve yönetim API’leri
+
+Gerçek liste route'u `app/[locale]/bars/page.js`; `i18n/routing.js` içinde bars için
+özel yerelleştirilmiş pathname yoktur. Adresler `/tr/bars`, `/en/bars`, `/de/bars`,
+`/ru/bars` olarak kalır. Azura'nın **Restoranlar ve Kafeler / Barlar** ayrımı korunur;
+Lago'nun **Restoranlar / Barlar ve Kafeler** ayrımı Azura'ya uygulanmaz.
+
+Önce: `messages/<locale>.json` içindeki `Bars` metinleri ve statik importlar.
+Şimdi: server-only `azura-bars-content.js` → ortak doğrulama yardımcılarını kullanan
+`azura-bars-storage.mjs` → kalıcı `site-pages/bars.json` → seçili dilde bileşen props'ları.
+Sayfa `force-dynamic` ile her istekte güncel içeriği okur. Panel bağlandığında site
+panelden veri çekmeyecek; yönetim API’si kalıcı dosyayı değiştirecek, site aynı okuyucuyu kullanacak.
+
+### Kesin JSON şeması ve görünür alanlar
+
+```text
+{
+ schemaVersion: 1,
+ pageKey: "bars",
+ translations: {
+  tr|en|de|ru: {
+   hero: {subtitle,title,text},
+   culinaryInfo: {subtitle,title,text},
+   featureBackgrounds: {bars:{subtitle,title,text}},
+   bars: {subtitle,title,text,cards:{
+    lobbyPiano:{subtitle,title,text},
+    chacha:{subtitle,title,text},
+    pier:{subtitle,title,text},
+    lyricSnack:{subtitle,title,text}
+   }},
+   discover: {subtitle,title,text}
+  }
+ },
+ media: {
+  hero: CSSImage,
+  culinaryInfo: {primary:Image,secondary:Image},
+  featureBackgrounds: {bars:CSSImage},
+  bars: {lobbyPiano:OrderedImage,chacha:OrderedImage,pier:OrderedImage,lyricSnack:OrderedImage},
+  discover: CSSImage
+ }
+}
+CSSImage = {image,width,height}
+Image = {image,width,height,translations:{tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+OrderedImage = {id,order,...Image}
+```
+
+Dört dilin hepsi zorunludur. Görünür kaynak alanlarında boş değer yoktur; mevcut
+baştaki/sondaki boşluklar aynen korunur. Zorunlu metinler boş/yalnızca boşluk olamaz;
+metin en fazla 4000, alt metin 300 karakterdir. Kontrol karakterleri reddedilir.
+Bölüm alt anahtarları kesin doğrulanır; kafe veya yeni bölüm eklenemez. Kök gelecekteki
+metaveri alanlarına izin verir. Kartların sırası `lobbyPiano → chacha → pier → lyricSnack`,
+`order: 0…3`; `id/order` medya kart kayıtlarının üst seviyesindedir. Metinler aynı
+anahtarla eşleşir. Bağlantılar JSON'da düzenlenemez.
+
+| Bileşen | Metin | Medya |
+|---|---|---|
+| BannerDark | hero | hero |
+| ClinaryInfoSection | culinaryInfo | primary/secondary; DOM'da secondary önce |
+| BackgroundSection | featureBackgrounds.bars | featureBackgrounds.bars |
+| OtherOptions4 | bars ve bars.cards | bars.<kart kimliği> |
+| DiscoverBackground | discover | discover |
+| ContactSection2 | Değişmedi | Değişmedi |
+
+### Tam medya yolları
+
+| JSON nesne yolu | Kalıcı URL | Mevcut kaynak (`app/[locale]/` altında) |
+|---|---|---|
+| media.hero | /uploads/pages/bars/hero.jpg | bars/images/Banner.jpg |
+| media.culinaryInfo.primary | /uploads/pages/bars/intro-primary.png | bars/images/blok2.png |
+| media.culinaryInfo.secondary | /uploads/pages/bars/intro-secondary.png | bars/images/blok22.png |
+| media.featureBackgrounds.bars | /uploads/pages/bars/bars-background.png | bars/images/POOL.png |
+| media.bars.lobbyPiano | /uploads/pages/bars/lobby-piano.png | bars/images/PIANOBAR.png |
+| media.bars.chacha | /uploads/pages/bars/chacha.png | bars/images/Chacha.png |
+| media.bars.pier | /uploads/pages/bars/pier.png | bars/images/Pierbar.png |
+| media.bars.lyricSnack | /uploads/pages/bars/lyric-snack.png | bars/images/discobar.png |
+| media.discover | /uploads/pages/bars/discover.jpg | restaurants/orchestrarestaurant/images/orchestra3.jpg |
+
+**9 medya kaydı / 9 benzersiz dosya**, 6 normal img + 3 CSS arka planı.
+Bütün kopyalar bayt eşidir; orijinaller korunur. Hero/background/discover CSS kullandığı
+ için alt metin içermez. Diğer alt metinler mevcut yerelleştirilmiş bölüm/kart başlıklarından
+alınır. Gerçek ölçüler JSON'da tutulur; sunum ölçüleri/sınıfları değişmez.
+Restoran klasöründeki orchestra3.jpg **önceden de Barlar keşif bölümünde kullanılıyordu**;
+restoran liste sayfasından yeni bir bölüm veya içerik taşınmadı.
+
+### Kurulum ve güvenlik
+
+```sh
+AZURA_CONTENT_ROOT=/persistent/content AZURA_UPLOADS_ROOT=/persistent/uploads npm run seed:bars
+```
+
+Hedef JSON `${AZURA_CONTENT_ROOT}/site-pages/bars.json`; görseller
+`${AZURA_UPLOADS_ROOT}/pages/bars/`. Seed `wx` ve `COPYFILE_EXCL` kullanır: mevcut JSON
+ve görsellerin üzerine yazmaz. Sonrasında mevcut kalıcı içeriği doğrular; bozuk mevcut
+kaydı sessizce seed ile değiştirmez. Varsayılan geliştirme kaynakları client/content ve
+client/public/uploads'dır. Üretimde mevcut Azura ortam değişkenleri kullanılmalıdır.
+
+Eksik/geçersiz JSON, dil, alan, kimlik/sıra, dosya yolu veya bulunamayan görsel açık hata
+üretir. Yalnızca bars kapsamındaki gerçek JPEG/PNG/WebP, 8 MiB / 16 milyon piksel,
+gerçek ölçü eşliği ve güvenli dosya/dizin/symlink kontrolleri kullanılır. Ortak medya
+sunumuna yalnızca salt okunur `bars` kapsamı eklendi; önceki gerçek bayt kontrolü korunur.
+
+### Korunan tutarsızlıklar / kapsam dışı
+
+- Lyric Snack Bar başlığı/metni `discobar.png` ile eşleşiyordu; aynı eşleşme korundu.
+- Kartların eski hedefleri kodda sırasıyla `/bars/lobby-piano-bar`,
+  `/bars/chacha-pool-bar`, `/bars/pier-bar`, `/bars/pier-bar` olarak korunur.
+  OtherOptions4 bunları render etmiyordu; bağlantılar etkinleştirilmedi.
+- BackgroundSection ve DiscoverBackground düğmeleri yorum satırında kalır.
+  Görünmeyen buttonText alanları JSON'a alınmadı; mesaj anahtarları silinmedi.
+- Keşif bölümü restoranları anlatır ve `link="/bars"` alır; bağlantı görünmez.
+  Başlık/metin/görsel değiştirilmedi.
+- Türkçe ilk kartın saat metnindeki `00:00Mayıs` birleşikliği ve diğer yazımlar korunur.
+- OtherOptions4 mobil göstergesindeki tanımsız handleJump çağrısı API geçişinde
+  mevcut Embla örneğinde `emblaApi?.scrollTo?.(index)` ile düzeltildi. Kart sırası,
+  sınıflar, animasyon ve masaüstü davranışı değişmedi.
+- Kullanılmayan BarCarouselSection ve kullanılmayan sabit İngilizce backgroundTexts2
+  başlangıç verisine alınmadı. Aktif listede video veya ayrı galeri yoktur.
+- Bar detay sayfaları, restoran sayfası ve ContactSection2 değiştirilmedi.
+  Ortak OtherOptions4 yalnızca `room.img.alt ?? room.title` desteği aldı;
+  üç bar detayındaki eski alt metin davranışı korunur.
+
+### Lago formu ve uygulanmış yönetim sözleşmesi
+
+Lago `BarCafesMediaEditor.jsx`, panel kayıt tablosu ve `content/site-pages/barcafes.json`
+salt okunur incelendi. Anlamca eşleşen `hero`, `culinaryInfo.primary/secondary`,
+`featureBackgrounds.bars`, `bars` ve `discover` isimleri kullanıldı. Otel yapılandırması
+Azura için `pageKey: bars`, dört farklı kart kimliği, CSS alt ayrımı ve gerçek ölçüleri
+kullanmalıdır. Lago'nun cafes, featureBackgrounds.cafes ve sekiz görsellik carousel alanları
+Azura'da yoktur; forma sahte veri veya ek alan olarak zorunlu kılınmamalıdır.
+
+Her iki API mevcut `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` başlığını ister;
+yanıtlar `Cache-Control: no-store` kullanır. Token yapılandırılmamışsa mevcut ortak davranış 503'tür.
+
+```http
+GET /api/azura/bars/page-content
+Authorization: Bearer <token>
+```
+GET ve başarılı PUT tam olarak `{bundle,media,revision}` döndürür:
+- `bundle`: yukarıdaki `translations` nesnesinin dört dilde tamamı.
+- `media`: yukarıdaki dokuz medya kaydının tamamı.
+- `revision`: doğrulanmış bundle/media'nın kanonik JSON içeriğinden üretilen
+  64 karakter küçük harf hexadecimal SHA-256; JSON dosyasına yazılmaz.
+
+```http
+PUT /api/azura/bars/page-content
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+
+{"bundle": <dört dilin tüm metin nesneleri>, "media": <dokuz medya kaydının tamamı>}
+```
+Gövde yalnızca bundle/media kabul eder. Tam başlangıç nesneleri `content/site-pages/bars.json`
+içindedir; translations alanı istek/yanıtta bundle adıyla taşınır. schemaVersion/pageKey veya
+revision PUT gövdesine eklenemez. **Hiçbir zorunlu metinde boş string istisnası yoktur**;
+baştaki/sondaki geçerli boşluklar trim edilmeden korunur. Metin 4000, alt açıklama 300
+karakter, içerik gövdesi 128 KiB ile sınırlıdır.
+
+Hatalar `{error:"..."}` biçiminde: 401 yetkisiz, 400 geçersiz veri/biçimsiz If-Match,
+415 yanlış Content-Type/desteklenmeyen görsel türü, 428 eksik If-Match, 409 eski revision,
+413 boyut aşımı. Başarısız içerik isteği dosyayı değiştirmez.
+
+`enqueuePageWrite` ortak kuyruğunda dosya yeniden okunur, revision kontrol edilir;
+yalnızca translations/media güncellenip diğer kök alanlar korunarak atomik kaydedilir.
+Kök metaveri revision'a katılmaz. Başarısız işlem kuyruğu kilitlemez.
+**Kuyruk yalnızca aynı Node.js sürecini korur**; çok süreç/çok sunucu için süreçler arası
+kilit veya transactional depolama gerekir. Başarılı PUT `/tr/bars`, `/en/bars`, `/de/bars`,
+`/ru/bars` yollarını yeniden doğrular; dinamik okuma güncel kalıcı dosyayı gösterir.
+
+```http
+GET /api/azura/bars/images
+Authorization: Bearer <token>
+```
+```json
+{"images":[{"image":"/uploads/pages/bars/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":2048,"height":1365,"modifiedAt":"ISO-8601 tarih"}]}
+```
+POST aynı adrese tek multipart `file` alanı kabul eder. Başarı kodu 201:
+```json
+{"image":"/uploads/pages/bars/<sunucu-adı>.jpg","mimeType":"image/jpeg","size":123,"width":2048,"height":1365}
+```
+Sadece `/uploads/pages/bars/` altında benzersiz sunucu adıyla dosya oluşturulur; var olan
+ dosya ezilmez. JPEG/PNG/WebP, 8 MiB/16 milyon piksel, gerçek tür/ölçü/çözülebilirlik,
+güvenli dizin ve symlink kontrolleri ortaktır. FileHandle.stat() sıfır boyut sorununun
+düzeltmesi ve gerçek okunan bayt doğrulaması değiştirilmedi. Yükleme bars.json'u değiştirmez;
+yayınlamak için yol/gerçek width/height içerik PUT'unda seçilmelidir. CSS kayıtları alt metinsiz kalır.
+
+Eklenenler: bars.json, dokuz uploads kopyası, azura-bars-storage.mjs,
+azura-bars-content.js, seed-persistent-bars.mjs, birim/HTTP testleri ve izole production
+betiği. Değişenler: aktif bars/page.js, OtherOptions4 alt desteği, salt okunur medya
+route izin listesi, package.json komutları ve README. Yönetim route’ları sonraki API geçişinde eklendi.
+
+Test komutları: `npm run test:bars`, `npm run test:bars-production`, `npm run lint`.
+Testler gerçek kullanıcı verisine yazmaz; ayrı geçici içerik/uploads ve build dizinleri
+kullanır. Gerçek tarayıcı, hover veya piksel karşılaştırması yapılmadı.
+
+Bu geçişin sonuçları: Barlar birim/bileşen testleri **7/7**, izole production HTTP
+**1/1** başarılı. Dört dilin gerçek `/bars` yolları, bütün görünür metinler, altı normal
+görselin sırası/alt metni, üç CSS arka planı, dokuz görsel URL'sinin baytları, gizli kart
+bağlantıları, canlı JSON değişikliği ve restart sonrası kalıcılık kontrol edildi.
+Restoran listesi ve üç bar detay sayfası dört dilde HTTP 200 verdi. OtherOptions4'ün
+eski title alt davranışı ve yeni yerelleştirilmiş alt desteği bileşen testinde doğrulandı.
+Next.js **15.5.26** izole production build, lint ve `git diff --check` başarılı.
+Sayfa ve OtherOptions4 className ifadeleri HEAD ile aynıdır.
+
+Ortak medya + restoran regresyonları **12/13**: tek mevcut başarısızlık restoran Almanca
+`mainRestaurant.list2` metnindeki ` hetheth` ekinin mesaj dosyasıyla eşleşmemesidir.
+Bunu gidermek için içerik değiştirilmedi. İlk Barlar HTTP denemesindeki URL kodlama
+karşılaştırması test hatası düzeltildi; son çalışmada yeni başarısızlık yoktur.
+
+### Barlar API geçişi: dosyalar ve doğrulama
+
+Bu aşamada eklenen route'lar `app/api/azura/bars/page-content/route.js` ve
+`images/route.js` olup ortak handler fabrikalarını kullanır. `azura-bars-storage.mjs`
+kanonik revision ve ortak kuyrukta atomik yazma ile genişletildi;
+`azura-homepage-media.mjs` yalnızca sabit bars kapsamlı listeleme/yükleme sarmalayıcıları aldı.
+OtherOptions4'e güvenli gösterge fonksiyonu eklendi. Başlangıç JSON/görseller, restoran
+sayfası, bar detay sayfaları ve ContactSection2 bu API aşamasında değiştirilmedi.
+
+Test ekleri: `azura-bars-api-http.test.mjs`, `azura-bars-indicator.test.mjs`, mevcut
+storage testindeki kanonik revision/kök alan koruma testi. package.json ve izole
+production betiği Barlar + Kids Club + Beach & Pools HTTP paketlerini çalıştırır.
+OtherOptions4'ün liste dışındaki tüketicileri lobby-piano-bar, chacha-pool-bar ve pier-bar;
+bu sayfalar dört dilde HTTP regresyon kapsamındadır.
+
+Son sonuçlar: Barlar birim/bileşen **9/9**; izole production HTTP Barlar **2/2**,
+Kids Club **2/2**, Beach & Pools **2/2** başarılı. Yetki, 400/401/409/413/415/428,
+eksik/fazla alanlar, CSS/normal ayrımı, yanlış yol/gerçek ölçü/symlink, paralel 200/409,
+hatalı kayıtta dosyanın korunması, kök metaveri, yükleme/listeleme/seçme, dört dilde
+yayın ve restart sonrası aynı içerik/revision test edildi. Dokuz geçerli görsel listelenir;
+yükleme sonrası on kayıt vardır. Gerçek kullanıcı verisine test yazılmadı.
+
+Ortak medya, Kids Club, Beach & Pools ve restoran birim regresyonları **26/27**:
+tek eski başarısızlık yukarıdaki Almanca restoran `hetheth` metin farkıdır. Yeni hata yok.
+Next.js **15.5.26** izole production build, lint ve git diff --check başarılı.
+Gösterge testi gerçek JSX'i derleyip dört tıklamanın doğru scrollTo indekslerini ve
+Embla hazır değilken güvenli davranışı doğrular; gerçek tarayıcı/piksel testi yapılmadı.
