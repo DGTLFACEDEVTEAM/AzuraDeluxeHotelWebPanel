@@ -13,7 +13,7 @@ const locales = ["tr", "en", "de", "ru"];
 
 async function startServer(port, paths) {
   const child = spawn(process.execPath,
-    ["node_modules/next/dist/bin/next", "start", "-H", "127.0.0.1", "-p", String(port)], {
+    ["node_modules/next/dist/bin/next", "start", "-H", "localhost", "-p", String(port)], {
       cwd: appRoot,
       env: { ...process.env, AZURA_CONTENT_ROOT: paths.contentRoot,
         AZURA_UPLOADS_ROOT: paths.uploadsRoot, AZURA_PANEL_SERVICE_TOKEN: token },
@@ -22,7 +22,7 @@ async function startServer(port, paths) {
   let output = "";
   child.stdout.on("data", (chunk) => { output += chunk; });
   child.stderr.on("data", (chunk) => { output += chunk; });
-  const base = `http://127.0.0.1:${port}`;
+  const base = `http://localhost:${port}`;
   for (let i = 0; i < 100; i++) {
     if (child.exitCode !== null) throw new Error(`Next başlatılamadı: ${output}`);
     try {
@@ -74,6 +74,14 @@ test("canlı production background API ve dört dilde güncel yayın", { timeout
   const listed = await fetch(`${base}/api/azura/homepage/images`, { headers: auth });
   assert.equal(listed.status, 200);
   assert.ok(JSON.stringify(await listed.json()).includes(initial.section.image));
+  const escapeHtml = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#x27;");
+  for (const locale of locales) {
+    const response = await fetch(`${base}/${locale}/connect`);
+    assert.equal(response.status, 200, `${locale} connect başlangıç`);
+    const html = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
+    for (const value of Object.values(initial.section.translations[locale])) assert.ok(html.includes(escapeHtml(value)));
+    assert.ok(html.includes(initial.section.image));
+  }
   const put = (section, ifMatch, extra = {}) => fetch(url, {
     method: "PUT", headers: { ...auth, "Content-Type": "application/json", ...(ifMatch ? { "If-Match": ifMatch } : {}) },
     body: JSON.stringify({ section, ...extra }),
@@ -112,11 +120,13 @@ test("canlı production background API ve dört dilde güncel yayın", { timeout
   assert.deepEqual(current.sections.background, changed);
   assert.deepEqual(current.sections.accommodation, seed.sections.accommodation);
   for (const locale of locales) {
-    const page = await fetch(`${base}/${locale}`);
+    for (const suffix of ["", "/connect"]) {
+    const page = await fetch(`${base}/${locale}${suffix}`);
     assert.equal(page.status, 200);
     const html = await page.text();
     assert.ok(html.includes(`Azura ${locale} nature marker`), `${locale} anasayfasında yeni başlık yok`);
     assert.ok(html.includes(uploadedImage), `${locale} anasayfasında yeni arka plan yok`);
+    }
   }
   assert.equal((await fetch(`${base}${uploadedImage}`)).status, 200);
 });

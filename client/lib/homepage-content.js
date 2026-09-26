@@ -1,6 +1,6 @@
 import "server-only";
 
-import { LOCALES, readHomepageContent } from "./azura-homepage-storage.mjs";
+import { LOCALES, readHomepageContent, readHomepageSection } from "./azura-homepage-storage.mjs";
 import { contactEmailHref, contactPhoneHref, readSharedContactDetails } from "./azura-shared-contact-storage.mjs";
 
 const CAROUSEL_LINKS = Object.freeze({
@@ -92,4 +92,13 @@ export async function readHomepageExperience(locale) {
       ...details.translations[locale],
     },
   };
+}
+
+// Shared background section used by /connect; no dependency on shared contact data.
+export async function readHomepageBackground(locale) {
+  if (!LOCALES.includes(locale)) {
+    throw new Error(`Azura homepage için desteklenmeyen dil: ${locale}`);
+  }
+  const { section } = await readHomepageSection("background");
+  return { image: section.image, ...section.translations[locale] };
 }
