@@ -1,0 +1,2044 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    {
+      "id": "general",
+      "images": [
+        {
+          "id": "general-001",
+          "src": "/uploads/gallery/image-4-88ff1f7447c4.jpg",
+          "width": 1288,
+          "height": 1865,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-002",
+          "src": "/uploads/gallery/image-25-a866734fe72b.jpg",
+          "width": 1288,
+          "height": 1044,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-003",
+          "src": "/uploads/gallery/image-6-9df9eaada2ed.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-004",
+          "src": "/uploads/gallery/image-28-13e7fdfe48ad.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-005",
+          "src": "/uploads/gallery/image-19-bed2e59531df.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-006",
+          "src": "/uploads/gallery/image-22-55347dd7ad37.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-007",
+          "src": "/uploads/gallery/image-11-a06da9deaa30.jpg",
+          "width": 1288,
+          "height": 1124,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-008",
+          "src": "/uploads/gallery/image-13-f8b183e9c8e9.jpg",
+          "width": 1288,
+          "height": 1152,
+          "order": 7,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-009",
+          "src": "/uploads/gallery/image-5-b93de6f530a7.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 8,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-010",
+          "src": "/uploads/gallery/image-1-c5b4aef9a425.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 9,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-011",
+          "src": "/uploads/gallery/image-7-356198074bea.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 10,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-012",
+          "src": "/uploads/gallery/image-16-35323f806f29.jpg",
+          "width": 1280,
+          "height": 1216,
+          "order": 11,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-013",
+          "src": "/uploads/gallery/image-10-3d19cd2c9585.jpg",
+          "width": 1288,
+          "height": 1933,
+          "order": 12,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-014",
+          "src": "/uploads/gallery/image-20-42509fe709da.jpg",
+          "width": 1288,
+          "height": 1916,
+          "order": 13,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-015",
+          "src": "/uploads/gallery/image-23-e91fff5aa20d.jpg",
+          "width": 1280,
+          "height": 1216,
+          "order": 14,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-016",
+          "src": "/uploads/gallery/image-26-659a0d50ea57.jpg",
+          "width": 1288,
+          "height": 917,
+          "order": 15,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-017",
+          "src": "/uploads/gallery/image-12-10633dc63656.jpg",
+          "width": 1288,
+          "height": 859,
+          "order": 16,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-018",
+          "src": "/uploads/gallery/image-14-77963acc3225.jpg",
+          "width": 1278,
+          "height": 859,
+          "order": 17,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-019",
+          "src": "/uploads/gallery/image-27-640fc189f0a8.jpg",
+          "width": 1288,
+          "height": 859,
+          "order": 18,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-020",
+          "src": "/uploads/gallery/image-2-1e28f4fadf3c.jpg",
+          "width": 1288,
+          "height": 1865,
+          "order": 19,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-021",
+          "src": "/uploads/gallery/image-8-48e77bcf03b7.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 20,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-022",
+          "src": "/uploads/gallery/image-18-ab13da31c5a2.jpg",
+          "width": 1288,
+          "height": 1932,
+          "order": 21,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-023",
+          "src": "/uploads/gallery/image-3-058ef5a943ef.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 22,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-024",
+          "src": "/uploads/gallery/image-21-ae6b0e9f99ec.jpg",
+          "width": 1288,
+          "height": 1913,
+          "order": 23,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-025",
+          "src": "/uploads/gallery/image-24-2b8c2e449810.jpg",
+          "width": 1280,
+          "height": 1215,
+          "order": 24,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-026",
+          "src": "/uploads/gallery/image-29-dbc0f5974105.jpg",
+          "width": 1280,
+          "height": 610,
+          "order": 25,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-027",
+          "src": "/uploads/gallery/image-15-4e79518bb1b7.jpg",
+          "width": 1288,
+          "height": 916,
+          "order": 26,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "general-028",
+          "src": "/uploads/gallery/image-17-dd785e0c78bb.jpg",
+          "width": 1280,
+          "height": 1496,
+          "order": 27,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "rooms",
+      "images": [
+        {
+          "id": "rooms-001",
+          "src": "/uploads/gallery/image-2-1e28f4fadf3c.jpg",
+          "width": 1288,
+          "height": 1865,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-002",
+          "src": "/uploads/gallery/image-3-058ef5a943ef.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-003",
+          "src": "/uploads/gallery/image-6-9df9eaada2ed.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-004",
+          "src": "/uploads/gallery/image-11-a06da9deaa30.jpg",
+          "width": 1288,
+          "height": 1124,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-005",
+          "src": "/uploads/gallery/image-12-10633dc63656.jpg",
+          "width": 1288,
+          "height": 859,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-006",
+          "src": "/uploads/gallery/image-23-e91fff5aa20d.jpg",
+          "width": 1280,
+          "height": 1216,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "rooms-007",
+          "src": "/uploads/gallery/image-27-640fc189f0a8.jpg",
+          "width": 1288,
+          "height": 859,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "flavours",
+      "images": [
+        {
+          "id": "flavours-001",
+          "src": "/uploads/gallery/image-13-f8b183e9c8e9.jpg",
+          "width": 1288,
+          "height": 1152,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-002",
+          "src": "/uploads/gallery/image-17-dd785e0c78bb.jpg",
+          "width": 1280,
+          "height": 1496,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-003",
+          "src": "/uploads/gallery/bellaazura-59a0cfb358ed.webp",
+          "width": 2158,
+          "height": 1440,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-004",
+          "src": "/uploads/gallery/blok222-1b0ffc414d30.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-005",
+          "src": "/uploads/gallery/banner-65882b65829f.jpg",
+          "width": 2160,
+          "height": 1440,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-006",
+          "src": "/uploads/gallery/ottoman-6bef606d08a0.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-007",
+          "src": "/uploads/gallery/lyric-7d3697859a84.jpg",
+          "width": 2048,
+          "height": 1365,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-008",
+          "src": "/uploads/gallery/mazurka-982aff8d81d9.jpg",
+          "width": 2048,
+          "height": 1367,
+          "order": 7,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-009",
+          "src": "/uploads/gallery/blok2-abb8ed0eb6c3.jpg",
+          "width": 2160,
+          "height": 1440,
+          "order": 8,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-010",
+          "src": "/uploads/gallery/blok21-1758bfa2581e.jpg",
+          "width": 300,
+          "height": 450,
+          "order": 9,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-011",
+          "src": "/uploads/gallery/blok22-2d13bb0f7ae0.jpg",
+          "width": 300,
+          "height": 450,
+          "order": 10,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "flavours-012",
+          "src": "/uploads/gallery/patisserie-011337b5002f.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 11,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bar",
+      "images": [
+        {
+          "id": "bar-001",
+          "src": "/uploads/gallery/discoverbarsparallax-830d510def22.jpg",
+          "width": 2048,
+          "height": 1365,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "bar-002",
+          "src": "/uploads/gallery/pierbar-9a88cf7b58a6.png",
+          "width": 508,
+          "height": 466,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "bar-003",
+          "src": "/uploads/gallery/discobar-fd792dc2a120.png",
+          "width": 502,
+          "height": 466,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "bar-004",
+          "src": "/uploads/gallery/chacha-25a81a546c39.png",
+          "width": 512,
+          "height": 466,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "bar-005",
+          "src": "/uploads/gallery/pool-124804bed4b3.png",
+          "width": 2048,
+          "height": 637,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "bar-006",
+          "src": "/uploads/gallery/blok2-04ee3358c763.png",
+          "width": 600,
+          "height": 900,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "pool",
+      "images": [
+        {
+          "id": "pool-001",
+          "src": "/uploads/gallery/image-8-48e77bcf03b7.jpg",
+          "width": 1288,
+          "height": 1893,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "pool-002",
+          "src": "/uploads/gallery/image-16-35323f806f29.jpg",
+          "width": 1280,
+          "height": 1216,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "pool-003",
+          "src": "/uploads/gallery/image-21-ae6b0e9f99ec.jpg",
+          "width": 1288,
+          "height": 1913,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "pool-004",
+          "src": "/uploads/gallery/image-22-55347dd7ad37.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "pool-005",
+          "src": "/uploads/gallery/image-24-2b8c2e449810.jpg",
+          "width": 1280,
+          "height": 1215,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "pool-006",
+          "src": "/uploads/gallery/image-28-13e7fdfe48ad.jpg",
+          "width": 1288,
+          "height": 1866,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "entertainment",
+      "images": [
+        {
+          "id": "entertainment-001",
+          "src": "/uploads/gallery/1-744e5a04ffd2.jpg",
+          "width": 1076,
+          "height": 1200,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-002",
+          "src": "/uploads/gallery/2-f431c471363a.jpg",
+          "width": 1080,
+          "height": 1200,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-003",
+          "src": "/uploads/gallery/500-9a803e695afb.jpg",
+          "width": 674,
+          "height": 760,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-004",
+          "src": "/uploads/gallery/5042-79468fc71d84.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-005",
+          "src": "/uploads/gallery/2150407949-e041073b724e.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-006",
+          "src": "/uploads/gallery/ent-ban-94e9ca25b46e.jpg",
+          "width": 2880,
+          "height": 1024,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-007",
+          "src": "/uploads/gallery/fitness-center-1997fc4cbf8b.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-008",
+          "src": "/uploads/gallery/screenshot16-8fa054bafdd4.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 7,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-009",
+          "src": "/uploads/gallery/screenshot57-c16953b235d2.jpg",
+          "width": 699,
+          "height": 760,
+          "order": 8,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-010",
+          "src": "/uploads/gallery/screenshot59-0cecc859955a.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 9,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-011",
+          "src": "/uploads/gallery/screenshot00-ab19ec64be32.jpg",
+          "width": 699,
+          "height": 760,
+          "order": 10,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "entertainment-012",
+          "src": "/uploads/gallery/screenshot05-3996a0025c99.jpg",
+          "width": 698,
+          "height": 760,
+          "order": 11,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "kidsclub",
+      "images": [
+        {
+          "id": "kidsclub-001",
+          "src": "/uploads/gallery/1-8c2e73228d3d.jpg",
+          "width": 600,
+          "height": 900,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-002",
+          "src": "/uploads/gallery/kids1-6574dd488538.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-003",
+          "src": "/uploads/gallery/kids2-eea71f5f5632.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-004",
+          "src": "/uploads/gallery/2149046677-297334203fd8.jpg",
+          "width": 1000,
+          "height": 667,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-005",
+          "src": "/uploads/gallery/kids3-5ee23dfbe8d3.webp",
+          "width": 1859,
+          "height": 1206,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-006",
+          "src": "/uploads/gallery/kids4-4de47b52d7b7.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-007",
+          "src": "/uploads/gallery/kids5-5c4b66758af3.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-008",
+          "src": "/uploads/gallery/kids6-04f02a39bb6c.webp",
+          "width": 1920,
+          "height": 1280,
+          "order": 7,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-009",
+          "src": "/uploads/gallery/kids7-58975ec7c498.jpg",
+          "width": 1566,
+          "height": 1608,
+          "order": 8,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-010",
+          "src": "/uploads/gallery/kids8-f148d1172b01.jpg",
+          "width": 1258,
+          "height": 1580,
+          "order": 9,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "kidsclub-011",
+          "src": "/uploads/gallery/kids9-18c533f77363.jpg",
+          "width": 1618,
+          "height": 1612,
+          "order": 10,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "spa",
+      "images": [
+        {
+          "id": "spa-001",
+          "src": "/uploads/gallery/image-10-3d19cd2c9585.jpg",
+          "width": 1288,
+          "height": 1933,
+          "order": 0,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-002",
+          "src": "/uploads/gallery/image-20-42509fe709da.jpg",
+          "width": 1288,
+          "height": 1916,
+          "order": 1,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-003",
+          "src": "/uploads/gallery/image-26-659a0d50ea57.jpg",
+          "width": 1288,
+          "height": 917,
+          "order": 2,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-004",
+          "src": "/uploads/gallery/indoor-0a1d41f00905.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 3,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-005",
+          "src": "/uploads/gallery/spa1-c4eac5ba5c71.webp",
+          "width": 1001,
+          "height": 1500,
+          "order": 4,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-006",
+          "src": "/uploads/gallery/spa10-46a5dbba38d4.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 5,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-007",
+          "src": "/uploads/gallery/spa4-f588883ddd4f.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 6,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-008",
+          "src": "/uploads/gallery/spa5-b6efa47af553.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 7,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-009",
+          "src": "/uploads/gallery/spa6-963bb6add6ce.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 8,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-010",
+          "src": "/uploads/gallery/spa7-85b9e36dc9e8.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 9,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-011",
+          "src": "/uploads/gallery/spa8-4800x3200-1393793f06e2.jpg",
+          "width": 4800,
+          "height": 3200,
+          "order": 10,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-012",
+          "src": "/uploads/gallery/spa9-eda27890ae76.webp",
+          "width": 2160,
+          "height": 1440,
+          "order": 11,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        },
+        {
+          "id": "spa-013",
+          "src": "/uploads/gallery/spacopy-437e30197fcb.webp",
+          "width": 1876,
+          "height": 1038,
+          "order": 12,
+          "translations": {
+            "tr": {
+              "alt": "gallery"
+            },
+            "en": {
+              "alt": "gallery"
+            },
+            "de": {
+              "alt": "gallery"
+            },
+            "ru": {
+              "alt": "gallery"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "meeting",
+      "images": []
+    }
+  ]
+}

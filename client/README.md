@@ -2120,3 +2120,164 @@ Ortak medya/Bars/Kids Club/restoran birim regresyonları **28/29**; tek eski ba�
 Almanca restoran `mainRestaurant.list2` alanındaki ` hetheth` metin farkıdır.
 Next.js **15.5.26** izole production build, lint ve git diff --check başarılı.
 Canlı üretim dizini bu ortamda yapılandırılmadı; canlı geçiş/commit/deploy yapılmadı.
+
+## Kalıcı Galeri ve yönetim API’si
+
+Önce statik importlar ve çevrilmiş kategori anahtarları kullanılıyordu. Şimdi `app/[locale]/gallery/page.js`, server-only `lib/azura-gallery-content.js` üzerinden `azura-gallery-storage.mjs` ile dosyayı doğrular ve seçili dilin verisini `GalleryScrollSection` bileşenine aktarır. Panel aşağıdaki yönetim API’siyle kalıcı dosyayı günceller; site panelden veri çekmez. Lago bağlantısı henüz uygulanmadı.
+
+Başlangıç: `content/gallery/gallery.json`. Kalıcı kaynak: `${AZURA_CONTENT_ROOT}/gallery/gallery.json`. Görseller: `${AZURA_UPLOADS_ROOT}/gallery/`; başlangıç kopyaları `public/uploads/gallery/`. Mevcut development/production dizin kuralları geçerlidir. Production ortamında iki kök değişkeni tanımlanmalıdır. Bu çalışma canlı kurulum/deploy yapmaz.
+
+```json
+{
+  "schemaVersion": 1,
+  "categories": [
+    {
+      "id": "general",
+      "images": [
+        {
+          "id": "general-001",
+          "src": "/uploads/gallery/image-4-<kaynak-yolu-hashi>.jpg",
+          "order": 0,
+          "width": 1200,
+          "height": 800,
+          "translations": {
+            "tr": {"alt": "gallery"}, "en": {"alt": "gallery"},
+            "de": {"alt": "gallery"}, "ru": {"alt": "gallery"}
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Yukarıdaki tek kategori örnektir; kesin sözleşmede aşağıdaki dokuz kategori bu sırayla zorunludur. Görsel sayıları doğrulayıcıda sabitlenmez; tüm kategoriler boş olabilir. Her kategori içinde `order` sıfırdan başlayıp kesintisiz artar. Kayıt kimlikleri tüm galeride benzersizdir ve okuma sırasında üretilmez. Başlangıç kimlikleri `<kategori>-001` biçimindedir; gelecekte yeniden sıralarken/eklerken eski kimlikler değiştirilmemelidir.
+
+| Kategori | Başlangıç kayıt sayısı |
+|---|---:|
+| general | 28 |
+| rooms | 7 |
+| flavours | 12 |
+| bar | 6 |
+| pool | 6 |
+| entertainment | 12 |
+| kidsclub | 11 |
+| spa | 13 |
+| meeting | 0 |
+
+Toplam 95 kayıt, 77 benzersiz kaynak yolu ve 77 uploads dosyası. Aynı kaynak birden çok kategoride aynı `src` ile kullanılır; kayıt kimlikleri ayrıdır. Benzer görünümlü veya baytları eşit farklı kaynaklar birleştirilmez. Kaynak → uploads eşlemesi, gerçek ölçüler ve SHA-256 değerleri `content/gallery/source-manifest.json` içindedir. Manifest kurulum/denetim içindir; runtime içerik sözleşmesine dahil değildir.
+
+Normal görseller dört dilde alt metin taşır. Eski küçük görsellerdeki `gallery` değeri korunmuştur; yeni ayrıntılar uydurulmamıştır. Eski lightbox `Enlarged gallery` değeri, alt metin hâlâ `gallery` ise korunur; düzenlenmiş alt metin lightbox’a da aktarılır. Kategori başlıkları mevcut `Gallery` next-intl mesajlarından gelir. Banner, başlıklar, ContactSection2, diğer sayfaların galerileri değişmez. Boş `meeting` düğmesi görünür kalır. Kolonlar, sınıflar, responsive düzen, klavye okları/Escape ve ileri/geri sarma korunur; kategori değişince veya seçili kayıt kaldırılınca geçersiz lightbox indeksi kullanılmaz.
+
+### Onaylı tek görsel dönüşümü
+
+Orijinal `app/[locale]/gallery/images/spa/spa8.jpg` değiştirilmedi. 5616×3744 / 18.232.600 bayt olan kaynağın yalnızca uploads kopyası EXIF yönü uygulanarak, kırpılmadan ve oran korunarak 4800×3200 JPEG üretildi. Çıktı `spa8-4800x3200-1393793f06e2.jpg`, 8.029.040 bayt, 15.360.000 piksel. Yüksek kalite JPEG (4:4:4) kullanıldı. Yalnızca bu kaynak için bayt eşliği beklenmez; manifest kaynak ve çıktı hash’lerini ayrı saklar. Diğer 76 dosya bayt eşidir. Sınırlar gevşetilmedi: JPEG/PNG/WebP, 8 MiB, 16 milyon piksel, gerçek çözümleme/tür/ölçü denetimi; güvenli dosya adı, dizin ve symlink denetimi. Alt metin sınırı 300 karakterdir, dört dil eksiksiz ve boş olmayan değer ister. Kategori/görsel kayıtlarında bilinmeyen veya eksik alanlar reddedilir; mevcut kök metaverileri korunur.
+
+### Kurulum ve test
+
+```sh
+AZURA_CONTENT_ROOT=/kalici/azura/content AZURA_UPLOADS_ROOT=/kalici/azura/uploads npm run seed:gallery
+npm run test:gallery
+npm run test:gallery-production
+```
+
+Seed yalnızca eksik JSON ve görselleri ekler (`wx` / `COPYFILE_EXCL`). Mevcut düzenlemeler ve dosyalar ezilmez; eski/geçersiz mevcut içerik doğrulama hatası üretir, sessizce seed’e dönülmez. Salt okunur mevcut medya sunumu `/uploads/gallery/<dosya>` kapsamını destekler. Yönetim GET/PATCH ve görsel GET/POST uçları aşağıda tanımlanmıştır. Fiziksel silme API’si yoktur.
+
+Birim testleri başlangıç sayıları/kimlikleri, kaynak hash/ölçüleri, dört dil, boş kategori, değişken kayıt sayısı, şema, güvenli yollar/symlink, seed tekrarını kapsar. Bileşen testi lightbox gezinmesi, klavye, boş kategori ve kaldırılan seçimi kontrol eder. Production runner ayrı geçici checkout/build, geçici içerik/uploads ve HTTP sunucusu kullanır; dört dil, 77 görsel URL’si ve restart öncesi/sonrası kalıcı alt metin değişikliği test edilir. Gerçek kullanıcı içeriğine test verisi yazılmaz. Gerçek tarayıcı/piksel testi yapılmadı.
+
+Son doğrulama (2026-09-28): galeri birim/bileşen testleri 4/4, izole production HTTP 1/1, mevcut ortak medya testleri 7/7 geçti. Next.js 15.5.26 production build, lint ve `git diff --check` başarılı. İlk sandbox build denemesinde Google Fonts DNS erişimi engellendi; ağ izinli izole build geçti. HTTP testinin ilk sürümündeki `&`/`&amp;` karşılaştırması düzeltildi; içerik değiştirilmedi. Tam proje test paketi çalıştırılmadı; önceki sayfalardaki bilinen içerik eşliği sorunları bu çalışma kapsamında değiştirilmedi.
+
+### Galeri yönetim sözleşmesi
+
+Bütün uçlar `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister. Ortak yapılandırma kuralıyla servis tokenı en az 32 karakter olmalıdır. Token yanlış/eksikse 401; sunucuda token yapılandırılmamışsa mevcut ortak davranış gereği 503. Yanıtlar `Cache-Control: no-store` taşır.
+
+`GET /api/azura/gallery` ve başarılı `PATCH /api/azura/gallery`:
+
+```json
+{"gallery":{"schemaVersion":1,"categories":[]},"revision":"<64 küçük harf hexadecimal SHA-256>"}
+```
+
+Örnekte kısaltılan `categories`, yukarıdaki dokuz kategorinin tamamını mevcut sırada içerir; her kategori boş `images` kabul eder. Dosyadaki diğer kök metaveriler yanıtta ve kayıtta korunur. Revision doğrulanmış galeri nesnesinin tamamının kanonik JSON hash’idir (nesne anahtarları sıralanır, dizilerin sırası anlamlıdır); JSON’a eklenmez.
+
+PATCH başlıkları:
+
+```http
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET revision>"
+```
+
+İşlem başına tek gövde; aşağıdakiler dışında alan kabul edilmez:
+
+```json
+{
+  "action":"add", "categoryId":"general",
+  "src":"/uploads/gallery/gallery-<server-uuid>.jpg",
+  "translations":{
+    "tr":{"alt":"Açıklama"},"en":{"alt":"Description"},
+    "de":{"alt":"Beschreibung"},"ru":{"alt":"Описание"}
+  }
+}
+```
+
+Sunucu `gallery-<UUID>` kayıt kimliği üretir; gerçek dosyadan width/height alır ve kategori sonuna ekler. Aynı src başka kategoride kullanılabilir. Aynı kategoride yinelenen src 409’dur; başka kategoride bulunan kayıt yanıt olarak döndürülmez.
+
+```json
+{"action":"reorder","categoryId":"general","imageIds":["general-002","general-001"]}
+```
+
+Örnek iki kayıtlı kategori içindir: güncel kategorideki bütün kimlikler tam bir kez verilmelidir. Başka kategori kimliği, eksik/fazla/tekrarlı kimlik 400’dür. Kimlikler korunur, `order` sıfırdan düzenlenir. Boş kategori için `imageIds: []` geçerlidir.
+
+```json
+{
+  "action":"update","categoryId":"general","imageId":"general-001",
+  "translations":{
+    "tr":{"alt":"Yeni açıklama"},"en":{"alt":"New description"},
+    "de":{"alt":"Neue Beschreibung"},"ru":{"alt":"Новое описание"}
+  }
+}
+```
+
+Yalnızca dört dilin alt açıklaması güncellenir; src/ölçü/id/order değişmez.
+
+```json
+{"action":"remove","categoryId":"general","imageId":"general-001"}
+```
+
+Yalnızca bu kategori kaydı çıkarılır ve sıra yeniden düzenlenir. **Fiziksel dosya silinmez**, diğer kategori kayıtları değişmez. Kategoriler eklenemez/silinemez. Kayıt kimliği yalnızca belirtilen kategori içinde aranır; bulunmazsa 404.
+
+### Galeri görselleri
+
+`GET /api/azura/gallery/images`:
+
+```json
+{"images":[{"image":"/uploads/gallery/gallery-<server-uuid>.png","mimeType":"image/png","size":123,"width":800,"height":600,"modifiedAt":"2026-09-28T10:00:00.000Z"}]}
+```
+
+`POST /api/azura/gallery/images`: tek `file` alanlı multipart; `Content-Type` boundary’sini FormData istemcisi oluşturmalıdır. Başarılı yanıt **201**:
+
+```json
+{"image":"/uploads/gallery/gallery-<server-uuid>.png","mimeType":"image/png","size":123,"width":800,"height":600}
+```
+
+Yalnızca `${AZURA_UPLOADS_ROOT}/gallery/` dizinine sunucunun ürettiği adla, mevcut dosyayı ezmeden yazılır. Listede yalnızca bu dizindeki geçerli dosyalar bulunur; sahte/bozuk dosyalar ve symlink’ler dışlanır. Gerçek JPEG/PNG/WebP, 8 MiB ve 16 milyon piksel sınırları; gerçek okunan baytlar, çözümleme ve ölçü denetimleri korunur. Sıfır `FileHandle.stat().size` bildiren runtime için önceki düzeltme korunmuştur. Yükleme gallery.json’a kayıt eklemez. **POST yanıtındaki `image`, ayrı PATCH add gövdesindeki `src` değeridir.** Mevcut dosyalar, onaylı spa8 kopyası dahil, yeniden dönüştürülmez.
+
+### Sınırlar, hata ve eşzamanlılık
+
+- PATCH gövdesi en fazla **128 KiB** (başlık beyanından bağımsız, okunan UTF-8 baytlar da sayılır). Alt metin her dil için **1–300 karakter**, yalnız boşluk/kontrol karakterleri geçersizdir; geçerli baştaki/sondaki boşluklar korunur.
+- 95 kayıt veya 77 dosya sabit sınır değildir. Toplam kayıt/dosya sayısı için bu aşamada ek kota yoktur. Tam sıralama listesi tek PATCH sınırına sığmalıdır: 44 karakterli sunucu kimliklerinde yaklaşık 2.700 kayıt; izin verilen 128 karakterlik kimliklerde yaklaşık 990 kayıt (JSON biçimleme ve diğer alanlar dahil gerçek bayt sınırı belirleyicidir). Daha büyük galeriler için gövde kapasitesi veya ayrı sıralama protokolü tasarlanmalıdır; panel sınırı aşan listeyi sessizce parçalamamalıdır.
+- 400 geçersiz işlem/gövde/biçimsiz If-Match; 401 yetkisiz; 404 kategori/kayıt yok; 409 eski revision veya aynı kategoride yinelenen src; 413 boyut aşımı; 415 yanlış Content-Type/desteklenmeyen görsel türü; 428 eksik veya boş If-Match.
+- Hatalı istek JSON’u değiştirmez. Her PATCH aynı galeri dosyası için ortak process kuyruğunda **yeniden okuma → revision kontrolü → işlem → tam şema/dosya doğrulama → atomik kayıt** yapar. Hata kuyruğu kilitlemez. Başarılı işlem `/{tr,en,de,ru}/gallery` yollarını revalidate eder. No-op işlemler içerik değişmediği için aynı revision döndürebilir.
+- Kuyruk yalnızca **aynı Node.js sürecini** korur; çoklu worker/instance/harici yazıcı için ortak kilit veya transactional veri deposu gerekir. Seed ayrı process’tir, bu kuyruğa katılmaz: ilk kurulum/bakım sırasında, yönetim yazmaları durdurularak çalıştırılmalıdır. Seed mevcut dosyaları ezmese de production yazmalarıyla eşzamanlı çalıştırılmamalıdır.
+
+### Dosya görevleri ve Lago bağlantısı
+
+- `lib/azura-gallery-storage.mjs`: mevcut okuyucu + işlem doğrulama, kanonik revision, ortak kuyruk ve atomik PATCH; ek kök metaverileri korur.
+- `app/api/azura/gallery/route.js`: token korumalı GET/PATCH; ortak `azura-page-api.js` sınırlı gövde, If-Match ve revalidation akışını yeniden kullanır. Ortak fabrikaya isteğe bağlı işlem doğrulayıcı/yazıcı eklendi; mevcut sayfa PUT sözleşmeleri aynı kaldı.
+- `app/api/azura/gallery/images/route.js`: mevcut `azura-page-image-api.js` üzerinden GET/POST.
+- `lib/azura-homepage-media.mjs`: mevcut güvenli yükleme/listeleme akışının sabit `gallery` kapsamı; `pages/` öneki kullanılmaz. Diğer medya kapsamları değişmez.
+- `lib/azura-gallery-api.test.mjs`, `lib/azura-gallery-api-http.test.mjs`: izole işlem, güvenlik, paralellik, paylaşım, yayın ve restart kontrolleri. `test:gallery-production` ayrıca Bars/Kids Club HTTP API regresyonlarını çalıştırır.
+
+Lago’nun kategori seçimi bu dokuz sabit Azura kimliğini kullanmalı; `lobby/other` eklememeli, `meeting` korunmalıdır. Panel GET revision’ını saklar; yükleme POST’u sonrasında `image` yolunu add src olarak gönderir; yukarı/aşağı taşıma tam `imageIds` listesi üretir; alt metin editörü dört dili gönderir; kaldırma yalnızca remove PATCH yapar. Her başarılı yanıt yerel gallery/revision’ı yeniler. 409’da yeniden GET yapılıp kullanıcıya çakışma gösterilmeli, eski değişiklik otomatik zorla yazılmamalıdır. Servis tokenı yalnızca Lago sunucusunda saklanmalıdır. Lago reposu bu görevde değiştirilmedi; fiziksel silme davranışı Azura’ya kopyalanmadı. API uygulanmıştır, gerçek Lago → Azura uçtan uca bağlantısı sonraki adımdır.
+
+Galeri API doğrulama sonucu (2026-09-28): galeri birim/okuyucu/seed/bileşen/işlem testleri **6/6**, mevcut ortak medya testleri **7/7**, izole production galeri HTTP testleri **2/2**, Bars ve Kids Club API HTTP regresyonları **2/2** geçti. Next.js 15.5.26 izole build, lint ve `git diff --check` başarılı. İlk API HTTP denemesinde yalnızca test tokenı ortak 32 karakter şartını karşılamadığı için 503 alındı; test tokenı düzeltildi. Boş If-Match beklentisi mevcut 428 sözleşmesiyle eşleştirildi. Başlangıç içerikleri testleri geçirmek için değiştirilmedi. Gerçek tarayıcı/lightbox etkileşim testi ve Lago uçtan uca entegrasyonu yapılmadı; mevcut bileşen testi korunup çalıştırıldı. Canlı kurulum veya deploy yapılmadı; kalıcı dizinler, en az 32 karakter servis tokenı ve bakım sırasında seed kurulumu canlı ortamda ayrıca gereklidir.

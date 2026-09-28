@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,writeFile,readFile,rm,symlink} from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import sharp from 'sharp';
+import {GALLERY_CATEGORY_IDS,readGalleryManagement,patchGallery,validateGalleryAction,galleryFile} from './azura-gallery-storage.mjs';
+import {saveGalleryImage,listGalleryImages} from './azura-homepage-media.mjs';
+const translations=Object.fromEntries(['tr','en','de','ru'].map(l=>[l,{alt:`  Test ${l}  `}]));
+test('gallery operations, exact fields, queue recovery, concurrency and physical sharing',async t=>{
+ const dir=await mkdtemp(path.join(os.tmpdir(),'gallery-api-unit-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const paths={contentRoot:path.join(dir,'content'),uploadsRoot:path.join(dir,'uploads')};await mkdir(path.join(paths.contentRoot,'gallery'),{recursive:true});
+ const initial={schemaVersion:1,categories:GALLERY_CATEGORY_IDS.map(id=>({id,images:[]})),customMetadata:{keep:true}};await writeFile(galleryFile(paths),JSON.stringify(initial));
+ const bytes=await sharp({create:{width:32,height:24,channels:3,background:'blue'}}).png().toBuffer();
+ const uploaded=await saveGalleryImage(bytes,'image/png',paths);assert.deepEqual((await readGalleryManagement(paths)).gallery,initial);assert.equal((await listGalleryImages(paths)).length,1);
+ const next=await saveGalleryImage(bytes,'image/png',paths);let current=await readGalleryManagement(paths);
+ const apply=async body=>(current=await patchGallery(body,current.revision,paths));
+ await apply({action:'add',categoryId:'general',src:uploaded.image,translations});const first=current.gallery.categories[0].images[0];assert.equal(first.width,32);assert.equal(first.height,24);
+ const unchanged=await readFile(galleryFile(paths));await assert.rejects(apply({action:'add',categoryId:'general',src:uploaded.image,translations}),e=>e.status===409);assert.deepEqual(await readFile(galleryFile(paths)),unchanged);
+ await apply({action:'add',categoryId:'meeting',src:uploaded.image,translations});const meeting=current.gallery.categories[8].images[0];assert.notEqual(meeting.id,first.id);
+ await apply({action:'add',categoryId:'general',src:next.image,translations});let ids=current.gallery.categories[0].images.map(r=>r.id);
+ for(const imageIds of [[ids[0]],[ids[0],ids[0]],[ids[0],meeting.id],[...ids,'extra']])await assert.rejects(apply({action:'reorder',categoryId:'general',imageIds}),e=>e.status===400);
+ await apply({action:'reorder',categoryId:'general',imageIds:ids.toReversed()});assert.equal(current.gallery.categories[0].images[1].id,first.id);
+ const before=structuredClone(current.gallery.categories[0].images[1]);const updated=structuredClone(translations);updated.tr.alt='  new  ';await apply({action:'update',categoryId:'general',imageId:first.id,translations:updated});assert.deepEqual(current.gallery.categories[0].images[1],{...before,translations:updated});
+ const rev=current.revision;const results=await Promise.allSettled([patchGallery({action:'remove',categoryId:'meeting',imageId:meeting.id},rev,paths),patchGallery({action:'remove',categoryId:'general',imageId:first.id},rev,paths)]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal(results.find(r=>r.status==='rejected').reason.status,409);
+ current=await readGalleryManagement(paths);assert.equal(current.gallery.categories[8].images.length,0);assert.deepEqual(await readFile(path.join(paths.uploadsRoot,uploaded.image.slice('/uploads/'.length))),bytes);assert.ok(current.gallery.categories[0].images.some(r=>r.id===first.id));assert.deepEqual(current.gallery.customMetadata,{keep:true});assert.equal(Object.hasOwn(current.gallery,'revision'),false);
+ for(const body of [{action:'bad'},{action:{}},{action:'remove',categoryId:'unknown',imageId:'a'},{action:'update',categoryId:'general',imageId:'a',translations:{tr:{alt:'x'}}},{action:'add',categoryId:'general',src:'/uploads/pages/bars/a.jpg',translations}])assert.throws(()=>validateGalleryAction(body));
+ await assert.rejects(apply({action:'remove',categoryId:'general',imageId:'missing'}),e=>e.status===404);
+ await apply({action:'remove',categoryId:'general',imageId:first.id});assert.deepEqual(await readFile(path.join(paths.uploadsRoot,uploaded.image.slice('/uploads/'.length))),bytes);
+ await symlink(path.join(paths.uploadsRoot,uploaded.image.slice('/uploads/'.length)),path.join(paths.uploadsRoot,'gallery/link.png'));await writeFile(path.join(paths.uploadsRoot,'gallery/fake.jpg'),'fake');assert.equal((await listGalleryImages(paths)).length,2);
+ await assert.rejects(saveGalleryImage(Buffer.from('fake'),'image/png',paths));
+});
+test('gallery translations, body fields and dedicated media directory boundaries',async t=>{
+ const valid={action:'add',categoryId:'general',src:'/uploads/gallery/a.jpg',translations};
+ for(const change of [b=>b.translations.tr.alt='',b=>b.translations.en.alt='x'.repeat(301),b=>delete b.translations.de,b=>b.translations.fr={alt:'x'},b=>b.translations.ru.extra='x',b=>b.width=10,b=>b.src='/uploads/gallery/../a.jpg']){const body=structuredClone(valid);change(body);assert.throws(()=>validateGalleryAction(body));}
+ assert.doesNotThrow(()=>validateGalleryAction({...valid,translations:Object.fromEntries(['tr','en','de','ru'].map(l=>[l,{alt:'x'.repeat(300)}]))}));
+ const dir=await mkdtemp(path.join(os.tmpdir(),'gallery-scope-'));t.after(()=>rm(dir,{recursive:true,force:true}));const paths={uploadsRoot:path.join(dir,'uploads')};await mkdir(paths.uploadsRoot);await mkdir(path.join(dir,'outside'));await symlink(path.join(dir,'outside'),path.join(paths.uploadsRoot,'gallery'));
+ const bytes=await sharp({create:{width:3,height:2,channels:3,background:'red'}}).png().toBuffer();await assert.rejects(saveGalleryImage(bytes,'image/png',paths));await assert.rejects(listGalleryImages(paths));
+ await rm(path.join(paths.uploadsRoot,'gallery'));const first=await saveGalleryImage(bytes,'image/png',paths,()=> 'collision');await assert.rejects(saveGalleryImage(bytes,'image/png',paths,()=> 'collision'),e=>e.status===409);assert.deepEqual(await readFile(path.join(paths.uploadsRoot,first.image.slice('/uploads/'.length))),bytes);
+});

@@ -36,7 +36,7 @@ export function restaurantsMediaDir(paths = resolveAzuraPaths()) {
 }
 
 function mediaDir(page, paths) {
-  return path.join(paths.uploadsRoot, "pages", page);
+  return page === "gallery" ? path.join(paths.uploadsRoot, "gallery") : path.join(paths.uploadsRoot, "pages", page);
 }
 
 function sniffFormat(bytes) {
@@ -83,6 +83,14 @@ export async function inspectHomepageImage(bytes, mimeType) {
 async function safeMediaDir(paths, page, create = false) {
   if (create) await mkdir(paths.uploadsRoot, { recursive: true });
   const root = await realpath(paths.uploadsRoot);
+  if (page === "gallery") {
+    const directory = path.join(root, "gallery");
+    if (create) await mkdir(directory).catch(error => { if (error.code !== "EEXIST") throw error; });
+    if ((await lstat(directory)).isSymbolicLink() || await realpath(directory) !== directory || !(await stat(directory)).isDirectory()) {
+      throw new HomepageMediaError("Galeri uploads dizini güvenli değil.");
+    }
+    return directory;
+  }
   if ((await lstat(path.join(root, "pages")).catch((error) => {
     if (error.code !== "ENOENT" || !create) throw error;
     return null;
@@ -150,7 +158,7 @@ async function savePageImage(page, bytes, mimeType, paths, idFactory) {
   } finally {
     await directory.close();
   }
-  return { image: `/uploads/pages/${page}/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
+  return { image: `${page === "gallery" ? "/uploads/gallery" : `/uploads/pages/${page}`}/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
 }
 
 export async function listHomepageImages(paths = resolveAzuraPaths()) {
@@ -190,7 +198,7 @@ async function listPageImages(page, paths) {
       if (details.size > MAX_IMAGE_BYTES) continue;
       const info = await inspectHomepageImage(await handle.readFile(), mimeType);
       records.push({
-        image: `/uploads/pages/${page}/${entry.name}`,
+        image: `${page === "gallery" ? "/uploads/gallery" : `/uploads/pages/${page}`}/${entry.name}`,
         mimeType: info.mimeType,
         size: info.size,
         width: info.width,
@@ -277,4 +285,12 @@ export async function saveEntertainmentImage(bytes, mimeType, paths = resolveAzu
 }
 export async function listEntertainmentImages(paths = resolveAzuraPaths()) {
   return listPageImages("entertainment", paths);
+}
+
+// Gallery is a collection scope with no pages/ prefix; caller cannot choose a directory.
+export async function saveGalleryImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("gallery", bytes, mimeType, paths, idFactory);
+}
+export async function listGalleryImages(paths = resolveAzuraPaths()) {
+  return listPageImages("gallery", paths);
 }

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { hasValidServiceToken, serviceTokenConfigured } from "@/lib/azura-service-auth.mjs";
 import { HomepageContentError, LOCALES } from "@/lib/azura-homepage-storage.mjs";
-export function createPageContentHandlers({ readContent, writeContent, parseIfMatch, ContentError, pageKey, revalidationPaths = LOCALES.map(locale => `/${locale}/${pageKey}`) }) {
+export function createPageContentHandlers({ readContent, writeContent, parseIfMatch, ContentError, pageKey, validateBody, writeOperation, revalidationPaths = LOCALES.map(locale => `/${locale}/${pageKey}`) }) {
 const MAX_BODY_BYTES = 128 * 1024;
 
 function json(body, status = 200) {
@@ -64,11 +64,12 @@ async function PUT(request) {
       if (error instanceof ContentError) throw error;
       return json({ error: "Geçersiz JSON." }, 400);
     }
-    if (!body || typeof body !== "object" || Array.isArray(body) ||
+    if (validateBody) validateBody(body);
+    else if (!body || typeof body !== "object" || Array.isArray(body) ||
         Object.keys(body).length !== 2 || !Object.hasOwn(body, "bundle") || !Object.hasOwn(body, "media")) {
       return json({ error: "Yalnızca bundle ve media alanları güncellenebilir." }, 400);
     }
-    const result = await writeContent(body.bundle, body.media, expectedRevision);
+    const result = writeOperation ? await writeOperation(body, expectedRevision) : await writeContent(body.bundle, body.media, expectedRevision);
     for (const pagePath of revalidationPaths) revalidatePath(pagePath);
     return json(result);
   } catch (error) { return failure(error); }

@@ -1,3 +1,4 @@
+import { readGalleryImage } from "@/lib/azura-gallery-storage.mjs";
 import { readFile, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
@@ -10,6 +11,12 @@ const types = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png"
 
 export async function GET(_request, { params }) {
   const { segments } = await params;
+  if (Array.isArray(segments) && segments.length === 2 && segments[0] === "gallery") {
+    try {
+      const { bytes, info } = await readGalleryImage(`/uploads/gallery/${segments[1]}`);
+      return new NextResponse(bytes, { headers: { "Content-Type": info.mimeType, "Cache-Control": "public, max-age=0, must-revalidate" } });
+    } catch { return new NextResponse(null, { status: 404 }); }
+  }
   if (!Array.isArray(segments) || segments.length !== 3 ||
       segments[0] !== "pages" || !["homepage", "rooms", "restaurants", "about", "spawellness", "spor", "beachpools", "kidsclub", "bars", "entertainment", "deluxeroom", "familyroom", "fantasyroom", "room-options"].includes(segments[1]) ||
       segments.some((segment) => !/^[A-Za-z0-9._-]+$/.test(segment) || segment.includes(".."))) {

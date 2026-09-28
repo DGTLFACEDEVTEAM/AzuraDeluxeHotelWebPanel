@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
+test('lightbox arrows, keyboard, category changes and deleted selection remain safe',async()=>{
+ const {transform}=require('next/dist/build/swc');
+ const source=await readFile(new URL('../app/[locale]/gallery/components/GalleryScrollSection.jsx',import.meta.url),'utf8');
+ const output=await transform(source,{filename:'GalleryScrollSection.jsx',jsc:{parser:{syntax:'ecmascript',jsx:true},transform:{react:{runtime:'classic'}}},module:{type:'commonjs'}});
+ const states=[];let cursor=0,listener;
+ const React={createElement:(type,props,...children)=>({type,props:props??{},children}),useState:initial=>{const i=cursor++;if(!(i in states))states[i]=initial;return [states[i],v=>states[i]=v];},useEffect:fn=>fn()};
+ const context={exports:{},document:{addEventListener:(_,fn)=>listener=fn,removeEventListener:()=>{}},require:id=>id==='react'?React:id==='next-intl'?{useTranslations:()=>key=>key}:id==='next/image'?'Image':{}};
+ vm.runInNewContext(output.code,context);
+ let categories=[{id:'general',images:[{id:'a',src:'/a.jpg',width:10,height:10,alt:'gallery'},{id:'b',src:'/b.jpg',width:10,height:10,alt:'second'}]},{id:'meeting',images:[]}];
+ let nodes;const render=()=>{cursor=0;nodes=[];function walk(n){if(Array.isArray(n))return n.forEach(walk);if(!n||typeof n!=='object')return;nodes.push(n);walk(n.children);}walk(context.exports.default({categories}));};
+ const modal=()=>nodes.find(n=>n.type==='Image'&&n.props.className.includes('max-h'));
+ render();nodes.find(n=>n.props.onClick&&n.props.className?.startsWith('mb-')).props.onClick();render();assert.equal(modal().props.src,'/a.jpg');
+ nodes.find(n=>n.props['aria-label']==='Previous').props.onClick();render();assert.equal(modal().props.src,'/b.jpg');listener({key:'ArrowRight'});render();assert.equal(modal().props.src,'/a.jpg');listener({key:'Escape'});render();assert.equal(modal(),undefined);
+ nodes.find(n=>n.props.onClick&&n.props.className?.startsWith('mb-')).props.onClick();render();categories[0].images=[];render();assert.equal(modal(),undefined);
+ nodes.find(n=>n.type==='button'&&n.children.includes('meeting')).props.onClick();render();assert.equal(modal(),undefined);categories=[];assert.doesNotThrow(render);
+});
