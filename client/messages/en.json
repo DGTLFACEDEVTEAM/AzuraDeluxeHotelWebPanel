@@ -900,6 +900,14 @@
     "list2": "Use sunscreen with at least SPF 50 to protect against UV rays.",
     "list3": "Not using sunscreen may cause serious health issues."
   }
+},
+
+"BlogNews": {
+    "subtitle": "  Discover Your Perfect Getaway",
+    "title": "Latest News",
+    "readMore": "Read more",
+  "empty": "There are no published blog posts yet.",
+     "all":"All blog posts"
 }
 
 }

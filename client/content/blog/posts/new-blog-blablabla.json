@@ -1,0 +1,131 @@
+{
+  "storageVersion": 2,
+  "slug": "new-blog-blablabla",
+  "createdAt": "2026-09-28T12:41:01.095Z",
+  "updatedAt": "2026-09-28T12:41:07.392Z",
+  "publicationUpdatedAt": "2026-09-28T12:41:07.392Z",
+  "draft": {
+    "slug": "new-blog-blablabla",
+    "status": "draft",
+    "updatedAt": "2026-09-28T12:41:06.748Z",
+    "coverImage": "/uploads/blog/blog-224bedf0-2f34-4be8-8556-5b95eb2f02ab.webp",
+    "publishedAt": "2026-09-28T12:40:16.200Z",
+    "translations": {
+      "tr": {
+        "title": "New blog blablabla",
+        "excerpt": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride ",
+        "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "en": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "de": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "ru": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      }
+    },
+    "contentBlocks": [
+      {
+        "id": "bce03cd8-69d1-462c-9de7-b5ecfba4e1ef",
+        "headingLevel": "h2",
+        "image": "",
+        "translations": {
+          "tr": {
+            "heading": "blablabla h2 ",
+            "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum"
+          },
+          "en": {
+            "heading": "",
+            "content": ""
+          },
+          "de": {
+            "heading": "",
+            "content": ""
+          },
+          "ru": {
+            "heading": "",
+            "content": ""
+          }
+        }
+      }
+    ]
+  },
+  "published": {
+    "slug": "new-blog-blablabla",
+    "status": "published",
+    "updatedAt": "2026-09-28T12:41:06.748Z",
+    "coverImage": "/uploads/blog/blog-224bedf0-2f34-4be8-8556-5b95eb2f02ab.webp",
+    "publishedAt": "2026-09-28T12:40:16.200Z",
+    "translations": {
+      "tr": {
+        "title": "New blog blablabla",
+        "excerpt": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride ",
+        "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "en": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "de": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "ru": {
+        "title": "",
+        "excerpt": "",
+        "content": "",
+        "seoTitle": "",
+        "seoDescription": ""
+      }
+    },
+    "contentBlocks": [
+      {
+        "id": "bce03cd8-69d1-462c-9de7-b5ecfba4e1ef",
+        "headingLevel": "h2",
+        "image": "",
+        "translations": {
+          "tr": {
+            "heading": "blablabla h2 ",
+            "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum"
+          },
+          "en": {
+            "heading": "",
+            "content": ""
+          },
+          "de": {
+            "heading": "",
+            "content": ""
+          },
+          "ru": {
+            "heading": "",
+            "content": ""
+          }
+        }
+      }
+    ]
+  }
+}

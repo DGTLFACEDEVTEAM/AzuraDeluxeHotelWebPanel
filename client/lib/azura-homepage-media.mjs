@@ -36,7 +36,7 @@ export function restaurantsMediaDir(paths = resolveAzuraPaths()) {
 }
 
 function mediaDir(page, paths) {
-  return page === "gallery" ? path.join(paths.uploadsRoot, "gallery") : path.join(paths.uploadsRoot, "pages", page);
+  return ["gallery", "blog"].includes(page) ? path.join(paths.uploadsRoot, page) : path.join(paths.uploadsRoot, "pages", page);
 }
 
 function sniffFormat(bytes) {
@@ -83,8 +83,8 @@ export async function inspectHomepageImage(bytes, mimeType) {
 async function safeMediaDir(paths, page, create = false) {
   if (create) await mkdir(paths.uploadsRoot, { recursive: true });
   const root = await realpath(paths.uploadsRoot);
-  if (page === "gallery") {
-    const directory = path.join(root, "gallery");
+  if (["gallery", "blog"].includes(page)) {
+    const directory = path.join(root, page);
     if (create) await mkdir(directory).catch(error => { if (error.code !== "EEXIST") throw error; });
     if ((await lstat(directory)).isSymbolicLink() || await realpath(directory) !== directory || !(await stat(directory)).isDirectory()) {
       throw new HomepageMediaError("Galeri uploads dizini güvenli değil.");
@@ -158,7 +158,7 @@ async function savePageImage(page, bytes, mimeType, paths, idFactory) {
   } finally {
     await directory.close();
   }
-  return { image: `${page === "gallery" ? "/uploads/gallery" : `/uploads/pages/${page}`}/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
+  return { image: `${["gallery", "blog"].includes(page) ? `/uploads/${page}` : `/uploads/pages/${page}`}/${name}`, mimeType: info.mimeType, size: info.size, width: info.width, height: info.height };
 }
 
 export async function listHomepageImages(paths = resolveAzuraPaths()) {
@@ -198,7 +198,7 @@ async function listPageImages(page, paths) {
       if (details.size > MAX_IMAGE_BYTES) continue;
       const info = await inspectHomepageImage(await handle.readFile(), mimeType);
       records.push({
-        image: `${page === "gallery" ? "/uploads/gallery" : `/uploads/pages/${page}`}/${entry.name}`,
+        image: `${["gallery", "blog"].includes(page) ? `/uploads/${page}` : `/uploads/pages/${page}`}/${entry.name}`,
         mimeType: info.mimeType,
         size: info.size,
         width: info.width,
@@ -293,4 +293,28 @@ export async function saveGalleryImage(bytes, mimeType, paths = resolveAzuraPath
 }
 export async function listGalleryImages(paths = resolveAzuraPaths()) {
   return listPageImages("gallery", paths);
+}
+
+// Published blog media uses the same strict decoder as management uploads.
+export async function readBlogImage(src, paths = resolveAzuraPaths()) {
+  const prefix = "/uploads/blog/";
+  const name = typeof src === "string" && src.startsWith(prefix) ? src.slice(prefix.length) : "";
+  if (!IMAGE_NAME.test(name) || name.includes("..")) throw new HomepageMediaError("Geçersiz blog görsel yolu.");
+  const directory = await safeMediaDir(paths, "blog");
+  const handle = await open(path.join(directory, name), constants.O_RDONLY | constants.O_NOFOLLOW);
+  try {
+    const details = await handle.stat();
+    if (!details.isFile() || details.size > MAX_IMAGE_BYTES) throw new HomepageMediaError("Geçersiz blog görsel dosyası.");
+    const bytes = await handle.readFile();
+    const ext = path.extname(name).toLowerCase();
+    const info = await inspectHomepageImage(bytes, ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg");
+    return { bytes, info };
+  } finally { await handle.close(); }
+}
+
+export async function saveBlogImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {
+  return savePageImage("blog", bytes, mimeType, paths, idFactory);
+}
+export async function listBlogImages(paths = resolveAzuraPaths()) {
+  return listPageImages("blog", paths);
 }

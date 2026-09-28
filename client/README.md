@@ -2281,3 +2281,198 @@ Yalnızca `${AZURA_UPLOADS_ROOT}/gallery/` dizinine sunucunun ürettiği adla, m
 Lago’nun kategori seçimi bu dokuz sabit Azura kimliğini kullanmalı; `lobby/other` eklememeli, `meeting` korunmalıdır. Panel GET revision’ını saklar; yükleme POST’u sonrasında `image` yolunu add src olarak gönderir; yukarı/aşağı taşıma tam `imageIds` listesi üretir; alt metin editörü dört dili gönderir; kaldırma yalnızca remove PATCH yapar. Her başarılı yanıt yerel gallery/revision’ı yeniler. 409’da yeniden GET yapılıp kullanıcıya çakışma gösterilmeli, eski değişiklik otomatik zorla yazılmamalıdır. Servis tokenı yalnızca Lago sunucusunda saklanmalıdır. Lago reposu bu görevde değiştirilmedi; fiziksel silme davranışı Azura’ya kopyalanmadı. API uygulanmıştır, gerçek Lago → Azura uçtan uca bağlantısı sonraki adımdır.
 
 Galeri API doğrulama sonucu (2026-09-28): galeri birim/okuyucu/seed/bileşen/işlem testleri **6/6**, mevcut ortak medya testleri **7/7**, izole production galeri HTTP testleri **2/2**, Bars ve Kids Club API HTTP regresyonları **2/2** geçti. Next.js 15.5.26 izole build, lint ve `git diff --check` başarılı. İlk API HTTP denemesinde yalnızca test tokenı ortak 32 karakter şartını karşılamadığı için 503 alındı; test tokenı düzeltildi. Boş If-Match beklentisi mevcut 428 sözleşmesiyle eşleştirildi. Başlangıç içerikleri testleri geçirmek için değiştirilmedi. Gerçek tarayıcı/lightbox etkileşim testi ve Lago uçtan uca entegrasyonu yapılmadı; mevcut bileşen testi korunup çalıştırıldı. Canlı kurulum veya deploy yapılmadı; kalıcı dizinler, en az 32 karakter servis tokenı ve bakım sırasında seed kurulumu canlı ortamda ayrıca gereklidir.
+
+## Azura Blog — kalıcı ziyaretçi okuması
+
+İlk aşamada liste/detay sayfaları ve salt okunur depolama/medya sunumu uygulandı. İkinci aşamada aşağıdaki blog yönetim ve görsel API’leri eklendi. Lago panel bağlantısı henüz yapılmadı. Lago’nun `blog.js`, `blog-versions.mjs`, `blog-blocks.mjs`, `blog-policy.mjs`, ziyaretçi sayfaları ve ilgili testleri yalnızca referans alınmıştır; gerçek Lago yazıları, kullanıcıları, oturum veya depolama yapılandırması taşınmamıştır.
+
+### Dosyalar ve akış
+
+- `lib/azura-blog-storage.mjs`: kesin v2 kayıt doğrulaması, güvenli slug/dosya okuma, yayımlanmış liste/detay ve ortak dil seçicileri.
+- `lib/azura-blog-content.js`: `server-only` giriş noktası.
+- `app/[locale]/news/page.js`: kullanıcının mevcut banner/imgBanner, Azura Journal, kart sınıfları ve ContactSection2 tasarımı korunarak async okuyucu bağlandı; yorumdaki kart listesi etkinleştirildi. Tanımsız t/Image/mainImg giderildi.
+- `app/[locale]/news/[slug]/page.js`: mevcut tasarım ve düz metin blok render’ı korunarak Lago admin bağımlılığı kaldırıldı. Metadata ve içerik yalnız yayımlanmış kopyadan gelir. Back link mevcut `BlogNews.all` anahtarını kullanır.
+- `i18n/routing.js`: `/news` ve `/news/[slug]` tanımları dört dilde aynı yol olacak şekilde eklendi; diğer adresler/middleware değişmedi. Gerçek adresler `/{tr,en,de,ru}/news` ve `/{tr,en,de,ru}/news/<slug>`.
+- `lib/azura-homepage-media.mjs`: mevcut dosya türü/ölçü/güvenlik denetimini kullanan salt okunur `readBlogImage` eklendi. İkinci aşamada blog kapsamlı güvenli yönetim yükleme/listeleme de eklendi.
+- `app/api/azura/media/[...segments]/route.js`: mevcut salt okunur sunuma `/uploads/blog/<dosya>` eklendi.
+- `scripts/seed-persistent-blog.mjs`: yalnız dizin oluşturur; yazı/görsel kopyalamaz veya üretmez.
+- `lib/azura-blog-{storage.test,http.test,test-fixtures}.mjs`, `scripts/test-blog-production.mjs`, package komutları: izole doğrulama. Fixture yazıları yalnız testlerin geçici dizinlerinde oluşturulur.
+
+Kullanıcının dört dilde önceden eklediği `BlogNews.subtitle/title/readMore/empty/all` değerleri aynen korundu; mesaj dosyalarına yeni değişiklik yapılmadı. Liste banner’ının mevcut sabit `News` başlığı ve boş üst başlığı bu kapsamda değişmedi.
+
+### Kesin kayıt şeması
+
+JSON `${AZURA_CONTENT_ROOT}/blog/posts/<slug>.json`, medya `${AZURA_UPLOADS_ROOT}/blog/`, URL `/uploads/blog/<dosya>`; mevcut Azura development/production kök çözümlemesi kullanılır. Aşağıdaki şema gösteriminde `Post` ve `Translation` tip adıdır, dosyaya yazılacak ek alan değildir:
+
+```text
+Record = {
+  storageVersion: 2,
+  slug: string,
+  createdAt: ISO-UTC,
+  updatedAt: ISO-UTC,
+  publicationUpdatedAt: ISO-UTC | null,
+  draft: Post (status="draft"),
+  published: Post (status="published") | null
+}
+Post = {
+  slug: string,
+  status: "draft" | "published",
+  coverImage: "" | "/uploads/blog/<dosya>",
+  publishedAt: ISO-UTC,
+  updatedAt: ISO-UTC,
+  translations: {tr: Translation, en: Translation, de: Translation, ru: Translation},
+  contentBlocks: Block[]
+}
+Translation = {title: string, excerpt: string, content: string,
+               seoTitle: string, seoDescription: string}
+Block = {
+  id: string,
+  headingLevel: "h2" | "h3",
+  image: "" | "/uploads/blog/<dosya>",
+  translations: {
+    tr: {heading: string, content: string}, en: {heading: string, content: string},
+    de: {heading: string, content: string}, ru: {heading: string, content: string}
+  }
+}
+```
+
+Dört dil nesnesi ve tüm alt alanları zorunlu; çevrilmeyen alanlar boş string olabilir. Her Post’ta en az bir dolu başlık bulunmalıdır. Slug dosya adı ve her iki kopyada aynı olmalı; yalnız küçük ASCII harf/rakam ve arada tek tire, en fazla 120 karakter. Blok kimlikleri yazı kopyası içinde benzersiz, en fazla 128 ASCII harf/rakam/alt çizgi/tire; ilk karakter harf/rakam. Blok sırası dizi sırasıdır. Bilinmeyen/eksik alanlar reddedilir. `storageVersion:1` otomatik dönüştürülmez; gerekirse ayrı açık geçiş gerekir.
+
+Tarihler Lago’nun normalleştirilmiş UTC ISO biçimidir (`2026-09-01T10:00:00.000Z`); takvim dışı tarihler reddedilir. `published:null` olduğunda `publicationUpdatedAt:null` gerekir. Yayın kopyası varsa bu tarih dolu olmalıdır. Tarih tek başına yayınlama yapmaz; zamanlanmış yayın görevi bu adımın kapsamında değildir.
+
+Dosya sınırı **2 MiB** gerçek okunan bayt; title/seoTitle/heading **500**, excerpt/seoDescription **4000**, content **100000 karakter**. Kontrol karakterleri reddedilir; içerikte satır sonu/tab ve geçerli boşluklar saklanır. Görseller boş string veya yalnız blog kapsamındaki tek güvenli dosya adıdır; dış URL/HTML/traversal kabul edilmez. Gerçek JPEG/PNG/WebP, **8 MiB / 16 milyon piksel**, çözümleme ve symlink kontrolleri mevcut ortak katmandan gelir. Editör modeliyle uyum için görseller string URL olarak tutulur; JSON’a yeni width/height alanı eklenmez, gerçek ölçüler dosya çözümlemesinde denetlenir; mevcut `fill` yerleşimleri korunur.
+
+### Taslak, yayın ve hata davranışı
+
+`listPublishedBlogPosts` ve `readPublishedBlogPost` yalnız `record.published` döndürür; draft nesnesi ziyaretçi props/metadata’sına verilmez. Taslağı değiştirmek yayını değiştirmez. Her iki kopyanın şeması doğrulanır; yalnız yayımlanmış kopyanın görsel dosyaları açılıp doğrulanır (taslakta seçilmiş henüz bulunmayan dosya yayını etkilemez, güvenli yol şeması yine zorunludur). Liste tarihe göre azalan, eşit tarihte slug’a göre sıralanır.
+
+Boş veya henüz oluşturulmamış blog dizini boş liste verir. Eksik tek kayıt veya `published:null` okuyucuda null, detayda 404’tür. Bozuk JSON/şema, güvensiz dosya ya da eksik yayımlanmış görsel açık hata üretir; sessizce atlanmaz, taslağa dönülmez veya dosya silinmez. İçerik daima React düz metin olarak render edilir; `dangerouslySetInnerHTML` kullanılmaz. İki sayfa `force-dynamic` çalışır: yayın dosyası değişikliği yeni build gerektirmez.
+
+### Dil ve kapak davranışı
+
+Liste, detay ve metadata aynı `selectBlogTranslation` yardımcısını kullanır: istenen dilde trim sonrası dolu title varsa o **çeviri nesnesinin tamamı**, yoksa tr → en → de → ru içinden ilk dolu başlıklı nesne seçilir. Excerpt/content/SEO başka dillerden birleştirilmez. Boş SEO alanı aynı seçili nesnenin title/excerpt alanına döner.
+
+Bloklarda önce yazı için seçilen dil denenir; o dilin heading veya content alanından biri doluysa iki alan birlikte seçilir. İkisi de boşsa tr → en → de → ru sırasındaki ilk dolu blok çevirisi bütünüyle kullanılır. Hepsi boşsa görsel varsa yalnız görsel gösterilir; tamamen boş blok render edilmez. Paragraflar mevcut bileşendeki gibi çift satır sonundan bölünür.
+
+Kapak yoksa listede mevcut Azura `imgBanner` yedeği kullanılır; detayda kapak konteyneri tamamen gösterilmez. Blok görselinin alt metni seçilen blok başlığı, boşsa seçilen yazı başlığıdır.
+
+### İlk kurulum ve doğrulama
+
+```sh
+AZURA_CONTENT_ROOT=/kalici/azura/content AZURA_UPLOADS_ROOT=/kalici/azura/uploads npm run seed:blog
+npm run test:blog
+npm run test:blog-production
+```
+
+Seed yalnız eksik blog/posts ve blog medya dizinlerini oluşturur; örnek yazı veya Lago içeriği eklemez, mevcut JSON ve görselleri hiçbir koşulda ezmez. Gerçek kalıcı dizinlerde bu görev sırasında kurulum/yazma yapılmaz. Production runner ayrı geçici checkout/build ve geçici içerik/uploads ile çalışır; geliştirme `.next` çıktısını kullanmaz.
+
+Blog doğrulama sonucu: storage/seed/dil güvenlik testleri **2/2**, izole production blog HTTP testi **1/1**, galeri API HTTP regresyonu **1/1**, ortak medya + galeri işlem testleri **9/9** geçti. Next.js 15.5.26 production build, lint ve `git diff --check` başarılı. Boş liste, taslak-only 404, yayımdan ayrı taslak, dört dil/fallback, kapaksız detay, H2/H3/paragraflar/blok görselleri, düz metin HTML kaçışı, dosya URL’si, bozuk kayıtta 500 ve restart kalıcılığı HTTP üzerinden doğrulandı. Çalıştırılan kapsamda başarısız test kalmadı; tüm proje test paketi çalıştırılmadı. Gerçek tarayıcı/piksel testi ve canlı kurulum/deploy yapılmadı.
+
+### Blog yönetim API’leri — ikinci aşama, uygulanmış sözleşme
+
+Bütün aşağıdaki endpoint’ler `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister. Token sunucuda en az 32 karakter olmalıdır; yanlış/eksik Bearer 401, yapılandırılmamış servis tokenı 503. Yanıtlar `Cache-Control: no-store` taşır. Servis tokenı yalnız Lago sunucusunda tutulmalı, tarayıcıya gönderilmemelidir. Lago entegrasyonu bu görevde yapılmadı.
+
+**GET `/api/azura/blog/posts`**:
+
+```json
+{"posts":[{"record":"<yukarıdaki storageVersion:2 Record nesnesi>","revision":"<64 küçük harf SHA-256>"}]}
+```
+
+Şemadaki `record` gerçekte string değil, tam Record nesnesidir; bu gösterim tekrar eden şemayı kısaltır. Liste taslak-only kayıtları da içerir, updatedAt azalan/slug artan sıralıdır. Boş liste `{ "posts": [] }`. Liste okuyucusu bozuk kaydı sessizce atlamaz.
+
+**GET `/api/azura/blog/posts/<slug>`** → `{ "record": Record, "revision": "<SHA-256>" }`. Bulunmayan kayıt 404. Slug güvenli ASCII harf/rakam ve arada tek tire, en fazla 120 karakter; yol taşıması 400.
+
+**POST `/api/azura/blog/posts`**, `Content-Type: application/json`:
+
+```json
+{
+  "slug":"yeni-yazi",
+  "draft":{
+    "coverImage":"",
+    "publishedAt":"2026-09-28T10:00:00.000Z",
+    "translations":{
+      "tr":{"title":"Başlık","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "en":{"title":"","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "de":{"title":"","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "ru":{"title":"","excerpt":"","content":"","seoTitle":"","seoDescription":""}
+    },
+    "contentBlocks":[]
+  }
+}
+```
+
+Başarı **201** `{record,revision}`. Her zaman yalnız taslak oluşturur; `published:null`, `publicationUpdatedAt:null`. Yeni kaynak için If-Match gerekmez; mevcut slug 409 verir ve dosyası ezilmez. Slug, draft.status, updatedAt/createdAt ve storageVersion istemciden Draft içine alınmaz; sunucu üretir. Kurulum dizinleri yoksa 503 ve `seed:blog` gereksinimi döner; mevcut içerik otomatik seed ile ezilmez.
+
+**PUT `/api/azura/blog/posts/<slug>`**:
+
+```http
+Authorization: Bearer <token>
+Content-Type: application/json
+If-Match: "<GET veya son başarılı yazma yanıtındaki revision>"
+```
+
+Tam olarak şu üç işlemden biri:
+
+```text
+{ "action": "save", "draft": DraftInput }
+{ "action": "publish" }
+{ "action": "unpublish" }
+```
+
+`DraftInput`, POST örneğindeki tam dört alanlı draft nesnesidir: `coverImage`, `publishedAt`, `translations`, `contentBlocks`. Blok şeması ilk aşamayla aynı kalır: `{id,headingLevel,image,translations:{tr:{heading,content},en:{heading,content},de:{heading,content},ru:{heading,content}}`. Bilinmeyen/eksik alanlar reddedilir. Kaydetmek yayınlamak değildir:
+
+- `save`: yalnız draft ve kök updatedAt değişir; published/publicationUpdatedAt korunur. Taslak görsellerinin gerçek dosyaları doğrulanır.
+- `publish`: mevcut kayıtlı taslak derin kopyalanarak published yapılır; publicationUpdatedAt/kök updatedAt güncellenir. İstek içinde yeni taslak kabul edilmez; editör önce save, dönen revision ile publish yapmalıdır. Taslağın publishedAt değeri korunur; bu alan zamanlanmış yayın görevi oluşturmaz.
+- `unpublish`: yalnız yayın kopyası ve publicationUpdatedAt null yapılır, kök updatedAt güncellenir; taslak korunur.
+
+Her başarılı PUT **200** `{record,revision}` döndürür. Slug yeniden adlandırma bu aşamada yoktur. Yayınlanan içerik `/tr/news`, `/en/news`, `/de/news`, `/ru/news` ve ilgili detay yollarında revalidate edilir. Taslak kaydı ziyaretçi içeriğine veya metadata’ya sızmaz.
+
+**DELETE `/api/azura/blog/posts/<slug>`**: Bearer ve tırnaklı If-Match zorunlu; gövde gönderilmez. Başarı **200**:
+
+```json
+{"deleted":true,"slug":"yeni-yazi"}
+```
+
+Yalnız bu yazının JSON dosyası kaldırılır. **Kapak/blok görselleri fiziksel olarak silinmez**, başka yazıların dosyaları veya kayıtları değiştirilmez. Silinmiş kaynak tekrar okunduğunda 404’tür. Fiziksel görsel temizleme endpoint’i yoktur.
+
+### Blog medya sözleşmesi
+
+**GET `/api/azura/blog/images`**:
+
+```json
+{"images":[{"image":"/uploads/blog/blog-<server-uuid>.png","mimeType":"image/png","size":123,"width":800,"height":600,"modifiedAt":"2026-09-28T10:00:00.000Z"}]}
+```
+
+**POST `/api/azura/blog/images`**: tek `file` alanlı multipart. Başarı **201**:
+
+```json
+{"image":"/uploads/blog/blog-<server-uuid>.png","mimeType":"image/png","size":123,"width":800,"height":600}
+```
+
+Dönen `image`, DraftInput.coverImage veya contentBlocks[].image alanına alınır. Yükleme hiçbir yazıyı oluşturmaz/değiştirmez/yayımlamaz; ayrı save ve publish gerekir. Sadece `${AZURA_UPLOADS_ROOT}/blog/` kullanılır. JPEG/PNG/WebP, 8 MiB, 16 milyon piksel, gerçek dosya imzası/çözümleme, gerçek bayt boyutu, symlink/dizin güvenliği ve sunucu adıyla üzerine yazmayan atomik medya kaydı mevcut ortak katmandan gelir. Önceki sıfır `FileHandle.stat().size` düzeltmesi korunur. Sahte/bozuk veya symlink dosyalar listelenmez.
+
+### Revision, atomik kayıt ve sınırlar
+
+Revision bütün doğrulanmış v2 Record’un kanonik SHA-256 hash’idir; draft, published ve tarihleri kapsar, JSON’a yazılmaz. Nesne anahtarlarının sırası hash’i etkilemez; blok dizisi sırası etkiler. PUT/DELETE için eksik/boş If-Match 428, biçimsiz başlık 400, eski revision 409; dosya değişmez. İçerik/gövde hataları 400, yetki 401, bulunmayan yazı 404, içerik/medya boyut aşımı 413, yanlış Content-Type/desteklenmeyen görsel 415.
+
+POST/PUT gövdesi **128 KiB**; saklanan tam Record **2 MiB** sınırındadır. İlk aşamanın metin sınırları ve dört dil/benzersiz blok/H2-H3 kuralları korunur; geçerli boşluklar normalleştirilmez. İstek başlığına güvenilmez, okunan gerçek baytlar da sınırlandırılır.
+
+Tüm blog oluşturma/PUT/DELETE işlemleri aynı gerçek posts dizinine ait ortak process içi kuyruk kullanır. Kilit içinde yeniden okuma → revision kontrolü → işlem/doğrulama → atomik yazma yapılır. Güncelleme geçici dosya+fsync+rename, ilk oluşturma geçici dosya+fsync+exclusive hard-link ile mevcut dosyayı ezmeden yayımlanır. Silme unlink ve dizin fsync kullanır. Başarısız doğrulama eski dosyayı korur; başarısız işlem kuyruğu kilitlemez. Aynı revision ile paralel PUT’larda bir 200, bir 409 döner. Kaynak zaten silindiyse sonraki işlem 404’tür.
+
+Kuyruk yalnız **aynı Node.js sürecini** korur. Birden fazla worker/instance veya harici yazıcı için ortak kilit/transactional depolama gereklidir; seed ve harici dosya düzenlemeleri production yönetim yazmalarıyla eşzamanlı çalıştırılmamalıdır. İlk oluşturmanın exclusive kaydı başka process’in mevcut dosyasını da ezmez; bu, tüm güncellemeler için süreçler arası kilit yerine geçmez.
+
+### İkinci aşamada gerçekten eklenen/değişen dosyalar
+
+- `app/api/azura/blog/posts/route.js`: GET/POST.
+- `app/api/azura/blog/posts/[slug]/route.js`: GET/PUT/DELETE.
+- `app/api/azura/blog/images/route.js`: ortak medya handler’ıyla GET/POST.
+- `lib/azura-blog-api.js`: Bearer, sınırlı JSON gövdesi, If-Match, hata kodları ve revalidation.
+- `lib/azura-blog-management.mjs`: yönetim okuması, revision, oluşturma/save/publish/unpublish/delete, ortak kuyruk ve dosya doğrulaması.
+- `lib/azura-blog-storage.mjs`: güvenli Record okuyucusu ayrıştırıldı; ziyaretçi okuyucusu aynı published-only davranışını korur.
+- `lib/azura-page-storage.mjs`: ilk oluşturma için opsiyonel exclusive atomik kayıt; mevcut çağrıların rename davranışı aynı.
+- `lib/azura-homepage-media.mjs`: sabit blog kapsamlı listeleme/yükleme, mevcut güvenlik yardımcıları yeniden kullanılır.
+- `lib/azura-blog-management.test.mjs`, `lib/azura-blog-api-http.test.mjs`, package komutları ve README: ikinci aşama testleri ve kesin sözleşme.
+
+Ziyaretçi sayfalarının tasarımı, mesajlar ve mevcut içerikler ikinci aşamada değiştirilmedi. Git durumunda görülen birinci aşama dosyaları önceki çalışmadan kalmıştır. Lago bağlantısı, canlı kurulum, commit ve deploy yapılmadı.
+
+İkinci aşamada yeniden çalıştırılan sonuçlar: blog storage/seed/model + yönetim birim testleri **3/3**; blog ziyaretçi ve yönetim production HTTP testleri **2/2**; galeri API production HTTP regresyonu **1/1**; ortak medya ve galeri yönetim regresyonları **9/9** geçti. Next.js 15.5.26 izole production build, lint ve `git diff --check` başarılı. Bu kapsamda yeni veya mevcut başarısız test kalmadı; tüm proje test paketi çalıştırılmadı. Gerçek tarayıcı/piksel testi yapılmadı; HTTP testleri geçici içerik/uploads ve ayrı build dizininde çalıştı. Gerçek kullanıcı içeriğine test verisi yazılmadı.

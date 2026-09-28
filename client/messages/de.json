@@ -866,6 +866,14 @@
     "list2": "Verwenden Sie Sonnencreme mit mindestens LSF 50 zum Schutz vor UV-Strahlen.",
     "list3": "Die Nichtverwendung von Sonnencreme kann ernsthafte Gesundheitsprobleme verursachen."
   }
+},
+
+"BlogNews": {
+    "subtitle": "Entdecken Sie Ihren perfekten Kurzurlaub",
+    "title": "Neueste Nachrichten",
+    "readMore": "Weiterlesen",
+"empty": "Es sind noch keine Blogbeiträge veröffentlicht.",
+  "all":"Alle Blogbeiträge"
 }
 
 }

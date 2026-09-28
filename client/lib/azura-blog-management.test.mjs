@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,readFile,rm,symlink} from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import sharp from 'sharp';
+import {blogFixture} from './azura-blog-test-fixtures.mjs';
+import {createBlogPost,mutateBlogPost,deleteBlogPost,getBlogPost,listBlogPosts} from './azura-blog-management.mjs';
+import {readPublishedBlogPost} from './azura-blog-storage.mjs';
+import {saveBlogImage,listBlogImages} from './azura-homepage-media.mjs';
+const draft=()=>{const {coverImage,publishedAt,translations,contentBlocks}=blogFixture().draft;return {coverImage,publishedAt,translations,contentBlocks:contentBlocks.map(b=>({...b,image:''}))};};
+test('blog management snapshot isolation, concurrency, failures, delete and media preservation',async t=>{
+ const dir=await mkdtemp(path.join(os.tmpdir(),'blog-management-'));t.after(()=>rm(dir,{recursive:true,force:true}));const paths={contentRoot:path.join(dir,'content'),uploadsRoot:path.join(dir,'uploads')};await mkdir(path.join(paths.contentRoot,'blog/posts'),{recursive:true});
+ const bytes=await sharp({create:{width:8,height:6,channels:3,background:'red'}}).png().toBuffer();const media=await saveBlogImage(bytes,'image/png',paths);assert.ok(media.image.startsWith('/uploads/blog/'));assert.equal((await listBlogImages(paths)).length,1);assert.deepEqual(await listBlogPosts(paths),{posts:[]});
+ const input=draft();input.coverImage=media.image;const created=await Promise.allSettled([createBlogPost({slug:'example',draft:input},paths),createBlogPost({slug:'example',draft:input},paths)]);assert.equal(created.filter(x=>x.status==='fulfilled').length,1);assert.equal(created.find(x=>x.status==='rejected').reason.status,409);
+ let current=await getBlogPost('example',paths);assert.equal(await readPublishedBlogPost('example',paths),null);assert.match(current.revision,/^[a-f0-9]{64}$/);
+ current=await mutateBlogPost('example',{action:'publish'},current.revision,paths);const publicPost=await readPublishedBlogPost('example',paths);
+ input.translations.en.title='NEW PRIVATE';current=await mutateBlogPost('example',{action:'save',draft:input},current.revision,paths);assert.deepEqual(await readPublishedBlogPost('example',paths),publicPost);
+ const file=path.join(paths.contentRoot,'blog/posts/example.json'),before=await readFile(file);
+ await assert.rejects(mutateBlogPost('example',{action:'publish'},'0'.repeat(64),paths),e=>e.status===409);assert.deepEqual(await readFile(file),before);
+ const invalid=structuredClone(input);invalid.coverImage='/uploads/gallery/a.jpg';await assert.rejects(mutateBlogPost('example',{action:'save',draft:invalid},current.revision,paths));assert.deepEqual(await readFile(file),before);
+ const results=await Promise.allSettled([mutateBlogPost('example',{action:'publish'},current.revision,paths),mutateBlogPost('example',{action:'unpublish'},current.revision,paths)]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal(results.find(r=>r.status==='rejected').reason.status,409);
+ current=await getBlogPost('example',paths);assert.equal((await readPublishedBlogPost('example',paths)).translations.en.title,'NEW PRIVATE');current=await mutateBlogPost('example',{action:'unpublish'},current.revision,paths);assert.equal(await readPublishedBlogPost('example',paths),null);assert.equal(current.record.draft.translations.en.title,'NEW PRIVATE');
+ assert.deepEqual(await deleteBlogPost('example',current.revision,paths),{deleted:true,slug:'example'});await assert.rejects(getBlogPost('example',paths),e=>e.status===404);assert.deepEqual(await readFile(path.join(paths.uploadsRoot,media.image.slice(9))),bytes);
+ await symlink(path.join(paths.uploadsRoot,media.image.slice(9)),path.join(paths.uploadsRoot,'blog/link.png'));assert.equal((await listBlogImages(paths)).length,1);
+ await assert.rejects(createBlogPost({slug:'../bad',draft:input},paths));await assert.rejects(createBlogPost({slug:'bad',draft:{...input,extra:true}},paths));
+});

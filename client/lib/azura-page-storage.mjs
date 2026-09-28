@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, open, rename, unlink } from "node:fs/promises";
+import { mkdir, open, rename, unlink, link } from "node:fs/promises";
 import path from "node:path";
 
 export function canonicalJson(value) {
@@ -10,7 +10,7 @@ export function canonicalJson(value) {
   return JSON.stringify(value);
 }
 
-export async function writePageAtomically(content, target) {
+export async function writePageAtomically(content, target, { exclusive = false } = {}) {
   await mkdir(path.dirname(target), { recursive: true });
   const temporary = path.join(path.dirname(target), `.${path.basename(target)}.${randomUUID()}.tmp`);
   let handle;
@@ -20,7 +20,10 @@ export async function writePageAtomically(content, target) {
     await handle.sync();
     await handle.close();
     handle = null;
-    await rename(temporary, target);
+    if (exclusive) {
+      await link(temporary, target);
+      await unlink(temporary);
+    } else await rename(temporary, target);
     const directory = await open(path.dirname(target), "r");
     try { await directory.sync(); } finally { await directory.close(); }
   } catch (error) {

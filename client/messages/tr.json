@@ -874,6 +874,14 @@
     "list2":"UV ışınlarından korunmak için en az 50 faktöriyel güneş kremleri kullanılmalıdır.",
     "list3":"Güneş kremi kullanmamak ciddi rahatsızlıklara sebebiyet verebilir."
    }
-  }
+  },
+
+  "BlogNews": {
+    "subtitle": "Mükemmel Kaçışınızı Keşfedin",
+    "title": "Son Haberler",
+    "readMore": "Devamını oku",
+  "empty": "Henüz yayınlanmış blog yazısı bulunmuyor.",
+    "all":"Tüm blog yazıları"
+}
     
 }

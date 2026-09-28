@@ -43,7 +43,11 @@
     "seed:gallery": "node scripts/seed-persistent-gallery.mjs",
     "test:gallery": "node --test lib/azura-gallery-storage.test.mjs lib/azura-gallery-component.test.mjs lib/azura-gallery-api.test.mjs",
     "test:gallery-http": "node --test --test-concurrency=1 lib/azura-gallery-http.test.mjs lib/azura-gallery-api-http.test.mjs",
-    "test:gallery-production": "node scripts/test-gallery-production.mjs"
+    "test:gallery-production": "node scripts/test-gallery-production.mjs",
+    "seed:blog": "node scripts/seed-persistent-blog.mjs",
+    "test:blog": "node --test lib/azura-blog-storage.test.mjs lib/azura-blog-management.test.mjs",
+    "test:blog-http": "node --test --test-concurrency=1 lib/azura-blog-http.test.mjs lib/azura-blog-api-http.test.mjs",
+    "test:blog-production": "node scripts/test-blog-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",
