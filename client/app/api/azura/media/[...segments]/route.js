@@ -1,4 +1,4 @@
-import { readBlogImage } from "@/lib/azura-homepage-media.mjs";
+import { readBlogImage, readDynamicPageImage } from "@/lib/azura-homepage-media.mjs";
 import { readGalleryImage } from "@/lib/azura-gallery-storage.mjs";
 import { readFile, realpath, stat } from "node:fs/promises";
 import path from "node:path";
@@ -12,9 +12,9 @@ const types = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png"
 
 export async function GET(_request, { params }) {
   const { segments } = await params;
-  if (Array.isArray(segments) && segments.length === 2 && ["gallery", "blog"].includes(segments[0])) {
+  if (Array.isArray(segments) && segments.length === 2 && ["gallery", "blog", "dynamic-pages"].includes(segments[0])) {
     try {
-      const { bytes, info } = await (segments[0] === "gallery" ? readGalleryImage : readBlogImage)(`/uploads/${segments[0]}/${segments[1]}`);
+      const { bytes, info } = await (segments[0] === "gallery" ? readGalleryImage : segments[0] === "blog" ? readBlogImage : readDynamicPageImage)(`/uploads/${segments[0]}/${segments[1]}`);
       return new NextResponse(bytes, { headers: { "Content-Type": info.mimeType, "Cache-Control": "public, max-age=0, must-revalidate" } });
     } catch { return new NextResponse(null, { status: 404 }); }
   }

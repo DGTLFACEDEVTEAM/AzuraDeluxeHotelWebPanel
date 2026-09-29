@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useTransition } from "react";
 // ⭐️ next/navigation yerine navigation.ts’den alıyoruz:
 import { redirect, usePathname } from "@/i18n/navigation";
+import {usePathname as useActualPathname} from "next/navigation";
+import {useDynamicPageLocale} from "@/DynamicPageLocaleContext";
+import {dynamicLocaleHref} from "@/lib/azura-pages/routes.mjs";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function LocaleSwitcherSelect({ children, defaultValue, label }) {
@@ -10,6 +13,8 @@ export default function LocaleSwitcherSelect({ children, defaultValue, label }) 
   const [isPending, startTransition] = useTransition();
   // 🔑 burada internal rota anahtarını (ör: "/aboutus") alır
   const routeKey = usePathname();
+  const dynamicPage = useDynamicPageLocale();
+  const actualPathname = useActualPathname();
 
   useEffect(() => {
     const saved = sessionStorage.getItem("scrollPosition");
@@ -23,6 +28,9 @@ export default function LocaleSwitcherSelect({ children, defaultValue, label }) 
     // scroll pozisyonunu sakla
     sessionStorage.setItem("scrollPosition", window.scrollY);
     setIsOpen(false);
+
+    const dynamicHref = dynamicLocaleHref(dynamicPage, actualPathname, lang);
+    if (dynamicHref) { window.location.assign(dynamicHref); return; }
 
     startTransition(() => {
       // Next-Intl’in redirect’i ile doğru URL’e (ör: "/de/uber-uns") yönlendirir

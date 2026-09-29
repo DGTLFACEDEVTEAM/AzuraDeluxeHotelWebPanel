@@ -2476,3 +2476,388 @@ Kuyruk yalnız **aynı Node.js sürecini** korur. Birden fazla worker/instance v
 Ziyaretçi sayfalarının tasarımı, mesajlar ve mevcut içerikler ikinci aşamada değiştirilmedi. Git durumunda görülen birinci aşama dosyaları önceki çalışmadan kalmıştır. Lago bağlantısı, canlı kurulum, commit ve deploy yapılmadı.
 
 İkinci aşamada yeniden çalıştırılan sonuçlar: blog storage/seed/model + yönetim birim testleri **3/3**; blog ziyaretçi ve yönetim production HTTP testleri **2/2**; galeri API production HTTP regresyonu **1/1**; ortak medya ve galeri yönetim regresyonları **9/9** geçti. Next.js 15.5.26 izole production build, lint ve `git diff --check` başarılı. Bu kapsamda yeni veya mevcut başarısız test kalmadı; tüm proje test paketi çalıştırılmadı. Gerçek tarayıcı/piksel testi yapılmadı; HTTP testleri geçici içerik/uploads ve ayrı build dizininde çalıştı. Gerçek kullanıcı içeriğine test verisi yazılmadı.
+
+## Dinamik sayfalar — ziyaretçi gösterimi, ilk aşama
+
+Önce Azura yalnızca kodda tanımlı sayfaları gösteriyordu. Şimdi tek segmentli
+`/[locale]/<slug>` adresi, Azura'nın kalıcı dosyasındaki **published** kopyasını
+okur. Gelecekte Lago editörü Azura yönetim API'sine yazacak; ziyaretçi sitesi
+Lago'dan veri çekmeyecek. Yönetim/yükleme/geçmiş API'leri aşağıdaki ikinci aşamada uygulanmıştır; Lago panel
+bağlantısı yoktur. Yayımlanmış görünür sayfalar header menüsüne aşağıdaki menü entegrasyonuyla eklenir.
+
+### Kurulum ve dosyalar
+
+Yerel: `npm run seed:dynamic-pages -- --local`.
+Production: `AZURA_CONTENT_ROOT=/kalici/azura-content AZURA_UPLOADS_ROOT=/kalici/azura-uploads npm run seed:dynamic-pages`.
+Seed yalnızca `pages/` ve `dynamic-pages/` dizinlerini oluşturur; örnek sayfa,
+JSON veya görsel yazmaz. Tekrar çalışması mevcut verileri değiştirmez.
+Kayıt: `${AZURA_CONTENT_ROOT}/pages/<UUID>.json`; medya:
+`${AZURA_UPLOADS_ROOT}/dynamic-pages/<dosya>` → `/uploads/dynamic-pages/<dosya>`.
+Boş kurulum geçerlidir. Kaybolmuş tek sayfa 404; bozuk kayıt açık hatadır.
+
+- `lib/azura-pages/schema.mjs`, `block-definitions.mjs`, `section-renderer-registry.mjs`: Lago'nun içerikten bağımsız editör sözleşmesi, fabrika ve renderer tanımları.
+- `lib/azura-pages/validation.mjs`: kesin alan, dil, tarih, kimlik, varyant ve bağlantı doğrulaması.
+- `lib/azura-pages/routes.mjs`: tek slug normalizasyonu, ayrılmış adresler ve dil URL'leri.
+- `lib/azura-dynamic-pages-storage.mjs`: güvenli dosya okuma, published seçimi, çakışma ve görsel denetimi, menü okuyucusu.
+- `lib/azura-dynamic-pages-content.js`: server-only giriş.
+- `app/[locale]/[...rest]/page.js`: tek segmentli yayın ve metadata.
+- `app/[locale]/_dynamic-page/*`: yalnız dinamik sayfalara ait veri odaklı gösterimler; mevcut statik bileşenlerin yerine geçmez.
+- `DynamicPageLocaleContext.jsx`, `LocaleSwitcherSelect.jsx`, locale layout: mevcut header dil seçicisine aynı dinamik sayfanın hedef slug'ını iletir. Statik yönlendirme korunur.
+- Ortak medya okuyucusu ve salt okunur medya route'u: yalnız yeni dynamic-pages kapsamını ekler.
+- `scripts/seed-persistent-dynamic-pages.mjs`: veri ezmeyen dizin kurulumu.
+- `lib/azura-dynamic-pages*.test.mjs` ve `scripts/test-dynamic-pages-production.mjs`: geçici veriler, izole build/HTTP/regresyonlar.
+
+### Kesin kayıt ve sayfa sözleşmesi
+
+```js
+{
+  storageVersion: 2,
+  id: "UUID", createdAt: "ISO UTC", updatedAt: "ISO UTC",
+  publishedAt: null /* veya ISO UTC */,
+  history: [],
+  draft: Page /* status: "draft" */,
+  published: null /* veya Page, status: "published" */
+}
+```
+
+`Page` tam alanları:
+```js
+{
+  id: "aynı UUID", schemaVersion: 1, template: "standard",
+  slugs: {tr: "...", en: "...", de: "...", ru: "..."},
+  status: "draft" /* veya published */, showContactSection: false,
+  hero: {image: "", overlay: true, translations: {
+    // Her dil: {eyebrow, title, imageAlt}
+  }},
+  navigation: {visible: true, order: 100, translations: {
+    // Her dil: {label}
+  }},
+  seo: { /* Her dil: {title, description} */ },
+  sections: [], createdAt: "ISO UTC", updatedAt: "ISO UTC"
+}
+```
+
+Bütün translations/seo nesneleri tam `tr,en,de,ru` içerir. Metinler düz
+string'dir; boş değerler editörün boş alanlarıyla uyumludur, boşluklar korunur.
+Metin sınırı 100.000 karakter, kayıt dosyası sınırı 4 MiB'dir (geçmiş dahil).
+Kontrol karakterleri reddedilir. Tarihler `YYYY-MM-DDTHH:mm:ss.sssZ` biçimindedir.
+History öğesi Lago ile aynı:
+`{versionId,createdAt,action:"draft-save",createdBy:null|{id,username,displayName,role},wasPublished,draft}`.
+Geçmiş doğrulanır ve ziyaretçiye verilmez; yönetim işlemleri aşağıda açıklanır.
+Bilinmeyen/eksik alanlar reddedilir. Kayıt kimliği ve dosya adı UUID eşleşmelidir.
+
+Her bölüm `{id,type,enabled,translations,...alanlar,variant?}` içerir. Bölüm
+sırası sections dizisidir; enabled=false gösterilmez. Aşağıdaki metin alanları
+her dilde bulunur; başka tip/varyant kabul edilmez.
+
+| Tip | Varyant | Ortak alanlar | Her dilde metin alanları |
+|---|---|---|---|
+| intro | centered | — | eyebrow,title,text |
+| imageText | imageLeft / imageRight | image,imagePosition:left/right | eyebrow,title,text,imageAlt,buttonText,buttonHref |
+| twoAnimationImage | overlap | backgroundImage,foregroundImage | eyebrow,title,text,text2,backgroundImageAlt,foregroundImageAlt,buttonText,buttonHref |
+| spaInfo | splitImages | leftImage,rightImage | eyebrow,title,text,leftEyebrow,leftTitle,leftText,leftImageAlt,rightEyebrow,rightTitle,rightText,rightItems,rightImageAlt |
+| otherOptions | carousel | options | eyebrow,title,buttonText |
+| gallery | horizontal | images | eyebrow,title,text |
+| carousel | centered | images | eyebrow,title,text |
+| callToAction | image | image,overlay | eyebrow,title,text,imageAlt,buttonText,buttonHref |
+| cardCollection | grid / carousel | displayMode:grid/carousel,cards | eyebrow,title,text |
+
+`images` öğesi: `{id,src,order,translations:{<dil>:{imageAlt}}}`.
+`cards` öğesi: `{id,image,order,translations:{<dil>:{title,text,imageAlt,buttonText,buttonHref}}}`.
+`options` öğesi: `{id,image,order,translations:{<dil>:{eyebrow,title,size,capacity,text,imageAlt,buttonHref}}}`.
+Koleksiyonlar boş veya değişken uzunlukta olabilir. Kimlikler (en fazla 128
+karakter) ve negatif olmayan tam sayı order değerleri koleksiyon içinde
+benzersizdir. Görseller string olarak kalır; editör uyumu için zorunlu ölçü
+nesnesine dönüştürülmez. Gerçek tür/ölçü sunucuda denetlenir.
+
+### Yayın, URL, dil ve güvenlik
+
+Yalnız published metinleri, medya ve SEO gösterilir; değişen draft canlı
+kopyayı etkilemez. `force-dynamic` ile dosya değişikliği rebuild gerektirmez.
+Aynı dilde aynı published slug'a sahip iki kayıt açık hata üretir.
+
+Slug NFC Unicode normalizasyonu + dilin küçük harf dönüşümünü kullanır;
+harf/rakam ve tek tire ayırıcıları, en fazla 160 karakter kabul edilir.
+Saklanan slug zaten normalleştirilmiş olmalıdır. next-intl rewrite sonrası kodlu kalabilen route parametresi sınırda bir kez
+çözülür; sonuçta kalan yüzde, slash ve traversal reddedilir. Depolanan slug
+üzerinde URL-decode uygulanmaz.
+URL üretiminde encodeURIComponent kullanılır. Büyük harfle gelen geçerli
+adres aynı normalize edilmiş sayfayı bulur; otomatik canonical redirect yoktur.
+Statik route kökleri, yerelleştirilmiş karşılıkları ve panel/api/uploads/_next
+alanları tüm dillerde ayrılmıştır. İç içe dinamik adres desteklenmez;
+`/news/[slug]` ve statik route'lar korunur.
+
+Dil seçici aynı sayfanın hedef dil slug'ına gider. SEO/hero/bölümler seçilen
+dilin bütün nesnesini kullanır; farklı dillerden alan birleştirmez. Dört dil
+zorunlu olduğundan boş çeviri otomatik başka dil metniyle doldurulmaz.
+Metadata başlığı: seçili seo.title → hero.title → `Azura Deluxe Hotel`.
+`showContactSection` yalnız mevcut ContactSection2 gösterimini koşullandırır.
+
+Bağlantılar yalnız yerel `/...`, `#anchor` veya kimlik bilgisi içermeyen
+`https://...` olabilir; javascript/data/protocol-relative URL reddedilir.
+İçerik HTML olarak çalıştırılmaz. Medya yalnız dynamic-pages kapsamında gerçek
+JPEG/PNG/WebP, 8 MiB ve 16 milyon piksel sınırındadır; symlink/dizin dışına
+çıkma reddedilir. Diğer sayfa/galeri klasörleri otomatik yetkilendirilmez.
+
+### İlk aşamanın entegrasyon notları (API ikinci aşamada eklendi)
+
+Lago formu yukarıdaki alan/blok sözleşmesini kullanabilir; medya seçicisi Azura
+kapsamına ve desteklenen türlere sınırlanmalı. Aşağıdaki yönetim API'sinde kalıcı
+UUID ile liste/oluşturma/okuma/taslak/yayın/yayından kaldırma/silme, Bearer yetki,
+If-Match/revision, kilit içinde yeniden okuma ve atomik kayıt gerekir. Geçmiş
+oluşturma/geri yükleme ikinci aşamada uygulanmıştır; fiziksel görseller otomatik
+silinmez. Yükleme API'si aşağıda belgelenmiştir.
+
+`listDynamicPageNavigation(locale)` yalnız yayımlanmış görünür sayfaları
+`{id,label,href,order}` olarak verir. Menü entegrasyonu bu sonucu iki header'a
+sunucu prop'u olarak aktarır; dinamik bağlantılar mevcut sabit bağlantılardan sonra gelir.
+
+Doğrulama komutları: `npm run test:dynamic-pages`,
+`npm run test:dynamic-pages-production`, `npm run lint`, `git diff --check`.
+Production betiği ayrı geçici checkout/build ve içerik/uploads kullanır;
+çalışan geliştirme sunucusunun .next çıktısına veya gerçek içeriğe yazmaz.
+
+Bu uygulamanın doğrulama notu: dinamik sayfa birim testleri 5/5, dört dilde
+production HTTP/yayın/restart testi başarılı; Next.js 15.5.26 production build,
+lint ve diff kontrolü geçti. Blog birim 3/3, galeri birim 6/6 ve anasayfa
+birim/API 58/58 başarılı. Oda birim testlerinde 8/11 geçti; üç eski metin
+eşliği beklentisi mevcut `azure` eklenmiş içeriklerle uyuşmuyor. Oda HTTP
+regresyonu Fantasy detayına ulaşınca eksik fixture nedeniyle 500 beklenmedik
+sonucuna düşüyor: fixture yalnız rooms/homepage/shared verisini kuruyor,
+Fantasy kalıcı detay dosyasını kurmuyor. Bunları geçirmek için içerikler veya
+mevcut testler değiştirilmedi. Gerçek tarayıcı/piksel ve etkileşimli carousel
+karşılaştırması yapılmadı; dil bağlantısı birim ve dört dil HTTP düzeyinde
+kontrol edildi.
+
+## Dinamik sayfalar — ikinci aşama: uygulanmış yönetim API'leri
+
+Bu bölüm artık öneri değildir. Lago bağlantısı/header menüsü/arayüz yapılmadı;
+Azura'nın aşağıdaki sunucular arası uçları uygulandı. Bütün yanıtlar
+`Cache-Control: no-store` ve bütün uçlar
+`Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister. Bu token bir insan
+kullanıcısının rolü değildir; Lago proxy'si kendi rollerini ayrıca denetlemelidir.
+
+### Tam istek sözleşmesi
+
+`POST /api/azura/pages`, `Content-Type: application/json`, örnek eksiksiz gövde:
+
+```json
+{
+  "draft": {
+    "schemaVersion": 1,
+    "template": "standard",
+    "slugs": {"tr":"ozel-konaklama","en":"special-stay","de":"besonderer-aufenthalt","ru":"особый-отдых"},
+    "showContactSection": false,
+    "hero": {
+      "image": "",
+      "overlay": true,
+      "translations": {
+        "tr":{"eyebrow":"","title":"Özel konaklama","imageAlt":""},
+        "en":{"eyebrow":"","title":"Special stay","imageAlt":""},
+        "de":{"eyebrow":"","title":"Besonderer Aufenthalt","imageAlt":""},
+        "ru":{"eyebrow":"","title":"Особый отдых","imageAlt":""}
+      }
+    },
+    "navigation": {
+      "visible": false,
+      "order": 100,
+      "translations": {"tr":{"label":""},"en":{"label":""},"de":{"label":""},"ru":{"label":""}}
+    },
+    "seo": {
+      "tr":{"title":"","description":""},
+      "en":{"title":"","description":""},
+      "de":{"title":"","description":""},
+      "ru":{"title":"","description":""}
+    },
+    "sections": []
+  }
+}
+```
+
+Başarı **201**: `{record,revision}`. `record` yukarıdaki storageVersion:2 tam
+kayıttır. UUID, createdAt/updatedAt sunucuda üretilir; `draft.status="draft"`,
+`published=null`, `publishedAt=null`, `history=[]`. İstemci draft içindeki
+`id,status,createdAt,updatedAt` alanlarını göndermez; bunlar salt okunurdur.
+İstemci kökte history/published/id gönderirse de 400 döner. Bloklar ve dört dil
+alanları birinci aşamadaki sözleşmenin aynısıdır; ikinci editör şeması yoktur.
+
+| Uç | İstek gövdesi | Başarılı yanıt |
+|---|---|---|
+| GET /api/azura/pages | yok | 200 `{pages:[{record,revision}]}` |
+| POST /api/azura/pages | yukarıdaki `{draft}` | 201 `{record,revision}` |
+| GET /api/azura/pages/[id] | yok | 200 `{record,revision}` |
+| PUT /api/azura/pages/[id] | `{action:"save",draft}` | 200 `{record,revision}` |
+| PUT /api/azura/pages/[id] | `{action:"publish"}` | 200 `{record,revision}` |
+| PUT /api/azura/pages/[id] | `{action:"unpublish"}` | 200 `{record,revision}` |
+| DELETE /api/azura/pages/[id] | **yok** | 200 `{deleted:true,record,revision}` |
+| GET /api/azura/pages/[id]/history | yok | 200 `{record,revision}`; geçmiş `record.history` içinde |
+| POST /api/azura/pages/[id]/history/[versionId]/restore | **yok** | 200 `{record,revision}` |
+
+DELETE yanıtındaki record/revision silinen son kaydın teyididir; dosyada bir
+tombstone veya yeniden kullanılabilir revision saklanmaz. Sonraki GET 404'tür.
+Silme geri dönüşüm kutusu oluşturmaz; bu aşamada fiziksel JSON kaydını kaldırır,
+görselleri **silmez**.
+
+PUT, DELETE ve restore her zaman `If-Match: "<64 küçük harf SHA-256>"` ister.
+PUT ayrıca application/json ister. Restore/DELETE `{}` dahil gövde kabul etmez.
+İşlem başına bilinmeyen/eksik alanlar reddedilir. Save, publish ve unpublish
+ayrı isteklerdir; publish yalnız daha önce kaydedilmiş taslağı yayınlar.
+
+Tam save isteği, yukarıdaki POST nesnesinin aynı draft içeriğiyle:
+```js
+const response = await fetch(`/api/azura/pages/${id}`, {
+  method: "PUT",
+  headers: {
+    Authorization: `Bearer ${serviceToken}`,
+    "Content-Type": "application/json",
+    "If-Match": `"${revision}"`
+  },
+  body: JSON.stringify({action: "save", draft: createRequest.draft})
+});
+const saved = await response.json(); // {record, revision}
+```
+Yayın isteğinde gövde tam olarak `{"action":"publish"}`, yayından kaldırmada
+`{"action":"unpublish"}` olur. Her başarılı cevabın revision'ı bir sonraki
+mutasyon başlığında kullanılmalıdır.
+
+### Revision, atomik kayıt ve adres kuralları
+
+Revision bütün record'un (draft, published, history, sunucu zamanları dahil)
+kanonik JSON SHA-256 değeridir; dosyaya revision yazılmaz. Hatta aynı taslağın
+tekrar kaydı updatedAt nedeniyle revision değiştirir. İçerik aynıysa gereksiz
+geçmiş snapshot'ı oluşturulmaz.
+
+Bütün sayfa dosyaları **aynı pages dizini kuyruğunu** kullanır. Oluşturma,
+kayıt, yayın, restore ve silme sırasında dosyalar kilit altında yeniden okunur;
+revision, şema, gerçek medya ve slug denetimlerinden sonra mevcut ortak atomik
+geçici dosya/fsync/rename mekanizması çalışır. Yeni dosyada exclusive kayıt
+kullanılır. Hata kuyruğu kilitlemez. Bu koruma yalnız **aynı Node.js süreci**
+içindir; birden fazla worker/container veya dışarıdan dosya yazan araç arasında
+kilit sağlamaz. Böyle bir deployment için ortak işlem/kilit sistemi gerekir.
+Seed veri yazmaz ama kurulum/manuel dosya taşıma işlemleri canlı yönetim
+mutasyonlarıyla eşzamanlı yürütülmemelidir.
+
+Slug rezervasyonu Lago'daki gibi diğer bütün kayıtların **draft + published**
+kopyalarını kapsar; kendi iki kopyası birbirini engellemez. Oluşturma/save/
+restore/publish denetler. Eski yayın adresi, taslak adresi değişse bile yeni
+sürüm yayınlanana veya sayfa yayından kaldırılana kadar ayrılmış kalır.
+Yayından kaldırmada mevcut taslağın adresi hâlâ ayrılmıştır. Silme iki kopyanın
+rezervasyonunu kaldırır. Başlangıçta dışarıdan çakışan iki taslak yazılmışsa
+iki yayın isteği de 409 alabilir; rastgele birine öncelik verilmez.
+
+Başarılı işlemler önceki ve sonraki published dört dil yollarını yeniden
+ doğrular. Slug değişikliği yayınlanınca eski adres 404; yönlendirme geçmişi
+oluşturulmaz. Save/restore eski canlı adresi, metadata'yı, dil geçişini ve
+navigation okuyucusunu değiştirmez. Yayından kaldırma/silme ziyaretçide 404'tür.
+
+### Geçmiş ve restore
+
+Lago alanları korunur:
+`{versionId,createdAt,action:"draft-save",createdBy:null,wasPublished,draft}`.
+- İlk oluşturma geçmiş oluşturmaz.
+- Anlamlı save önceki taslağı snapshot yapar (yeni taslağı değil).
+- Publish/unpublish snapshot oluşturmaz; canlı kopya ayrı tutulur.
+- Restore seçilen sürümü önce belleğe alır, mevcut taslağı snapshot yapar ve
+  seçilen içeriği güncel sunucu zamanıyla yalnız taslağa koyar. Canlı kopya aynı kalır.
+- Başka sayfanın versionId'si 404; restore medya/slug/şema denetiminden geçer.
+- Varsayılan **3** snapshot; `AZURA_PAGE_HISTORY_LIMIT` tam sayı **1–100**.
+  Sonraki snapshot en yeniyi öne ekleyip sınırı aşan eskileri düşürür.
+- createdBy **null**: servis tokenından sahte insan/rol bilgisi türetilmez.
+
+### Medya sözleşmesi
+
+`GET /api/azura/pages/images` → 200:
+```json
+{"images":[{"image":"/uploads/dynamic-pages/dynamic-pages-UUID.png","mimeType":"image/png","size":1234,"width":800,"height":600,"modifiedAt":"2026-09-29T00:00:00.000Z"}]}
+```
+`POST /api/azura/pages/images`: tek `file` alanlı multipart/form-data → 201:
+```json
+{"image":"/uploads/dynamic-pages/dynamic-pages-UUID.png","mimeType":"image/png","size":1234,"width":800,"height":600}
+```
+Adı sunucu üretir; dosya üzerine yazılmaz. image değeri mevcut string hero/
+blok image/src alanına verilir; form sözleşmesi ölçü nesnesine dönüştürülmez.
+Yüklemek JSON/taslak/yayın oluşturmaz. Görseli draft save ile seçip ayrı publish
+isteğiyle yayınlamak gerekir. Sayfa/blok silme ve restore dosya silmez.
+Diğer sayfa/galeri/blog medya dizinleri kabul edilmez. Dosya boyutu yalnız
+FileHandle.stat() sonucuna dayanmaz; gerçek okunan baytlar ayrıca denetlenir.
+
+### Sınırlar, hatalar ve kurulum
+
+- JSON istek: **128 KiB**; Content-Length olmasa da akış sırasında sınırlı.
+- Her metin: **100.000 karakter**, önceki şema sınırı; paragraf satır sonları
+  ve geçerli boşluklar korunur. HTML/JS çalıştırılmaz.
+- Sayfa: **100 bölüm**, bölümdeki her koleksiyon **200 öğe**; dosya/geçmiş dahil
+  **4 MiB**. HTTP 128 KiB sınırı bir isteğin gerçek kullanılabilir kapasitesini
+  ayrıca sınırlar; bu sayılar başlangıç içerik sayısına bağlı değildir.
+- Koleksiyon kimlikleri en fazla 128 karakter; sıra negatif olmayan benzersiz
+  tam sayıdır. Dört dil ve bilinen tip/varyantlar zorunludur.
+- Görsel: JPEG/PNG/WebP, **8 MiB**, **16 milyon piksel**; multipart toplamı
+  **8 MiB + 128 KiB** ve akış sırasında denetlenir. Gerçek çözülebilirlik/tür/
+  ölçü, güvenli dizin ve symlink kontrolleri korunur.
+- 400 geçersiz JSON/şema/kimlik/If-Match; 401 yetkisiz; 404 bulunamayan kayıt/
+  sürüm; 409 eski revision veya slug çakışması; 413 boyut; 415 Content-Type/
+  görsel türü; 428 eksik If-Match; 503 eksik token/kurulum veya geçersiz geçmiş
+  sınırı. Başarısız doğrulama/revision isteği dosyayı değiştirmez.
+
+Yerel kurulum:
+```sh
+npm run seed:dynamic-pages -- --local
+```
+Production kurulum (**--local kullanılmaz**):
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run seed:dynamic-pages
+```
+Aynı dizin değişkenlerini ve ayrı servis tokenını çalışan Next sunucusuna verin.
+Kurulmamış pages/dynamic-pages dizinleri yönetim uçlarında anlaşılır 503 verir.
+Bu geliştirme ortamında canlı production kurulumu veya Lago bağlantısı yapılmadı.
+
+İkinci aşama dosyaları: `azura-dynamic-pages-management.mjs` ortak kuyruk ve
+yaşam döngüsü; `azura-dynamic-pages-api.js` yetki/HTTP/revalidation; beş route
+ailesi; `azura-json-request.mjs` blog ile paylaşılan sınırlı JSON okuyucu;
+ortak medya modülündeki yeni scope wrapper'ları; yönetim birim/HTTP testleri.
+İlk aşama okuyucusu yönetim için ham kayıt okuyucusunu paylaşır; ziyaretçi
+okuyucusu yalnız published döndürmeye devam eder.
+
+İkinci aşamada yeniden çalıştırılan doğrulama: dinamik okuyucu + yönetim birim
+**10/10**, dinamik ziyaretçi + yönetim production HTTP **2/2**, blog birim
+**3/3** ve HTTP **2/2**, galeri birim **6/6** ve API HTTP **1/1**, ortak medya
+**7/7**, anasayfa HTTP **3/3** geçti. Next.js 15.5.26 izole production build,
+lint ve `git diff --check` başarılı. Toplu production betiği mevcut oda HTTP
+fixture'ının Fantasy verisini kurmaması nedeniyle yine başarısız durum koduyla
+biter; yeni dinamik API testleri başarısız değildir. Gerçek kullanıcı dosyaları
+bu testlerde değiştirilmedi. Gerçek tarayıcı/piksel testi yapılmadı.
+
+Lago proxy uyarlaması: formun aynı içerik alanlarından salt okunur
+id/status/createdAt/updatedAt çıkarılıp `draft` gönderilmeli; dönen
+`record.draft` editöre, `record.history` geçmiş arayüzüne aktarılmalı. Save ile
+publish ayrı isteklerdir ve her adım yeni revision kullanmalıdır. Lago'nun
+oturum/rol/edit-lock kodu Azura'ya taşınmadı. İstemci servis tokenını almamalı;
+Lago sunucusu Azura'ya Bearer eklemelidir.
+
+
+### Yayımlanmış dinamik sayfaların header menüsüne bağlanması
+
+Locale layout aynı server-only `listDynamicPageNavigation(locale)` okuyucusunu
+bir kez çağırır, sonucu Header ve HeaderWhite'a geçirir. Her header'ın mevcut
+responsive açılır menüsü masaüstü ve mobilde aynı listeyi kullanır. Sabit
+bağlantılar/sıraları korunur; dinamik bağlantılar listenin sonuna eklenir.
+Sıralama navigation.order, eşitlikte kalıcı UUID üzerindendir. Etiket mevcut
+okuyucudaki gibi seçili dilin label → hero.title → slug sırasını kullanır;
+çeviriler arasında yeni bir fallback eklenmez.
+
+DynamicNavigationLinks hazır /locale/slug href'ini doğrudan next/link'e verir;
+next-intl ile tekrar önek eklemez. Tıklama menüyü kapatır. Gizli published sayfa
+menüde görünmez ama doğrudan adresinden açılır. Taslak görünürlük/etiket/adres
+ve sıra değişiklikleri menüyü etkilemez. Yayından kaldırma, silme veya görünmez
+sürümü yayınlama ilgili bağlantıyı kaldırır.
+
+Layout'ta connection() ile menü istek sırasında okunur; bunun sonucu locale
+altındaki sayfalar build-time statik menüye bağlı kalmaz, sunucuda render edilir.
+Published kopya değiştiğinde mevcut yönetim akışı dört locale layout'unu da
+revalidate eder. API sözleşmesi değişmedi. Zaten açık sekmelere canlı push yoktur;
+güncel sunucu menüsü yeni istek/sayfa yenilemesinde alınır.
+
+Bu adımın dosyaları: locale layout, Header.jsx, HeaderWhite.jsx,
+DynamicNavigationLinks.jsx, azura-dynamic-pages-api.js, navigation birim testi,
+dinamik API HTTP testi ve package test komutu. Depolama modeli/okuyucu ve
+server-only giriş yeniden kullanıldı; yeni API oluşturulmadı.

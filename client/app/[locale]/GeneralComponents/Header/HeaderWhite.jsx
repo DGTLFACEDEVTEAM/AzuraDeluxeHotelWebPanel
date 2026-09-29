@@ -1,5 +1,6 @@
 "use client"
 
+import DynamicNavigationLinks from "./DynamicNavigationLinks";
 import React, { useState, useRef, useEffect } from 'react'
 import { usePathname } from "next/navigation"; // Sayfa değişimini takip etmek için
 import Image from 'next/image'
@@ -17,7 +18,7 @@ import { RxCross2 } from "react-icons/rx";
 import LangSwitcher from '@/LangSwitcher';
 import {useTranslations} from 'next-intl';
 
-export default function HeaderWhite() {
+export default function HeaderWhite({ dynamicNavigation = [] }) {
   const t = useTranslations('Header');
     // 1 ekran scrolldan sonra headerin gözükmesi için
     const [showHeader, setShowHeader] = useState(false);
@@ -305,7 +306,9 @@ export default function HeaderWhite() {
           <Link href="/connect" className="block text-lagoBlack font-normal leading-normal w-[70%] md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#000000] lg:border-none">
           {t("contact")}
           </Link>
-        </nav>
+          <DynamicNavigationLinks items={dynamicNavigation} onNavigate={() => setIsMenuOpen(false)}
+              className="block text-lagoBlack font-normal leading-normal w-[70%] md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#000000] lg:border-none" />
+          </nav>
 
         {/* TELEFON + BUTON ALANI */}
         <div className="ml-2 px-4 w-full lg:max-w-[392px] flex flex-col items-center font-jost">

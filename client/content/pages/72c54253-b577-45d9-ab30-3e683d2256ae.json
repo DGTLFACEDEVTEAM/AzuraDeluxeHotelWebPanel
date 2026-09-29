@@ -1,0 +1,354 @@
+{
+  "storageVersion": 2,
+  "id": "72c54253-b577-45d9-ab30-3e683d2256ae",
+  "createdAt": "2026-09-29T11:27:38.712Z",
+  "updatedAt": "2026-09-29T11:32:29.386Z",
+  "publishedAt": "2026-09-29T11:32:29.386Z",
+  "history": [],
+  "draft": {
+    "schemaVersion": 1,
+    "template": "standard",
+    "slugs": {
+      "tr": "newpagebla",
+      "en": "newpageblaen",
+      "de": "newpageblade",
+      "ru": "newpageblaru"
+    },
+    "showContactSection": true,
+    "hero": {
+      "image": "/uploads/dynamic-pages/dynamic-pages-912fbd91-cf51-419b-9126-aa5cc8f2b03e.webp",
+      "overlay": true,
+      "translations": {
+        "tr": {
+          "eyebrow": "newpagebla Azura Deluxe Hotel",
+          "title": "newpagebla newpagebla",
+          "imageAlt": " newpagebla newpagebla newpageblanewpagebla"
+        },
+        "en": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "New Page",
+          "imageAlt": ""
+        },
+        "de": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Neue Seite",
+          "imageAlt": ""
+        },
+        "ru": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Новая страница",
+          "imageAlt": ""
+        }
+      }
+    },
+    "navigation": {
+      "visible": true,
+      "order": 100,
+      "translations": {
+        "tr": {
+          "label": "newpagebla"
+        },
+        "en": {
+          "label": "New Page"
+        },
+        "de": {
+          "label": "Neue Seite"
+        },
+        "ru": {
+          "label": "Новая страница"
+        }
+      }
+    },
+    "seo": {
+      "tr": {
+        "title": "",
+        "description": ""
+      },
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "de": {
+        "title": "",
+        "description": ""
+      },
+      "ru": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "sections": [
+      {
+        "id": "spa-info-c120c4d9-d4ac-49b3-8b6e-a7127dfb9835",
+        "type": "spaInfo",
+        "enabled": true,
+        "leftImage": "",
+        "rightImage": "",
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          }
+        }
+      },
+      {
+        "id": "card-collection-c59b304d-9b91-44ae-a2d0-34deaddd8b18",
+        "type": "cardCollection",
+        "enabled": true,
+        "displayMode": "grid",
+        "cards": [],
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          }
+        }
+      }
+    ],
+    "id": "72c54253-b577-45d9-ab30-3e683d2256ae",
+    "status": "draft",
+    "createdAt": "2026-09-29T11:27:38.712Z",
+    "updatedAt": "2026-09-29T11:32:28.762Z"
+  },
+  "published": {
+    "schemaVersion": 1,
+    "template": "standard",
+    "slugs": {
+      "tr": "newpagebla",
+      "en": "newpageblaen",
+      "de": "newpageblade",
+      "ru": "newpageblaru"
+    },
+    "showContactSection": true,
+    "hero": {
+      "image": "/uploads/dynamic-pages/dynamic-pages-912fbd91-cf51-419b-9126-aa5cc8f2b03e.webp",
+      "overlay": true,
+      "translations": {
+        "tr": {
+          "eyebrow": "newpagebla Azura Deluxe Hotel",
+          "title": "newpagebla newpagebla",
+          "imageAlt": " newpagebla newpagebla newpageblanewpagebla"
+        },
+        "en": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "New Page",
+          "imageAlt": ""
+        },
+        "de": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Neue Seite",
+          "imageAlt": ""
+        },
+        "ru": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Новая страница",
+          "imageAlt": ""
+        }
+      }
+    },
+    "navigation": {
+      "visible": true,
+      "order": 100,
+      "translations": {
+        "tr": {
+          "label": "newpagebla"
+        },
+        "en": {
+          "label": "New Page"
+        },
+        "de": {
+          "label": "Neue Seite"
+        },
+        "ru": {
+          "label": "Новая страница"
+        }
+      }
+    },
+    "seo": {
+      "tr": {
+        "title": "",
+        "description": ""
+      },
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "de": {
+        "title": "",
+        "description": ""
+      },
+      "ru": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "sections": [
+      {
+        "id": "spa-info-c120c4d9-d4ac-49b3-8b6e-a7127dfb9835",
+        "type": "spaInfo",
+        "enabled": true,
+        "leftImage": "",
+        "rightImage": "",
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": "",
+            "leftEyebrow": "",
+            "leftTitle": "",
+            "leftText": "",
+            "leftImageAlt": "",
+            "rightEyebrow": "",
+            "rightTitle": "",
+            "rightText": "",
+            "rightItems": "",
+            "rightImageAlt": ""
+          }
+        }
+      },
+      {
+        "id": "card-collection-c59b304d-9b91-44ae-a2d0-34deaddd8b18",
+        "type": "cardCollection",
+        "enabled": true,
+        "displayMode": "grid",
+        "cards": [],
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          }
+        }
+      }
+    ],
+    "id": "72c54253-b577-45d9-ab30-3e683d2256ae",
+    "status": "published",
+    "createdAt": "2026-09-29T11:27:38.712Z",
+    "updatedAt": "2026-09-29T11:32:29.386Z"
+  }
+}

@@ -1,3 +1,6 @@
+import {connection} from "next/server";
+import {listDynamicPageNavigation} from "@/lib/azura-dynamic-pages-content";
+import {DynamicPageLocaleProvider} from "@/DynamicPageLocaleContext";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Header from "./GeneralComponents/Header/Header";
@@ -49,6 +52,8 @@ export default async function RootLayout({ children, params }) {
   
     // 2) Ardından mesajları yükleyip client’a iletebiliriz
     const messages = await getMessages()
+    await connection();
+    const dynamicNavigation = await listDynamicPageNavigation(locale);
 
   return (
     <html lang={locale}>
@@ -57,13 +62,15 @@ export default async function RootLayout({ children, params }) {
       >
           <meta name="theme-color" content="#FBFBFBCC" />
           <NextIntlClientProvider locale={locale} messages={messages}>
-        <Header />
-        <HeaderWhite/>
+        <DynamicPageLocaleProvider>
+        <Header dynamicNavigation={dynamicNavigation} />
+        <HeaderWhite dynamicNavigation={dynamicNavigation} />
        
         {children}
         <BookNow/>
         <CookiePopup/>
         <Footer />
+        </DynamicPageLocaleProvider>
         </NextIntlClientProvider>
       </body>
     </html>

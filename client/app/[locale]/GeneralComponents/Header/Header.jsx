@@ -1,5 +1,6 @@
 "use client";
 
+import DynamicNavigationLinks from "./DynamicNavigationLinks";
 import React, { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation"; // Sayfa değişimini takip etmek için
 import Image from "next/image";
@@ -18,7 +19,7 @@ import { RxCross2 } from "react-icons/rx";
 import LangSwitcher from "@/LangSwitcher";
 import {useTranslations} from 'next-intl';
 
-export default function Header() {
+export default function Header({ dynamicNavigation = [] }) {
   const t = useTranslations('Header');
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -340,6 +341,8 @@ export default function Header() {
             >
               {t("contact")}
             </Link>
+            <DynamicNavigationLinks items={dynamicNavigation} onNavigate={() => setIsMenuOpen(false)}
+              className="block text-white font-normal leading-normal w-[70%] md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none" />
           </nav>
 
           {/* TELEFON + BUTON ALANI */}

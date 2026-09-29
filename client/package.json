@@ -47,7 +47,11 @@
     "seed:blog": "node scripts/seed-persistent-blog.mjs",
     "test:blog": "node --test lib/azura-blog-storage.test.mjs lib/azura-blog-management.test.mjs",
     "test:blog-http": "node --test --test-concurrency=1 lib/azura-blog-http.test.mjs lib/azura-blog-api-http.test.mjs",
-    "test:blog-production": "node scripts/test-blog-production.mjs"
+    "test:blog-production": "node scripts/test-blog-production.mjs",
+    "seed:dynamic-pages": "node scripts/seed-persistent-dynamic-pages.mjs",
+    "test:dynamic-pages": "node --test lib/azura-dynamic-pages.test.mjs lib/azura-dynamic-pages-management.test.mjs lib/azura-dynamic-navigation.test.mjs",
+    "test:dynamic-pages-http": "node --test --test-concurrency=1 lib/azura-dynamic-pages-http.test.mjs lib/azura-dynamic-pages-api-http.test.mjs",
+    "test:dynamic-pages-production": "node scripts/test-dynamic-pages-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

@@ -4,15 +4,9 @@ import {hasValidServiceToken,serviceTokenConfigured} from './azura-service-auth.
 import {parseIfMatch,HomepageContentError,LOCALES} from './azura-homepage-storage.mjs';
 import {BlogContentError} from './azura-blog-storage.mjs';
 import {listBlogPosts,getBlogPost,createBlogPost,mutateBlogPost,deleteBlogPost} from './azura-blog-management.mjs';
-const LIMIT=128*1024;
+import {readJsonRequest} from './azura-json-request.mjs';
 const json=(body,status=200)=>NextResponse.json(body,{status,headers:{'Cache-Control':'no-store'}});
-async function body(request){
- if(!/^application\/json(?:\s*;|\s*$)/i.test(request.headers.get('content-type')||''))throw new BlogContentError('Content-Type application/json olmalı.',415);
- if(Number(request.headers.get('content-length'))>LIMIT)throw new BlogContentError('İstek 128 KiB sınırını aşıyor.',413);
- const reader=request.body?.getReader(),chunks=[];let length=0;
- if(reader)while(true){const {done,value}=await reader.read();if(done)break;length+=value.byteLength;if(length>LIMIT){await reader.cancel();throw new BlogContentError('İstek 128 KiB sınırını aşıyor.',413);}chunks.push(value);}
- try{return JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{throw new BlogContentError('Geçersiz JSON.');}
-}
+const body=request=>readJsonRequest(request,BlogContentError);
 function invalidate(slug){for(const locale of LOCALES){revalidatePath(`/${locale}/news`);revalidatePath(`/${locale}/news/${slug}`);}}
 export function blogHandler(operation){return async(request,context)=>{
  if(!serviceTokenConfigured())return json({error:'Servis tokenı yapılandırılmamış.'},503);
