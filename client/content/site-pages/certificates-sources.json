@@ -1,0 +1,30 @@
+[
+  {
+    "source": "app/[locale]/about/images/Gal_sag.jpg",
+    "image": "/uploads/pages/certificates/hero.jpg"
+  },
+  {
+    "source": "app/[locale]/certificates/images/certificate1tr.png",
+    "image": "/uploads/pages/certificates/certificate1tr.png"
+  },
+  {
+    "source": "app/[locale]/certificates/images/certificate1en.png",
+    "image": "/uploads/pages/certificates/certificate1en.png"
+  },
+  {
+    "source": "app/[locale]/certificates/images/certificate2.png",
+    "image": "/uploads/pages/certificates/certificate2.png"
+  },
+  {
+    "source": "app/[locale]/certificates/images/ISO9001.png",
+    "image": "/uploads/pages/certificates/ISO9001.png"
+  },
+  {
+    "source": "app/[locale]/certificates/images/ISO10002.png",
+    "image": "/uploads/pages/certificates/ISO10002.png"
+  },
+  {
+    "source": "app/[locale]/certificates/images/ISO14001.png",
+    "image": "/uploads/pages/certificates/ISO14001.png"
+  }
+]

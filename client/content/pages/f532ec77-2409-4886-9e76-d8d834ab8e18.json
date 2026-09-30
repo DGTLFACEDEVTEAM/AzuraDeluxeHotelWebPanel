@@ -1,0 +1,250 @@
+{
+  "storageVersion": 2,
+  "id": "f532ec77-2409-4886-9e76-d8d834ab8e18",
+  "createdAt": "2026-09-30T06:17:58.499Z",
+  "updatedAt": "2026-09-30T06:17:58.499Z",
+  "publishedAt": null,
+  "history": [],
+  "draft": {
+    "schemaVersion": 1,
+    "template": "standard",
+    "slugs": {
+      "tr": "nemesisblog",
+      "en": "nemesisblogen",
+      "de": "nemesisblogde",
+      "ru": "nemesisblogru"
+    },
+    "showContactSection": true,
+    "hero": {
+      "image": "/uploads/dynamic-pages/dynamic-pages-fafc1cab-579c-4eb8-9baa-fdde18d8e260.webp",
+      "overlay": true,
+      "translations": {
+        "tr": {
+          "eyebrow": "nemesisblog",
+          "title": "nemesisblog",
+          "imageAlt": "nemesisblog"
+        },
+        "en": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "New Page",
+          "imageAlt": ""
+        },
+        "de": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Neue Seite",
+          "imageAlt": ""
+        },
+        "ru": {
+          "eyebrow": "Azura Deluxe Hotel",
+          "title": "Новая страница",
+          "imageAlt": ""
+        }
+      }
+    },
+    "navigation": {
+      "visible": false,
+      "order": 100,
+      "translations": {
+        "tr": {
+          "label": "nemesisblog"
+        },
+        "en": {
+          "label": "New Page"
+        },
+        "de": {
+          "label": "Neue Seite"
+        },
+        "ru": {
+          "label": "Новая страница"
+        }
+      }
+    },
+    "seo": {
+      "tr": {
+        "title": "",
+        "description": ""
+      },
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "de": {
+        "title": "",
+        "description": ""
+      },
+      "ru": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "sections": [
+      {
+        "id": "intro-dff9f279-b32b-462e-8f55-fe97a8b9796f",
+        "type": "intro",
+        "enabled": true,
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          }
+        }
+      },
+      {
+        "id": "card-collection-d7c14dbe-e1cd-4b8d-9255-68cc130e79d7",
+        "type": "cardCollection",
+        "enabled": true,
+        "displayMode": "grid",
+        "cards": [
+          {
+            "id": "card-44762ea2-a554-4b36-b642-88456013ef7c",
+            "image": "",
+            "order": 0,
+            "translations": {
+              "tr": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "en": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "de": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "ru": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              }
+            }
+          },
+          {
+            "id": "card-62b12a4b-d434-4ce6-983b-5dac5f38163c",
+            "image": "",
+            "order": 1,
+            "translations": {
+              "tr": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "en": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "de": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "ru": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              }
+            }
+          },
+          {
+            "id": "card-508b750d-e7af-4def-b6d8-eb0489e5d53c",
+            "image": "",
+            "order": 2,
+            "translations": {
+              "tr": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "en": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "de": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              },
+              "ru": {
+                "title": "",
+                "text": "",
+                "imageAlt": "",
+                "buttonText": "",
+                "buttonHref": ""
+              }
+            }
+          }
+        ],
+        "translations": {
+          "tr": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "en": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "de": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          },
+          "ru": {
+            "eyebrow": "",
+            "title": "",
+            "text": ""
+          }
+        }
+      }
+    ],
+    "id": "f532ec77-2409-4886-9e76-d8d834ab8e18",
+    "status": "draft",
+    "createdAt": "2026-09-30T06:17:58.499Z",
+    "updatedAt": "2026-09-30T06:17:58.499Z"
+  },
+  "published": null
+}

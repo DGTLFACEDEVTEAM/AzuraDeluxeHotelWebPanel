@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "pageKey": "certificates",
+  "translations": {
+    "tr": {
+      "hero": {
+        "eyebrow": "",
+        "title": "Certificate"
+      },
+      "feature": {
+        "eyebrow": "Azura Deluxe Hotel certificate",
+        "title": "Sustainable Tourism Verification",
+        "text": ""
+      },
+      "gallery": {
+        "title": "Certificates",
+        "modalAlt": "Enlarged gallery"
+      }
+    },
+    "en": {
+      "hero": {
+        "eyebrow": "",
+        "title": "Certificate"
+      },
+      "feature": {
+        "eyebrow": "Azura Deluxe Hotel certificate",
+        "title": "Sustainable Tourism Verification",
+        "text": ""
+      },
+      "gallery": {
+        "title": "Certificates",
+        "modalAlt": "Enlarged gallery"
+      }
+    },
+    "de": {
+      "hero": {
+        "eyebrow": "",
+        "title": "Certificate"
+      },
+      "feature": {
+        "eyebrow": "Azura Deluxe Hotel certificate",
+        "title": "Sustainable Tourism Verification",
+        "text": ""
+      },
+      "gallery": {
+        "title": "Certificates",
+        "modalAlt": "Enlarged gallery"
+      }
+    },
+    "ru": {
+      "hero": {
+        "eyebrow": "",
+        "title": "Certificate"
+      },
+      "feature": {
+        "eyebrow": "Azura Deluxe Hotel certificate",
+        "title": "Sustainable Tourism Verification",
+        "text": ""
+      },
+      "gallery": {
+        "title": "Certificates",
+        "modalAlt": "Enlarged gallery"
+      }
+    }
+  },
+  "media": {
+    "hero": {
+      "image": "/uploads/pages/certificates/hero.jpg",
+      "width": 1879,
+      "height": 1254
+    },
+    "feature": {
+      "image": "/uploads/pages/certificates/certificate1en.png",
+      "width": 666,
+      "height": 939,
+      "translations": {
+        "tr": {
+          "alt": "certificate"
+        },
+        "en": {
+          "alt": "certificate"
+        },
+        "de": {
+          "alt": "certificate"
+        },
+        "ru": {
+          "alt": "certificate"
+        }
+      }
+    },
+    "gallery": {
+      "images": [
+        {
+          "id": "certificate-tr",
+          "src": "/uploads/pages/certificates/certificate1tr.png",
+          "order": 0,
+          "width": 666,
+          "height": 939,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        },
+        {
+          "id": "certificate-en",
+          "src": "/uploads/pages/certificates/certificate1en.png",
+          "order": 1,
+          "width": 666,
+          "height": 939,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        },
+        {
+          "id": "certificate-2",
+          "src": "/uploads/pages/certificates/certificate2.png",
+          "order": 2,
+          "width": 673,
+          "height": 939,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        },
+        {
+          "id": "iso-9001",
+          "src": "/uploads/pages/certificates/ISO9001.png",
+          "order": 3,
+          "width": 986,
+          "height": 1428,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        },
+        {
+          "id": "iso-10002",
+          "src": "/uploads/pages/certificates/ISO10002.png",
+          "order": 4,
+          "width": 1002,
+          "height": 1430,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        },
+        {
+          "id": "iso-14001",
+          "src": "/uploads/pages/certificates/ISO14001.png",
+          "order": 5,
+          "width": 1002,
+          "height": 1428,
+          "translations": {
+            "tr": {
+              "alt": "certificate"
+            },
+            "en": {
+              "alt": "certificate"
+            },
+            "de": {
+              "alt": "certificate"
+            },
+            "ru": {
+              "alt": "certificate"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

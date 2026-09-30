@@ -51,7 +51,11 @@
     "seed:dynamic-pages": "node scripts/seed-persistent-dynamic-pages.mjs",
     "test:dynamic-pages": "node --test lib/azura-dynamic-pages.test.mjs lib/azura-dynamic-pages-management.test.mjs lib/azura-dynamic-navigation.test.mjs",
     "test:dynamic-pages-http": "node --test --test-concurrency=1 lib/azura-dynamic-pages-http.test.mjs lib/azura-dynamic-pages-api-http.test.mjs",
-    "test:dynamic-pages-production": "node scripts/test-dynamic-pages-production.mjs"
+    "test:dynamic-pages-production": "node scripts/test-dynamic-pages-production.mjs",
+    "seed:certificates": "node scripts/seed-persistent-certificates.mjs",
+    "test:certificates": "node --test lib/azura-certificates.test.mjs lib/azura-certificates-indicator.test.mjs",
+    "test:certificates-http": "node --test --test-concurrency=1 lib/azura-certificates-http.test.mjs lib/azura-certificates-api-http.test.mjs",
+    "test:certificates-production": "node scripts/test-certificates-production.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",

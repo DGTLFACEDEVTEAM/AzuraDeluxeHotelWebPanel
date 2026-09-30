@@ -336,3 +336,10 @@ export async function listDynamicPageImages(paths=resolveAzuraPaths()){
 export async function saveDynamicPageImage(bytes,mimeType,paths=resolveAzuraPaths()){
  await requireDynamicMediaDirectory(paths);return savePageImage('dynamic-pages',bytes,mimeType,paths,randomUUID);
 }
+
+export async function listCertificatesImages(paths=resolveAzuraPaths()) {
+ return listPageImages('certificates',paths);
+}
+export async function saveCertificatesImage(bytes,mimeType,paths=resolveAzuraPaths(),idFactory=randomUUID) {
+ return savePageImage('certificates',bytes,mimeType,paths,idFactory);
+}

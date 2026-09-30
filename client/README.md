@@ -2861,3 +2861,241 @@ Bu adımın dosyaları: locale layout, Header.jsx, HeaderWhite.jsx,
 DynamicNavigationLinks.jsx, azura-dynamic-pages-api.js, navigation birim testi,
 dinamik API HTTP testi ve package test komutu. Depolama modeli/okuyucu ve
 server-only giriş yeniden kullanıldı; yeni API oluşturulmadı.
+
+## Sertifikalar — kalıcı içerik, ilk aşama
+
+Önce `/[locale]/certificates` sayfası statik görsel importları ve sabit İngilizce
+metinler kullanıyordu. Şimdi sunucu `readCertificatesLocale(locale)` ile Azura
+JSON'unu ve gerçek görselleri doğrular; aynı bileşenlere props aktarır. Site
+Lago'dan veri çekmez. İlk aşamada yalnız veri dönüşümü yapıldı; yönetim/yükleme API'leri aşağıdaki ikinci aşamada eklendi.
+
+Başlangıç `content/site-pages/certificates.json`, kalıcı dosya
+`${AZURA_CONTENT_ROOT}/site-pages/certificates.json`; medya
+`${AZURA_UPLOADS_ROOT}/pages/certificates/` → `/uploads/pages/certificates/`.
+
+Kesin JSON yapısı:
+```js
+{
+  schemaVersion: 1,
+  pageKey: "certificates",
+  translations: {
+    // tr, en, de, ru: her biri aşağıdaki tam nesneyi içerir
+    tr: {
+      hero: {eyebrow: "", title: "Certificate"},
+      feature: {eyebrow: "Azura Deluxe Hotel certificate", title: "Sustainable Tourism Verification", text: ""},
+      gallery: {title: "Certificates", modalAlt: "Enlarged gallery"}
+    }
+  },
+  media: {
+    hero: {image: "/uploads/pages/certificates/hero.jpg", width: 1879, height: 1254},
+    feature: {
+      image: "/uploads/pages/certificates/certificate1en.png", width: 666, height: 939,
+      translations: {tr:{alt:"certificate"},en:{alt:"certificate"},de:{alt:"certificate"},ru:{alt:"certificate"}}
+    },
+    gallery: {images: [
+      // Her öğe tam olarak:
+      {id: "certificate-tr", src: "/uploads/pages/certificates/certificate1tr.png", order: 0,
+       width: 666, height: 939,
+       translations: {tr:{alt:"certificate"},en:{alt:"certificate"},de:{alt:"certificate"},ru:{alt:"certificate"}}}
+    ]}
+  }
+}
+```
+Kök ve alt alanlar kesin doğrulanır. Yalnız `hero.eyebrow` ve `feature.text`
+boş olabilir. Metinler en fazla 4000, alt metinler 300 karakterdir. Normal
+medyada dört dil alt zorunlu; CSS banner'da kullanılmayan alt alanı yoktur.
+Galeri sayısı değişmez kural değildir; boş dizi kabul edilir. Kimlikler benzersiz,
+1–80 küçük harf/rakam/tire; order dizi sırasına göre 0'dan kesintisiz başlar.
+`src` galeri için Lago'nun mevcut alan adıdır; tek görseller `image` kullanır.
+Ölçüler gerçek dosyayla eşleşmelidir. Sadece JPEG/PNG/WebP, 8 MiB ve 16 milyon
+piksel; güvenli scope ve symlink kontrolleri uygulanır. Eksik/bozuk dosyada
+sessiz fallback yoktur.
+
+| Bileşen | Metin | Medya |
+|---|---|---|
+| MainBanner2 | hero.eyebrow/title | media.hero (CSS) |
+| CertificateSection1 | feature.eyebrow/title/text | media.feature |
+| Certificate | gallery.title/modalAlt | media.gallery.images; normal alt kayıttan |
+
+Kaynaklar `app/[locale]/` altındadır. Tam kaynak manifesti
+`content/site-pages/certificates-sources.json` dosyasında bulunur:
+
+| Kaynak | uploads/pages/certificates dosyası | Galeri id/order | Ölçü |
+|---|---|---|---|
+| about/images/Gal_sag.jpg | hero.jpg | — | 1879×1254 |
+| certificates/images/certificate1tr.png | certificate1tr.png | certificate-tr / 0 | 666×939 |
+| certificates/images/certificate1en.png | certificate1en.png | certificate-en / 1 | 666×939 |
+| certificates/images/certificate2.png | certificate2.png | certificate-2 / 2 | 673×939 |
+| certificates/images/ISO9001.png | ISO9001.png | iso-9001 / 3 | 986×1428 |
+| certificates/images/ISO10002.png | ISO10002.png | iso-10002 / 4 | 1002×1430 |
+| certificates/images/ISO14001.png | ISO14001.png | iso-14001 / 5 | 1002×1428 |
+
+**8 medya kullanımı, 7 benzersiz dosya**: öne çıkan görsel galeri ikinci öğesiyle
+aynı dosyadır. Hepsi kaynakla bayt eşidir; yeniden boyutlandırma yapılmadı.
+Orijinaller durur. Belge/PDF veya indirme bağlantısı yoktur; görsel tıklaması
+mevcut modalı açar. Bu sayfada ContactSection2 bulunmaz, eklenmedi.
+
+Mevcut tutarsızlıklar: dört dilde de İngilizce sabit metinler vardı; çeviri
+uydurulmadan korundu. Footer'daki certificates çevirileri bu sayfanın metin
+kaynağı değildir ve silinmedi. İlk aşamada korunan mobil gösterge `handleJump` hatası ikinci aşamada mevcut
+Embla scrollTo çağrısına bağlanarak düzeltildi. Galerinin
+`width={image}`/`height={image}` nesne prop'ları JSON'un gerçek sayısal ölçüleriyle
+değiştirildi; sınıflar, modal genişliği ve Embla seçenekleri değiştirilmedi.
+
+Lago uyumu: hero/feature/gallery adları, eyebrow/title/text ve gallery.images
+id/src/order aynı anlamdadır. Azura'nın altı sertifikası korunur; Lago'nun
+çevre belgeleri ve diğer ek sertifikaları eklenmez. Gelecek proxy formu medya
+alanlarını `media` zarfına, metinleri dört dilli `bundle` içine eşlemeli;
+gerçek width/height ve normal alt alanlarını korumalıdır. Azura'ya özgü
+`gallery.modalAlt` ek bir metin alanıdır. GIF veya PDF sisteme dahil değildir.
+
+Dosyalar: azura-certificates-storage.mjs doğrulama/okuma/lokalizasyon;
+azura-certificates-content.js server-only giriş; certificates/page.js sunucu
+bağlantısı; iki yerel bileşen props tüketimi; kaynak JSON/manifest/7 görsel;
+seed-persistent-certificates.mjs veri ezmeyen kurulum; mevcut salt okunur medya
+route'unda certificates scope'u; birim ve production HTTP testleri. Ortak
+MainBanner2 ve ContactSection2 değiştirilmedi; iki Certificate bileşeninin
+başka aktif tüketicisi bulunmadı.
+
+Yerel kurulum:
+```sh
+cd client
+npm run seed:certificates -- --local
+```
+Env verilmezse content ve public/uploads kullanılır; açık AZURA değişkenleri
+varsa bunlar önceliklidir. Production:
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run seed:certificates
+```
+Seed `.env` dosyalarını otomatik yüklemez; değişkenleri shell/servis ortamına
+verin. JSON ve görseller exclusive oluşturulur, var olanlar ezilmez; mevcut
+veri geçersizse sessiz onarım yerine hata döner. Sunucu production'da iki
+kalıcı kökü ister. Testler geçici köklerde çalışır.
+
+İkinci aşamada uygulanan sözleşmeler (ayrıntıları aşağıda):
+- GET/PUT `/api/azura/certificates/page-content` → `{bundle,media,revision}`;
+  bundle mevcut translations, media mevcut media; servis tokenı/If-Match,
+  ortak kuyruk ve atomik kayıt kullanılmalı.
+- GET/POST `/api/azura/certificates/images`; yalnız certificates kapsamı,
+  ortak güvenli medya sözleşmesi kullanılmalı.
+
+Test komutları: `npm run test:certificates`, `npm run test:certificates-production`,
+`npm run lint`, `git diff --check`. Production betiği geçici proje kopyası,
+ayrı build ve içerik dizinleri kullanır. Gerçek tarayıcı/modal/mobil gösterge
+ve piksel testi yapılmadı.
+
+Sertifikalar doğrulama sonucu: birim 2/2, production HTTP 1/1; izole Next.js
+15.5.26 build ve lint başarılı. Dinamik sayfa 2/2, blog 2/2, anasayfa 3/3 ve
+galeri API HTTP 1/1 regresyonları geçti. Toplu betik yalnız önceden mevcut
+oda HTTP testinin kurmadığı Fantasy verisine erişmesi nedeniyle başarısız
+durum koduyla biter. Kullanıcı içeriği bu hatayı gidermek için değiştirilmedi.
+
+### Sertifikalar ikinci aşama — uygulanmış API sözleşmesi
+
+Bütün uçlar `Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` ister ve
+`Cache-Control: no-store` döndürür. Lago panel bağlantısı yapılmadı.
+
+`GET /api/azura/certificates/page-content` ve başarılı PUT tam olarak:
+```js
+{
+  bundle: {tr: Texts, en: Texts, de: Texts, ru: Texts},
+  media: {
+    hero: {image, width, height},
+    feature: {image, width, height, translations: {tr:{alt},en:{alt},de:{alt},ru:{alt}}},
+    gallery: {images: [
+      {id, src, order, width, height, translations: {tr:{alt},en:{alt},de:{alt},ru:{alt}}}
+    ]}
+  },
+  revision: "64 karakter küçük harf SHA-256"
+}
+```
+`Texts` tam olarak:
+```js
+{
+  hero: {eyebrow, title},
+  feature: {eyebrow, title, text},
+  gallery: {title, modalAlt}
+}
+```
+Bütün metin/alt değerleri string'dir. Yalnız `hero.eyebrow` ve `feature.text`
+boş string kabul eder; diğer zorunlu metinler boş olamaz. Başlangıç İngilizce
+metinleri/boşlukları korunur. Metin 4000, alt 300 karakter; içerik JSON isteği
+128 KiB. İç içe eksik/fazla alanlar ve başka sayfaya ait medya yolları reddedilir.
+Hero CSS görselidir; translations/alt alanı kabul etmez.
+
+PUT mevcut altı öğeyi şu id/order ile zorunlu tutar (ekleme/silme/sıralama bu
+API'nin kapsamı değildir): `certificate-tr/0`, `certificate-en/1`,
+`certificate-2/2`, `iso-9001/3`, `iso-10002/4`, `iso-14001/5`.
+Okuyucu önceki koleksiyon modelini korur; yönetim PUT'u bu görevde altı
+başlangıç kimliğini/sırasını sabit tutar. Galeri kaydında yol `src`, tek
+sertifika ve banner'da `image` olarak kalır.
+
+Eksiksiz istek akışı (GET'ten gelen alanlar kayıpsız geri gönderilir):
+```js
+const endpoint = `${azuraOrigin}/api/azura/certificates/page-content`;
+const authorization = `Bearer ${serviceToken}`;
+const current = await fetch(endpoint, {
+  headers: {Authorization: authorization}, cache: "no-store"
+}).then(r => r.json());
+const {bundle, media, revision} = current;
+bundle.tr.feature.title = "Yeni başlık";
+const response = await fetch(endpoint, {
+  method: "PUT",
+  headers: {
+    Authorization: authorization,
+    "Content-Type": "application/json",
+    "If-Match": `"${revision}"`
+  },
+  body: JSON.stringify({bundle, media})
+});
+const updated = await response.json(); // {bundle, media, revision}
+```
+PUT başka kök gövde alanı kabul etmez. Başarılı cevap 200; eski revision 409 ve
+dosya değişmez. Revision yalnız doğrulanmış bundle/media kanonik JSON'undan
+üretilir; dosyaya yazılmaz. Mevcut dosya ortak kuyruk içinde yeniden okunur,
+revision kontrol edilir, yalnız translations/media değiştirilir ve atomik
+kaydedilir. schemaVersion/pageKey ve diğer kök metaverileri korunur. Kuyruk
+**yalnız aynı Node.js sürecini** korur; ayrı worker veya dış dosya yazıcıları
+arasında kilit değildir. Başarılı kayıt `/tr/certificates`, `/en/certificates`,
+`/de/certificates`, `/ru/certificates` yollarını revalidate eder.
+
+`GET /api/azura/certificates/images` → 200:
+```json
+{"images":[{"image":"/uploads/pages/certificates/certificates-UUID.png","mimeType":"image/png","size":1234,"width":666,"height":939,"modifiedAt":"2026-09-30T00:00:00.000Z"}]}
+```
+`POST /api/azura/certificates/images` tek multipart `file` kabul eder → 201:
+```json
+{"image":"/uploads/pages/certificates/certificates-UUID.png","mimeType":"image/png","size":1234,"width":666,"height":939}
+```
+JPEG/PNG/WebP, 8 MiB, 16 milyon piksel; multipart toplamı 8 MiB + 128 KiB.
+Gerçek tür/ölçü, symlink, güvenli dizin ve exclusive kayıt mevcut ortak medya
+katmanındadır. Boyut gerçek okunan baytlarda da doğrulanır; FileHandle.stat()
+boş liste düzeltmesi korunur. Adı sunucu üretir. Yükleme JSON'u değiştirmez;
+yayın için dönen image/width/height, hedef kayda (galeride src) yerleştirilip
+PUT yapılmalıdır. Fiziksel silme endpoint'i eklenmedi.
+
+Hatalar `{error:"..."}`: 401 yetkisiz, 400 geçersiz içerik/If-Match/kimlik/sıra,
+415 yanlış Content-Type veya desteklenmeyen/sahte görsel, 428 eksik If-Match,
+409 eski revision, 413 boyut. Token yapılandırılmamışsa mevcut ortak yardımcı
+503 döndürür. Geçersiz istek dosyayı değiştirmez.
+
+Lago formu mevcut hero/feature/gallery alanlarını aynen eşleyebilir; dört dil
+metinleri bundle, görseller media altında tutulur. Galeri id/src/order
+korunmalı, alt ve gerçek ölçüler de gönderilmeli; CSS hero'ya alt eklenmemeli.
+`gallery.modalAlt` Azura'nın ek metin alanıdır. Diğer otelin sertifikaları veya
+PDF/GIF alanları eklenmemelidir.
+
+Eklenen route'lar: certificates/page-content/route.js ve images/route.js.
+Depolama modülüne revision/read/write; ortak medya modülüne yalnız scope
+wrapper'ları eklendi. Certificate.jsx gösterge callback'i düzeltildi; stiller,
+modal ve masaüstü davranışı değiştirilmedi. Gösterge testi altı indeksi ve
+Embla hazır değilken güvenli davranışı çalıştırır. Gerçek tarayıcı/modal veya
+piksel testi yapılmadı; test edilen etkileşim bileşen düzeyindedir.
+
+İkinci aşama doğrulama: sertifika birim/gösterge testleri **3/3**, sertifika
+ziyaretçi/API production HTTP **2/2**, ortak medya güvenlik regresyonları **7/7**
+geçti. Next.js 15.5.26 izole production build, lint ve diff kontrolü başarılı.
+Dinamik sayfa ve blog HTTP testleri **2/2**'şer, anasayfa HTTP **3/3** başarılı.
+Önceden mevcut oda HTTP fixture'ında Fantasy dosyasının kurulmaması sorunu
+ayrı tutuldu; bu nedenle toplu test betiği tamamen yeşil değildir. Başlangıç
+İngilizce metinleri ve kullanıcı içerikleri test için değiştirilmedi.

@@ -2,17 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import img1 from "../images/certificate1tr.png"
-import img2 from "../images/certificate1en.png"
-import img3 from "../images/certificate2.png"
-
-import img4 from "../images/ISO9001.png"
-import img5 from "../images/ISO10002.png"
-import img6 from "../images/ISO14001.png"
-
-const images = [img1,img2,img3,img4,img5,img6];
-
-const Certificate = () => {
+const Certificate = ({images, title, modalAlt}) => {
   const [modalImage, setModalImage] = useState(null) 
 
   const [emblaRef, emblaApi] = useEmblaCarousel({  loop: true,
@@ -20,6 +10,7 @@ const Certificate = () => {
     startIndex: 0, });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const handleJump = useCallback(index => { emblaApi?.scrollTo?.(index); }, [emblaApi]);
     
   const scrollPrev = useCallback(() => {
     if (emblaApi && emblaApi.scrollPrev) emblaApi.scrollPrev();
@@ -44,20 +35,20 @@ const Certificate = () => {
     
       {/* <span className="text-[12px] font-medium uppercase tracking-[0.48px] leading-[14px] font-jost"></span> */}
     <h2 className="text-[28px] md:text-[32px] lg:text-[48px] font-marcellus font-normal leading-[120%] lg:leading-[57.6px] lg:capsizedText2">
-    Certificates
+    {title}
     </h2>
      
 
         <div className="overflow-hidden w-full" ref={emblaRef}>
           <div  className="flex">
             {images.map((image,index) => (
-              <div key={index} className="flex-[0_0_80%] md:flex-[0_0_55%] lg:flex-[0_0_33.3%] xl:flex-[0_0_28.3%] min-w-0 mr-[3%] md:mr-[1.5%]">
+              <div key={image.id} className="flex-[0_0_80%] md:flex-[0_0_55%] lg:flex-[0_0_33.3%] xl:flex-[0_0_28.3%] min-w-0 mr-[3%] md:mr-[1.5%]">
               <div className="flex flex-col w-full items-start justify-center gap-[15px] md:gap-[25px] font-jost text-black "  onClick={() => setModalImage(image)} >
                 <Image 
                   src={image} 
-                  alt="certificate" 
-                  width={image} 
-                  height={image}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
                   className="object-cover shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl"
                 />
                 
@@ -86,7 +77,7 @@ const Certificate = () => {
             onClick={() => setModalImage(null)} // Modal dışına tıklandığında kapanır
           >
             <div className="relative w-[30%] " onClick={(e) => e.stopPropagation()}>
-              <Image src={modalImage} alt="Enlarged gallery" className="w-full h-auto object-contain" />
+              <Image src={modalImage} alt={modalAlt} className="w-full h-auto object-contain" />
               
             </div>
             <button

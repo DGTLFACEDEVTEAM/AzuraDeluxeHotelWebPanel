@@ -1,3 +1,6 @@
+import {inspectHomepageImage} from "@/lib/azura-homepage-media.mjs";
+import {constants} from "node:fs";
+import {open} from "node:fs/promises";
 import { readBlogImage, readDynamicPageImage } from "@/lib/azura-homepage-media.mjs";
 import { readGalleryImage } from "@/lib/azura-gallery-storage.mjs";
 import { readFile, realpath, stat } from "node:fs/promises";
@@ -19,7 +22,7 @@ export async function GET(_request, { params }) {
     } catch { return new NextResponse(null, { status: 404 }); }
   }
   if (!Array.isArray(segments) || segments.length !== 3 ||
-      segments[0] !== "pages" || !["homepage", "rooms", "restaurants", "about", "spawellness", "spor", "beachpools", "kidsclub", "bars", "entertainment", "deluxeroom", "familyroom", "fantasyroom", "room-options"].includes(segments[1]) ||
+      segments[0] !== "pages" || !["homepage", "rooms", "restaurants", "about", "spawellness", "spor", "beachpools", "kidsclub", "bars", "entertainment", "deluxeroom", "familyroom", "fantasyroom", "room-options", "certificates"].includes(segments[1]) ||
       segments.some((segment) => !/^[A-Za-z0-9._-]+$/.test(segment) || segment.includes(".."))) {
     return new NextResponse(null, { status: 404 });
   }
@@ -27,6 +30,12 @@ export async function GET(_request, { params }) {
   try {
     const { uploadsRoot } = resolveAzuraPaths();
     const root = await realpath(uploadsRoot);
+    if(segments[1] === 'certificates') {
+      const directory=path.join(root,'pages/certificates');
+      if(await realpath(directory)!==directory) return new NextResponse(null,{status:404});
+      const handle=await open(path.join(directory,segments[2]),constants.O_RDONLY|constants.O_NOFOLLOW);
+      try {const details=await handle.stat();if(!details.isFile()||details.size>8*1024*1024) return new NextResponse(null,{status:404});const bytes=await handle.readFile();const info=await inspectHomepageImage(bytes,types[path.extname(segments[2]).toLowerCase()]);return new NextResponse(bytes,{headers:{'Content-Type':info.mimeType,'Cache-Control':'public, max-age=0, must-revalidate'}});}finally{await handle.close();}
+    }
     const file = await realpath(path.join(root, ...segments));
     const type = types[path.extname(file).toLowerCase()];
     if (!file.startsWith(`${root}${path.sep}`) || !type || !(await stat(file)).isFile()) {
