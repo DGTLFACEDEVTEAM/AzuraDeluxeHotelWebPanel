@@ -1,3 +1,4 @@
+import {BlogLocaleProvider} from "@/BlogLocaleContext";
 import {connection} from "next/server";
 import {listDynamicPageNavigation} from "@/lib/azura-dynamic-pages-content";
 import {DynamicPageLocaleProvider} from "@/DynamicPageLocaleContext";
@@ -62,7 +63,7 @@ export default async function RootLayout({ children, params }) {
       >
           <meta name="theme-color" content="#FBFBFBCC" />
           <NextIntlClientProvider locale={locale} messages={messages}>
-        <DynamicPageLocaleProvider>
+        <DynamicPageLocaleProvider><BlogLocaleProvider>
         <Header dynamicNavigation={dynamicNavigation} />
         <HeaderWhite dynamicNavigation={dynamicNavigation} />
        
@@ -70,7 +71,7 @@ export default async function RootLayout({ children, params }) {
         <BookNow/>
         <CookiePopup/>
         <Footer />
-        </DynamicPageLocaleProvider>
+        </BlogLocaleProvider></DynamicPageLocaleProvider>
         </NextIntlClientProvider>
       </body>
     </html>

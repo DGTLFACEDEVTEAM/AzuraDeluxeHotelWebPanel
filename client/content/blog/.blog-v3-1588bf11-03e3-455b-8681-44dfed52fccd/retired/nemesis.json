@@ -1,5 +1,5 @@
 {
-  "storageVersion": 3,
+  "storageVersion": 2,
   "slug": "nemesis",
   "createdAt": "2026-09-30T06:16:08.968Z",
   "updatedAt": "2026-09-30T06:16:08.968Z",
@@ -40,19 +40,7 @@
         "seoDescription": ""
       }
     },
-    "contentBlocks": [],
-    "slugs": {
-      "tr": "nemesis",
-      "en": "nemesis",
-      "de": "nemesis",
-      "ru": "nemesis"
-    }
+    "contentBlocks": []
   },
-  "published": null,
-  "aliases": {
-    "tr": [],
-    "en": [],
-    "de": [],
-    "ru": []
-  }
+  "published": null
 }

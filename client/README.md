@@ -3099,3 +3099,471 @@ Dinamik sayfa ve blog HTTP testleri **2/2**'şer, anasayfa HTTP **3/3** başarı
 Önceden mevcut oda HTTP fixture'ında Fantasy dosyasının kurulmaması sorunu
 ayrı tutuldu; bu nedenle toplu test betiği tamamen yeşil değildir. Başlangıç
 İngilizce metinleri ve kullanıcı içerikleri test için değiştirilmedi.
+
+## Blog dil bazlı slug modeli — ilk aşama tasarım kaydı (güncel durum aşağıda)
+
+İlk aşamada saf model/plan yardımcıları hazırlandı. İkinci aşamada V3 API,
+okuyucu ve dil değiştirici sunucu sürüm ayarına bağlandı; üçüncü aşamada aşağıda
+belgelenen migration CLI eklendi. V2 varsayılandır. Gerçek kayıtlar bu görevlerde
+dönüştürülmedi. Güncel kesin API sözleşmesi ikinci aşama bölümündedir.
+
+### Kayıt sözleşmesi
+
+`storageVersion: 3` kökü tam olarak şu alanlardan oluşur:
+`storageVersion, slug, createdAt, updatedAt, publicationUpdatedAt, draft, published, aliases`.
+Kök `slug` değişmeyen teknik anahtardır; dosya daima
+`${AZURA_CONTENT_ROOT}/blog/posts/<teknik-slug>.json` olarak kalır.
+Snapshot içindeki mevcut `slug` da aynı teknik anahtar kalır; ziyaretçi adresi değildir.
+
+Draft ve null olmayan published nesneleri mevcut v2 alanlarını aynen korur:
+`slug, status, coverImage, publishedAt, updatedAt, translations, contentBlocks`;
+yalnız `slugs: {tr, en, de, ru}` eklenir. Çeviriler her dilde
+`{title, excerpt, content, seoTitle, seoDescription}`; bloklar
+`{id, headingLevel, image, translations:{tr:{heading,content},en:{heading,content},de:{heading,content},ru:{heading,content}}}`
+olarak kalır. Tarih, görsel yolu, H2/H3, blok kimliği ve metin doğrulaması mevcut
+v2 doğrulayıcısından yeniden kullanılır; burada fiziksel dosya okuması yapılmaz.
+Gelecekteki yazıcı mevcut gerçek görsel denetimini ayrıca çalıştırmalıdır.
+
+Yeni kök alanı `aliases: {tr: [], en: [], de: [], ru: []}` her dilde eski adres
+stringlerini saklar. Alias hedefi ayrı bir string değil, aynı kaydın o dildeki
+**güncel published.slugs** değeridir; böylece yönlendirme zinciri oluşmaz.
+Her dilin alias listesi benzersizdir; güncel yayımlanmış adres o listede bulunmaz.
+Alias alanını istemci düzenleyemez; sonraki aşamadaki yayın işlemi yönetir.
+
+Örnek adres alanları (diğer v2 alanları değişmeden kalır):
+
+```json
+{
+  "storageVersion": 3,
+  "slug": "summer-news",
+  "aliases": {"tr": ["summer-news"], "en": [], "de": [], "ru": []},
+  "draft": {"slugs": {"tr": "yaz-taslagi", "en": "summer-news", "de": "sommer", "ru": "leto"}},
+  "published": {"slugs": {"tr": "yaz-haberleri", "en": "summer-news", "de": "sommer", "ru": "leto"}}
+}
+```
+
+Bu örnek yalnız yeni alanları gösterir; tek başına geçerli tam kayıt değildir.
+Dört slug zorunludur: `^[a-z0-9]+(?:-[a-z0-9]+)*$`, en fazla 120 karakter.
+Unicode, büyük harf, boşluk ve yüzde kodlamalı slug kabul edilmez. Trim,
+normalleştirme veya otomatik çeviri yapılmaz. Farklı diller aynı slug'ı kullanabilir.
+
+### Saf yardımcılar ve adres kuralları
+
+`lib/azura-blog-v3.mjs` hiçbir dosya yazmaz; V3 aktif akışı ve migration aracı bu saf yardımcıları kullanır:
+
+- `convertBlogV2ToV3`: doğrulanmış v2'yi kopyalar, dört dil adresini teknik slug
+  ile başlatır, aliases listelerini boş oluşturur. published:null korunur.
+  Metinler/boşluklar/tarihler/bloklar değişmez; v3 girdisi de doğrulanıp bağımsız
+  kopyalanır. Tekrar çalıştırılması veri kaybı oluşturmaz.
+- `validateBlogV3`: kesin alanları ve mevcut v2 içerik kurallarını denetler.
+- `planBlogV3Migration`: kayıt listesi için bellekte dönüşüm ve tüm adreslerin
+  çakışma kontrolü; dosya sistemi migration komutu değildir.
+- `assertBlogV3AddressAvailability`: aynı dilde draft, published ve alias
+  adreslerini birlikte rezerve eder. Aynı teknik kaydın kopyaları çakışmaz;
+  başka kaydın adresi veya tekrarlı teknik anahtar 409 olur. Yayımdan kaldırılan
+  kaydın alias rezervasyonları tutulur, fakat ziyaretçiye açılmaz. Silinen kaydın
+  rezervasyonları kalkar; eski adresin gelecekte yeniden kullanılabileceği bu
+  modelin açık politikasıdır (kalıcı silinmiş-adres mezarlığı uygulanmadı).
+- `resolvePublishedBlogV3`: yalnız published adresi veya aynı dil alias'ını
+  çözer; `{recordKey,published,href,redirect}` veya null döndürür. Taslak/root
+  yönetim nesnesi dönmez. Çakışmış kayıt kümesinden rastgele seçim yapmaz.
+- `publishedBlogV3Href`: hedef dilde aynı yazının yayımlanmış URL'si veya null.
+  Dil önekini bir kez ekler. İçerik çevirisi fallback'i adres seçimini etkilemez.
+- `planBlogV3Publication`: tam kayıt kümesi ve çağıranın verdiği ISO timestamp
+  ile saf yayın planı oluşturur. Değişen eski published slug alias'a eklenir;
+  eski adrese geri dönülürse yeni canonical alias listesinden çıkarılır.
+  Taslak kaydetmek alias oluşturmaz. İşlev kalıcı yazma veya revalidation yapmaz.
+
+Sonraki okuyucu alias için güncel adrese **308** yönlendirecek; yayımlanmamış
+veya silinmiş yazı alias üzerinden de 404 olacaktır. Liste/detail/metadata ve
+LocaleSwitcherSelect yalnız published slugs kullanacaktır. Mevcut metin ve blok
+çeviri fallback yardımcıları değişmeyecek. Bloga ait locale context yalnız
+published adreslerini taşımalı; mevcut statik/dinamik sayfa dil akışı korunmalı.
+
+### Sonraki aşamanın API sözleşmesi ve sürüm kapısı
+
+Adreslerde `[slug]` teknik anahtar olarak kalacak. Medya endpoint'i değişmeyecek.
+Yeni sözleşmenin tüm yönetim çağrıları Bearer yanında
+`X-Azura-Blog-Contract-Version: 3` isteyecek; eksik veya farklı sürüm **409**
+`{"error":"Blog contract version 3 required","code":"BLOG_CONTRACT_VERSION_MISMATCH"}`
+ile, dosyaya dokunmadan reddedilecek. Bu kapı ikinci aşamada **uygulandı**, yalnız sunucu V3 modundayken etkindir. Sadece
+If-Match eski istemcinin yeni alanları silmesini engellemek için yeterli değildir.
+V3 yazıcı v2 gövdesini otomatik tamamlamayacak veya eksik slugs'u teknik anahtara
+sessizce çevirmeyecek.
+
+- GET liste: `{posts:[{record:<tam v3>,revision:"sha256"}]}`.
+- GET detay ve başarılı PUT: `{record:<tam v3>,revision:"sha256"}`.
+- POST: `{slug:<teknik anahtar>,draft:<DraftInputV3>}` → 201 aynı detay yanıtı.
+- PUT save: `{action:"save",draft:<DraftInputV3>}`.
+- PUT publish/unpublish: `{action:"publish"}` / `{action:"unpublish"}`.
+- DELETE: gövdesiz; `{deleted:true,slug:<teknik anahtar>}`. Görseller silinmez.
+- DraftInputV3 tam alanları: `coverImage,publishedAt,translations,contentBlocks,slugs`.
+  İç içe translations/contentBlocks yukarıdaki mevcut sözleşmedir.
+  Root/snapshot teknik anahtar, status, aliases ve sunucu zaman damgaları
+  keyfî istemci alanı değildir. PUT/DELETE tırnaklı If-Match istemeye devam eder.
+- Revision tam v3 kaydının kanonik hash'ini kapsayacak (aliases dahil);
+  geçiş sonrası eski revision'lar geçersiz olacak, panel yeniden GET yapacak.
+- Gelecekte tüm blog yazmaları aynı posts kuyruğunda çalışmalı; kayıtlar kilit
+  altında yeniden okunmalı, dil bazlı tüm rezervasyonlar ve gerçek medya
+  doğrulanmalı, revision kontrolü sonrası atomik kayıt yapılmalı. Tek Node.js
+  süreci sınırı devam eder; çoklu süreçte dağıtık kilit ayrıca gereklidir.
+- Save canlı adresi değiştirmez. Publish eski/yeni dört dil yollarını, alias'ları
+  ve liste sayfalarını revalidate eder. Unpublish/delete aynı yolları temizler.
+
+### Kesin geçiş ve geri dönüş sırası
+
+1. Önce Azura v3 okuyucu/yazıcı, sürüm kapısı, public resolver ve blog dil
+   context'i ayrı sürümde hazırlanır; staging üzerinde doğrulanır. Lago'nun
+   mevcut tek slug normalleştirmesi yerine teknik anahtarı salt okunur tutan,
+   dört dil slugs alanlarını eksiksiz taşıyan adaptör hazırlanır. Lago'nun yerel
+   blog depolaması veya oturum altyapısı Azura'ya kopyalanmaz.
+2. Lago adaptörü özellik bayrağı kapalı dağıtılır; v2 çalışmaya devam eder.
+   Bakımda tüm blog yazmaları ve seed durdurulur, bütün çalışan süreçler
+   durdurulur/kapılanır. Gerçek posts dizini, ortam yapılandırması ve yazılım
+   sürümleri yedeklenir; dosya adları, hash'leri ve kayıt sayıları manifestlenir.
+   Medya salt okunur kalır; yedek geri yükleme provası yapılır.
+3. Migration aracı varsayılan **dry-run** ile: her dosyanın teknik
+   anahtarla eşleşmesini ve v2/v3 şemasını denetleyecek; saf planı oluşturacak,
+   dil/alias çakışmalarını, dosya boyutu ve gerçek medyayı kontrol edecek;
+   içerik/tarih/blok eşliğini raporlayacak. Hatalı kayıt atlanmayacak. Bu görevde
+   migration CLI üçüncü aşamada eklendi; seed migration amacıyla kullanılmamalı.
+4. Onaylı bakım geçişinde dosya adlarını koruyarak staging dizinine atomik
+   çıktılar hazırlanacak, tüm küme doğrulandıktan sonra dizin değiştirilecek.
+   Dosya başına atomiklik tek başına tüm küme için transaction değildir; yarıda
+   kalan geçişte servis açılmayacak. Manifest/backup ile tüm küme kurtarılacak.
+5. V3 Azura sürümü ve sürüm kapısı etkinleştirilir; Lago adaptörü v3 bayrağı
+   açılır. Panel tüm kayıtları yeniden GET eder. Eski v2 istemci reddi, dört dil
+   URL, published-only metadata, alias 308 ve taslak izolasyonu smoke test edilir.
+   Başlangıçta dört slug teknik anahtara eşit olduğundan mevcut URL'ler korunur.
+6. Sorunda yazmalar tekrar durdurulur. V3 sonrası düzenleme yoksa tam v2
+   yedeği ve eski yazılım/adaptör birlikte geri yüklenir. Düzenleme varsa önce
+   v3 kümesi ayrıca yedeklenir; v2'ye alan silerek dönüş **yapılmaz**. Yeni
+   adresler/alias'lar v2'de temsil edilemediğinden kayıpsız otomatik rollback
+   yoktur; manuel uzlaştırma ve eski/yeni URL yönlendirme planı onaylanmadan
+   yedekle ezme yapılmaz.
+
+### Doğrulama
+
+`npm run test:blog` mevcut v2 testlerini ve yeni
+`lib/azura-blog-v3.test.mjs` testlerini birlikte çalıştırır. Yeni testler saf
+bellek nesneleri kullanır; gerçek kayıt veya uploads değişmez. Production
+regresyonu `npm run test:blog-production` ile ayrı geçici build ve içerik
+köklerinde çalışır. Bu aşamada v3 HTTP endpoint'i veya yönlendirme/dil
+bileşeni etkinleştirilmediğinden v3 tarayıcı davranışı doğrulanmış sayılmaz.
+
+Bu hazırlıkta yeniden çalıştırılan sonuçlar: blog birim testleri **9/9**
+(mevcut v2 3, yeni v3 6), blog production HTTP **2/2**, galeri API HTTP
+regresyonu **1/1** başarılı. Next.js 15.5.26 izole production build, lint ve
+`git diff --check` geçti. Çalıştırılan kapsamda başarısız test yok. Lint komutu
+Next lint kullanım dışı bırakılma ve birden fazla lockfile uyarısı verdi;
+ESLint hatası/uyarısı yoktu. Tüm proje testleri ve gerçek tarayıcı testi
+çalıştırılmadı. Gerçek veri migration'ı veya canlı kurulum yapılmadı.
+
+## Blog V3 ikinci aşama — sunucu ayarıyla etkinleştirilebilir
+
+Önceki “hazırlık” bölümünün etkinleştirilmemiş kod açıklamaları tarihsel ilk
+ aşamayı anlatır. Artık okuyucu, yönetim API'si, ziyaretçi sayfaları ve dil
+ değiştirici V3'ü destekler. **Bu ortamda ayar değiştirilmedi, V3 açılmadı,
+ gerçek migration yapılmadı.** Gerçek içerik/görsel veya Lago dosyası değişmedi.
+
+### Sürüm seçimi ve uyumsuz kayıtlar
+
+Sunucu çalışma zamanı değişkeni `AZURA_BLOG_CONTRACT_VERSION`:
+
+- Tanımsız veya `2`: mevcut V2 API ve ziyaretçi davranışı.
+- `3`: V3 dosyaları ve aşağıdaki sürüm kapısı.
+- Boş string dahil diğer değerler: açık yapılandırma hatası;
+  API `503 BLOG_CONTRACT_CONFIGURATION_ERROR` döndürür.
+
+Bu bir `NEXT_PUBLIC_*` ayarı değildir; istek başlığı sunucu modunu seçemez.
+Ayara göre validator seçilir; dosyalar otomatik dönüştürülmez. V3'te herhangi
+bir V2/uyumsuz storageVersion bulunduğunda bütün kayıt kümesini kullanan
+okuma/yazma `503 BLOG_MIGRATION_REQUIRED` verir; dosyayı değiştirmez. V2'de V3
+kayıt okunması da aynı şekilde reddedilir. Bozuk şema ayrı bir veri hatasıdır.
+Önceki bölümdeki yedekli/dry-run bakım planı uygulanmadan gerçek ortamı V3'e
+çevirmeyin. Migration CLI üçüncü aşamada eklendi; gerçek canlı geçiş yapılmadı.
+
+### Uygulanmış V3 yönetim sözleşmesi
+
+`GET/POST /api/azura/blog/posts` ve
+`GET/PUT/DELETE /api/azura/blog/posts/<teknik-slug>` için V3 modunda:
+
+```http
+Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>
+X-Azura-Blog-Contract-Version: 3
+```
+
+Eksik/farklı sürüm başlığı **409**
+`{"error":"Blog contract version 3 required","code":"BLOG_CONTRACT_VERSION_MISMATCH"}`
+döndürür. Yetkisiz istek önce 401 alır. Lago adaptörü, GET dahil bütün kayıt
+isteklerinde bu başlığı göndermelidir. V2 modunda eski istemci aynen çalışır.
+Görsel API'si bu başlığı istemez; sözleşmesi/dizini/güvenlik sınırları değişmedi.
+
+Örnek eksiksiz POST gövdesi (yalnız örnek, gerçek yazı olarak eklenmez):
+
+```json
+{
+  "slug": "technical-key",
+  "draft": {
+    "coverImage": "",
+    "publishedAt": "2026-09-30T10:00:00.000Z",
+    "translations": {
+      "tr": {"title":"Yazı","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "en": {"title":"Article","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "de": {"title":"Artikel","excerpt":"","content":"","seoTitle":"","seoDescription":""},
+      "ru": {"title":"Статья","excerpt":"","content":"","seoTitle":"","seoDescription":""}
+    },
+    "contentBlocks": [],
+    "slugs": {"tr":"yazi","en":"article","de":"artikel","ru":"statya"}
+  }
+}
+```
+
+POST yalnız `{slug,draft}` kabul eder, **201** döndürür. DraftInput tam olarak
+`coverImage,publishedAt,translations,contentBlocks,slugs` alanlarından oluşur.
+PUT save gövdesi `{ "action":"save", "draft": <yukarıdaki tam draft> }` olur.
+Diğer PUT gövdeleri tam olarak `{"action":"publish"}` veya
+`{"action":"unpublish"}`. JSON yazmalarında `Content-Type: application/json`;
+PUT ve gövdesiz DELETE'te `If-Match: "<GET revision>"` zorunludur.
+
+Liste yanıtı `{posts:[{record,revision}]}`; GET detay, başarılı POST ve PUT
+`{record,revision}` döndürür. `record` önceki bölümdeki kesin V3 köküdür:
+`storageVersion:3,slug,createdAt,updatedAt,publicationUpdatedAt,draft,published,aliases`.
+Snapshot'lar mevcut yedi alan artı `slugs` içerir; published başlangıçta null'dır.
+DELETE yanıtı `{deleted:true,slug:"technical-key"}`; fiziksel medya silinmez.
+Revision tüm kaydın (aliases dahil) kanonik SHA-256 hash'idir; dosyaya yazılmaz.
+İstemci draft içine aliases/published/storageVersion/updatedAt veya başka
+sunucu alanları ekleyemez. `publishedAt` mevcut editoryal tarih alanıdır.
+
+Hatalar: 400 gövde/slug/başlık/şema; 401 yetki; 404 kayıt yok;
+409 eski revision/adres çakışması/sürüm uyuşmazlığı; 413 boyut;
+415 Content-Type; 428 If-Match yok; 503 yapılandırma/migration gerekli.
+Mevcut 128 KiB JSON istek, 2 MiB kayıt, 120 karakter ASCII slug,
+çeviri/blok metin sınırları ve blog medya kuralları korunur.
+
+### Kayıt, ziyaretçi ve dil akışı
+
+Tüm yazmalar aynı gerçek posts dizininin kuyruğunda kalır. V3 yazma sırasında
+kilit içinde kayıtlar yeniden okunur; revision, tüm dillerde draft/published/
+alias rezervasyonları, yeni içerik ve gerçek seçili görseller doğrulanır.
+Yazma atomiktir. Kuyruk yalnız aynı Node.js sürecini korur; migration/seed veya
+başka process eşzamanlı çalıştırılmamalıdır.
+
+Save yalnız taslağı değiştirir. Publish eski canlı slug'ları dil alias'larına
+alır; kendi alias'ına dönüşte canonical alias listesinden çıkarılır. Alias
+her zaman doğrudan güncel published adrese **308** döner; zincir oluşturmaz.
+Unpublish/delete sonrası canonical ve alias ziyaretçiye 404 verir. Alias
+rezervasyonunun silme/yeniden kullanım politikası ilk aşamadaki gibi kalır.
+
+Liste seçili dilin `published.slugs[locale]` adresini üretir. Detay ve metadata
+aynı published-only çözümleyiciyi kullanır; teknik anahtar ziyaretçi yolu olarak
+kendiliğinden açılmaz. Metadata canonical/hreflang yalnız published slugs'tan
+oluşturulur. Metin ve içerik bloklarının mevcut çeviri fallback'i değişmez.
+Revalidation tüm locale news listelerini ve `/[locale]/news/[slug]` page
+örüntüsünü kapsar; böylece eski/yeni adresler ve alias'lar birlikte yenilenir.
+
+Locale layout'taki `BlogLocaleProvider` hem Header/HeaderWhite hem children'ı
+sarar. Detay `BlogLocaleBridge` ile yalnız published slugs'u ve mevcut pathname'i
+iletir. Taslak, aliases veya yönetim kaydı istemci context'ine gönderilmez.
+Dil seçici yalnız pathname eşleşiyorsa blog adresini kullanır; statik ve dinamik
+sayfaların mevcut akışına aksi durumda devam eder. Locale öneki bir kez eklenir.
+
+### Dosya görevleri ve kontrol komutları
+
+- `lib/azura-blog-schema.mjs`: mevcut V2 doğrulamasının IO'dan ayrılmış ortak
+  kaynağı; storage eski export'ları geriye uyumlu sunar.
+- `lib/azura-blog-version.mjs`: yalnız sunucu ortamından sürüm seçimi.
+- `lib/azura-blog-v3.mjs`: saf V3/alias/çakışma yardımcıları yeniden kullanılır.
+- `lib/azura-blog-storage.mjs`, `azura-blog-management.mjs`, `azura-blog-api.js`,
+  `azura-blog-content.js`: mod seçimi, güvenli kayıt ve public çözümleme.
+- `app/[locale]/news/page.js`, `news/[slug]/page.js`: yayımlanmış dil adresleri,
+  alias 308, metadata ve bridge; tasarım değişmez.
+- `BlogLocaleContext.jsx`, `lib/azura-blog-locale.mjs`, locale layout ve
+  `LocaleSwitcherSelect.jsx`: header'a ulaşan published-only dil bağlamı.
+- `lib/azura-blog-v3-http.test.mjs`, `azura-blog-locale.test.mjs`: izole V3 HTTP,
+  sürüm/dil testleri. `scripts/test-blog-production.mjs` aynı izole build'de
+  V2/V3 blog, dinamik sayfa ve galeri API regresyonlarını çalıştırır.
+
+`npm run test:blog`, `npm run lint`, `npm run test:blog-production` ve
+`git diff --check` kullanılır. Test sunucularının V3 ayarı yalnız geçici süreçlere
+verilir; gerçek ortam dosyaları veya kullanıcı kayıtları değiştirilmez.
+
+İkinci aşamanın yeniden çalıştırılan sonuçları: blog birim **11/11**, dinamik
+sayfa birim **12/12**; izole production blog HTTP **3/3** (varsayılan V2 ziyaretçi
+ve yönetim + V3 lifecycle), dinamik sayfa HTTP **2/2**, galeri API HTTP **1/1**.
+Next.js 15.5.26 production build, lint ve diff kontrolü başarılı. İlk V3 HTTP
+koşusunda liste linklerinde teknik slug kullanımı yakalanıp düzeltildi;
+son koşuda başarısız test yok. Bir build denemesi sandbox font erişimi nedeniyle
+başarısız oldu; ağ izni verilen izole koşu geçti. Next lint kullanımdan kaldırma,
+çoklu lockfile ve next-intl webpack cache uyarıları içerik hatası değildir.
+Gerçek tarayıcı/dil seçici tıklama testi yapılmadı: context kapsamı ve URL üretimi
+birim testleriyle, sayfa/metadata/redirect davranışı HTTP üzerinden doğrulandı.
+Tüm proje test paketi çalıştırılmadı; gerçek veri migration'ı yapılmadı.
+
+## Blog V3 üçüncü aşama — bakım migration aracı
+
+**Hazır:** V3 model/API/ziyaretçi/dil desteği ve şimdi migration CLI.
+**Etkinleştirilmedi:** bu ortamda V3 ayarı; gerçek kayıt migration'ı.
+Lago adaptörünün hazır olduğu kullanıcı tarafından bildirildi; bu görev Lago
+reposunu değiştirmedi veya canlı adaptör bağlantısını doğrulamadı.
+
+### Komutlar — varsayılan salt okunur
+
+Komutları `client` dizininden çalıştırın. `.env` otomatik yüklenmez. Her iki
+kök açıkça verilmelidir; local fallback veya `--local` yoktur. Dizinler önceden
+mevcut olmalı; migration seed çalıştırmaz. Aşağıdaki yolları hedef ortamın
+**gerçek mutlak yollarıyla** değiştirin; bu örnekler çalıştırılmış değildir.
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3 -- --dry-run
+```
+
+Yerel prova için aynı komutlarda kendi geçici mutlak köklerinizi kullanın.
+Çıktı çözümlenen content/uploads köklerini, kayıt sayısını, `convert` ve
+`unchanged` dosya listelerini bildirir. Hata halinde sıfır olmayan exit code ve
+`errors` döner; güvenle çözümlenebilmiş kökler de raporlanır. İlk hatada durur,
+hatalı kayıt atlanmaz. Token veya ortamın diğer değerleri yazdırılmaz.
+
+Dry-run hiçbir dizin, kilit, yedek veya dosya oluşturmaz. Tüm dosyaların güvenli
+adı, türü, gerçek teknik anahtarı, V2/V3 şeması, tüm draft ve published medya
+kaynakları ve dil bazlı adres rezervasyonları denetlenir. Bilinmeyen dosyalar
+(temp dosyaları dahil) sessizce atlanmaz. V2→V3 projeksiyonu mevcut içerikle derin
+eşitlik kontrolünden geçer; metin/boşluk/tarih/blok/görsel değişmez. V3 dosyaları
+aynı baytlarla korunur. Kullanılan gerçek görseller ortak JPEG/PNG/WebP,
+8 MiB/16 milyon piksel ve symlink güvenliği kurallarıyla doğrulanır.
+
+Yazma **yalnız iki açık seçenekle**:
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3 -- --apply --maintenance-confirmed
+```
+
+`--maintenance-confirmed`, uygulamanın tüm instance'larının, panel yazıcılarının,
+seed ve diğer içerik yazıcılarının **operatör tarafından durdurulduğu beyanıdır**;
+araç bunu otomatik denetleyemez veya uygulamayı durduramaz. Bir shell değişkeniyle
+V3 açmak, yedekli bakım geçişinin yerine geçmez. `--apply --dry-run` reddedilir.
+Geçerli V3/boş kümede apply dönüşüm yapmaz, yeni yedek üretmez, dosya değiştirmez.
+
+### Kalıcı kurtarma dosyaları ve işlem sırası
+
+Bütün migration artefaktları `${AZURA_CONTENT_ROOT}/blog/` altında:
+
+```text
+posts/                         aktif kayıt kümesi
+.blog-v3-migration.lock         exclusive migration/restore kilidi
+.blog-v3-<uuid>/                benzersiz, 0700 işlem dizini
+  manifest.json                source/target: name, size, sha256; kökler ve medya hash'leri
+  backup/                      kaynağın bayt eşli kopyası (0600 dosyalar)
+  staging/                     doğrulanmış V3 kümesi; kurulunca posts'e taşınır
+  retired/                     taşıma öncesindeki özgün posts dizini
+  00-started.json … 60-complete.json    tamamlanan aşama işaretleri
+```
+
+Dosyalar exclusive create + fsync ile kaydedilir; yeni UUID ile mevcut yedek
+üzerine yazılmaz. Önce backup manifesti kaynak manifestiyle karşılaştırılır.
+Staging aynı dosya sisteminde hazırlanır; posts ayrı mount ise işlem reddedilir.
+Staging'in bütün kayıtları, adresleri ve medyası tekrar doğrulanır. Sonra kaynak
+kümesi ve kullanılan medya hash'leri tekrar okunup ilk taramayla karşılaştırılır.
+Değişiklik varsa swap yapılmaz. Medya yalnız okunur, kopyalanmaz/silinmez.
+
+Swap iki ayrı rename'dir:
+
+1. `posts → <run>/retired`, ilgili dizinleri fsync.
+2. `<run>/staging → posts`, ilgili dizinleri fsync.
+
+Bunlar tek transaction değildir; iki adım arasında `posts` olmayabilir.
+Bakım penceresi ve bütün yazıcıların durması zorunludur. Son tarama ile rename
+arasındaki harici yazmayı kilit engellemez. Sonuç kümesi doğrulanınca complete
+işareti yazılır ve kilit kaldırılır. Başarısızlıkta artefaktlar ve kilit kalır;
+araç otomatik rollback, cleanup veya uygulama restart yapmaz. Kilit yalnız diğer
+migration/restore süreçlerini engeller, mevcut uygulama kuyruğuyla ortak değildir.
+
+### Kesinti kurtarması ve yedek doğrulaması
+
+Önce bütün yazıcıları kapalı tutun, kilitteki PID'yi ve işlem dizinlerini inceleyin.
+PID tek başına güvenilir canlılık kanıtı değildir. İşaret dosyaları rename ile
+aynı transaction'da olmadığından, **gerçek dizin varlığı ve hash manifesti** esas
+alınmalıdır. İkinci migration başlatmayın; bilinmeyen dosyaları temizlemeyin.
+
+Salt okunur backup doğrulaması, posts eksik olsa da çalışır:
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3 -- --verify-backup /srv/azura/content/blog/.blog-v3-UUID
+```
+
+- Backup/staging aşamasında kesinti: posts hâlâ eski kümedir. Kaynak ve backup
+  hash'lerini doğrulayın. Artefaktları saklayın; yarım staging'i canlıya taşımayın.
+- İlk rename sonrası: posts yok, retired ve staging vardır. Backup doğrulamasından
+  sonra retired'ın source manifestiyle aynı olduğunu ayrıca doğrulayın. Eski
+  sürüme dönülecekse yalnız **posts hedefi yokken** retired'ı posts'e taşıyın.
+  Tamamlamaya karar verilirse staging tümüyle tekrar doğrulanmalı; operatör
+  doğrulaması olmadan otomatik devam yoktur.
+- İkinci rename sonrası: posts target kümedir; retired ve backup kalır.
+  Target manifesti ve API smoke testi başarılıysa operatör tamamlandığını
+  kabul edebilir; başarısızsa aşağıdaki açık rollback prosedürünü kullanır.
+- Manifest oluşmadan kesinti: yedek doğrulanmış sayılmaz. Özgün posts'e dokunmayın;
+  yeni girişimden önce çalışan süreç olmadığını ve mevcut dosyaları doğrulayın.
+
+Stale kilit ancak çalışan migration olmadığı, kurtarma kararı alındığı ve
+artefaktlar korunduğu doğrulandıktan sonra operatörce kaldırılır. Otomatik
+stale-lock silme/timeout yoktur. Dosya sistemi/host arızasında aynı diskteki yedek
+tek başına yeterli değildir; bakım öncesi harici yedek de alınmalıdır.
+
+### Geri yükleme — önce kontrol, sonra açık apply
+
+Başarıyla tamamlanmış migration'ın yedeği için:
+
+```sh
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3 -- --restore /srv/azura/content/blog/.blog-v3-UUID
+AZURA_CONTENT_ROOT=/srv/azura/content AZURA_UPLOADS_ROOT=/srv/azura/uploads npm run migrate:blog-v3 -- --restore /srv/azura/content/blog/.blog-v3-UUID --apply --maintenance-confirmed
+```
+
+İlk komut salt okunurdur. Restore hem backup/source hash eşliğini hem **aktif
+kümenin migration target manifestiyle birebir eşliğini** şart koşar. Kullanıcı
+V3 sonrası düzenleme yaptıysa işlem reddedilir; otomatik olarak V3 alanları
+silinmez veya eski yedekle ezilmez. Önce güncel V3 kümesini ayrı, doğrulanmış
+bir yedekte koruyun; kayıplar/alias adresleri için açık kullanıcı onayı ve manuel
+uzlaştırma planı olmadan rollback yapmayın. Bu korumayı atlayan force seçeneği yok.
+
+İzin verilen restore yeni `.blog-v3-<uuid>/staging` oluşturur; `restore-from.json`
+özgün backup dizinine işaret eder. Aktif V3 dizini yeni `retired/` içine taşınır,
+yedekten üretilen staging posts olur; V3 dosyaları fiziksel olarak korunur.
+Restore da iki rename ve aynı kesinti kurallarına tabidir; hata halinde kilit ve
+artefaktlar saklanır. CLI uygulamayı veya sürüm ayarını değiştirmez.
+
+### Bakım ve etkinleştirme sırası
+
+1. Harici yedek alın, hedef kökleri doğrulayın, dry-run çalıştırın.
+2. Bütün writer/seed süreçlerini durdurun; bakım içinde dry-run'ı tekrarlayın.
+3. Açık apply çalıştırın; complete işareti ve manifestleri kontrol edin.
+4. Ayrı operasyonla sunucuyu `AZURA_BLOG_CONTRACT_VERSION=3` ile başlatın;
+   Lago adaptörü `X-Azura-Blog-Contract-Version: 3` göndermeli. Eski revision'lar
+   yerine yeni GET yapılmalı. Dört dil, taslak izolasyonu ve API smoke testi yapın.
+5. Sorunda writer'ları durdurun. Düzenleme yoksa kontrollü restore ardından
+   V2 ayarı/eski istemciyle başlatın; düzenleme varsa yukarıdaki onaylı uzlaştırma.
+
+### Dosyalar ve testler
+
+- `lib/azura-blog-migration.mjs`: bağımsız güvenli tarama, saf dönüşümün yeniden
+  kullanımı, kilit/backup/manifest/staging/swap, kontrollü restore.
+- `scripts/migrate-blog-v3.mjs`: varsayılan dry-run CLI, açık apply ve bakım bayrağı;
+  sadece izinli seçenekler, gizli ortam değerlerini yazdırmayan rapor.
+- `lib/azura-blog-migration.test.mjs`: geçici köklerde 16 test (alt testler dahil).
+- `lib/azura-blog-v3-http.test.mjs`: geçici V2 fixture'ı gerçek migration aracıyla
+  dönüştürüp V3 API ve dört dil ziyaretçi erişimini kontrol eder.
+- `package.json`: `migrate:blog-v3`, `test:blog-migration`; seed:blog değişmedi.
+
+Komutlar: `npm run test:blog-migration`, `npm run test:blog`, `npm run lint`,
+`npm run test:blog-production`, `git diff --check`. Gerçek kullanıcı kayıtları
+ve uploads bu testlerin hedefi değildir. Yapay checkpoint hataları yalnız test
+bağımlılık enjeksiyonudur; CLI veya ortam değişkeniyle etkinleştirilemez.
+
+Üçüncü aşama sonuçları: migration **16/16**, blog birim **11/11**; izole
+production blog HTTP **3/3**, dinamik sayfa HTTP **2/2**, galeri API HTTP **1/1**.
+Next.js 15.5.26 izole build, lint ve diff kontrolü başarılı; çalıştırılan kapsamda
+başarısız test yok. Önceden görülen Next lint/çoklu lockfile/webpack cache
+uyarıları sürüyor. Gerçek tarayıcı testi, fiziksel güç kesintisi/disk arızası ve
+çoklu host kilit testi yapılmadı; kesintiler beş kontrollü checkpoint'te hata
+üreterek doğrulandı. Gerçek apply, .env değişikliği, V3 etkinleştirmesi veya canlı
+Lago doğrulaması yapılmadı. Commit/deploy yapılmadı.

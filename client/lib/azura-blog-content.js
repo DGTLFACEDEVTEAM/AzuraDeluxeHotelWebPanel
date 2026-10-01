@@ -1,2 +1,2 @@
 import 'server-only';
-export {listPublishedBlogPosts,readPublishedBlogPost,selectBlogTranslation,selectBlogBlockTranslation,validBlogSlug} from './azura-blog-storage.mjs';
+export {resolvePublicBlogPost,listPublishedBlogPosts,readPublishedBlogPost,selectBlogTranslation,selectBlogBlockTranslation,validBlogSlug} from './azura-blog-storage.mjs';

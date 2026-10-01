@@ -1,5 +1,5 @@
 {
-  "storageVersion": 3,
+  "storageVersion": 2,
   "slug": "new-blog-blablabla",
   "createdAt": "2026-09-28T12:41:01.095Z",
   "updatedAt": "2026-09-28T12:41:07.392Z",
@@ -64,13 +64,7 @@
           }
         }
       }
-    ],
-    "slugs": {
-      "tr": "new-blog-blablabla",
-      "en": "new-blog-blablabla",
-      "de": "new-blog-blablabla",
-      "ru": "new-blog-blablabla"
-    }
+    ]
   },
   "published": {
     "slug": "new-blog-blablabla",
@@ -132,18 +126,6 @@
           }
         }
       }
-    ],
-    "slugs": {
-      "tr": "new-blog-blablabla",
-      "en": "new-blog-blablabla",
-      "de": "new-blog-blablabla",
-      "ru": "new-blog-blablabla"
-    }
-  },
-  "aliases": {
-    "tr": [],
-    "en": [],
-    "de": [],
-    "ru": []
+    ]
   }
 }

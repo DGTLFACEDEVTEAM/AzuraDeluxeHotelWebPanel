@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "roots": {
+    "contentRoot": "/Users/ece/Documents/GitHub/AzuraDeluxeHotelWebPanel/client/content",
+    "uploadsRoot": "/Users/ece/Documents/GitHub/AzuraDeluxeHotelWebPanel/client/public/uploads"
+  },
+  "source": [
+    {
+      "name": "nemesis.json",
+      "size": 1670,
+      "sha256": "9c1d5ef18d7c72bf07a0ff87c7cdc257a5c4cc9a084dbaf8fdc83f7366f51941"
+    },
+    {
+      "name": "new-blog-blablabla.json",
+      "size": 5974,
+      "sha256": "72999800089b263807bf83fa0eb4a2be6d4ebdf368f3e3dda5ec9959fc540bb9"
+    }
+  ],
+  "target": [
+    {
+      "name": "nemesis.json",
+      "size": 1858,
+      "sha256": "383dd0c8be50feeff4d6aa6ed2fd31344484dd19b7240e10d660a3232a7d7561"
+    },
+    {
+      "name": "new-blog-blablabla.json",
+      "size": 6363,
+      "sha256": "c6d87808a77c1374b8beadc4fd5823d77576cb3c2e269ae5958f65e4040e17da"
+    }
+  ],
+  "media": [
+    [
+      "/uploads/blog/blog-224bedf0-2f34-4be8-8556-5b95eb2f02ab.webp",
+      "2d013405dfab45dd0389dc9d8545256e3b7c59635d8026846ad46078df47b216"
+    ],
+    [
+      "/uploads/blog/blog-50092eb0-3a4d-48d8-90f3-ccb49342ed0a.webp",
+      "95495eae91bbb2435dd4875d3086d2dda2f7845fbeb2682428923467f6d54d01"
+    ]
+  ]
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import {useBlogLocale} from "@/BlogLocaleContext";
+import {blogLocaleHref} from "@/lib/azura-blog-locale.mjs";
 import React, { useState, useEffect, useTransition } from "react";
 // ⭐️ next/navigation yerine navigation.ts’den alıyoruz:
 import { redirect, usePathname } from "@/i18n/navigation";
@@ -13,6 +15,7 @@ export default function LocaleSwitcherSelect({ children, defaultValue, label }) 
   const [isPending, startTransition] = useTransition();
   // 🔑 burada internal rota anahtarını (ör: "/aboutus") alır
   const routeKey = usePathname();
+  const blogPage = useBlogLocale();
   const dynamicPage = useDynamicPageLocale();
   const actualPathname = useActualPathname();
 
@@ -28,6 +31,9 @@ export default function LocaleSwitcherSelect({ children, defaultValue, label }) 
     // scroll pozisyonunu sakla
     sessionStorage.setItem("scrollPosition", window.scrollY);
     setIsOpen(false);
+
+    const blogHref = blogLocaleHref(blogPage, actualPathname, lang);
+    if (blogHref) { window.location.assign(blogHref); return; }
 
     const dynamicHref = dynamicLocaleHref(dynamicPage, actualPathname, lang);
     if (dynamicHref) { window.location.assign(dynamicHref); return; }

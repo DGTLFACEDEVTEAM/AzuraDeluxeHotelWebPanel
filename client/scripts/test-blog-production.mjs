@@ -14,6 +14,7 @@ try {
  await symlink(path.join(source,'node_modules'),path.join(target,'node_modules'),'dir');
  await run(['run','build']);
  await run(['run','test:blog-http']);
+ await run(['run','test:dynamic-pages-http']);
  await run(['exec','--','node','--test','--test-concurrency=1','lib/azura-gallery-api-http.test.mjs']);
 
 

@@ -1,8 +1,9 @@
+import {BlogLocaleBridge} from "@/BlogLocaleContext";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import {getTranslations} from "next-intl/server";
-import {readPublishedBlogPost,selectBlogTranslation,selectBlogBlockTranslation,validBlogSlug} from "@/lib/azura-blog-content";
+import {resolvePublicBlogPost,selectBlogTranslation,selectBlogBlockTranslation,validBlogSlug} from "@/lib/azura-blog-content";
 export const dynamic = "force-dynamic";
 
 function splitParagraphs(content = "") {
@@ -15,7 +16,8 @@ function splitParagraphs(content = "") {
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params;
   if (!validBlogSlug(slug)) notFound();
-  const post = await readPublishedBlogPost(slug);
+  const result = await resolvePublicBlogPost(slug, locale);
+  const post = result?.published;
 
   if (!post) {
     return {};
@@ -26,18 +28,21 @@ export async function generateMetadata({ params }) {
   return {
     title: translation.seoTitle || translation.title,
     description: translation.seoDescription || translation.excerpt,
+    ...(post.slugs ? {alternates:{canonical:result.href,languages:Object.fromEntries(Object.entries(post.slugs).map(([language,address])=>[language,`/${language}/news/${address}`]))}} : {}),
   };
 }
 
 export default async function NewsDetailPage({ params }) {
   const { locale, slug } = await params;
   if (!validBlogSlug(slug)) notFound();
-  const post = await readPublishedBlogPost(slug);
+  const result = await resolvePublicBlogPost(slug, locale);
+  const post = result?.published;
 
   if (!post) {
     notFound();
   }
 
+  if (result.redirect) permanentRedirect(result.href);
   const {translation, locale: contentLocale} = selectBlogTranslation(post, locale);
   const t = await getTranslations({locale,namespace:"BlogNews"});
   const paragraphs = splitParagraphs(translation.content);
@@ -45,6 +50,7 @@ export default async function NewsDetailPage({ params }) {
 
   return (
     <div className="bg-[#fbfbfb] pb-20">
+      {post.slugs ? <BlogLocaleBridge slugs={post.slugs} /> : null}
       <article className="mx-auto max-w-[1100px] px-4 pt-32 md:px-8">
         <Link
           href="/news"
