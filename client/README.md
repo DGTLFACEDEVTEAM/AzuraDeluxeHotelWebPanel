@@ -3567,3 +3567,159 @@ uyarıları sürüyor. Gerçek tarayıcı testi, fiziksel güç kesintisi/disk a
 çoklu host kilit testi yapılmadı; kesintiler beş kontrollü checkpoint'te hata
 üreterek doğrulandı. Gerçek apply, .env değişikliği, V3 etkinleştirmesi veya canlı
 Lago doğrulaması yapılmadı. Commit/deploy yapılmadı.
+
+## Ortak Azura medya kütüphanesi
+
+Bu altyapı mevcut uploads görsellerini yeniden yüklemeden kullanmayı sağlar.
+İçerik doğrulayıcılarının sayfa bazlı yol izinleri **genişletilmedi**. Başka
+kapsamdaki görsel seçilince önce hedef kapsama kopyalanır; yayın daha sonra
+mevcut içerik API'siyle yapılır. JSON, blog veya galeri kaydı otomatik değişmez.
+Alt açıklama kopyalanmaz; seçilen içerik alanında ayrıca düzenlenir.
+
+### Kesin kapsamlar
+
+`scope` / `targetScope` değerleri şu sabit listedendir:
+
+- `/uploads/pages/<scope>/`: `homepage`, `rooms`, `restaurants`, `about`,
+  `spawellness`, `spor`, `beachpools`, `kidsclub`, `bars`, `entertainment`,
+  `certificates`, `deluxeroom`, `familyroom`, `fantasyroom`, `room-options`.
+- `/uploads/<scope>/`: `gallery`, `blog`, `dynamic-pages`.
+
+`room-options` listelenir ve kaynak olabilir; **hedef olarak kabul edilmez**.
+Oda detay API anahtarı `family` iken medya kapsamı `familyroom`'dur; adaptör bu
+sabit eşlemeyi kullanmalıdır. İzinli klasörlerin yalnız doğrudan görsel dosyaları
+okunur; alt klasörlere recursive tarama yapılmaz. Statik importlar, diğer public
+klasörleri, videolar, PDF/SVG/GIF, JSON, gizli/temp dosyalar, backup dizinleri ve
+izin listesinde olmayan sayfa/oda klasörleri kapsam dışıdır. Mevcut görseller
+kendiliğinden taşınmaz veya birleştirilmez.
+
+### GET /api/azura/media-library
+
+`Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>` zorunludur. Blog V3 sürüm
+başlığı gerekmez. Yanıt `Cache-Control: no-store` kullanır.
+
+İzinli query alanları: `scope` (opsiyonel kesin kapsam), `q` (en fazla 100
+karakter; dosya adı/klasör üzerinde büyük-küçük harf duyarsız alt string),
+`limit` (1–100, varsayılan 50), `offset` (0–1.000.000, varsayılan 0).
+Bilinmeyen veya tekrarlı query parametreleri reddedilir. Kök/dizin/folder/path
+parametresi kabul edilmez.
+
+```http
+GET /api/azura/media-library?scope=blog&q=test&limit=50&offset=0
+Authorization: Bearer <token>
+```
+
+```json
+{
+  "images": [{
+    "image": "/uploads/blog/test.png",
+    "name": "test.png",
+    "scope": "blog",
+    "folder": "blog",
+    "mimeType": "image/png",
+    "size": 1234,
+    "width": 800,
+    "height": 600,
+    "modifiedAt": "2026-10-01T10:00:00.000Z"
+  }],
+  "total": 1,
+  "limit": 50,
+  "offset": 0,
+  "nextOffset": null
+}
+```
+
+`folder`, uploads köküne göre mantıksal klasördür (ör. `pages/homepage`);
+fiziksel sunucu yolu değildir. Sıra `image` URL'sine göre artandır. `total`
+filtrelenmiş geçerli görsellerin sayısıdır. Son sayfada nextOffset null olur.
+Sayfalama snapshot garantisi vermez; eşzamanlı ekleme/silmede listeyi yenileyin.
+
+Bu ilk sürüm yanıt boyutunu sınırlar, fakat seçilen kapsamların dosyalarını
+her istekte yeniden çözümler; arama/sayfalama disk tarama maliyetini sınırlamaz.
+Büyük kütüphanelerde scope filtresi tercih edilmeli; ileride güvenli indeks/cache
+ayrıca tasarlanabilir. Eksik kapsam boş liste verir; güvensiz/symlink klasör
+hata verir. Bozuk/sahte/symlink dosyalar mevcut listeleme kuralıyla dışlanır.
+
+### POST /api/azura/media-library/reuse
+
+Bearer ve `Content-Type: application/json` zorunlu. Gövde yalnız:
+
+```json
+{"image":"/uploads/blog/test.png","targetScope":"homepage"}
+```
+
+Kaynak izinli yerel URL olmalıdır; uzak URL indirilmez. POST query parametresi
+kabul etmez. Akış okunurken de denetlenen JSON gövde sınırı **4096 bayt**.
+Başarılı yanıt tam olarak:
+
+```json
+{
+  "image": "/uploads/pages/homepage/homepage-<sha256>.png",
+  "mimeType": "image/png",
+  "size": 1234,
+  "width": 800,
+  "height": 600
+}
+```
+
+- **200**: aynı kapsam; veya hedefte aynı baytlara sahip güvenli görsel bulundu.
+- **201**: hedefte yeni dosya oluşturuldu.
+
+Kaynak yerinde kalır. Hedefte bütün güvenli görseller arasında bayt eşliği
+aranır; farklı adla mevcut dosya da kullanılabilir. Yeni ad kapsam + SHA-256
+ile sunucuda üretilir. Ortak mevcut temp/fsync/exclusive hard-link kaydı üzerine
+yazmayı engeller. Aynı süreçte hedef kapsam kuyruğu kullanılır; ayrı süreçlerde
+aynı deterministik adın exclusive kaydı yarışmayı çözer, kaybeden güvenli
+hedefi yeniden okuyup bayt eşliğini doğrular. Başka upload endpoint'inin aynı
+anda farklı adla aynı baytları yüklemesini küresel tekilleştirmez; mevcut
+hiçbir dosyayı silmez. Hash adı beklenmeyen farklı dosyayla çakışırsa ezilmez.
+
+JPEG/PNG/WebP, 8 MiB, 16 milyon piksel, gerçek imza ve çözülebilirlik,
+symlink/traversal güvenliği korunur. Eski sıfır FileHandle.stat() boyutu düzeltmesi
+korunur; gerçek okunan baytların boyutu denetlenir. Kaynak alt metni veya herhangi
+bir içerik kaydı bu işlemde okunup hedef alanlara aktarılmaz.
+
+Hatalar: **400** geçersiz sorgu/gövde/kapsam/yol, **401** yetkisiz, **404** kaynak
+bulunamadı, **409** güvenli dosya adı çakışması, **413** boyut, **415** JSON
+Content-Type veya gerçek görsel türü/çözümlenemeyen görsel. Servis tokenı yoksa
+**503**; beklenmeyen sunucu hatası **500**. Bazı mevcut medya kontrolleri aşırı
+boyutlu kaynak dosyasını 400 ile reddeder; güvenlik sınırı aynı kalır.
+
+### Lago bağlantısı — sonraki iş, burada uygulanmadı
+
+Salt okunur incelenen Lago dosyaları `lib/admin/media-library.js` ve
+`app/[locale]/panel/sayfalar/components/PageImagePicker.jsx` oldu. Mevcut Lago
+kütüphanesi recursive pages taraması ve `{library:{assets,folders,...}}`
+kullanıyor; Azura bunu doğrudan kopyalamaz. PageImagePicker'ın PageMediaContext /
+externalAssets akışı `image` alanını kabul ediyor ancak klasörü şu an “Azura”
+olarak sabitliyor ve seçimde `onChange(src)` çağırıyor.
+
+Entegrasyon adımları:
+
+1. Lago sunucu proxy'si Azura GET'i çağırmalı; token tarayıcıya gönderilmemeli.
+2. Picker arama/sayfalamayı query parametrelerine taşımalı; `folder/name/scope`
+   alanlarını korumalı. Önizleme URL'si Azura origin + image olmalı.
+3. Seçimde doğrudan yabancı scope URL'sini kaydetmek yerine proxy üzerinden
+   `{image,targetScope}` reuse çağrılmalı. TargetScope form yapılandırmasının
+   sunucu tarafından doğrulanan değerinden seçilmeli.
+4. Başarılı reuse yanıtından hedef `image,width,height` ilgili mevcut veri
+   biçimine aktarılmalı. Galeride image → src; blog/dinamik sayfada string yol;
+   normal sayfa kaydında image/ölçüler kullanılır. Kullanıcının alt metin alanı
+   korunmalı veya kendisi tarafından doldurulmalı.
+5. Ayrı mevcut içerik kaydı/If-Match akışı yayın yapar. Reuse tek başına yayın
+   değildir; kaydetme iptal edilirse kopya kalabilir. Fiziksel temizlik API'si yok.
+
+Dosyalar: `azura-media-library.mjs` liste/reuse; `azura-media-library-api.js`
+yetki/HTTP; iki route dosyası; `azura-homepage-media.mjs` izin listeli ortak
+wrapper'lar (mevcut endpoint/validator sözleşmeleri korunur); birim/HTTP testleri,
+package komutu ve izole production test betiği. `npm run test:media-library`
+yalnız geçici dizinlerde çalışır. HTTP testi izole `test:blog-production` akışına
+eklenmiştir. Lago koduna, kullanıcı kayıtlarına ve gerçek uploads'a yazılmaz.
+
+Bu aşama doğrulaması: kütüphane birim senaryosu **1/1** (filtre/sınır/yol,
+symlink/sahte dosya, aynı/kapsamlar arası reuse ve paralellik kontrolleri), ortak
+medya regresyonları **7/7**, kütüphane production HTTP **1/1**; blog HTTP **3/3**,
+dinamik sayfa HTTP **2/2**, galeri API HTTP **1/1**. İzole Next.js production build,
+lint ve `git diff --check` başarılı. Çalıştırılan kapsamda başarısız test yok.
+Gerçek tarayıcı/picker uçtan uca testi yapılmadı; Lago bağlantısı uygulanmadı.
+Gerçek kullanıcı içeriği/görselleri değiştirilmedi; commit/deploy yapılmadı.

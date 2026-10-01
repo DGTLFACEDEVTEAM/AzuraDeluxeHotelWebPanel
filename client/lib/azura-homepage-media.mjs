@@ -303,7 +303,7 @@ export async function readDynamicPageImage(src, paths = resolveAzuraPaths()) {
   return readCollectionImage("dynamic-pages", src, paths);
 }
 async function readCollectionImage(scope, src, paths) {
-  const prefix = `/uploads/${scope}/`;
+  const prefix = ["gallery","blog","dynamic-pages"].includes(scope) ? `/uploads/${scope}/` : `/uploads/pages/${scope}/`;
   const name = typeof src === "string" && src.startsWith(prefix) ? src.slice(prefix.length) : "";
   if (!IMAGE_NAME.test(name) || name.includes("..")) throw new HomepageMediaError("Geçersiz blog görsel yolu.");
   const directory = await safeMediaDir(paths, scope);
@@ -343,3 +343,14 @@ export async function listCertificatesImages(paths=resolveAzuraPaths()) {
 export async function saveCertificatesImage(bytes,mimeType,paths=resolveAzuraPaths(),idFactory=randomUUID) {
  return savePageImage('certificates',bytes,mimeType,paths,idFactory);
 }
+
+// Library boundaries are explicit; existing content validators remain unchanged.
+export const MEDIA_LIBRARY_SCOPES = Object.freeze(['homepage','rooms','restaurants','about','spawellness','spor','beachpools','kidsclub','bars','entertainment','certificates','deluxeroom','familyroom','fantasyroom','room-options','gallery','blog','dynamic-pages']);
+export function requireLibraryScope(scope,write=false){
+ if(!MEDIA_LIBRARY_SCOPES.includes(scope)||(write&&scope==='room-options'))throw new HomepageMediaError('Geçersiz veya salt okunur medya kapsamı.');
+ return scope;
+}
+export function libraryPrefix(scope){requireLibraryScope(scope);return ['gallery','blog','dynamic-pages'].includes(scope)?`/uploads/${scope}/`:`/uploads/pages/${scope}/`;}
+export function listLibraryScope(scope,paths){return listPageImages(requireLibraryScope(scope),paths);}
+export function readLibraryImage(scope,src,paths){requireLibraryScope(scope);return readCollectionImage(scope,src,paths);}
+export function saveLibraryImage(scope,bytes,mimeType,paths,id){return savePageImage(requireLibraryScope(scope,true),bytes,mimeType,paths,()=>id);}
