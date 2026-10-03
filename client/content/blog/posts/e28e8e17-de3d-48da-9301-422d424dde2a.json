@@ -1,0 +1,101 @@
+{
+  "storageVersion": 3,
+  "slug": "e28e8e17-de3d-48da-9301-422d424dde2a",
+  "createdAt": "2026-10-02T12:15:22.979Z",
+  "updatedAt": "2026-10-02T12:15:26.169Z",
+  "publicationUpdatedAt": "2026-10-02T12:15:26.169Z",
+  "draft": {
+    "slug": "e28e8e17-de3d-48da-9301-422d424dde2a",
+    "status": "draft",
+    "updatedAt": "2026-10-02T12:15:25.596Z",
+    "coverImage": "/uploads/blog/blog-53a0544fdf899c45b4491ac8751d03eeb2919ec8b4da29e531509079c42b0aa8.jpg",
+    "publishedAt": "2026-10-02T12:14:04.925Z",
+    "translations": {
+      "tr": {
+        "title": "ornek-blog-yazisi",
+        "excerpt": "ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi",
+        "content": "ornek-blog-yazisi ornek-blog-yazisi vv ornek-blog-yazisi vornek-blog-yazisi",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "en": {
+        "title": "ornek-blog-yazisi-en",
+        "excerpt": "ornek-blog-yazisi-en",
+        "content": "ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en v",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "de": {
+        "title": "ornek-blog-yazisi-de",
+        "excerpt": "ornek-blog-yazisi-deornek-blog-yazisi-de",
+        "content": "ornek-blog-yazisi-deornek-blog-yazisi-de ornek-blog-yazisi-deornek-blog-yazisi-de ornek-blog-yazisi-deornek-blog-yazisi-de",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "ru": {
+        "title": "ornek-blog-yazisi-ru",
+        "excerpt": "ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru",
+        "content": " ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru v ",
+        "seoTitle": "",
+        "seoDescription": ""
+      }
+    },
+    "contentBlocks": [],
+    "slugs": {
+      "tr": "ornek-blog-yazisi",
+      "en": "ornek-blog-yazisi-en",
+      "de": "ornek-blog-yazisi-de",
+      "ru": "ornek-blog-yazisi-ru"
+    }
+  },
+  "published": {
+    "slug": "e28e8e17-de3d-48da-9301-422d424dde2a",
+    "status": "published",
+    "updatedAt": "2026-10-02T12:15:25.596Z",
+    "coverImage": "/uploads/blog/blog-53a0544fdf899c45b4491ac8751d03eeb2919ec8b4da29e531509079c42b0aa8.jpg",
+    "publishedAt": "2026-10-02T12:14:04.925Z",
+    "translations": {
+      "tr": {
+        "title": "ornek-blog-yazisi",
+        "excerpt": "ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi ornek-blog-yazisi",
+        "content": "ornek-blog-yazisi ornek-blog-yazisi vv ornek-blog-yazisi vornek-blog-yazisi",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "en": {
+        "title": "ornek-blog-yazisi-en",
+        "excerpt": "ornek-blog-yazisi-en",
+        "content": "ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en ornek-blog-yazisi-en v",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "de": {
+        "title": "ornek-blog-yazisi-de",
+        "excerpt": "ornek-blog-yazisi-deornek-blog-yazisi-de",
+        "content": "ornek-blog-yazisi-deornek-blog-yazisi-de ornek-blog-yazisi-deornek-blog-yazisi-de ornek-blog-yazisi-deornek-blog-yazisi-de",
+        "seoTitle": "",
+        "seoDescription": ""
+      },
+      "ru": {
+        "title": "ornek-blog-yazisi-ru",
+        "excerpt": "ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru",
+        "content": " ornek-blog-yazisi-ru ornek-blog-yazisi-ru ornek-blog-yazisi-ru v ",
+        "seoTitle": "",
+        "seoDescription": ""
+      }
+    },
+    "contentBlocks": [],
+    "slugs": {
+      "tr": "ornek-blog-yazisi",
+      "en": "ornek-blog-yazisi-en",
+      "de": "ornek-blog-yazisi-de",
+      "ru": "ornek-blog-yazisi-ru"
+    }
+  },
+  "aliases": {
+    "tr": [],
+    "en": [],
+    "de": [],
+    "ru": []
+  }
+}

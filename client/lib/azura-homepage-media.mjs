@@ -1,3 +1,5 @@
+import {mediaScanCoordinator} from "./azura-media-scan.mjs";
+import {validateImageFileMetadata} from "./azura-image-validation-cache.mjs";
 import { randomUUID } from "node:crypto";
 import { constants } from "node:fs";
 import { link, lstat, mkdir, open, readdir, realpath, stat, unlink } from "node:fs/promises";
@@ -181,9 +183,13 @@ async function listPageImages(page, paths) {
     if (error.code === "ENOENT") return [];
     throw error;
   }
+  const signature=await lstat(folder,{bigint:true});
+  const key=JSON.stringify([paths.contentRoot,await realpath(paths.uploadsRoot),page,folder,signature.dev.toString(),signature.ino.toString(),signature.mtimeNs.toString(),signature.ctimeNs.toString()]);
+  const result=await mediaScanCoordinator.scan(key,async()=>{
   const records = [];
-  for (const entry of await readdir(folder, { withFileTypes: true })) {
-    if (!entry.isFile() || !IMAGE_NAME.test(entry.name) || entry.name.includes("..")) continue;
+  const entries=await readdir(folder, { withFileTypes: true });
+  await mediaScanCoordinator.map(entries,async entry=>{
+    if (!entry.isFile() || !IMAGE_NAME.test(entry.name) || entry.name.includes("..")) return;
     const extension = path.extname(entry.name).toLowerCase();
     const mimeType = extension === ".jpg" || extension === ".jpeg" ? "image/jpeg" :
       extension === ".png" ? "image/png" : "image/webp";
@@ -192,11 +198,11 @@ async function listPageImages(page, paths) {
     try {
       handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW);
       const details = await handle.stat();
-      if (!details.isFile()) continue;
+      if (!details.isFile()) return;
       // Actual bytes are checked for emptiness and size by inspectHomepageImage.
       // This also handles runtimes reporting zero descriptor size for nonempty files.
-      if (details.size > MAX_IMAGE_BYTES) continue;
-      const info = await inspectHomepageImage(await handle.readFile(), mimeType);
+      if (details.size > MAX_IMAGE_BYTES) return;
+      const info = await validateImageFileMetadata({handle,file,initialStat:details,namespace:JSON.stringify([paths.contentRoot,paths.uploadsRoot,folder]),mimeType,inspect:inspectHomepageImage,error:message=>new HomepageMediaError(message)});
       records.push({
         image: `${["gallery", "blog", "dynamic-pages"].includes(page) ? `/uploads/${page}` : `/uploads/pages/${page}`}/${entry.name}`,
         mimeType: info.mimeType,
@@ -210,8 +216,12 @@ async function listPageImages(page, paths) {
     } finally {
       if (handle) await handle.close();
     }
-  }
+  });
   return records.sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt) || a.image.localeCompare(b.image));
+  });
+  // Every caller checks the directory again, including callers sharing an in-flight scan.
+  if(await safeMediaDir(paths,page)!==folder)throw new HomepageMediaError("Medya dizini tarama sırasında değişti.");
+  return result;
 }
 
 export async function saveAboutImage(bytes, mimeType, paths = resolveAzuraPaths(), idFactory = randomUUID) {

@@ -3723,3 +3723,208 @@ dinamik sayfa HTTP **2/2**, galeri API HTTP **1/1**. İzole Next.js production b
 lint ve `git diff --check` başarılı. Çalıştırılan kapsamda başarısız test yok.
 Gerçek tarayıcı/picker uçtan uca testi yapılmadı; Lago bağlantısı uygulanmadı.
 Gerçek kullanıcı içeriği/görselleri değiştirilmedi; commit/deploy yapılmadı.
+
+## Ortak dosya görsel doğrulama önbelleği
+
+`lib/azura-image-validation-cache.mjs` yalnız başarıyla doğrulanmış metadata'yı
+process belleğinde tutar. Buffer'lar kalıcı cache'e konmaz; doğrulama süresince
+okunur ve iş bitince bırakılır. `inspectHomepageImage` ve yeni upload buffer
+kontrolleri değişmedi. Ortak `listPageImages` bu yardımcıyı kullanır; tüm mevcut
+sayfa/oda/blog/galeri/dinamik medya listeleme endpoint'leri ve ortak kütüphane
+aynı katmandan yararlanır. Yanıt alanları ve sıraları değişmedi.
+
+Sınırlar: **512 metadata kaydı**, doğrulama tamamlandığından itibaren **60 saniye**
+TTL; erişimde LRU sırası güncellenir, TTL uzamaz. 512 sınırı kütüphane büyürken
+belleği sınırlamak, 60 saniye sınırı süreçler arası değişikliklerde uzun ömürlü
+sonuç bırakmamak için seçildi. Aynı sürüm için en fazla **128 bekleyen anahtar**
+tutulur; kapasite dolduğunda yeni dosya normal doğrulanır, genel kilit uygulanmaz.
+Süre dolmuş kayıtlar sonraki çağrıda temizlenir; toplam sınır her zaman korunur.
+
+Cache anahtarı: içerik/uploads kökleri ve gerçek klasör namespace'i + tam dosya
+yolu + istenen MIME + `dev, ino, size, mtimeNs, ctimeNs`. Kimlikler bigint fstat
+ile alınır; pozitif olmayan/eksik alan, sıfır boyut veya yalnız milisaniye
+hassasiyetli iki timestamp durumunda cache kullanılmaz. Gerçek okunan bayt
+sayısı stat boyutuyla eşleşmeden cache kaydı oluşturulmaz. Bu, önceki sıfır
+FileHandle.stat().size sorununda geçerli dosyaların dışlanmasını engeller;
+boş/sahte/aşırı boyutlu buffer hâlâ gerçek doğrulamadan geçemez.
+
+Her istekte mevcut kapsam, güvenli gerçek kök/klasör ve `O_NOFOLLOW` açma
+kontrolleri çalışır. Silinmiş dosya cache'den döndürülmez. Cache hit ve bekleyen
+sonuç kullanımı öncesinde descriptor ve dosya yolunun lstat kimliği yeniden
+karşılaştırılır. Tam doğrulama sonrası da aynı denetim yapılır. İşlem sırasında
+sürüm değişirse sonuç reddedilir, yeni sürüme eski sonuç bağlanmaz. Symlink ile
+aynı yolun değiştirilmesi veya dosyanın rename ile yenilenmesi de bu denetime
+ dahildir. MIME/imza, gerçek Sharp metadata/stats, 8 MiB ve 16 milyon piksel
+kuralları atlanmaz; yalnız değişmediği doğrulanan başarılı sonuç tekrar kullanılır.
+
+Aynı güvenilir sürüme gelen paralel istekler tek doğrulama promise'ini bekler.
+Hatalar saklanmaz; pending kaydı finally ile temizlenir. Farklı dosyalar birbirini
+kilitlemez. Process restart sonrası cache boştur; instance'lar cache paylaşmaz.
+Kimlik/timestamp'leri gerçeğe aykırı raporlayan dosya sistemlerine karşı bu bir
+kriptografik dosya bütünlüğü garantisi değildir. Güvenilir değişiklik bilgisi
+sağlanamayan ortamlarda cache bypass olur; beklenen hızlanma gerçekleşmeyebilir.
+Son stat ile yanıt arasındaki harici dosya değişikliğini işletim sistemi seviyesinde
+kilitlemez; sonuç yalnız gözlenen dosya sürümü için doğrulanmıştır.
+
+### Kapsam ve kalan işler
+
+- `readLibraryImage` / `readCollectionImage` gerçek bayt isteyen tüketiciler
+  olarak mevcut tam okuma/doğrulamayı sürdürür. Reuse akışı değişmez.
+- **Galeri ziyaretçi storage'ı henüz bağlı değil.** `azura-gallery-storage.mjs`
+  içindeki `readGalleryImage` kendi okuması ve Sharp kontrolünü yapıyor. Galeri
+  listeleme API'si faydalanır; ziyaretçi galeri sayfasının aynı hızlanmayı aldığı
+  iddia edilmez. Storage entegrasyonu ayrı sonraki adımdır.
+- İlk/soğuk tarama tüm görselleri okumaya ve çözümlemeye devam eder. Büyük
+  kütüphanelerde 512 kayıt üzerindeki taramalar LRU churn oluşturabilir.
+- Scope paralelleştirme, indeks/sayfalama değişikliği, thumbnail ve Lago timeout
+  düzenlemesi yapılmadı. Canlı kapasite ölçümü ayrı yapılmalıdır.
+
+### Doğrulama ve yerel ölçüm
+
+`npm run test:media-cache`: **14/14** (6 cache testi, 7 mevcut medya testi,
+1 kütüphane testi). Değişmeyen sürüm, aynı boyutlu değişiklik, inode yenileme,
+silinme, sıcak cache'de symlink/dizin koruması, sıfır stat boyutu, paralellik,
+hata sonrası retry, TTL/LRU/kök ayrımı ve doğrulama sırasında değişme test edildi.
+
+Geçici yerel 1200×800 PNG: soğuk **16,85 ms**, sıcak **0,43 ms**; ağır doğrulama
+sayısı soğuk **1**, sıcak ek **0**. Bunlar tek yerel örnek ölçümüdür; canlı
+performans sonucu, benchmark garantisi veya tüm kütüphane açılış süresi değildir.
+Gerçek kullanıcı kayıtları/görselleri ve çalışma ağacındaki içerik değişiklikleri
+korundu. Commit, deploy veya seed yapılmadı.
+
+İzole Next.js production build ve HTTP regresyonları: blog **3/3**, medya
+kütüphanesi **1/1**, dinamik sayfa **2/2**, galeri API **1/1** başarılı. Lint ve
+`git diff --check` geçti. Mevcut Next lint/çoklu lockfile/cache uyarıları dışında
+bu kapsamda başarısız test yok. Canlı sunucu performansı ve gerçek tarayıcı
+ölçümü yapılmadı.
+
+## Medya taramasında sınırlı eşzamanlılık ve devam eden iş paylaşımı
+
+`lib/azura-media-scan.mjs` ortak listelemeler için process genelinde **3 dosya
+ işi** bütçesi sağlar. Kapsamlar mevcut sırayla taranır; kapsam paralelliği
+eklenmedi. Her tarama en fazla üç worker oluşturur; dosya başına sınırsız
+Promise.all veya önceden okunmuş buffer listesi yoktur. readdir dosya adlarını,
+sonuç listesi ise yalnız metadata'yı tutar. Bütçe bütün kapsamlar ve eşzamanlı
+istekler arasında ortaktır; scope × dosya çarpımı oluşmaz. Üç sınırı düşük
+kaynaklı sunucuda açık dosya/buffer ve Sharp işlerini sınırlarken I/O beklemesini
+örtmek için seçildi. Sharp/libvips kendi iç thread'lerini kullanabilir; bu sayı
+native thread veya toplam process belleği garantisi değildir. Upload/reuse
+bayt doğrulamaları listeleme bütçesinin dışında, mevcut akışında kalır.
+
+Paylaşılan devam eden tarama anahtarı içerik kökü, gerçek uploads kökü, kapsam,
+gerçek klasör ve klasör dev/ino/mtimeNs/ctimeNs bilgileridir. Aynı sürüm için
+istekler tek taramayı bekler; her çağırana bağımsız metadata kopyası döner.
+Bütün worker'lar bitmeden tarama tamamlanmış sayılmaz. Hata olursa pending kayıt
+finally ile temizlenir; bir sonraki istek yeniden deneyebilir. Farklı kökler
+karışmaz, ancak düşük kaynak koruması için dosya bütçesini paylaşırlar.
+
+**Tam liste cache'i yoktur.** Sonuç tamamlanınca pending map'ten çıkarılır.
+Sonraki istekte dizin tekrar okunur; mevcut doğrulama cache'i dosya kimliğini
+kontrol eder. Upload/reuse ardından ayrı tam-liste invalidation gerekmiyor.
+Klasör kimliği/zamanı değişirse devam eden eski taramaya katılmak yerine yeni
+anahtarla taranır. Harici aynı dosya içeriği değişikliği klasör zamanını
+ değiştirmeyebilir: taramaya katılan istekler devam eden taramanın gözlemlediği
+sonucu paylaşır; tarama sonrası yeni istek dosyayı tekrar kontrol eder. Tarama
+bir dosya sistemi transaction/snapshot'ı değildir. Önceden olduğu gibi tarama
+sırasında değişen/silinen görsel dışlanabilir; sonraki istekte yeniden değerlendirilir.
+
+Her çağıran paylaşım öncesinde ve sonucu almadan sonra mevcut güvenli dizin
+kontrolünü çalıştırır. Dosyalar O_NOFOLLOW ile açılır; imza/çözümleme/byte/piksel
+ve metadata cache kontrolleri korunur. Kapsam izinleri, images/total/limit/offset/
+nextOffset, URL sırası, arama ve filtre anlamları değişmedi. Galeri storage,
+Lago, timeout'lar, thumbnail veya sayfalama modeli değiştirilmedi.
+
+### Yerel ölçüm (canlı sonucu değildir)
+
+Geçici üç kapsamda toplam **72 PNG**, her biri **800×600**, aynı kontrollü
+sentetik görüntünün ayrı dosyaları. Yeni kökte cold cache ve ikinci çağrıda warm
+cache; eşzamanlı çift için ayrıca taze kök kullanıldı. Ağır çağrı sayısı Sharp
+stats metodundan, aktif dosya bütçesi ortak koordinatörden ölçüldü.
+
+| İşlem | Süre | Ağır doğrulama | En fazla eşzamanlı ağır doğrulama |
+|---|---:|---:|---:|
+| Soğuk liste | 1324,52 ms | 72 | 3 |
+| Sıcak liste | 12,54 ms | 0 | 0 |
+| İki eşzamanlı soğuk liste, toplam | 1035,82 ms | 72 | 3 |
+| Kapsam + arama + ilk sayfa | 3,30 ms | 0 | 0 |
+| Sonraki sayfa | 4,24 ms | 0 | 0 |
+
+Dosya işlerinin gözlenen process geneli üst sınırı **3** oldu. Eşzamanlı iki
+istek üç kapsam için toplam **3** tarama çalıştırdı. Bu tek yerel ölçüm,
+önceki seri sürüme karşı kontrollü hızlanma benchmark'ı veya canlı açılış süresi
+ değildir. Gerçek fotoğraflar, disk, CPU, libvips ve trafik süreleri değiştirebilir.
+
+`npm run test:media-scan` **16/16**: yeni koordinatör/paylaşım/ölçüm testleri,
+önceki cache, medya güvenliği ve kütüphane upload/reuse testleri. Kaynak ekleme,
+değiştirme, silme, retry, kök ayrımı, sonuç kopyası ve global bütçe doğrulanır.
+Yeni dosyalar: `lib/azura-media-scan.mjs`, `lib/azura-media-scan.test.mjs`.
+Değişenler: ortak `azura-homepage-media.mjs` listelemesi, package test komutu ve
+README. Gerçek kullanıcı içerikleri, seed ve uploads dosyaları değiştirilmedi.
+
+Kalan maliyet: ilk taramada bütün aday görseller hâlâ doğrulanır; arama ve
+sayfalama disk/Sharp işini azaltmaz, yalnız yanıtı sınırlar. Büyük kütüphanelerde
+512 kayıt cache kapasitesi aşılabilir. Sonraki optimizasyon için canlı ölçüm ve
+ayrı indeks/thumbnail tasarımı gerekebilir; burada yapılmadı. Çoklu Node.js
+süreçleri taramaları veya bütçeyi paylaşmaz. Galeri ziyaretçi storage entegrasyonu
+ayrı iş olarak kalır.
+
+Bu aşamada izole production build, lint ve diff kontrolü başarılı. HTTP
+regresyonları: blog **3/3**, medya kütüphanesi **1/1**, dinamik sayfa **2/2**,
+galeri API **1/1**. Çalıştırılan testlerde başarısızlık yok. Gerçek tarayıcı veya
+canlı sunucu performans ölçümü yapılmadı. Commit/deploy/seed yapılmadı.
+
+## Galeri storage: ortak cache ve dosya bütçesi entegrasyonu
+
+Önceki bölümlerde sonraki adım olarak belirtilen galeri storage entegrasyonu
+artık uygulandı. `readGalleryContent → validateGalleryFiles` aynı metadata
+cache'ini ve aynı process geneli **3 dosya** bütçesini kullanır. Ayrı cache,
+ayrı limit, galeri JSON cache'i veya ziyaretçi HTML cache'i eklenmedi.
+
+JSON her okumada yeniden okunup doğrulanır. Kaynak URL'ler Set ile tekilleştirilir;
+kategoriler arasındaki ortak dosya bir kez işlenir. Ortak koordinatörün map
+worker'ları slot alır; içerideki metadata okuyucusu ikinci slot almaz. Böylece
+galeri ile medya kütüphanesi birlikte çalışırken limit çoğalmaz ve iç içe
+semafor beklemesi oluşmaz. Cache namespace'i ortak listelemeyle aynıdır; aynı
+kök/dosya sürümünün eşzamanlı doğrulaması mevcut pending mekanizmasını paylaşır.
+
+Her kategori kaydının JSON width/height değerleri, cache'den gelmiş olsa bile
+aynı gerçek metadata ile karşılaştırılır. Hatalar galeri için **atlanmaz**;
+GalleryContentError olarak yayılır. Kayıt ve kategori sırası değişmez.
+İzinli yol, gerçek uploads dizini, symlink/O_NOFOLLOW, gerçek dosya türü, imza,
+çözümleme, byte/piksel sınırları korunur. Güvenilmez kimlik ve sıfır stat.size
+mevcut cache fallback'iyle tam doğrulamaya gider. Dosya yenileme ve silme her
+istekte gerçek dosya açma/kimlik kontrollerinden geçer.
+
+`readGalleryImage` hâlâ `{bytes,info}` döndürür; buffer isteyen tüketici tam
+okuma/doğrulamayı sürdürür ve ortak bütçeden bir slot kullanır. Yalnız metadata
+isteyen validateGalleryFiles bu public buffer fonksiyonunu çağırmaz. Yönetim
+add akışı ve API sözleşmeleri korunur.
+
+Değişen dosyalar: `lib/azura-gallery-storage.mjs`, yeni
+`lib/azura-gallery-cache.test.mjs`, package test komutu ve README.
+`npm run test:gallery-cache`: **18/18**, geçici fixture ile yeni entegrasyon,
+galeri yönetim/component, mevcut cache ve medya güvenliği/kütüphane regresyonları.
+
+Yerel örnek: **24 ayrı 800×600 PNG**, iki kategoride **48 kayıt**:
+
+| İşlem | Süre | Ağır doğrulama | En yüksek eşzamanlı ağır doğrulama |
+|---|---:|---:|---:|
+| Soğuk galeri | 441,44 ms | 24 | 3 |
+| Sıcak galeri | 9,34 ms | 0 | 0 |
+| Aynı anda soğuk galeri + medya kütüphanesi | 351,11 ms | Toplam 24 | 3 |
+
+Bunlar geçici yerel sentetik fixture ölçümleridir; canlı açılış süresi veya
+karşılaştırmalı hızlanma garantisi değildir. Soğuk tarama/TTL sonu hâlâ tam
+çözümleme gerektirir. Cache 512 kayıt/60 saniye sınırları ve process başına
+bütçe geçerlidir. Büyük galerilerde cache churn olabilir. İstekler dosya sistemi
+transaction'ı değildir; doğrulama sırasında değişen dosyada tekrar deneme
+gerekebilir. Gerçek buffer isteyen yollar ağır doğrulamayı sürdürür.
+Lago, timeout, tasarım, içerik, API ve galeri sıraları değiştirilmedi.
+
+Galeri entegrasyonunun son doğrulaması: birim/regresyon **18/18**; izole
+production galeri yönetim ve ziyaretçi HTTP **2/2**, Bars/Kids Club medya ve
+sayfa API HTTP regresyonları **2/2**. Next.js 15.5.26 build, lint ve diff kontrolü
+başarılı. Çalıştırılan kapsamda başarısız test yok; mevcut next-intl webpack
+cache/Next lint/çoklu lockfile uyarıları sürüyor. Gerçek tarayıcı veya canlı
+performans ölçümü yapılmadı. Kullanıcı verisine yazılmadı; commit/deploy/seed
+işlemi yapılmadı.

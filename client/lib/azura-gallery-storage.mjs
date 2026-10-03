@@ -1,3 +1,5 @@
+import {validateImageFileMetadata} from "./azura-image-validation-cache.mjs";
+import {mediaScanCoordinator} from "./azura-media-scan.mjs";
 import { createHash, randomUUID } from "node:crypto";
 import { canonicalJson, enqueuePageWrite, writePageAtomically } from "./azura-page-storage.mjs";
 import { constants } from "node:fs";
@@ -39,15 +41,24 @@ export function validateGalleryContent(c) {
 }
 // Gallery is a separate collection scope, not a fixed site-page media section.
 export async function readGalleryImage(src, paths = resolveAzuraPaths()) {
+  let result;
+  await mediaScanCoordinator.map([src],async()=>{result=await readGalleryFile(src,paths,false);});
+  return result;
+}
+// Called inside the shared budget: never acquire another slot here.
+async function readGalleryFile(src,paths,metadataOnly){
   const name = filename(src); let handle;
   try {
     const root = await realpath(paths.uploadsRoot), directory = path.join(root, "gallery");
     if ((await lstat(directory)).isSymbolicLink() || await realpath(directory) !== directory) throw new Error("Güvenli olmayan galeri dizini");
-    handle = await open(path.join(directory, name), constants.O_RDONLY | constants.O_NOFOLLOW);
+    const file=path.join(directory,name);
+    handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW);
     const stat = await handle.stat();
     if (!stat.isFile() || stat.size > 8 * 1024 * 1024) throw new Error("Geçersiz galeri dosyası");
-    const bytes = await handle.readFile();
     const ext = path.extname(name).toLowerCase();
+    const mimeType=ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
+    if(metadataOnly)return await validateImageFileMetadata({handle,file,initialStat:stat,namespace:JSON.stringify([paths.contentRoot,paths.uploadsRoot,directory]),mimeType,inspect:inspectHomepageImage,error:message=>new GalleryContentError(message)});
+    const bytes = await handle.readFile();
     const info = await inspectHomepageImage(bytes, ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg");
     return { bytes, info };
   } catch (e) { throw new GalleryContentError(`Galeri görseli okunamadı: ${src} (${e.message})`); }
@@ -65,8 +76,9 @@ export async function readGalleryContent(paths = resolveAzuraPaths()) {
 export async function validateGalleryFiles(c, paths = resolveAzuraPaths()) {
   validateGalleryContent(c);
   const inspected = new Map();
+  const sources=[...new Set(c.categories.flatMap(category=>category.images.map(record=>record.src)))];
+  await mediaScanCoordinator.map(sources,async src=>{inspected.set(src,await readGalleryFile(src,paths,true));});
   for (const category of c.categories) for (const record of category.images) {
-    if (!inspected.has(record.src)) inspected.set(record.src, (await readGalleryImage(record.src, paths)).info);
     const actual = inspected.get(record.src);
     if (actual.width !== record.width || actual.height !== record.height) throw new GalleryContentError(`Galeri gerçek ölçüleri eşleşmiyor: ${record.src}`);
   }
