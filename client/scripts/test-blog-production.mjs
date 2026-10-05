@@ -13,6 +13,7 @@ try {
  await cp(source,target,{recursive:true,filter:p=>!['node_modules','.next','.git'].includes(path.basename(p))&&!path.basename(p).startsWith('.env')});
  await symlink(path.join(source,'node_modules'),path.join(target,'node_modules'),'dir');
  await run(['run','build']);
+ await run(['exec','--','node','--test','lib/azura-dashboard-summary-http.test.mjs']);
  await run(['run','test:blog-http']);
  await run(['exec','--','node','--test','lib/azura-media-library-http.test.mjs']);
  await run(['run','test:dynamic-pages-http']);

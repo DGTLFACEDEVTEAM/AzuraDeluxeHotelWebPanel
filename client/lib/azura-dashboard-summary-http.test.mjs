@@ -1,0 +1,32 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import {GALLERY_CATEGORY_IDS} from './azura-gallery-storage.mjs';
+const token='dashboard-test-token-01234567890123456789';
+test('production summary HTTP auth, independent sources and write lifecycle',{timeout:90000},async t=>{
+ const root=await mkdtemp(path.join(os.tmpdir(),'summary-http-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ const contentRoot=path.join(root,'content');for(const part of ['gallery','blog/posts','pages'])await mkdir(path.join(contentRoot,part),{recursive:true});
+ await writeFile(path.join(contentRoot,'gallery/gallery.json'),JSON.stringify({schemaVersion:1,categories:GALLERY_CATEGORY_IDS.map(id=>({id,images:[]}))}));
+ const port=49000+Math.floor(Math.random()*1000),base=`http://localhost:${port}`;
+ const child=spawn(process.execPath,['node_modules/next/dist/bin/next','start','-H','localhost','-p',String(port)],{cwd:path.resolve(import.meta.dirname,'..'),env:{...process.env,AZURA_CONTENT_ROOT:contentRoot,AZURA_UPLOADS_ROOT:path.join(root,'uploads'),AZURA_PANEL_SERVICE_TOKEN:token,AZURA_BLOG_CONTRACT_VERSION:'2'},stdio:['ignore','pipe','pipe']});
+ let logs='';child.stdout.on('data',b=>logs+=b);child.stderr.on('data',b=>logs+=b);
+ t.after(async()=>{if(child.exitCode===null)await new Promise(resolve=>{child.once('exit',resolve);child.kill();setTimeout(()=>{child.kill('SIGKILL');resolve();},3000).unref();});});
+ const endpoint='/api/azura/dashboard/summary';let ready=false;
+ for(let i=0;i<100;i++){try{if((await fetch(base+endpoint)).status===401){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,100));}
+ assert.ok(ready,logs);
+ const req=(url,method='GET',body,revision)=>fetch(base+url,{method,headers:{Authorization:`Bearer ${token}`,...(body?{'Content-Type':'application/json'}:{}),...(revision?{'If-Match':`"${revision}"`}:{})},...(body?{body:JSON.stringify(body)}:{})});
+ const response=await req(endpoint);assert.equal(response.headers.get('cache-control'),'no-store');assert.equal((await response.json()).blog.data.total,0);
+ assert.equal((await req(endpoint+'?sections=bad')).status,400);
+ const translations=Object.fromEntries(['tr','en','de','ru'].map(l=>[l,{title:'Title '+l,excerpt:'Excerpt',content:'Private long content',seoTitle:'SEO',seoDescription:'Description'}]));
+ let post=await(await req('/api/azura/blog/posts','POST',{slug:'summary-post',draft:{coverImage:'',publishedAt:'2026-09-01T10:00:00.000Z',translations,contentBlocks:[]}})).json();assert.ok(post.revision,JSON.stringify(post));
+ const summary=async()=> (await(await req(endpoint+'?sections=blog')).json()).blog.data;
+ assert.equal((await summary()).draftCount,1);
+ post=await(await req('/api/azura/blog/posts/summary-post','PUT',{action:'publish'},post.revision)).json();assert.equal((await summary()).currentPublishedCount,1);
+ post=await(await req('/api/azura/blog/posts/summary-post','PUT',{action:'unpublish'},post.revision)).json();assert.equal((await summary()).draftCount,1);
+ assert.equal((await req('/api/azura/blog/posts/summary-post','DELETE',undefined,post.revision)).status,200);assert.equal((await summary()).total,0);
+ await writeFile(path.join(contentRoot,'gallery/gallery.json'),'{bad');const partial=await(await req(endpoint)).json();assert.equal(partial.gallery.status,'error');assert.equal(partial.blog.status,'ok');assert.equal(partial.pages.status,'ok');
+ assert.deepEqual(Object.keys(await(await req(endpoint+'?sections=pages')).json()),['pages']);
+});

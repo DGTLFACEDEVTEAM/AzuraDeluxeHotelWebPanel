@@ -3928,3 +3928,165 @@ başarılı. Çalıştırılan kapsamda başarısız test yok; mevcut next-intl 
 cache/Next lint/çoklu lockfile uyarıları sürüyor. Gerçek tarayıcı veya canlı
 performans ölçümü yapılmadı. Kullanıcı verisine yazılmadı; commit/deploy/seed
 işlemi yapılmadı.
+
+### Dashboard için salt okunur özet API’si
+
+`GET /api/azura/dashboard/summary` mevcut `AZURA_PANEL_SERVICE_TOKEN` Bearer
+servis yetkisini ister; tüm yanıtlar `Cache-Control: no-store` taşır. Yönetim
+listelerini veya içerik sözleşmelerini değiştirmez. Lago bağlantısı bu görevde
+uygulanmadı.
+
+İzinli sorgular:
+
+- `sections=gallery,blog,pages`: varsayılan üçü; tek bölüm veya bunların herhangi
+  bir alt kümesi seçilebilir. Bilinmeyen/tekrarlı/boş bölüm, bilinmeyen veya
+  tekrarlı query parametresi 400 döner.
+- `limit=5`: bildirim listesi için varsayılan; tam sayı 1–20. Sayaçlar ve
+  `notifications.total` bu sınırdan etkilenmez. Bu bir içerik sayfalama API’si değildir.
+- Sunucuda blog V3 seçiliyse blog içeren istekte ayrıca
+  `X-Azura-Blog-Contract-Version: 3` gerekir; eksik/yanlış başlık 409 ve
+  `BLOG_CONTRACT_VERSION_MISMATCH` döndürür. `sections=gallery` veya `pages`
+  blog sözleşmesine bağımlı değildir. V2 varsayılan olarak korunur.
+
+```http
+GET /api/azura/dashboard/summary?sections=blog,pages&limit=5
+Authorization: Bearer <AZURA_PANEL_SERVICE_TOKEN>
+X-Azura-Blog-Contract-Version: 3
+```
+
+Varsayılan tüm bölümler için örnek 200 yanıtı:
+
+```json
+{
+  "gallery": {
+    "status": "ok",
+    "data": { "categoryCount": 9, "imageCount": 95 }
+  },
+  "blog": {
+    "status": "ok",
+    "data": {
+      "total": 3,
+      "currentPublishedCount": 1,
+      "changedCount": 1,
+      "draftCount": 1,
+      "latestPost": { "slug": "technical-key", "title": "Son yazı" },
+      "notifications": {
+        "total": 2,
+        "items": [
+          {
+            "slug": "technical-key",
+            "title": "Son yazı",
+            "status": "published",
+            "hasUnpublishedChanges": true,
+            "updatedAt": "2026-09-01T10:00:00.000Z"
+          },
+          {
+            "slug": "draft-key",
+            "title": "Taslak",
+            "status": "draft",
+            "hasUnpublishedChanges": false,
+            "updatedAt": "2026-08-01T10:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  "pages": {
+    "status": "ok",
+    "data": {
+      "total": 0,
+      "currentPublishedCount": 0,
+      "changedCount": 0,
+      "draftCount": 0,
+      "notifications": { "total": 0, "items": [] }
+    }
+  }
+}
+```
+
+Sayfa bildirim öğesi tam olarak
+`{id,title,status,hasUnpublishedChanges,updatedAt}` biçimindedir; blogda `id`
+yerine teknik `slug` bulunur. Tam metin, çeviri nesneleri, bloklar, sections,
+history, alias, revision veya görsel listeleri dönmez. Örnekteki 95 yalnız
+örnek sayıdır; doğrulamada sabitlenmez. Seçilmeyen bölüm yanıtta bulunmaz.
+
+Sayaçlar:
+
+- `imageCount`: tüm kategorilerdeki kayıt toplamı; ortak `src` tekrarları da
+  sayılır. Benzersiz dosya sayısı değildir. Boş kategoriler categoryCount’a dahildir.
+- `total = currentPublishedCount + changedCount + draftCount`.
+- `currentPublishedCount`: yayımlanmış kopyası var, içerik değişikliği yok.
+- `changedCount`: yayımlanmış kopyası var, taslak farklı; hâlâ yayındadır.
+- `draftCount`: yayımlanmış kopyası yok. Yayın oranının payı
+  `currentPublishedCount + changedCount` olur. Kayıtlar iki dilimde sayılmaz.
+- Karşılaştırma kanonik içerik üzerinden yapılır. Blogda status/updatedAt/
+  hasUnpublishedChanges; sayfalarda status/createdAt/updatedAt dışarıda kalır.
+  JSON nesne anahtarlarının sırasının değişmesi içerik değişikliği sayılmaz.
+- Lago’nun mevcut farkı korunur: blog bildirimleri taslak + değişiklik bekleyen
+  yayınları, sayfa bildirimleri yalnız taslak-only kayıtları içerir.
+- Başlıklar yönetim taslağından tr/en/de/ru sırasındaki ilk dolu başlıktır;
+  bildirimdeki trim/fallback davranışı korunur. Boş başlık yedekleri
+  “Başlıksız blog yazısı” / “Başlıksız sayfa”dır. İçerik dosyası normalleştirilmez.
+- Son blog kaydı kök updatedAt azalan, eşitlikte teknik slug artan sıralanır.
+  Blog bildirim tarihi draft.updatedAt, sayfa bildirim tarihi kök updatedAt’tır;
+  eşit tarihte teknik kimlik artan sıralanır. Boş blogda latestPost null’dır.
+
+Hata sözleşmesi:
+
+- 401: yetkisiz; 400: query hatası; 503: servis tokenı/kök yapılandırması
+  veya geçersiz blog sürüm ayarı. Sonuncuda `BLOG_CONTRACT_CONFIGURATION_ERROR`.
+- Kaynağa özgü bozuk/eksik/okunamayan JSON veya güvensiz dosya 200 içindeki
+  ilgili bölümde `{ "status":"error", "error":{"code":"SUMMARY_SOURCE_UNAVAILABLE",
+  "message":"Bu bölümün özeti okunamadı."} }` olur. `data` ve sıfır sayaçlar
+  verilmez. Diğer hazır bölümler korunur; tüm kaynaklar bozuksa da aynı bölüm
+  sözleşmesi geçerlidir. Dosya yolu veya iç hata mesajı açıklanmaz.
+- Seçili blog sürümü ile kayıtlar uyuşmazsa blog bölümünün hata kodu
+  `BLOG_MIGRATION_REQUIRED` olur; otomatik dönüşüm yapılmaz.
+- Kurulmuş boş blog/posts ve pages dizinleri geçerlidir. Kurulmamış dizin hata;
+  galeri için doğru şemalı, tüm kategorileri boş JSON geçerlidir, eksik dosya hatadır.
+
+Güvenlik ve maliyet: mevcut blog/dinamik sayfa JSON doğrulayıcıları yeniden
+kullanılır; galeri için no-follow, gerçek dizin kontrolü ve en fazla 16 MiB
+akış okumasından sonra mevcut şema doğrulaması uygulanır. Blog 2 MiB, sayfa
+geçmiş dahil 4 MiB kayıt sınırları mevcut okuyuculardadır. Görsel yollarının
+JSON şeması denetlenir fakat gerçek görseller **bu özette** okunmaz; Sharp,
+uploads taraması ve görsel metadata cache’i çalıştırılmaz. Özet medya sağlık
+kontrolü değildir. Ayrıntılı okuyucuların dosya doğrulaması aynen devam eder.
+
+Seçili kaynaklar paralel okunur; tümü seçilen tek istek en yavaş seçili kaynağı
+bekler. Lago dashboard’un bağımsız yükleme davranışı için proxy’de üç ayrı
+`?sections=gallery`, `?sections=blog`, `?sections=pages` isteği kullanın.
+Bildirimler blog/pages özetlerinin notifications alanlarını kullanmalı;
+`total` toplam rozeti, `items` sınırlı önizlemeyi besler. Daha fazla kayıt için
+mevcut yönetim listesine gidilir. Servis tokenı tarayıcıya verilmez; V3 başlığı
+Lago sunucu adaptöründen gönderilir. Bölüm error olduğunda “—/yüklenemedi”
+gösterilmeli, 0 olarak yorumlanmamalıdır. Lago dosyaları değiştirilmedi.
+
+Özetler cache’lenmez; her istek güncel JSON’u okur. Ayrı kaynaklar/dosyalar
+arasında tek transaction snapshot garantisi yoktur. JSON okuma, şema doğrulama
+ve taslak/yayın karşılaştırması kayıt sayısıyla büyür; büyük history JSON’ları
+okunur fakat yanıta eklenmez. Mevcut metadata cache ve ortak 3 dosyalık medya
+sınırı değiştirilmedi.
+
+Dosyalar: `lib/azura-dashboard-summary.mjs` özet/HTTP mantığı;
+`app/api/azura/dashboard/summary/route.js` Node GET girişi;
+`lib/azura-dashboard-summary.test.mjs` izole doğrulama ve yerel ölçüm;
+`lib/azura-dashboard-summary-http.test.mjs` production HTTP kontrolü.
+`npm run test:dashboard-summary` birim testlerini çalıştırır.
+`npm run test:blog-production` geçici build içinde özet HTTP kontrolünü ve
+mevcut blog, dinamik sayfa, galeri ve medya kütüphanesi HTTP regresyonlarını
+çalıştırır; çalışan development build’ine ve gerçek içeriğe yazmaz.
+
+Yerel geçici ölçüm (40 blog, 20 dinamik sayfa, 40 galeri kaydı; 800×600 test
+PNG’leri): tam liste soğuk 637.05 ms / 151970 bayt / 40 ağır doğrulama;
+tam liste sıcak 29.71 ms / 151970 bayt / 0 ağır doğrulama; özet 17.62 ms /
+1810 bayt / 0 ağır doğrulama; tekrar özet 18.87 ms. Bu tek yerel denemedir,
+canlı performans garantisi değildir. Özetin temel kazancı küçük yanıt ve medya
+bağımlılığının olmamasıdır; sıcak tam liste zaten mevcut cache’ten yararlanır.
+
+Bu aşamada 7 özet birim/ölçüm, 11 blog, 12 dinamik sayfa, 18 galeri/cache/medya
+regresyonu ve izole production build sonrasında 8 HTTP testi geçti. Lint ve
+`git diff --check` başarılı. İlk HTTP denemesinde geçici fixture’ın null tarihi
+şemaya uymadı; yalnız test tarihi düzeltildi ve yeniden geçti. Gerçek tarayıcı
+veya canlı sunucu performans ölçümü yapılmadı. İçerik/API yazma sözleşmeleri,
+Lago dosyaları ve gerçek uploads değişmedi.

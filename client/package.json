@@ -61,7 +61,8 @@
     "seed:certificates": "node scripts/seed-persistent-certificates.mjs",
     "test:certificates": "node --test lib/azura-certificates.test.mjs lib/azura-certificates-indicator.test.mjs",
     "test:certificates-http": "node --test --test-concurrency=1 lib/azura-certificates-http.test.mjs lib/azura-certificates-api-http.test.mjs",
-    "test:certificates-production": "node scripts/test-certificates-production.mjs"
+    "test:certificates-production": "node scripts/test-certificates-production.mjs",
+    "test:dashboard-summary": "node --test lib/azura-dashboard-summary.test.mjs"
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.2",
