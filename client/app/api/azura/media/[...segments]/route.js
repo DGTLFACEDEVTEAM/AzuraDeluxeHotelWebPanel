@@ -1,17 +1,11 @@
-import {inspectHomepageImage} from "@/lib/azura-homepage-media.mjs";
-import {constants} from "node:fs";
-import {open} from "node:fs/promises";
-import { readBlogImage, readDynamicPageImage } from "@/lib/azura-homepage-media.mjs";
-import { readGalleryImage } from "@/lib/azura-gallery-storage.mjs";
-import { readFile, realpath, stat } from "node:fs/promises";
-import path from "node:path";
-import { NextResponse } from "next/server";
-import { resolveAzuraPaths } from "@/lib/azura-homepage-storage.mjs";
+import {readBlogImage, readDynamicPageImage, readLibraryImage} from "@/lib/azura-homepage-media.mjs";
+import {readGalleryImage} from "@/lib/azura-gallery-storage.mjs";
+import {mediaScanCoordinator} from "@/lib/azura-media-scan.mjs";
+import {NextResponse} from "next/server";
+import {resolveAzuraPaths} from "@/lib/azura-homepage-storage.mjs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-const types = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
 
 export async function GET(_request, { params }) {
   const { segments } = await params;
@@ -28,21 +22,13 @@ export async function GET(_request, { params }) {
   }
 
   try {
-    const { uploadsRoot } = resolveAzuraPaths();
-    const root = await realpath(uploadsRoot);
-    if(segments[1] === 'certificates') {
-      const directory=path.join(root,'pages/certificates');
-      if(await realpath(directory)!==directory) return new NextResponse(null,{status:404});
-      const handle=await open(path.join(directory,segments[2]),constants.O_RDONLY|constants.O_NOFOLLOW);
-      try {const details=await handle.stat();if(!details.isFile()||details.size>8*1024*1024) return new NextResponse(null,{status:404});const bytes=await handle.readFile();const info=await inspectHomepageImage(bytes,types[path.extname(segments[2]).toLowerCase()]);return new NextResponse(bytes,{headers:{'Content-Type':info.mimeType,'Cache-Control':'public, max-age=0, must-revalidate'}});}finally{await handle.close();}
-    }
-    const file = await realpath(path.join(root, ...segments));
-    const type = types[path.extname(file).toLowerCase()];
-    if (!file.startsWith(`${root}${path.sep}`) || !type || !(await stat(file)).isFile()) {
-      return new NextResponse(null, { status: 404 });
-    }
-    return new NextResponse(await readFile(file), {
-      headers: { "Content-Type": type, "Cache-Control": "public, max-age=0, must-revalidate" },
+    // Byte readers fully decode this request's bytes; metadata cache is not a substitute.
+    let result;
+    await mediaScanCoordinator.map([segments], async () => {
+      result = await readLibraryImage(segments[1], `/uploads/${segments.join("/")}`, resolveAzuraPaths());
+    });
+    return new NextResponse(result.bytes, {
+      headers: { "Content-Type": result.info.mimeType, "Cache-Control": "public, max-age=0, must-revalidate" },
     });
   } catch {
     return new NextResponse(null, { status: 404 });
