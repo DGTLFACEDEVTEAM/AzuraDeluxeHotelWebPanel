@@ -4090,3 +4090,72 @@ regresyonu ve izole production build sonrasında 8 HTTP testi geçti. Lint ve
 şemaya uymadı; yalnız test tarihi düzeltildi ve yeniden geçti. Gerçek tarayıcı
 veya canlı sunucu performans ölçümü yapılmadı. İçerik/API yazma sözleşmeleri,
 Lago dosyaları ve gerçek uploads değişmedi.
+
+### Dinamik görsel okuyucusu: salt okunur canlı ölçüm planı
+
+`scripts/diagnose-dynamic-image.mjs` bağımsız Node sürecinde mevcut
+`readDynamicPageImage` okuyucusunu çağırır. Uygulama kodunu değiştirmez; endpoint,
+seed, migration veya restart gerektirmez. Başarılı çalışmada önce **1 tekil**,
+sonra **3 eşzamanlı** okuma yapar ve çıkar. Yük testi, tekrar döngüsü veya retry
+yoktur. Dosyalara yazmaz; görsel baytlarını, mutlak kökü ve ortam değişkenlerini
+çıktıya koymaz. Sadece sürüm/CPU bilgileri, boyut/ölçüler ve süreler döner.
+
+Sunucuda elle çalıştırma (bu komut burada canlıda çalıştırılmadı):
+
+1. Betiği mevcut sunucu checkout’unun `client/scripts/` dizinine ayrı bir tanı
+   dosyası olarak aktarın; uygulama deploy’u veya restart yapmayın. Sunucudaki
+   okuyucu sürümünün yerelde ölçülen sürümle aynı olduğunu doğrulayın.
+2. Servisin dosya okuma yetkisine sahip kullanıcısıyla, aynı Node sürümü ve
+   kurulu bağımlılıklarla `client` dizinine geçin. Paket kurulumu yapmayın.
+3. Gerçek kalıcı uploads kökünü açıkça verin; aşağıdaki `/srv/...` örneğini
+   sunucunuzun gerçek yolu ile değiştirin:
+
+```sh
+node scripts/diagnose-dynamic-image.mjs \
+  --uploads-root /srv/azura/uploads \
+  --image /uploads/dynamic-pages/dynamic-pages-fafc1cab-579c-4eb8-9baa-fdde18d8e260.webp
+```
+
+`AZURA_UPLOADS_ROOT` zaten süreç ortamına aktarılmışsa `--uploads-root`
+atlanabilir. Betik `.env` dosyalarını yüklemez ve başka dizine fallback yapmaz.
+Root mutlak olmalıdır. Servis tokenı gerekmez. Başarılı çıkış 0, argüman/okuma/
+doğrulama hatası 1’dir; hatada yerel dosya yolları açıklanmaz.
+
+JSON çıktısında:
+
+- `environment`: Node, Sharp, libvips, işletim sistemi, CPU modeli/mantıksal
+  CPU sayısı, değiştirilmemiş `sharpConcurrency`.
+- `single` ve `concurrent.samples`: her okumanın `ms.pathAndFileChecks`,
+  `readBytes`, `metadata`, `stats`, `other`, `total` süreleri (milisaniye).
+- `pathAndFileChecks`: realpath/lstat/stat/open ve descriptor stat süreleri.
+  Dosya adı denetimi, kapatma ve küçük JavaScript işleri `other` içindedir.
+- `calls`: her başarılı okumada metadata=1, stats=1.
+- `concurrent.wallMs`: üçlü grubun duvar saati süresi; `peak` en fazla 3.
+- `applicationQueue`: mevcut dinamik görsel okuyucusu ortak uygulama kuyruğunu
+  kullanmadığı için "not used by readDynamicPageImage". Üçlü sınır yalnız
+  tanı grubuna aittir, sunucunun eşzamanlılık politikasını değiştirmez.
+
+Ölçüm sarmalayıcıları yalnız tanı sürecinde kurulup kaldırılır; asıl dosya ve
+Sharp fonksiyonlarının sonuçları/hataları değiştirilmez. Reader güvenliği ve
+8 MiB / 16 milyon piksel sınırı aynen çalışır. Başarısız üçlü grupta kalan
+okumalar tamamlanmadan süreç toparlanmaz.
+
+Karşılaştırma: önce ölçü ve bayt boyutunu (yerel örnek 2400×1792, 170942 bayt),
+Node/Sharp sürümlerini eşleştirin. Tekil `total` değerini yerel yaklaşık 52 ms
+ile, üçlü sonuçları önceki yaklaşık 118 ms/okuma ile ayrı karşılaştırın.
+Tekil okuma disk cache’inin soğuk olduğunu garanti etmez; üçlü okuma onun
+ardından gelir. İşletim sistemi cache’ini temizlemeyin. Bu tanı yeni bir süreçte
+çalışır; mevcut Next.js worker kuyruğunu ölçmez. CPU kotası, anlık sunucu yükü
+ve native worker beklemesi farklı sonuç üretebilir. Metadata/stats süreleri
+Sharp/libuv içindeki beklemeyi de içerir; saf CPU süreleri değildir.
+
+Canlı HTTP’deki 1,52 saniye TTFB; ağ, proxy ve çalışan uygulama yükünü de
+kapsar. Bu betik HTTP/TLS/proxy/indirme ölçmez; TTFB’nin tamamını Sharp’a
+atfetmeyin. Dört okuma sınırlı olsa da CPU tüketir; uygun bir zamanda tek
+çalıştırma yapıp çıktıyı inceleyin. Sürekli zamanlayıcıya bağlamayın.
+
+İzole doğrulama: `node --test lib/azura-dynamic-image-diagnostic.test.mjs`.
+Test geçici 2400×1792 WebP üretir; gerçek kullanıcı dosyalarına yazmadan
+süre/çağrı biçimini, içerik eşliğini, symlink/sahte dosya reddini ve gizli
+çıktı sızıntısı olmamasını kontrol eder. Tanı dosyası uygulama içinde import
+edilmemelidir. Bu aşamada canlı çalıştırma veya optimizasyon yapılmadı.
